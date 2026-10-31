@@ -424,4 +424,12 @@ var masteryJournal=monkMastery.Learning;masteryJournal.FinishCharacter(13);
 Check(masteryJournal.Observe(13,"monk",new[]{"m/mastery/monk"},true).Length==1,"New mastery can announce once");
 monkMastery=JsonSerializer.Deserialize<Campaign>(JsonSerializer.Serialize(monkMastery))!;monkMastery.Validate();
 Check(monkMastery.Learning.Observe(1,"monk",new[]{"m/mastery/monk"},true).Length==0,"Mastery announcement stays acknowledged after saving and reloading");
+// Advanced normal-attack modifiers are exclusive and applied after native calc.
+foreach(int damage in new[]{int.MinValue,-100,0,1,19,20,100,9999,int.MaxValue})
+{
+    Check(JobFeatures.PhysicalAttackDamage(damage,false,false)==damage,"Ordinary attacks retain native damage");
+    Check(JobFeatures.PhysicalAttackDamage(damage,true,false)==JobFeatures.RapidFireDamage(damage),"Rapid Fire applies half damage");
+    Check(JobFeatures.PhysicalAttackDamage(damage,false,true)==JobFeatures.BarehandDamage(damage),"Barehand applies only its five-percent bonus");
+    Check(JobFeatures.PhysicalAttackDamage(damage,true,true)==JobFeatures.RapidFireDamage(damage),"Rapid Fire never stacks Barehand damage");
+}
 Console.WriteLine($"PASS: {checks} progression, save, and fast-forward checks.");

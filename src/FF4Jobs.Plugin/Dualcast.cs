@@ -131,6 +131,12 @@ internal static class DualcastCharge
         first.time=wait;second.time=wait;
         chants[indices[0]]=first;chants[indices[1]]=second;
         Dualcast.SecondCasts[second.actData.Pointer]=second.actData;
+        // Native SetHistoryActData replaces history with a one-action list on
+        // EACH SetActData call. Preserve the pair for the native auto-battle loop.
+        var history=new Il2CppSystem.Collections.Generic.List<BattleActData>();
+        history.Add(new BattleActData(first.actData));
+        history.Add(new BattleActData(second.actData));
+        battleActData.AttackUnitData.GetOwnedCharacterData()?.CommandHistoryData?.SetActData(history);
     }
 }
 

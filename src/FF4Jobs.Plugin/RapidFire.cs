@@ -1,7 +1,6 @@
 using FF4Jobs.Core;
 using HarmonyLib;
 using Last.Battle;
-using Last.Battle.Function;
 using Last.Data.Master;
 using NativeActs=Il2CppSystem.Collections.Generic.List<Last.Battle.BattleActData>;
 
@@ -59,14 +58,3 @@ internal static class RapidFireTarget
     }
 }
 
-// Scale the final native physical result once, before both display and application.
-// No patch to a value-tuple return or to shared trivial IL2CPP setters.
-[HarmonyPatch(typeof(BattleBasicFunction),"GetSumCalcResult")]
-internal static class RapidFireDamage
-{
-    static void Postfix(BattleBasicFunction __instance,Last.Systems.ICalcResult __result)
-    {
-        if(__result!=null && RapidFire.Applies(__instance.battleActData))
-            __result.SetValue(JobFeatures.RapidFireDamage(__result.GetValue(false)));
-    }
-}

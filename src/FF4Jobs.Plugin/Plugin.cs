@@ -13,7 +13,7 @@ using System.Text.Json.Nodes;
 
 namespace FF4Jobs;
 
-[BepInPlugin("ff4jobs.mainandsub", "FF4 JOBS+", "0.3.0")]
+[BepInPlugin("ff4jobs.mainandsub", "FF4 JOBS+", "0.4.0")]
 public sealed class Plugin : BasePlugin
 {
     internal static ManualLogSource Logger = null!;
@@ -50,13 +50,15 @@ public sealed class Plugin : BasePlugin
             AddComponent<FastForward>();
             if(Environment.GetEnvironmentVariable("FF4JOBS_TEST_MODE")=="1") Application.runInBackground=true;
             Enabled = true;
-            Log.LogInfo("FF4 JOBS+ loaded. Select Jobs from the main menu.");
+            Log.LogInfo("FF4 JOBS+ 0.4.0 beta 1 loaded. Select Jobs from the main menu.");
+            StartupSmoke.Report(true,harmony.GetPatchedMethods().Count(),null);
         }
         catch(Exception e)
         {
             harmony.UnpatchSelf();
             Enabled = false;
             Log.LogError("FF4 Jobs initialization failed; patches removed: " + e);
+            StartupSmoke.Report(false,0,e.ToString());
         }
     }
 }

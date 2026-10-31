@@ -1,7 +1,6 @@
 using FF4Jobs.Core;
 using HarmonyLib;
 using Last.Battle;
-using Last.Battle.Function;
 using Last.Data;
 using Last.Data.Master;
 using Last.Data.User;
@@ -25,8 +24,7 @@ internal static class Monk
     // Keep native wrappers alive until battle cleanup so native addresses cannot be
     // reused while they identify the two separate fist actions.
     internal static readonly Dictionary<IntPtr,(BattleActData Act,bool Barehand)> Fists=new();
-    [ThreadStatic] internal static BattleActData? CalculatingAct;
-    internal static void Clear() { Fists.Clear();CalculatingAct=null; }
+    internal static void Clear() { Fists.Clear();PhysicalAttackBalance.CalculatingAct=null; }
     internal static bool IsFist(BattleActData? act) => act!=null && Fists.ContainsKey(act.Pointer);
     internal static int Strikes(BattleActData act)
     {
@@ -121,30 +119,6 @@ internal static class MonkStrikeAnimation
     {
         if(!Monk.IsFist(__instance.BattleActData)) return true;
         __result=false;return false;
-    }
-}
-
-// Carry the action through native synchronous calculation. Use this substantial
-// routine rather than GetSumCalcResult, whose calls are inlined in this build.
-[HarmonyPatch(typeof(BattleBasicFunction),"SetUpFunctions")]
-internal static class MonkCalculationScope
-{
-    static void Prefix(BattleBasicFunction __instance,ref BattleActData? __state)
-    { __state=Monk.CalculatingAct;Monk.CalculatingAct=__instance.battleActData; }
-    static void Finalizer(BattleActData? __state) => Monk.CalculatingAct=__state;
-}
-
-// Adjust the freshly computed result once, before native display and HP updates.
-// Reads never multiply the bonus again. Defense is already included here.
-[HarmonyPatch(typeof(FuncitonNormalAttack),"Calc")]
-internal static class MonkBarehandDamage
-{
-    static void Postfix(FuncitonNormalAttack __instance)
-    {
-        var act=Monk.CalculatingAct;
-        if(act==null || !Monk.Fists.TryGetValue(act.Pointer,out var strike) || !strike.Barehand) return;
-        var result=__instance.GetCalcResult();
-        if(result!=null) result.SetValue(JobFeatures.BarehandDamage(result.GetValue(false)));
     }
 }
 

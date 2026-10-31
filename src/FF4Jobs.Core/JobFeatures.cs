@@ -32,6 +32,8 @@ public static class JobFeatures
     public static bool StoryAllows(Campaign campaign, int command) =>
         command != RapidFire || campaign.StoryFlags.Contains(43);
     public static int RapidFireDamage(int damage) => damage <= 0 ? damage : Math.Max(1, damage / 2);
+    public static int PhysicalAttackDamage(int damage,bool rapidFire,bool barehand) =>
+        rapidFire ? RapidFireDamage(damage) : barehand ? BarehandDamage(damage) : damage;
     public static float DualcastCharge(float first,float second) => Math.Max(0,Math.Max(first,second));
     public static bool CanPayPair(int mp,int reserved,int cost) =>
         (long)Math.Max(0,reserved)+Math.Max(0,cost)<=mp;
