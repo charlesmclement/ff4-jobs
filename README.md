@@ -119,3 +119,7 @@ At 310 personal Red Mage ABP, main or sub job gains Dualcast. Choose two learned
 ### Ninja — Dual Wield
 
 Ninja learns Dual Wield at 70 personal ABP as a main job, or 150 ABP as a sub job. The main job still determines which weapons can be equipped. One-handed weapon pairs use FF4's native dual-weapon attack handling and Ninja attack calculation with the acting character's stats. Bows require arrows; duplicate bows/arrow stacks and incompatible two-handed pairs are rejected. Changing jobs returns invalid equipment to inventory. Edge retains his original innate passive.
+
+### Monk — Barehand
+
+Monk main jobs gain Barehand immediately; sub jobs need 70 personal Monk ABP. Both hands must be empty. Base attack is `2 × own level + floor(own STR / 4) + 2 + 2 × Monk rank`, followed by FF4's normal attack processing. Training adds up to 10 attack at 310 ABP. Focus, Kick and Gird retain their native actions and ABP command thresholds. Equipped weapons use their normal rules; Barehand does not stack with equipped hand gear.

@@ -16,7 +16,7 @@ public static class Balance
         "dark_knight"=>"Dark swords, swords; heavy armor.",
         "paladin"=>"Swords, staves; heavy armor. Holy swords: Cecil only.",
         "dragoon"=>"Spears; heavy armor.",
-        "monk"=>"Claws; light armor. Native barehand rules.",
+        "monk"=>"Claws; light armor. Barehand: main 0 / sub 70 ABP.",
         "thief"=>"Daggers, boomerangs; light armor.",
         "ninja"=>"Katana, daggers, boomerangs; light armor.",
         "ranger"=>"Bows, arrows, daggers; light armor.",

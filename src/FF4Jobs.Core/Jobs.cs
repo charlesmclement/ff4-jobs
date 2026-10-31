@@ -58,7 +58,7 @@ public static class Jobs
         new("dark_knight", "Dark Knight", "Darkness; trades vitality for physical power.", new[]{10}, str:8, vit:-3, spr:-3),
         new("paladin", "Paladin", "Cover and white magic; resilient protector.", new[]{14,7}, "paladin", str:3, vit:6, agi:-3, spr:6),
         new("dragoon", "Dragoon", "Jump; strong physical attacks.", new[]{11}, str:6, vit:3, agi:-3),
-        new("monk", "Monk", "Focus, Kick and Gird. Barehand bonuses are not yet implemented.", new[]{25,26,27}, str:8, vit:6, intel:-5, spr:-3),
+        new("monk", "Monk", "Focus, Kick and Gird. Barehand grows with your level and Monk ABP; both hands empty.", new[]{25,26,27}, str:8, vit:6, intel:-5, spr:-3),
         new("white_mage", "White Mage", "White magic and Pray.", new[]{7,12}, "white", str:-4, intel:3, spr:12),
         new("black_mage", "Black Mage", "Black magic and Bluff.", new[]{8,20}, "black", str:-4, vit:-2, intel:12),
         new("red_mage", "Red Mage", "Intermediate white/black magic. At 310 ABP, Dualcast selects two learned spells and targets.", new[]{7,8,JobFeatures.Dualcast}, "red", str:2, agi:3, intel:6, spr:6),

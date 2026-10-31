@@ -45,3 +45,7 @@ No Nexus upload has been made. The package is a reviewable alpha candidate.
 - Equipment validation runs before public SetEquip inventory bookkeeping. The shared GetEquipItems filter covers manual selection and Optimize; reconciliation uses native unequip calls.
 - Native UpdateEquipParameter sums item values across all equipment dictionary entries and merges each item's elemental resistances. No whole-character defense multiplier or persistent base-stat mutation is used.
 - Live equipment preview/Optimize, inventory counts, both-hand animation and departing/returning-character acceptance remain for playtesting.
+
+## Monk implementation stage
+
+Core checks cover the 0 main / 70 sub ABP passive, own-character level/strength/rank scaling, mastery saturation, arithmetic bounds and loss of unmastered passive after switching. The native Monk offensive-power helper confirms the base 2*level + strength/4 + 2 formula. The mod extends this at the offensive-power provider boundary, retaining native final combat modifiers. Both hands must be empty. Live Barehand/Focus/Kick damage acceptance remains for playtesting.

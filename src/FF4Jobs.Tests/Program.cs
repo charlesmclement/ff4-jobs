@@ -337,4 +337,16 @@ Check(!HandEquipment.PairAllowed(5,4,true,false,true,false),"Two-handed weapon c
 Check(HandEquipment.PairAllowed(12,0,false,false,false,false),"Empty offhand allows assembling a bow and arrow pair");
 foreach(var job in Jobs.All)
     Check(HandEquipment.PairAllowed(-1,-1,false,false,true,HandEquipment.AllowsShields(job.Id))==(job.Id is "paladin" or "engineer" or "dragoon"),"Defensive hand pairing restricted to selected main job: "+job.Id);
+var monk=new CharacterProgress{Main="monk"};
+Check(JobFeatures.HasPassive(monk,"monk"),"Monk main starts with Barehand");
+monk.Main="original";monk.Sub="monk";monk.Abp["monk"]=69;
+Check(!JobFeatures.HasPassive(monk,"monk"),"Monk sub needs 70 ABP for Barehand");
+monk.Abp["monk"]=70;
+Check(JobFeatures.HasPassive(monk,"monk"),"Monk sub gains Barehand at 70 ABP");
+Check(JobFeatures.UnarmedPower(20,40,0)==52 && JobFeatures.UnarmedPower(20,40,70)==58,"Barehand uses own level and strength plus own Monk rank");
+Check(JobFeatures.UnarmedPower(21,40,70)-JobFeatures.UnarmedPower(20,40,70)==2,"Own level growth improves barehand power");
+Check(JobFeatures.UnarmedPower(20,40,310)==62 && JobFeatures.UnarmedPower(20,40,int.MaxValue)==62,"Barehand rank bonus caps at mastery");
+Check(JobFeatures.UnarmedPower(int.MaxValue,int.MaxValue,int.MaxValue)==234,"Barehand arithmetic remains bounded");
+monk.Sub=null;
+Check(!JobFeatures.HasPassive(monk,"monk"),"Unmastered Barehand is lost when unequipped");
 Console.WriteLine($"PASS: {checks} progression, save, and fast-forward checks.");
