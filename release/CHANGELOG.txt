@@ -1,0 +1,17 @@
+0.2.0 alpha candidate
+- Added main-job weapon/armor policies and native unequip reconciliation.
+- Added trained Thief detection odds with ABP and enemy-level scaling.
+- Added agility tradeoffs to Dragoon, Paladin and Engineer.
+- Removed extra MP from untrained caster subjobs.
+- Added equipment/stat explanations to job selection.
+- Connected both native keyboard and controller input paths.
+- Separated names from portraits in the character picker.
+- Standardized menu wording to Sub Job.
+- Hid the negative button in single-OK unlock announcements.
+- Corrected Rydia's test identity; broadened progression/save checks.
+- Kept the approved story schedule, individual ABP and magic gates.
+- Excluded isometric/display/keyboard experiments from release files.
+
+Prior prototype
+Native Jobs menu; per-character main/subjob progress; story unlocks;
+ABP display; gated magic; native unlock dialogs; Zot Dragoon migration.

@@ -1,0 +1,54 @@
+TITLE
+FF4 Jobs — Main and Subjobs (Experimental Alpha)
+
+SHORT DESCRIPTION
+A story-gated main-job/subjob system for Final Fantasy IV Pixel Remaster,
+with individual ABP, a native-style Jobs menu, and progression through
+FF4's original story. Experimental; back up saves before trying it.
+
+DESCRIPTION
+Choose Jobs from the camp menu, select a character, then choose a main
+job and a subjob. Main jobs define combat commands, equipment access and
+stat adjustments. Train jobs to earn their subjob skills. Progress belongs
+to each character and is saved alongside normal FF4 progress.
+
+Jobs unlock through story milestones rather than all at once. Thief opens
+after Mist; transferable Dragoon waits until the escape from Zot. Kain's
+native Jump remains available. Dark Knight stays restricted to Cecil/Kain.
+Advanced magic requires both ABP and story progress, including Tellah's
+Meteo scene and later milestones. Character identities and story events
+remain FF4's own.
+
+This alpha uses existing FF4 actions. It does NOT reproduce every FF5
+mechanic. Dualcast, Rapid Fire, universal summons, mastery inheritance and
+new Ninja dual wield / Monk unarmed formulas are not implemented. See the
+included known-issues file. A full campaign playtest remains outstanding.
+
+REQUIREMENTS
+FF4 Pixel Remaster Steam build 20265023 with the documented executable
+hash; BepInEx Unity IL2CPP Windows x64 6.0.0-be.735. The loader and game
+are separate requirements and are not bundled. Tested locally under
+Linux/Proton; native Windows and other loader builds need verification.
+
+INSTALL / UNINSTALL
+Follow INSTALL.txt. Back up saves, install BepInEx first, then extract
+this archive beside FINAL FANTASY IV.exe. Rollback is supported by removing
+only the FF4Jobs plugin folder and restoring the pre-mod backup save.
+
+COMPATIBILITY
+Other mods affecting commands, stats, equipment, saves or menus are
+unverified. The separate isometric experiment is not included.
+
+BUG REPORTS
+Provide the mod/game/loader versions, job/subjob, ABP, location, steps and
+the BepInEx log. State whether other gameplay mods are installed.
+
+CREDITS
+BepInEx / Il2CppInterop / Harmony for runtime modding tools.
+Il2CppDumper for local metadata inspection; Memoria.FFPR as a tooling
+reference. FF4 and its original assets belong to their respective owners.
+No original game assets or generated interop libraries are distributed.
+
+UPLOAD STATUS
+Draft only. Screenshots and acceptance checks must be reviewed before
+publication. Do not advertise this as a finished or fully tested release.

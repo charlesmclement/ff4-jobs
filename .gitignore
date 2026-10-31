@@ -1,0 +1,17 @@
+tools/
+research/
+playtest-prefix/
+packages/
+**/bin/
+**/obj/
+dist/
+*.user
+*.log
+*.dmp
+
+# Local conversation/playtest history and environment files
+STATUS.md
+.env
+.env.*
+*.pfx
+*.key

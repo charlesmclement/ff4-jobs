@@ -1,0 +1,24 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework><LangVersion>latest</LangVersion><Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings><EnableNETAnalyzers>false</EnableNETAnalyzers>
+    <GamePath Condition="'$(GamePath)' == '' and '$(FF4JOBS_GAME_PATH)' != ''">$(FF4JOBS_GAME_PATH)</GamePath>
+    <GamePath Condition="'$(GamePath)' == ''">$(MSBuildThisFileDirectory)../../../SteamLibrary/steamapps/common/FINAL FANTASY IV PR</GamePath>
+    <AssemblyName>FF4Iso</AssemblyName>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="$(GamePath)/BepInEx/core/BepInEx.Core.dll" Private="false" />
+    <Reference Include="$(GamePath)/BepInEx/core/BepInEx.Unity.IL2CPP.dll" Private="false" />
+    <Reference Include="$(GamePath)/BepInEx/core/0Harmony.dll" Private="false" />
+    <Reference Include="$(GamePath)/BepInEx/core/Il2CppInterop.Runtime.dll" Private="false" />
+    <Reference Include="$(GamePath)/BepInEx/interop/Assembly-CSharp.dll" Private="false" />
+    <Reference Include="$(GamePath)/BepInEx/interop/Il2Cppmscorlib.dll" Private="false" />
+    <Reference Include="$(GamePath)/BepInEx/interop/UnityEngine.CoreModule.dll" Private="false" />
+    <Reference Include="$(GamePath)/BepInEx/interop/UnityEngine.IMGUIModule.dll" Private="false" />
+    <Reference Include="$(GamePath)/BepInEx/interop/UnityEngine.InputLegacyModule.dll" Private="false" />
+    <Reference Include="$(GamePath)/BepInEx/interop/UnityEngine.TextRenderingModule.dll" Private="false" />
+    <Reference Include="$(GamePath)/BepInEx/interop/UnityEngine.UI.dll" Private="false" />
+    <Reference Include="$(GamePath)/BepInEx/interop/UnityEngine.UIModule.dll" Private="false" />
+    <Reference Include="$(GamePath)/BepInEx/interop/UniTask.dll" Private="false" />
+  </ItemGroup>
+</Project>

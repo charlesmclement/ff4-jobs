@@ -1,0 +1,56 @@
+FF4 Jobs 0.2.0 alpha — player guide
+
+## Controls and story unlocks
+
+Select Jobs in the regular camp menu. The controller flow is character portraits → Main Job/Subjob → available jobs. Confirm uses the game's configured Enter action (normally A); cancel uses its Cancel action (normally B). D-pad/stick navigation repeats while held. Keyboard controls use the same configured actions, with Escape also available. The menu uses native Unity UI, the active FF4 font and native border sprite, plus an opaque blue backing. Main-party class labels show main/subjob over an opaque blue mask without changing the underlying native class text or character identity.
+
+Testing overrides are stored in `BepInEx/config/ff4jobs.mainandsub.cfg`: `AllJobsAvailable` and `AllSkillsAvailable`. Both default false; both are off for the current story-progression playtest. They do not award ABP or story flags. Disabling them restores normal eligibility. Untaught subjob selections saved during testing contribute no unearned commands/spells without the override.
+
+Unlocks use verified native ScenarioFlag1 event flags, synchronized only after control returns to the field/menu. Ordinary recruitment no longer grants jobs. The original classes remain usable throughout, including story characters' native spell lists.
+
+| Milestone | Job unlock | Flag |
+|---|---|---:|
+| Start | Dark Knight for Cecil only (no unlock dialog) | — |
+| Kain leaves at Mist (after the village incident) | Thief for both slots; Dark Knight also becomes available to Kain only | 7 |
+| Defeat Octomammoth | Black Mage | 13 |
+| Defeat Antlion | Bard | 16 |
+| Cure Rosa in Kaipo | Ranger | 17 |
+| Complete the defense of Fabul | Monk | 20 |
+| Cecil becomes a Paladin / Tellah remembers Meteo | Paladin | 28 |
+| Escape Baron aboard the Enterprise, after the twins' sacrifice | White Mage | 107 |
+| Escape the Tower of Zot after Barbariccia | Dragoon, Red Mage, Time Mage | 43 |
+| Adult Rydia returns and Golbez is defeated | Summoner | 46 |
+| Cid seals the underworld passage | Engineer | 49 |
+| Defeat Rubicante | Ninja | 53 |
+| Complete the Giant of Babil | Sage | 68 |
+
+Story-unlocked jobs can be selected in either slot immediately, except Original (main only) and the currently selected main job. An untrained subjob contributes no skills. The menu displays ABP numbers, a progress bar toward the next rank, and the remaining ABP for the next command. Only the selected main job earns ABP.
+
+A native FF4 dialog announces each story milestone once acknowledged and saved. Dark Knight never triggers an announcement. Older saves receive catch-up notices for unlocked jobs.
+
+A main job starts with its signature command. Additional commands unlock at 10 and 30 ABP; their subjob use unlocks at 10, 30 and 70 ABP. Progress belongs to each character. Cecil retains progress through his transformation.
+
+Job-granted magic requires **both story progress and ABP**, plus the existing school and MP-cost tier limits. Grinding cannot bypass the story gates. Spell eligibility uses an explicit player-spell allowlist; enemy/event spell copies, including zero-MP versions, are excluded even in testing.
+
+- Fire waits for Rydia's Mt. Hobs fire lesson (flag 18).
+- Fira/Blizzara/Thundara wait for the Fabul defense and 30 ABP.
+- Curaga, Esuna, Haste, Stop, Osmose, Bio, Break and Drain require Tellah's Meteo scene (flag 28) and 70 ABP.
+- Curaja, Reflect, Firaga/Blizzaga/Thundaga, Tornado, Quake and Death require the completed Tower of Zot (flag 43), Tellah's scene and 150 ABP.
+- Full-Life, Holy, Flare and Meteor require the completed Giant (flag 68), Tellah's scene and 310 ABP. Only Black Mage/Sage can gain Meteor through this system.
+- Summons still require the character's native story-earned summon. Party-wide summon teaching is not implemented yet.
+
+These restrictions govern the mod's granted abilities. Original/native spell acquisition and scripted scenes are preserved; a full campaign and exploit audit remains outstanding. Main-job equipment policies and initial stat tradeoffs are implemented in 0.2.0. Broader campaign balance and equipment edge cases still need playtesting.
+
+Story order cross-checks: [Gamer Corner walkthrough](https://guides.gamercorner.net/ffiv/walkthrough/) and [FF Compendium](https://ffcompendium.com/h/ff4story.shtml). Exact flag IDs were verified locally in this installed game's event scripts, not inferred from a walkthrough.
+
+The playtest launcher defaults to borderless fullscreen. Set `FF4JOBS_WINDOWED=1` for the old 1280×720 debugging window. Older pre-Zot Dragoon selections revert to Original (main) or None (sub), retaining earned ABP and any other valid slot. Kain retains native Jump in Original mode.
+
+
+MAIN-JOB EQUIPMENT
+See the job picker for weapon/armor access and stat bonuses. Subjobs grant neither.
+
+STEAL
+35 + 5 per Thief rank + 2 per level advantage; minimum 15%, maximum 75%.
+This is the initial detection check, not a guarantee that the enemy has loot.
+
+No new Dualcast, Rapid Fire, universal summons, Ninja dual wield or custom Monk barehand formula. Original retains the character's own native mechanics.

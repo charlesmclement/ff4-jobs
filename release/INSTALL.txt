@@ -1,0 +1,82 @@
+FF4 Jobs — Main & Sub — 0.2.0 ALPHA CANDIDATE
+
+Experimental jobs mod for FINAL FANTASY IV Pixel Remaster (Steam PC).
+This is not an FF5 conversion or a finished/campaign-tested release.
+
+REQUIREMENTS
+A legally installed FF4 Pixel Remaster, verified Steam build 20265023.
+GameAssembly.dll SHA-256:
+bb2f4c9db44c8ee9b065696aeafb77561a1709492130f045433e6d215abc42ed
+The plugin disables itself on a different executable hash.
+Tested loader: BepInEx Unity IL2CPP Windows x64, 6.0.0-be.735.
+BepInEx 5, Mono builds and x86 builds are not substitutes.
+Loader and game files are NOT included. Obtain the loader separately:
+https://builds.bepinex.dev/projects/bepinex_be
+Official IL2CPP installation instructions:
+https://docs.bepinex.dev/master/articles/user_guide/installation/unity_il2cpp.html
+The tested loader is pinned to be.735; newer loader builds are unverified.
+
+INSTALL
+1. Close FF4. Back up the entire FINAL FANTASY IV PR save folder and any
+   existing FF4Jobs plugin folder before changing versions.
+2. Install the required BepInEx loader beside FINAL FANTASY IV.exe using
+   its official instructions. Launch once so its interop/config files generate.
+3. Extract this archive into the game folder. Expected DLL locations:
+   BepInEx/plugins/FF4Jobs/FF4Jobs.dll
+   BepInEx/plugins/FF4Jobs/FF4Jobs.Core.dll
+   BepInEx/plugins/FF4Jobs/gameassembly.sha256
+4. Start FF4. Look for 'FF4 Jobs — Main & Sub 0.2.0' in BepInEx's log.
+   Open the camp menu and select Jobs.
+5. Choose a character, Main Job or Subjob, then an available job.
+   A/Enter confirms; B/Backspace cancels; Escape also backs out.
+   The game's configured keyboard/controller actions are respected.
+6. Equip appropriate gear after changing your MAIN job. Incompatible gear
+   is unequipped through the game and remains in inventory.
+
+LINUX / PROTON
+Use the Windows IL2CPP x64 loader for the Windows game under Proton.
+The locally tested launch environment includes WINEDLLOVERRIDES=winhttp=n,b.
+Steam launch option: WINEDLLOVERRIDES="winhttp=n,b" %command%
+Do not replace unrelated launch options without reviewing them.
+The development launcher and its temporary RAM prefix are not release files.
+
+SAVES
+Usual Windows location: Documents/My Games/FINAL FANTASY IV PR.
+Under Proton, find the equivalent Documents folder in this game's prefix.
+The game can use a redirected Documents location: verify the actual folder.
+Keep a separate pre-mod backup. Test in a separate save slot.
+Jobs/ABP are stored in the normal game save in FF4Jobs_MainSub_v1.
+No independent job-save file needs copying. Steam Cloud is not a backup.
+Loading a pre-Zot save made with old early Dragoon access resets that job
+selection while retaining its ABP. Legacy saves can show catch-up notices.
+
+UPDATE
+Close FF4 and back up saves/plugins first. Replace only the three files in
+BepInEx/plugins/FF4Jobs. Read the changelog before loading and resaving.
+Both AllJobsAvailable and AllSkillsAvailable must be false for normal play;
+check BepInEx/config/ff4jobs.mainandsub.cfg if upgrading from a test version.
+New installations default both settings to false. This archive contains no
+personal config file and does not overwrite your other settings.
+
+UNINSTALL / ROLLBACK
+Recommended: close FF4, remove ONLY BepInEx/plugins/FF4Jobs, and restore a
+pre-mod backup save. Keep the modded save separately if you may return.
+Do not remove BepInEx if other mods require it. The optional FF4Jobs config
+can be deleted independently. No base game assets are overwritten.
+If attempting to continue a modded save without the plugin, first return
+all characters to Original/None and remove non-native equipment. Later
+returning characters may still have mod-granted gear, so a pre-mod backup
+is the supported rollback. Vanilla save/resave may discard addon progress.
+
+TROUBLESHOOTING / REPORTS
+Report game build/hash, loader version, mod version, job/subjob, ABP,
+location, reproduction steps and the BepInEx log. Include a backed-up save
+privately when needed; do not post personal paths or unrelated files.
+Different executable hash: use a verified build or wait for validation;
+do not edit the hash file to bypass the check.
+No Jobs row: verify loader type and DLL paths, then inspect the log.
+No subjob command: train that job as main; see JOBS.txt for ABP thresholds.
+If another mod changes commands, equipment, stats, saves or the camp menu,
+compatibility is unverified. Reproduce on a copy with FF4 Jobs alone.
+
+See JOBS.txt, CHANGELOG.txt and KNOWN-ISSUES.txt for behavior and limits.
