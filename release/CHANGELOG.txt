@@ -1,3 +1,11 @@
+FF4 JOBS+ 0.4.0 beta 1
+- Corrected Rapid Fire's damage hook: half damage now applies at native calculation, before display and HP updates. Repeated result reads cannot compound modifiers.
+- Dualcast auto-battle history retains both selected spells and targets.
+- Corrected Monk's in-menu description to reflect fists/claws and the 5% barehand damage edge.
+- Startup smoke check loads all 78 Harmony targets with test overrides off; no campaign is loaded or saved.
+- Beta playtest guide, bug-report template, automated core checks and stale-build packaging protection.
+- Existing save schema, story gates and personal ABP remain compatible.
+
 FF4 JOBS+ 0.3.0 development playtest
 - Red Mage Dualcast at 310 ABP: two spell/target selections, one charge, separate costs.
 - Ninja Dual Wield at main 70 / sub 150 ABP, with hand-pair validation.

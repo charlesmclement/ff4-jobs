@@ -1,10 +1,10 @@
 TITLE
-FF4 JOBS+ (Experimental Playtest)
+FF4 JOBS+ (Beta 1)
 
 SHORT DESCRIPTION
 A story-gated main-job/subjob system for Final Fantasy IV Pixel Remaster,
 with individual ABP, a native-style Jobs menu, and progression through
-FF4's original story. Experimental; back up saves before trying it.
+FF4's original story. Beta; keep a backup while playing through your campaign.
 
 DESCRIPTION
 Choose Jobs from the camp menu, select a character, then choose a main
@@ -19,8 +19,8 @@ Advanced magic requires both ABP and story progress, including Tellah's
 Meteo scene and later milestones. Character identities and story events
 remain FF4's own.
 
-This alpha uses existing FF4 actions. It does NOT reproduce every FF5
-mechanic. Ranger Rapid Fire and Red Mage Dualcast are implemented in source.
+This beta builds on FF4 native combat actions. It does NOT reproduce every FF5
+mechanic. Ranger Rapid Fire and Red Mage Dualcast are included.
 Ninja Dual Wield and Monk Barehand scaling are also implemented.
 Personal stat growth and mastery inheritance are implemented. See the
 included player guide and known-issues file. A full campaign playtest remains outstanding.
@@ -51,5 +51,4 @@ reference. FF4 and its original assets belong to their respective owners.
 No original game assets or generated interop libraries are distributed.
 
 UPLOAD STATUS
-Draft only. Screenshots and acceptance checks must be reviewed before
-publication. Do not advertise this as a finished or fully tested release.
+Draft only. No Nexus upload has been performed. Do not advertise this as a finished or fully tested release.

@@ -7,3 +7,4 @@ export DOTNET_CLI_TELEMETRY_OPTOUT=1
 cd "$task_root"
 "$task_dotnet" run --project src/FF4Jobs.Tests/FF4Jobs.Tests.csproj
 "$task_dotnet" build src/FF4Jobs.Plugin/FF4Jobs.Plugin.csproj -c Release --nologo
+python3 scripts/verify-build.py --record

@@ -1,8 +1,8 @@
-FF4 JOBS+ 0.3.0 playtest — player guide
+FF4 JOBS+ 0.4.0 playtest — player guide
 
 ## Controls and story unlocks
 
-Select Jobs in the regular camp menu. The controller flow is character portraits → Main Job/Subjob → available jobs. Confirm uses the game's configured Enter action (normally A); cancel uses its Cancel action (normally B). D-pad/stick navigation repeats while held. Keyboard controls use the same configured actions, with Escape also available. The menu uses native Unity UI, the active FF4 font and native border sprite, plus an opaque blue backing. Main-party class labels show main/subjob over an opaque blue mask without changing the underlying native class text or character identity.
+Select Jobs in the regular camp menu. The controller flow is character portraits → Main Job/Sub Job → available jobs. Confirm uses the game's configured Enter action (normally A); cancel uses its Cancel action (normally B). D-pad/stick navigation repeats while held. Keyboard controls use the same configured actions, with Escape also available. The menu uses native Unity UI, the active FF4 font and native border sprite, plus an opaque blue backing. Main-party class labels show main/subjob over an opaque blue mask without changing the underlying native class text or character identity.
 
 Testing overrides are stored in `BepInEx/config/ff4jobs.mainandsub.cfg`: `AllJobsAvailable` and `AllSkillsAvailable`. Both default false; both are off for the current story-progression playtest. They do not award ABP or story flags. Disabling them restores normal eligibility. Untaught subjob selections saved during testing contribute no unearned commands/spells without the override.
 
@@ -67,7 +67,7 @@ The playtest launcher defaults to borderless fullscreen. Set `FF4JOBS_WINDOWED=1
 
 
 MAIN-JOB EQUIPMENT
-See the job picker for weapon/armor access and stat bonuses. Subjobs grant neither.
+See the job picker for weapon/armor access and stat bonuses. Sub jobs grant neither.
 
 STEAL
 35 + 5 per Thief rank + 2 per level advantage; minimum 15%, maximum 75%.

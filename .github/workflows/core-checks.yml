@@ -1,0 +1,13 @@
+name: Core checks
+on: [push, pull_request]
+permissions:
+  contents: read
+jobs:
+  progression:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.0.x'
+      - run: dotnet run --project src/FF4Jobs.Tests/FF4Jobs.Tests.csproj

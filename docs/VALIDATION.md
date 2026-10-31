@@ -1,4 +1,17 @@
-# FF4 Jobs 0.2.0 alpha candidate — validation
+# FF4 JOBS+ — validation history
+
+## Current: 0.4.0 beta 1 (2026-10-31)
+
+- Release build: zero warnings/errors; 1,550 core checks pass.
+- Real installed-game startup under Proton: all 78 Harmony-patched methods loaded successfully; JobWindow and FastForward components registered; normal test toggles both false.
+- Smoke check quits before loading any campaign. The entire current save folder matches its pre-check SHA-256 snapshot byte-for-byte.
+- Rapid Fire scaling moved from an inlined helper to the freshly calculated physical result. Dualcast auto-history now preserves both spells. Monk UI wording matches the implemented claw/barehand rules.
+- These checks do not certify advanced live combat, controller behavior, a full campaign, or other platforms. See [beta review](BETA-REVIEW.md).
+- Local evidence: `research/beta-pass/startup-result.json`, `startup-smoke.log`, `pre-smoke-save-hashes.json`; private and excluded from releases.
+
+## Historical validation
+
+### FF4 Jobs 0.2.0 alpha candidate
 
 Validated locally on 2026-10-31 with Steam build 20265023, Unity 2019.4.26f1, BepInEx Unity IL2CPP x64 be.735 and Proton Experimental. This records observed checks, not full-campaign certification.
 

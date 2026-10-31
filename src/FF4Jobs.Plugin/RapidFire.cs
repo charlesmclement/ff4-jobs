@@ -57,4 +57,3 @@ internal static class RapidFireTarget
         if(RapidFire.Applies(battleActData)) RapidFire.ChooseLivingEnemy(battleActData);
     }
 }
-

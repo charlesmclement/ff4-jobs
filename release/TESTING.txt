@@ -1,0 +1,35 @@
+FF4 JOBS+ 0.4.0 beta 1 — PLAYTEST GUIDE
+
+You can continue an existing campaign. Keep your original backup; no new
+game, all-jobs override or ABP reset is required. Story gates remain active.
+
+PRIORITY CHECKS AS YOU PLAY
+- Save/reload after changing a main/sub job or earning a new ability.
+- Check returning characters and Cecil's transformation retain personal ABP.
+- Monk: fists and claws should each produce two independently calculated
+  strikes per normal Attack. Fists gain 5% damage after defense. Claws
+  retain native elemental/status effects. Check misses and first-hit kills.
+- Red Mage: Dualcast at 310 ABP, two spell/target selections, one charge,
+  two costs. Check cancelling, insufficient MP, Silence and auto-battle.
+- Ranger: Rapid Fire after Zot, main 150/sub 310 ABP. Four half-damage
+  strikes, choosing a living enemy each time; no extra Barehand strikes.
+- Ninja: Dual Wield at main 70/sub 150 ABP. Check both hands, Optimize,
+  inventory counts and switching to a main job with different equipment.
+- Mastery: at 310 ABP the character keeps bounded stat benefits. Original
+  inherits mastered passives; repeated switching must not inflate stats.
+- Menus: A/B, directional repeat, command scrolling and triangle indicators.
+- Story: job/spell announcements and gated skills must match JOBS.txt.
+
+REPORTING
+Report at https://github.com/charlesmclement/ff4-jobs/issues
+Include mod/game/loader versions, character, main/sub job, ABP, location,
+exact steps, expected/actual result, other mods and relevant BepInEx log.
+Remove personal paths/account details. Share a backed-up save privately
+only if needed. Do not upload game assets, executables or interop DLLs.
+
+ACCEPTANCE SCOPE
+Beta means the intended feature set is implemented and ready for campaign
+playtesting. It does not mean a complete campaign or every combat combination
+has been verified. Native Windows and clean-prefix installations remain
+platform testing; the automated startup check covers the installed Proton
+environment only. See KNOWN-ISSUES.txt and the repository validation notes.

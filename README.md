@@ -1,12 +1,12 @@
 # FF4 JOBS+
 
-An experimental main-job/subjob mod (0.3.0 development playtest) for Final Fantasy IV Pixel Remaster on PC.
+A main-job/sub-job mod (0.4.0 beta 1) for Final Fantasy IV Pixel Remaster on PC.
 
-[Download the older 0.2.0 experimental alpha](https://github.com/charlesmclement/ff4-jobs/releases/tag/v0.2.0-alpha1). Requires the verified Steam build and BepInEx loader described in [INSTALL.txt](release/INSTALL.txt). Back up saves and use a separate slot. Early gameplay checks pass; a complete campaign playtest is still outstanding.
+Beta 1 is prepared for campaign playtesting. Use the `FF4JobsPlus-0.4.0-beta1.zip` archive and the verified game/loader in [INSTALL.txt](release/INSTALL.txt). Existing campaigns are supported; keep your pre-mod backup. The older 0.2.0 alpha download does not contain these features. See [beta scope](docs/BETA-REVIEW.md) and [playtest guide](release/TESTING.txt).
 
 ## Project requirements
 
-The local development build adds **hold LT/L2 for 4x fast-forward**, including dialogue confirmations. Release to restore normal speed. Menus/choices stay at normal speed; release and hold again after a choice. **LT + Start** opens native scene-skip confirmation only where the game provides it. Keyboard: **F6**, or **F6 + F7** for skip confirmation. In `BepInEx/config/ff4jobs.mainandsub.cfg`, `[Controls] UseLeftTrigger = false` selects RT/R2 instead. This update is not included in the linked alpha1 download yet.
+The beta includes **hold LT/L2 for 4x fast-forward**, including dialogue confirmations. Release to restore normal speed. Menus/choices stay at normal speed; release and hold again after a choice. **LT + Start** opens native scene-skip confirmation only where the game provides it. Keyboard: **F6**, or **F6 + F7** for skip confirmation. In `BepInEx/config/ff4jobs.mainandsub.cfg`, `[Controls] UseLeftTrigger = false` selects RT/R2 instead.
 
 - Preserve FF4's original story, cast, character identities, party departures/returns, and Cecil's transformation.
 - Mix FF4 and FF5 classes. Main job controls combat specialties and stats; subjob provides learned commands without a second set of stat bonuses.
@@ -17,11 +17,11 @@ The local development build adds **hold LT/L2 for 4x fast-forward**, including d
 
 ## Status
 
-Development prototype, **not a finished or campaign-tested mod**. The installed game is Steam build 20265023. Its IL2CPP metadata and master tables have been inspected locally. BepInEx 6 be.735 loads under Proton. No original game assets have been overwritten.
+**Beta 1: intended features implemented; full-campaign and advanced-combat acceptance remain in playtesting.** The installed game is Steam build 20265023. Its IL2CPP metadata and master tables have been inspected locally. BepInEx 6 be.735 loads under Proton. No original game assets have been overwritten.
 
 Native job-switching interfaces exist in this build, but FF4's job rows have empty command/stat overrides. Their presence alone does not supply an FF5 job system. This mod must supply its own rules and integrate them with combat and saving.
 
-The current development source adds Ranger Rapid Fire, Red Mage Dualcast, Ninja Dual Wield, Monk Barehand and personal stat mastery through FF4's native combat systems. These changes are not included in the older linked alpha1 download. Their live combat acceptance and the full campaign playtest remain outstanding.
+The beta includes Ranger Rapid Fire, Red Mage Dualcast, Ninja Dual Wield, Monk Barehand and personal stat mastery through FF4's native combat systems. The real loader accepted all 78 patched methods with testing overrides off. This startup check does not replace live combat or campaign acceptance.
 
 ## Development
 
@@ -33,7 +33,7 @@ References: [Memoria.FFPR](https://github.com/Albeoris/Memoria.FFPR), [BepInEx](
 
 ## Controls and story unlocks
 
-Select Jobs in the regular camp menu. The controller flow is character portraits → Main Job/Subjob → available jobs. Confirm uses the game's configured Enter action (normally A); cancel uses its Cancel action (normally B). D-pad/stick navigation repeats while held. Keyboard controls use the same configured actions, with Escape also available. The menu uses native Unity UI, the active FF4 font and native border sprite, plus an opaque blue backing. Main-party class labels show main/subjob over an opaque blue mask without changing the underlying native class text or character identity.
+Select Jobs in the regular camp menu. The controller flow is character portraits → Main Job/Sub Job → available jobs. Confirm uses the game's configured Enter action (normally A); cancel uses its Cancel action (normally B). D-pad/stick navigation repeats while held. Keyboard controls use the same configured actions, with Escape also available. The menu uses native Unity UI, the active FF4 font and native border sprite, plus an opaque blue backing. Main-party class labels show main/subjob over an opaque blue mask without changing the underlying native class text or character identity.
 
 Testing overrides are stored in `BepInEx/config/ff4jobs.mainandsub.cfg`: `AllJobsAvailable` and `AllSkillsAvailable`. Both default false; both are off for the current story-progression playtest. They do not award ABP or story flags. Disabling them restores normal eligibility. Untaught subjob selections saved during testing contribute no unearned commands/spells without the override.
 
@@ -96,13 +96,13 @@ Story order cross-checks: [Gamer Corner walkthrough](https://guides.gamercorner.
 
 The playtest launcher defaults to borderless fullscreen. Set `FF4JOBS_WINDOWED=1` for the old 1280×720 debugging window. Older pre-Zot Dragoon selections revert to Original (main) or None (sub), retaining earned ABP and any other valid slot. Kain retains native Jump in Original mode.
 
-## Alpha candidate release pass
+## Beta release pass
 
-See [review choices](docs/ALPHA-REVIEW.md), [validation evidence](docs/VALIDATION.md), and [installation/rollback instructions](release/INSTALL.txt). Build with `scripts/build.sh`; create the allowlisted archive with `python3 scripts/package-alpha.py`. Nothing is automatically published.
+See [beta review](docs/BETA-REVIEW.md), [validation evidence](docs/VALIDATION.md), and [installation/rollback instructions](release/INSTALL.txt). Build with `scripts/build.sh`; create the allowlisted archive with `python3 scripts/package-release.py`. Nothing is automatically published.
 
-Main jobs now define weapon/armor access. Subjobs provide learned actions without equipment or stat bonuses. Incompatible worn gear is returned using FF4's own unequip handling. Original preserves native equipment access. Dragoon/Paladin have -3 Agility; Engineer has -4. The job picker shows equipment and stat adjustments.
+Main jobs now define weapon/armor access. Sub jobs provide learned actions without equipment or stat bonuses. Incompatible worn gear is returned using FF4's own unequip handling. Original preserves native equipment access. Dragoon/Paladin have -3 Agility; Engineer has -4. The job picker shows equipment and stat adjustments.
 
-Trained Thief actions use a 35% equal-level starting detection chance, +5 percentage points per Thief rank and +2 per level advantage (or -2 per level disadvantage), clamped to 15–75%. Item selection and native loot availability remain authoritative. Original Edge without a Thief assignment retains native odds.
+Trained Thief actions use a 35% equal-level starting detection-success chance, +5 percentage points per Thief rank and +2 per level advantage (or -2 per level disadvantage), clamped to 15–75%. Item selection and native loot availability remain authoritative. Original Edge without a Thief assignment retains native odds.
 
 ## Building from this repository
 
@@ -133,3 +133,5 @@ Each ABP rank adds +1 to the main job's positive stat bonuses (up to +5); negati
 - Masteries take the best bonus per stat; they do not add every mastered job together. Final primary stats retain the 1–99 limit. Story and character restrictions still apply.
 
 All benefits are derived from the character's existing saved ABP. Older mastered saves qualify automatically. Switching jobs and reloading cannot compound bonuses; native level-up stats are never rewritten. Mastery uses the existing skill notification journal. Cecil's transformation retains his earned progress and ends his HP casting as before.
+
+Builds record hashes of source inputs and the two DLLs. Packaging rejects stale builds and includes only the mod DLLs, game-hash marker, player documentation and manifest. GitHub core checks run without game files; the native plugin build and loader checks require a local verified installation.

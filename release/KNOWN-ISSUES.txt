@@ -1,4 +1,4 @@
-FF4 JOBS+ 0.3.0 playtest — known limits
+FF4 JOBS+ 0.4.0 beta 1 — known limits
 
 A complete campaign and native Windows/clean-prefix installation have not
 been certified. Keep backup saves and use a separate test slot.
@@ -22,3 +22,8 @@ FF4JOBS_TEST_MODE=1 environment variable; normal launches do not run them.
 
 Native command scrolling/triangles and Cecil HP casting were approved in the
 previous live playtest. The new advanced-job changes need their own live pass.
+
+Beta 1 fixes Rapid Fire damage scaling at the native calculation boundary
+and preserves both Dualcast spells in auto-battle history. These fixes
+passed compilation and native patch loading; live combat remains to verify.
+See TESTING.txt for prioritized playtest cases.
