@@ -6,6 +6,13 @@ public static class JobFeatures
 {
     public const int RapidFire = 9001;
     public const int Dualcast = 9002;
+    public static int PassiveAbp(string job,bool sub) => job=="ninja" ? (sub?150:70) : int.MaxValue;
+    public static string? PassiveName(string job) => job=="ninja" ? "Dual Wield" : null;
+    public static bool HasPassive(CharacterProgress p,string job,bool test=false) =>
+        (p.Main==job && (test || p.Points(job)>=PassiveAbp(job,false)))
+        || (p.Sub==job && (test || p.Points(job)>=PassiveAbp(job,true)));
+    public static bool DualWieldWeapon(int category,bool twoHanded) =>
+        !twoHanded && category is not (12 or 13 or 43);
     public const int RapidFireHits = 4;
     public static int CommandAbp(int id, bool sub, int fallback) =>
         id == RapidFire ? (sub ? 310 : 150) : id == Dualcast ? 310 : fallback;

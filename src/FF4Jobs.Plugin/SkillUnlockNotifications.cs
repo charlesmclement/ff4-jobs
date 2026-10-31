@@ -55,6 +55,8 @@ internal static class SkillUnlockNotifications
                         var command=CustomCommands.Get(id);
                         if(command!=null) names[prefix+"command/"+id]=command.MesIdName;
                     }
+                    if(JobFeatures.PassiveName(job.Id)!=null && points>=JobFeatures.PassiveAbp(job.Id,sub))
+                        names[prefix+"passive/"+job.Id]="FF4JOBS_PASSIVE_"+job.Id;
                     foreach(var spell in spells)
                         if(Projection.Allows(job,spell.Ability,points,sub,native))
                             names[prefix+"spell/"+spell.Ability.Id]=spell.Name;

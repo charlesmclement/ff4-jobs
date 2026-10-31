@@ -31,13 +31,21 @@ internal static class EquipmentRules
 
     internal static int Reconcile(OwnedCharacterData c)
     {
-        if(!State.Applies(c) || State.GamePhase is not (SubSceneManagerMainGame.State.Player or SubSceneManagerMainGame.State.Menu))return 0;
+        if(!State.Applies(c,true) || State.GamePhase is not (SubSceneManagerMainGame.State.Player or SubSceneManagerMainGame.State.Menu))return 0;
         var remove=new List<Last.Defaine.EquipSlotType>();
         foreach(var entry in c.EquipmentData)
         {
             var item=entry.Value;
-            if(item!=null && !item.IsRemoveItem && !EquipUtility.CanEquipped(item,c.JobId))remove.Add(entry.Key);
+            if(item==null || item.IsRemoveItem) continue;
+            bool jobAllowed=EquipUtility.CanEquipped(item,c.JobId);
+            bool slotAllowed=HandEquipmentRules.SlotAllowed(c,item,entry.Key);
+            if(!jobAllowed || !slotAllowed)remove.Add(entry.Key);
         }
+        var first=Ninja.Hand(c,Last.Defaine.EquipSlotType.Slot1);
+        var second=Ninja.Hand(c,Last.Defaine.EquipSlotType.Slot2);
+        if(remove.Count==0 && !HandEquipmentRules.PairAllowed(c,first,second))
+            remove.Add(c.GetDominantArm()==Last.Defaine.EquipSlotType.Slot1
+                ?Last.Defaine.EquipSlotType.Slot2:Last.Defaine.EquipSlotType.Slot1);
         if(remove.Count==0)return 0;
         // Native removal updates inventory/equip counts; never destroy or duplicate items.
         var client=new OwnedCharacterClient();

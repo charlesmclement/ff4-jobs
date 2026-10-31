@@ -37,3 +37,11 @@ No Nexus upload has been made. The package is a reviewable alpha candidate.
 - Built against the installed FF4 PR interop, zero warnings/errors; core suite covers personal 310 ABP main/sub gates, combined MP reservation/overflow and shared charge timing.
 - Native NumberSelect=2 loops the spell/target windows. ATB SetActData normally creates separate chant entries; the patch synchronizes their wait to the slower spell and suppresses the second chanting effect. Native costs, effects and queue completion are retained.
 - This is source/build verification, not a live controller acceptance pass. Check two different targets, mixed healing/damage, cancel at each selection step, insufficient MP, Silence, reflection and auto-battle in playtesting.
+
+## Ninja and equipment stage
+
+- Core checks cover personal main/sub passive thresholds, losing the active passive, main-job weapon restrictions and hand-pair validation, including duplicate bows/arrows and two-handed conflicts.
+- Native HasTwoSwordStyle is a unique routine (not a shared trivial getter). FF4 BattleUtility.IsTwoSwords already checks the actual two equipped weapons. The offensive-power provider has a native-identity branch; trained characters are routed through its existing Ninja helper.
+- Equipment validation runs before public SetEquip inventory bookkeeping. The shared GetEquipItems filter covers manual selection and Optimize; reconciliation uses native unequip calls.
+- Native UpdateEquipParameter sums item values across all equipment dictionary entries and merges each item's elemental resistances. No whole-character defense multiplier or persistent base-stat mutation is used.
+- Live equipment preview/Optimize, inventory counts, both-hand animation and departing/returning-character acceptance remain for playtesting.

@@ -115,3 +115,7 @@ The separate `src/FF4Iso.Plugin` source is a parked courtyard experiment. It is 
 ### Red Mage — Dualcast
 
 At 310 personal Red Mage ABP, main or sub job gains Dualcast. Choose two learned white/black spells and targets in the native spell window. Both charge together for the slower spell's normal wait, then execute in selection order without charging again. Each spell pays its normal MP cost (Cecil's pre-Paladin HP casting still applies). Second-spell selection reserves the first spell's MP. Dualcast does not unlock higher-tier magic or bypass story gates. Native status, targeting, reflection and counter rules still apply.
+
+### Ninja — Dual Wield
+
+Ninja learns Dual Wield at 70 personal ABP as a main job, or 150 ABP as a sub job. The main job still determines which weapons can be equipped. One-handed weapon pairs use FF4's native dual-weapon attack handling and Ninja attack calculation with the acting character's stats. Bows require arrows; duplicate bows/arrow stacks and incompatible two-handed pairs are rejected. Changing jobs returns invalid equipment to inventory. Edge retains his original innate passive.

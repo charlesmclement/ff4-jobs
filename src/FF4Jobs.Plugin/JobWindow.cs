@@ -173,6 +173,12 @@ public sealed class JobWindow : MonoBehaviour
             int required=current.CommandRequirement(i,slot==1);
             lines.Add($"{CommandName(current.Commands[i])}: "+(points>=required?"Learned":$"{AbpText(p.ExactPoints(current.Id))}/{required} ABP"));
         }
+        string? passive=JobFeatures.PassiveName(current.Id);
+        if(passive!=null)
+        {
+            int required=JobFeatures.PassiveAbp(current.Id,slot==1);
+            lines.Add(passive+": "+(points>=required?"Learned":$"{AbpText(p.ExactPoints(current.Id))}/{required} ABP"));
+        }
         if(slot==1 && points<10 && !Plugin.TestAllSkills.Value) lines.Add("Sub trains at 25%; main trains faster.");
         if(current.IsCaster) lines.Add("Advanced spells need ABP and story progress.");
         MenuSkin.Label(parent,string.Join("\n",lines),.6f,.71f,.34f,.17f,24);

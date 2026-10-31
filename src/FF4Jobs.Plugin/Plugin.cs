@@ -83,7 +83,7 @@ internal static class State
         Projection.Clear();
         Campaign = new Campaign(); Generation++; RewardGiven = false; BrokenSave = false;
     }
-    internal static bool Applies(OwnedCharacterData? character)
+    internal static bool Applies(OwnedCharacterData? character,bool includeOriginal=false)
     {
         if (!Plugin.Enabled || BrokenSave || Bypass > 0 || character == null) return false;
         int status = character.characterStatusId;
@@ -103,7 +103,7 @@ internal static class State
         var p = Campaign.Character(status);
         if(!Campaign.IsAvailable(status,p.Main,Plugin.TestAllJobs.Value)
             || (p.Sub!=null && !Campaign.IsAvailable(status,p.Sub,Plugin.TestAllJobs.Value))) return false;
-        return p.Main != "original" || p.Sub != null;
+        return includeOriginal || p.Main != "original" || p.Sub != null;
     }
     internal static void Changed() { Generation++; Projection.Clear(); }
     internal static string Serialize() { Campaign.Validate(); return JsonSerializer.Serialize(Campaign); }

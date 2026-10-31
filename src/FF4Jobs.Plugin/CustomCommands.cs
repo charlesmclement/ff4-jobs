@@ -35,6 +35,7 @@ internal static class CustomCommands
     internal static string? Text(string key) => key switch {
         "FF4JOBS_RAPID_FIRE"=>"Rapid Fire",
         "FF4JOBS_RAPID_FIRE_HELP"=>"Four half-damage attacks against random living enemies.",
+        "FF4JOBS_PASSIVE_ninja"=>"Dual Wield",
         "FF4JOBS_DUALCAST"=>"Dualcast",
         "FF4JOBS_DUALCAST_HELP"=>"Select two learned white or black spells and their targets. Each spell pays its normal cost.",
         _=>null

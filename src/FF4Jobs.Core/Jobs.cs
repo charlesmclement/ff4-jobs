@@ -64,7 +64,7 @@ public static class Jobs
         new("red_mage", "Red Mage", "Intermediate white/black magic. At 310 ABP, Dualcast selects two learned spells and targets.", new[]{7,8,JobFeatures.Dualcast}, "red", str:2, agi:3, intel:6, spr:6),
         new("time_mage", "Time Mage", "Haste, Slow, Stop and related magic drawn from FF4.", new[]{7,8}, "time", agi:5, intel:9, spr:3),
         new("thief", "Thief", "Steal; fast, lightly built adventurer.", new[]{17}, str:1, agi:12, vit:-2),
-        new("ninja", "Ninja", "Ninjutsu and Throw. Dual wielding remains under development.", new[]{15,16}, "ninja", str:4, agi:8, intel:4),
+        new("ninja", "Ninja", "Ninjutsu and Throw. Dual Wield: 70 main / 150 sub ABP.", new[]{15,16}, "ninja", str:4, agi:8, intel:4),
         new("bard", "Bard", "Sing and Heal using FF4's bard actions.", new[]{22,23}, agi:4, spr:6),
         new("ranger", "Ranger", "Aim. Rapid Fire: four half-damage attacks after Zot; 150 main / 310 sub ABP.", new[]{13,JobFeatures.RapidFire}, str:3, agi:7),
         new("summoner", "Summoner", "Story-earned summons; your Summoner ABP unlocks stronger ones.", new[]{9}, "summon", str:-5, intel:10, spr:2),

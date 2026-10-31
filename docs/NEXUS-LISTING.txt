@@ -21,8 +21,8 @@ remain FF4's own.
 
 This alpha uses existing FF4 actions. It does NOT reproduce every FF5
 mechanic. Ranger Rapid Fire and Red Mage Dualcast are implemented in source.
-Mastery inheritance and new Ninja dual wield / Monk unarmed formulas are
-still being completed. See the
+Ninja Dual Wield is also implemented. Mastery inheritance and Monk
+unarmed scaling are still being completed. See the
 included known-issues file. A full campaign playtest remains outstanding.
 
 REQUIREMENTS

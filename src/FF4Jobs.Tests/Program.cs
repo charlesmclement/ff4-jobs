@@ -310,4 +310,31 @@ Check(JobFeatures.CanPayPair(20,5,15) && !JobFeatures.CanPayPair(19,5,15),"Secon
 Check(!JobFeatures.CanPayPair(int.MaxValue,int.MaxValue,int.MaxValue),"Combined spell cost cannot overflow");
 Check(JobFeatures.DualcastCharge(3,8)==8 && JobFeatures.DualcastCharge(8,3)==8,"Dualcast charges once for the slower selected spell");
 Check(JobFeatures.DualcastCharge(0,0)==0,"Instant spells do not gain an artificial charge");
+// Ninja training controls the passive; the main job still controls weapon types.
+var ninja=new CharacterProgress{Main="ninja"};ninja.Abp["ninja"]=69;
+Check(!JobFeatures.HasPassive(ninja,"ninja"),"Ninja main cannot dual wield before 70 ABP");
+ninja.Abp["ninja"]=70;
+Check(JobFeatures.HasPassive(ninja,"ninja"),"Ninja main learns Dual Wield at 70 ABP");
+ninja.Main="red_mage";ninja.Sub="ninja";ninja.Abp["ninja"]=149;
+Check(!JobFeatures.HasPassive(ninja,"ninja"),"Ninja sub cannot dual wield before 150 ABP");
+ninja.Abp["ninja"]=150;
+Check(JobFeatures.HasPassive(ninja,"ninja"),"Ninja sub learns Dual Wield at 150 ABP");
+ninja.Sub=null;
+Check(!JobFeatures.HasPassive(ninja,"ninja"),"Unequipping trained Ninja removes its passive");
+Check(!JobFeatures.HasPassive(new CharacterProgress(),"ninja"),"Ninja training is personal");
+Check(JobFeatures.DualWieldWeapon(5,false) && !JobFeatures.DualWieldWeapon(5,true),"Dual Wield requires one-handed weapons");
+foreach(int category in new[]{12,13,43}) Check(!JobFeatures.DualWieldWeapon(category,false),"Bows, arrows and empty hands are not dual-wield weapons");
+Check(!Balance.WeaponAllowed("red_mage",4,4),"Ninja sub does not grant katana equipment to Red Mage");
+foreach(bool dual in new[]{false,true})
+{
+    Check(!HandEquipment.PairAllowed(12,12,false,false,dual,false),"Two bows are invalid even with Dual Wield");
+    Check(!HandEquipment.PairAllowed(13,13,false,false,dual,false),"Two arrow stacks are invalid even with Dual Wield");
+    Check(HandEquipment.PairAllowed(12,13,false,false,dual,false) && HandEquipment.PairAllowed(13,12,false,false,dual,false),"Bow and arrows work in either hand");
+    Check(!HandEquipment.PairAllowed(12,5,false,false,dual,false) && !HandEquipment.PairAllowed(13,-1,false,false,dual,false),"Bow and arrow cannot pair with unrelated gear");
+}
+Check(HandEquipment.PairAllowed(5,4,false,false,true,false) && !HandEquipment.PairAllowed(5,4,false,false,false,false),"Two weapons require Dual Wield");
+Check(!HandEquipment.PairAllowed(5,4,true,false,true,false),"Two-handed weapon cannot pair with another weapon");
+Check(HandEquipment.PairAllowed(12,0,false,false,false,false),"Empty offhand allows assembling a bow and arrow pair");
+foreach(var job in Jobs.All)
+    Check(HandEquipment.PairAllowed(-1,-1,false,false,true,HandEquipment.AllowsShields(job.Id))==(job.Id is "paladin" or "engineer" or "dragoon"),"Defensive hand pairing restricted to selected main job: "+job.Id);
 Console.WriteLine($"PASS: {checks} progression, save, and fast-forward checks.");
