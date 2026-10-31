@@ -1,4 +1,4 @@
-FF4 Jobs 0.2.0 alpha — player guide
+FF4 JOBS+ 0.3.0 playtest — player guide
 
 ## Controls and story unlocks
 
@@ -73,7 +73,29 @@ STEAL
 35 + 5 per Thief rank + 2 per level advantage; minimum 15%, maximum 75%.
 This is the initial detection check, not a guarantee that the enemy has loot.
 
-No new Dualcast, Ninja dual wield or custom Monk barehand formula. Original retains the character's own native mechanics.
+Original retains native commands and equipment, plus earned mastery benefits.
 
 RANGER RAPID FIRE
 150 Ranger ABP as Main; 310 as Sub; escape Zot first. Four random-target physical attacks, each at half native damage. Native accuracy, enemy defenses, weapon effects and counters still apply. Each strike retargets a living enemy.
+
+### Red Mage — Dualcast
+
+At 310 personal Red Mage ABP, main or sub job gains Dualcast. Choose two learned white/black spells and targets in the native spell window. Both charge together for the slower spell's normal wait, then execute in selection order without charging again. Each spell pays its normal MP cost (Cecil's pre-Paladin HP casting still applies). Second-spell selection reserves the first spell's MP. Dualcast does not unlock higher-tier magic or bypass story gates. Native status, targeting, reflection and counter rules still apply.
+
+### Ninja — Dual Wield
+
+Ninja learns Dual Wield at 70 personal ABP as a main job, or 150 ABP as a sub job. The main job still determines which weapons can be equipped. One-handed weapon pairs use FF4's native dual-weapon attack handling and Ninja attack calculation with the acting character's stats. Bows require arrows; duplicate bows/arrow stacks and incompatible two-handed pairs are rejected. Changing jobs returns invalid equipment to inventory. Edge retains his original innate passive.
+
+### Monk — Barehand
+
+Monk main jobs gain Barehand immediately; sub jobs need 70 personal Monk ABP. Both hands must be empty. Base attack is `2 × own level + floor(own STR / 4) + 2 + 2 × Monk rank`, followed by FF4's normal attack processing. Training adds up to 10 attack at 310 ABP. Focus, Kick and Gird retain their native actions and ABP command thresholds. Equipped weapons use their normal rules; Barehand does not stack with equipped hand gear.
+
+### Stat growth and mastery
+
+Each ABP rank adds +1 to the main job's positive stat bonuses (up to +5); negative tradeoffs stay unchanged. At 310 personal ABP, that job is mastered and grants permanent benefits:
+
+- On other main jobs, the best mastered bonus for each stat carries over at one quarter of the job's base positive modifier, rounded up (at most +3 per stat).
+- Original inherits the best mastered positive modifier plus its five ranks for each stat (at most +17). It also inherits mastered Ninja Dual Wield, Monk Barehand and caster MP eligibility. Its native commands and equipment access stay intact.
+- Masteries take the best bonus per stat; they do not add every mastered job together. Final primary stats retain the 1–99 limit. Story and character restrictions still apply.
+
+All benefits are derived from the character's existing saved ABP. Older mastered saves qualify automatically. Switching jobs and reloading cannot compound bonuses; native level-up stats are never rewritten. Mastery uses the existing skill notification journal. Cecil's transformation retains his earned progress and ends his HP casting as before.

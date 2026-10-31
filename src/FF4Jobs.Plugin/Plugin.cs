@@ -13,7 +13,7 @@ using System.Text.Json.Nodes;
 
 namespace FF4Jobs;
 
-[BepInPlugin("ff4jobs.mainandsub", "FF4 Jobs — Main & Sub", "0.2.0")]
+[BepInPlugin("ff4jobs.mainandsub", "FF4 JOBS+", "0.3.0")]
 public sealed class Plugin : BasePlugin
 {
     internal static ManualLogSource Logger = null!;
@@ -50,7 +50,7 @@ public sealed class Plugin : BasePlugin
             AddComponent<FastForward>();
             if(Environment.GetEnvironmentVariable("FF4JOBS_TEST_MODE")=="1") Application.runInBackground=true;
             Enabled = true;
-            Log.LogInfo("FF4 Jobs prototype loaded. Select Jobs from the main menu.");
+            Log.LogInfo("FF4 JOBS+ loaded. Select Jobs from the main menu.");
         }
         catch(Exception e)
         {
@@ -103,7 +103,7 @@ internal static class State
         var p = Campaign.Character(status);
         if(!Campaign.IsAvailable(status,p.Main,Plugin.TestAllJobs.Value)
             || (p.Sub!=null && !Campaign.IsAvailable(status,p.Sub,Plugin.TestAllJobs.Value))) return false;
-        return includeOriginal || p.Main != "original" || p.Sub != null;
+        return includeOriginal || p.Main != "original" || p.Sub != null || Mastery.HasAny(Campaign,status,Plugin.TestAllJobs.Value);
     }
     internal static void Changed() { Generation++; Projection.Clear(); }
     internal static string Serialize() { Campaign.Validate(); return JsonSerializer.Serialize(Campaign); }

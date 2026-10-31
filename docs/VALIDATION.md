@@ -49,3 +49,7 @@ No Nexus upload has been made. The package is a reviewable alpha candidate.
 ## Monk implementation stage
 
 Core checks cover the 0 main / 70 sub ABP passive, own-character level/strength/rank scaling, mastery saturation, arithmetic bounds and loss of unmastered passive after switching. The native Monk offensive-power helper confirms the base 2*level + strength/4 + 2 formula. The mod extends this at the offensive-power provider boundary, retaining native final combat modifiers. Both hands must be empty. Live Barehand/Focus/Kick damage acceptance remains for playtesting.
+
+## Stat mastery / 0.3.0 stage
+
+Core checks cover every ABP rank, negative tradeoffs, best-per-stat inheritance, active vs Original passives, caster eligibility, personal progress, canonical Cecil identity, save round trips, legacy saves, story/character restrictions and repeated job-switch idempotence. Primary stats use derived bonuses; native saved base stats are never changed. The mod ID and save key remain unchanged under the FF4 JOBS+ display name. New advanced-job runtime acceptance remains outstanding; no game was launched and no user save was modified during this stage.

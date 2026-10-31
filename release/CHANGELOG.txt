@@ -1,11 +1,17 @@
-Unreleased playtest update
+FF4 JOBS+ 0.3.0 development playtest
+- Red Mage Dualcast at 310 ABP: two spell/target selections, one charge, separate costs.
+- Ninja Dual Wield at main 70 / sub 150 ABP, with hand-pair validation.
+- Monk Barehand at main 0 / sub 70 ABP, scaling with own level/STR/rank.
+- Main-job positive stats grow with rank; mastered stats and innate passives benefit Original.
+- Permanent mastery benefits use the best per-stat bonus, avoiding unlimited stacking.
+- Existing saves and the internal mod ID remain compatible.
 - Ranger Rapid Fire: four native queued attacks at half damage, random living enemy per strike. 150 main / 310 sub ABP, after Zot.
-- Corrected Cecil's blood-magic execution check: zero MP no longer selects the native "No effect" action before HP payment. In-game retest pending.
+- Corrected Cecil's blood-magic execution check: zero MP no longer selects the native "No effect" action before HP payment. Approved in live retest.
 - White native command-list triangles indicate hidden commands above/below.
 - Native skill/spell unlock dialogs track personal Main/Sub progression; old saves seed silently and acknowledged notices persist with saves.
 - Summoner unlocks at adult Rydia/Golbez for both slots; party story-earned summons now use personal Summoner ABP tiers.
-- Native combat-command scrolling prototype: reuses the five original rows and cursor; live acceptance pending.
-- Local playtest launcher verifies a timestamped save backup before each launch.
+- Native combat-command scrolling: reuses the five original rows and cursor; approved in live retest.
+- Local playtest launcher verifies the protected original campaign backup; does not keep making test-save copies.
 - Before becoming a Paladin, Cecil pays 4 HP per spell MP instead of MP.
 - Spell costs stop at 1 HP; Paladin restores normal MP casting.
 - Removed the per-battle ABP cap; boosted EXP continues to increase rewards.

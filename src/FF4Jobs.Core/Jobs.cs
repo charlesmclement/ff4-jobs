@@ -52,9 +52,9 @@ public static class Jobs
         "summoner"=>"Rydia returns; defeat Golbez", "engineer"=>"Cid seals the underworld passage",
         "ninja"=>"Defeat Rubicante", "sage"=>"Defeat the Giant of Babil", _=>"Original class"
     };
-    // Original is a compatibility mode, not an implementation of FF5 Freelancer mastery.
+    // Original keeps native commands/equipment, with earned mastery stats and innate passives.
     public static readonly Job[] All = {
-        new("original", "Original", "The character's original FF4 commands and stats.", Array.Empty<int>()),
+        new("original", "Original", "Native FF4 commands; inherits mastered job stats and passives.", Array.Empty<int>()),
         new("dark_knight", "Dark Knight", "Darkness; trades vitality for physical power.", new[]{10}, str:8, vit:-3, spr:-3),
         new("paladin", "Paladin", "Cover and white magic; resilient protector.", new[]{14,7}, "paladin", str:3, vit:6, agi:-3, spr:6),
         new("dragoon", "Dragoon", "Jump; strong physical attacks.", new[]{11}, str:6, vit:3, agi:-3),

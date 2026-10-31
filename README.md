@@ -1,8 +1,8 @@
-# FF4 Jobs
+# FF4 JOBS+
 
-An experimental main-job/subjob mod (0.2.0 alpha candidate) for Final Fantasy IV Pixel Remaster on PC.
+An experimental main-job/subjob mod (0.3.0 development playtest) for Final Fantasy IV Pixel Remaster on PC.
 
-[Download the experimental alpha](https://github.com/charlesmclement/ff4-jobs/releases/tag/v0.2.0-alpha1). Requires the verified Steam build and BepInEx loader described in [INSTALL.txt](release/INSTALL.txt). Back up saves and use a separate slot. Early gameplay checks pass; a complete campaign playtest is still outstanding.
+[Download the older 0.2.0 experimental alpha](https://github.com/charlesmclement/ff4-jobs/releases/tag/v0.2.0-alpha1). Requires the verified Steam build and BepInEx loader described in [INSTALL.txt](release/INSTALL.txt). Back up saves and use a separate slot. Early gameplay checks pass; a complete campaign playtest is still outstanding.
 
 ## Project requirements
 
@@ -21,13 +21,13 @@ Development prototype, **not a finished or campaign-tested mod**. The installed 
 
 Native job-switching interfaces exist in this build, but FF4's job rows have empty command/stat overrides. Their presence alone does not supply an FF5 job system. This mod must supply its own rules and integrate them with combat and saving.
 
-The alpha implementation uses existing FF4 combat actions. Advanced FF5-exclusive mechanics require separate implementation and validation. Class names do not imply those mechanics are already implemented.
+The current development source adds Ranger Rapid Fire, Red Mage Dualcast, Ninja Dual Wield, Monk Barehand and personal stat mastery through FF4's native combat systems. These changes are not included in the older linked alpha1 download. Their live combat acceptance and the full campaign playtest remain outstanding.
 
 ## Development
 
 Source and scripts are under `src/` and `scripts/`. Local game metadata, extracted tables, loader files and third-party tools stay ignored under `research/` and `tools/`; they are not release content. The game is at `../SteamLibrary/steamapps/common/FINAL FANTASY IV PR`.
 
-The NTFS drive rejects Proton's `c:` link, so the temporary test prefix lives in RAM at `/dev/shm/ff4-jobs-proton`. It contains separate test saves. Code, builds and logs stay on this drive.
+The NTFS drive rejects Proton's `c:` link, so the temporary test prefix lives in RAM at `/dev/shm/ff4-jobs-proton`. The local launcher retains campaign saves on New Volume across restarts; protected pre-test snapshots are kept separately. Code, builds and logs stay on this drive.
 
 References: [Memoria.FFPR](https://github.com/Albeoris/Memoria.FFPR), [BepInEx](https://github.com/BepInEx/BepInEx), [Il2CppDumper](https://github.com/Perfare/Il2CppDumper). These projects provide tooling/reference, not an existing completed job-system mod.
 
@@ -123,3 +123,13 @@ Ninja learns Dual Wield at 70 personal ABP as a main job, or 150 ABP as a sub jo
 ### Monk — Barehand
 
 Monk main jobs gain Barehand immediately; sub jobs need 70 personal Monk ABP. Both hands must be empty. Base attack is `2 × own level + floor(own STR / 4) + 2 + 2 × Monk rank`, followed by FF4's normal attack processing. Training adds up to 10 attack at 310 ABP. Focus, Kick and Gird retain their native actions and ABP command thresholds. Equipped weapons use their normal rules; Barehand does not stack with equipped hand gear.
+
+### Stat growth and mastery
+
+Each ABP rank adds +1 to the main job's positive stat bonuses (up to +5); negative tradeoffs stay unchanged. At 310 personal ABP, that job is mastered and grants permanent benefits:
+
+- On other main jobs, the best mastered bonus for each stat carries over at one quarter of the job's base positive modifier, rounded up (at most +3 per stat).
+- Original inherits the best mastered positive modifier plus its five ranks for each stat (at most +17). It also inherits mastered Ninja Dual Wield, Monk Barehand and caster MP eligibility. Its native commands and equipment access stay intact.
+- Masteries take the best bonus per stat; they do not add every mastered job together. Final primary stats retain the 1–99 limit. Story and character restrictions still apply.
+
+All benefits are derived from the character's existing saved ABP. Older mastered saves qualify automatically. Switching jobs and reloading cannot compound bonuses; native level-up stats are never rewritten. Mastery uses the existing skill notification journal. Cecil's transformation retains his earned progress and ends his HP casting as before.

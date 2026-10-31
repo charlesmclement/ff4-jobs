@@ -10,7 +10,8 @@ public static class JobFeatures
     public static string? PassiveName(string job) => job switch { "ninja"=>"Dual Wield", "monk"=>"Barehand", _=>null };
     public static bool HasPassive(CharacterProgress p,string job,bool test=false) =>
         (p.Main==job && (test || p.Points(job)>=PassiveAbp(job,false)))
-        || (p.Sub==job && (test || p.Points(job)>=PassiveAbp(job,true)));
+        || (p.Sub==job && (test || p.Points(job)>=PassiveAbp(job,true)))
+        || (p.Main=="original" && PassiveName(job)!=null && p.Points(job)>=310);
     public static int UnarmedPower(int level,int strength,int abp) =>
         2*Math.Clamp(level,1,99)+Math.Clamp(strength,1,99)/4+2+2*Jobs.Rank(Math.Clamp(abp,0,310));
     public static bool DualWieldWeapon(int category,bool twoHanded) =>

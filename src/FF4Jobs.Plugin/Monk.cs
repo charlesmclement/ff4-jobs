@@ -8,6 +8,7 @@ namespace FF4Jobs;
 internal static class Monk
 {
     internal static bool Trained(OwnedCharacterData c) => State.Applies(c)
+        && State.Campaign.IsAvailable(c.characterStatusId,"monk",Plugin.TestAllJobs.Value)
         && JobFeatures.HasPassive(State.Campaign.Character(c.characterStatusId),"monk",Plugin.TestAllSkills.Value);
     internal static bool EmptyHands(OwnedCharacterData c) =>
         HandEquipmentRules.Kind(Ninja.Hand(c,EquipSlotType.Slot1))==HandEquipment.Empty

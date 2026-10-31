@@ -1,4 +1,4 @@
-# FF4 Jobs 0.2.0 alpha candidate — review notes
+# FF4 JOBS+ 0.3.0 playtest — review notes
 
 This is an experimental public alpha for playtesting. It is not a campaign-certified release.
 
@@ -10,9 +10,9 @@ This is an experimental public alpha for playtesting. It is not a campaign-certi
 - Steal detection success: clamp(35 + 5 × Thief rank + 2 × level difference, 15, 75) percent. Equal-level beginner 35%; mastered 60%. Each level of disadvantage subtracts two points. Applies to an active Thief main or trained Thief subjob. Original Edge without a Thief assignment retains native odds. Native item tables, selection and failure consequences remain in place; a passed detection roll cannot invent missing loot.
 - Main job determines equipment; subjob grants learned actions and trained passives. Original retains native equipment rules. Switching returns incompatible equipment through native unequip handling. No items are added or deleted by the policy.
 - Preserve Cecil's exclusive holy-sword category, native restrictions on Gold Hairpin/Minerva equipment, native slot/two-hand rules, magnetic effects and inventory counts. Ninja learns Dual Wield at main 70 / sub 150 personal ABP, using the native equipment and attack systems.
-- Dragoon: STR +6, VIT +3, AGI -3. Paladin: STR +3, VIT +6, AGI -3, SPR +6. Engineer: STR +4, VIT +8, AGI -4. Other existing main-job adjustments retained. These are additive modifiers to the character's native stats, capped at 1–99, not FF5's exact formulas.
-- Keep original character identities, permanent growth and scripted story behavior. Do not impose a party-wide Jump limit in this alpha: simultaneous/queued Jump and boss behavior need an encounter-level implementation and testing first.
-- Red Mage Dualcast is implemented at 310 ABP in either slot, with two native spell/target selections and one shared charge. Monk Barehand now uses the acting character's level, STR and Monk ABP, with both hands empty. Mastery inheritance is still being completed. Job descriptions disclose these limits. The latest local playtest shares only story-earned summons, gated by each character's own Summoner ABP. Later-story live acceptance remains pending.
+- Dragoon: STR +6, VIT +3, AGI -3. Paladin: STR +3, VIT +6, AGI -3, SPR +6. Engineer: STR +4, VIT +8, AGI -4. Other existing main-job adjustments retained. These starting modifiers grow by +1 per ABP rank on positive stats; mastered jobs add bounded inheritance. Primary stats remain capped at 1–99.
+- Keep original character identities, native level-up growth and scripted story behavior. Transferable Dragoon remains late-game, with no party-wide Jump limit.
+- Red Mage Dualcast is implemented at 310 ABP in either slot, with two native spell/target selections and one shared charge. Monk Barehand now uses the acting character's level, STR and Monk ABP, with both hands empty. Personal stat growth and mastery inheritance are implemented; see the README for exact rules. The latest local playtest shares only story-earned summons, gated by each character's own Summoner ABP. Later-story live acceptance remains pending.
 - Park the isometric prototype. It is disabled locally and excluded from the jobs archive. Keyboard remapping and DXVK/VSync configuration are also excluded.
 
 ## Verification scope

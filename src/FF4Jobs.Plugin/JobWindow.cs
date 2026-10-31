@@ -124,7 +124,7 @@ public sealed class JobWindow : MonoBehaviour
     private void Build()
     {
         Hide(); root=MenuSkin.Root(nativeMenu!); var parent=root.transform;
-        MenuSkin.Label(parent,"Jobs",.035f,.025f,.35f,.065f,52);
+        MenuSkin.Label(parent,"FF4 JOBS+",.035f,.025f,.6f,.065f,52);
         string test="Jobs: "+(Plugin.TestAllJobs.Value?"All":"Story")+"\nSkills: "+(Plugin.TestAllSkills.Value?"All":"Earned");
         MenuSkin.Label(parent,test,.73f,.015f,.24f,.09f,28);
         MenuSkin.Label(parent,"Confirm: A / Enter       Back: B / Backspace       Move: D-pad / Stick",.04f,.91f,.92f,.055f,30);
@@ -166,12 +166,12 @@ public sealed class JobWindow : MonoBehaviour
         var current=choices[cursor];
         if(current==null) { MenuSkin.Label(parent,"Remove the sub job.",.6f,.33f,.34f,.2f,36); return; }
         DrawProgress(parent,current.Id,p,slot==1,.6f,.32f,.34f);
-        MenuSkin.Label(parent,current.Description+"\n"+(slot==0?Balance.EquipmentHint(current.Id)+"\n"+Balance.StatHint(current):"Sub Job: learned skills only; no equipment or stat bonus."),.6f,.47f,.35f,.22f,24);
+        MenuSkin.Label(parent,current.Description+"\n"+(slot==0?Balance.EquipmentHint(current.Id)+"\n"+StatProgressHint(current,p,c.characterStatusId):"Sub Job: learned skills/passives. Mastery adds permanent benefits."),.6f,.47f,.35f,.22f,24);
         var lines=new List<string>(); int points=p.Points(current.Id);
         for(int i=0;i<current.Commands.Length;i++)
         {
             int required=current.CommandRequirement(i,slot==1);
-            lines.Add($"{CommandName(current.Commands[i])}: "+(points>=required?"Learned":$"{AbpText(p.ExactPoints(current.Id))}/{required} ABP"));
+            lines.Add($"{CommandName(current.Commands[i])}: "+(!Plugin.TestAllSkills.Value && !JobFeatures.StoryAllows(State.Campaign,current.Commands[i])?"After Zot":points>=required?"Learned":$"{AbpText(p.ExactPoints(current.Id))}/{required} ABP"));
         }
         string? passive=JobFeatures.PassiveName(current.Id);
         if(passive!=null)
@@ -183,16 +183,25 @@ public sealed class JobWindow : MonoBehaviour
         if(current.IsCaster) lines.Add("Advanced spells need ABP and story progress.");
         MenuSkin.Label(parent,string.Join("\n",lines),.6f,.71f,.34f,.17f,24);
     }
+    private static string StatProgressHint(Core.Job job,CharacterProgress p,int status)
+    {
+        var values=Enum.GetValues<JobStat>().Select(stat=>{
+            int value=Mastery.Bonus(State.Campaign,status,stat,Plugin.TestAllJobs.Value,job.Id);
+            string label=stat switch {JobStat.Strength=>"STR",JobStat.Vitality=>"VIT",JobStat.Agility=>"AGI",JobStat.Intelligence=>"INT",_=>"SPR"};
+            return value==0?"":label+" "+(value>0?"+":"")+value;
+        });
+        return string.Join("  ",values.Where(v=>v.Length>0));
+    }
     private static string AbpText(decimal points) => points.ToString("0.##",System.Globalization.CultureInfo.InvariantCulture);
     private static void DrawProgress(Transform parent,string jobId,CharacterProgress progress,bool sub,float x,float y,float width)
     {
-        if(jobId=="original") { MenuSkin.Label(parent,"Original class does not earn ABP.",x,y,width,.07f,28); return; }
+        if(jobId=="original") { MenuSkin.Label(parent,"Original inherits earned mastery; no main ABP.",x,y,width,.07f,28); return; }
         int points=progress.Points(jobId); decimal exact=progress.ExactPoints(jobId);
         var job=Jobs.Get(jobId); int next=Jobs.NextThreshold(points);
         string label=next==0?$"{points} ABP - Mastered":$"{AbpText(exact)} / {next} ABP - Rank {Jobs.Rank(points)}";
         MenuSkin.Label(parent,label,x,y,width,.05f,30);
         MenuSkin.ProgressBar(parent,x,y+.058f,width,.014f,next==0?1:(float)exact/next);
-        string detail=next==0?"All ABP ranks earned.":$"{AbpText(next-exact)} ABP to next rank";
+        string detail=next==0?"Mastered: permanent stat benefits.":$"{AbpText(next-exact)} ABP to next rank";
         for(int i=0;i<job.Commands.Length;i++)
         {
             int required=job.CommandRequirement(i,sub);

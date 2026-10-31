@@ -225,14 +225,15 @@ internal static class StatsPatch
         if(__originalMethod.Name=="ConfirmedMaxMp")
         {
             if(BloodMagic.UsesHp(c)) return; // Pre-Paladin Cecil casts from HP.
-            bool caster=job.IsCaster || (p.Sub!=null && Jobs.Get(p.Sub).IsCaster && (Plugin.TestAllSkills.Value || p.Points(p.Sub)>=10));
+            bool caster=job.IsCaster || (p.Main=="original" && Mastery.HasCaster(State.Campaign,c.characterStatusId,Plugin.TestAllJobs.Value)) || (p.Sub!=null && Jobs.Get(p.Sub).IsCaster && (Plugin.TestAllSkills.Value || p.Points(p.Sub)>=10));
             if(caster) __result=Math.Clamp(Math.Max(__result,10+__instance.BaseLevel*3),0,999);
             return;
         }
-        int adjustment=__originalMethod.Name switch {
-            "ConfirmedPower"=>job.Strength,"ConfirmedVitality"=>job.Vitality,"ConfirmedAgility"=>job.Agility,
-            "ConfirmedIntelligence"=>job.Intelligence,"ConfirmedSpirit"=>job.Spirit,_=>0
+        var stat=__originalMethod.Name switch {
+            "ConfirmedPower"=>JobStat.Strength,"ConfirmedVitality"=>JobStat.Vitality,"ConfirmedAgility"=>JobStat.Agility,
+            "ConfirmedIntelligence"=>JobStat.Intelligence,"ConfirmedSpirit"=>JobStat.Spirit,_=>JobStat.Strength
         };
+        int adjustment=Mastery.Bonus(State.Campaign,c.characterStatusId,stat,Plugin.TestAllJobs.Value);
         __result=Math.Clamp(__result+adjustment,1,99);
     }
 }

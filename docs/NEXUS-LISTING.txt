@@ -1,5 +1,5 @@
 TITLE
-FF4 Jobs — Main and Subjobs (Experimental Alpha)
+FF4 JOBS+ (Experimental Playtest)
 
 SHORT DESCRIPTION
 A story-gated main-job/subjob system for Final Fantasy IV Pixel Remaster,
@@ -22,8 +22,8 @@ remain FF4's own.
 This alpha uses existing FF4 actions. It does NOT reproduce every FF5
 mechanic. Ranger Rapid Fire and Red Mage Dualcast are implemented in source.
 Ninja Dual Wield and Monk Barehand scaling are also implemented.
-Mastery inheritance is still being completed. See the
-included known-issues file. A full campaign playtest remains outstanding.
+Personal stat growth and mastery inheritance are implemented. See the
+included player guide and known-issues file. A full campaign playtest remains outstanding.
 
 REQUIREMENTS
 FF4 Pixel Remaster Steam build 20265023 with the documented executable

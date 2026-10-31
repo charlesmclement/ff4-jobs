@@ -8,6 +8,7 @@ namespace FF4Jobs;
 internal static class Ninja
 {
     internal static bool Trained(OwnedCharacterData c) => State.Applies(c)
+        && State.Campaign.IsAvailable(c.characterStatusId,"ninja",Plugin.TestAllJobs.Value)
         && JobFeatures.HasPassive(State.Campaign.Character(c.characterStatusId),"ninja",Plugin.TestAllSkills.Value);
     internal static OwnedItemData? Hand(OwnedCharacterData c,EquipSlotType slot) =>
         c.EquipmentData!=null && c.EquipmentData.ContainsKey(slot)?c.EquipmentData[slot]:null;

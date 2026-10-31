@@ -1,4 +1,4 @@
-FF4 Jobs — Main & Sub — 0.2.0 ALPHA CANDIDATE
+FF4 JOBS+ — 0.3.0 DEVELOPMENT PLAYTEST
 
 Experimental jobs mod for FINAL FANTASY IV Pixel Remaster (Steam PC).
 This is not an FF5 conversion or a finished/campaign-tested release.
@@ -25,7 +25,7 @@ INSTALL
    BepInEx/plugins/FF4Jobs/FF4Jobs.dll
    BepInEx/plugins/FF4Jobs/FF4Jobs.Core.dll
    BepInEx/plugins/FF4Jobs/gameassembly.sha256
-4. Start FF4. Look for 'FF4 Jobs — Main & Sub 0.2.0' in BepInEx's log.
+4. Start FF4. Look for 'FF4 JOBS+ 0.3.0' in BepInEx's log.
    Open the camp menu and select Jobs.
 5. Choose a character, Main Job or Subjob, then an available job.
    A/Enter confirms; B/Backspace cancels; Escape also backs out.

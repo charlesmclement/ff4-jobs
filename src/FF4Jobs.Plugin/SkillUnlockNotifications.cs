@@ -61,6 +61,7 @@ internal static class SkillUnlockNotifications
                         if(Projection.Allows(job,spell.Ability,points,sub,native))
                             names[prefix+"spell/"+spell.Ability.Id]=spell.Name;
                 }
+                if(points>=310) names["m/mastery/"+job.Id]="FF4JOBS_MASTERY";
                 bool trained=points>0 || progress.Main==job.Id || progress.Sub==job.Id;
                 var added=State.Campaign.Learning.Observe(c.characterStatusId,job.Id,names.Keys,trained);
                 var lines=added.GroupBy(id=>id.Substring(2)).Select(group=>
@@ -69,7 +70,7 @@ internal static class SkillUnlockNotifications
                     string slots=ids.Length>1?"Main + Sub":ids[0].StartsWith("s/")?"Sub Job":"Main Job";
                     string name=System.Text.RegularExpressions.Regex.Replace(
                         MessageManager.Instance.GetMessage(names[ids[0]],true),"<[^>]+>","");
-                    return name+" ("+slots+")";
+                    return ids[0].Contains("/mastery/")?name:name+" ("+slots+")";
                 }).ToArray();
                 // Small pages fit the native popup without shrinking the font.
                 for(int i=0;i<lines.Length;i+=3)

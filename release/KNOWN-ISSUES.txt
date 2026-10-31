@@ -1,17 +1,13 @@
-0.2.0 alpha candidate — known limits
+FF4 JOBS+ 0.3.0 playtest — known limits
 
 A complete campaign and native Windows/clean-prefix installation have not
 been certified. Keep backup saves and use a separate test slot.
 
-Jobs use existing FF4 actions, not every FF5 mechanic. No new Dualcast,
-Freelancer mastery inheritance, Ninja dual wield or custom
-Monk barehand formula. The local playtest now shares story-earned summons
-with personal Summoner ABP requirements; later-story acceptance is pending.
-Stat modifiers are provisional additive values.
-
-Borrowed Dragoon waits until Zot, but multiple party members can still
-Jump afterward. No party-wide airborne limit is implemented. Encounter
-balance, scripted battles and queued-action interactions need playtesting.
+Ranger Rapid Fire, Red Mage Dualcast, Ninja Dual Wield, Monk Barehand and
+personal mastery are implemented. They need live combat/controller acceptance
+and full-campaign balancing; build/core checks are not a campaign playthrough.
+This is an FF4/FF5 hybrid, not an exact recreation of every FF5 mechanic.
+Native elemental effects, defenses, status rules and counters remain relevant.
 
 Native character identity, slot restrictions and FF4 combat calculations
 remain. Equipment eligibility is changed by the main job; uncommon story,
@@ -24,5 +20,5 @@ The isometric experiment, VSync changes and keyboard remaps are separate
 and are not included. Development diagnostics require the explicit
 FF4JOBS_TEST_MODE=1 environment variable; normal launches do not run them.
 
-New local playtest: native command triangles and skill/spell unlock dialogs
-are installed but await visual/controller acceptance by the tester.
+Native command scrolling/triangles and Cecil HP casting were approved in the
+previous live playtest. The new advanced-job changes need their own live pass.

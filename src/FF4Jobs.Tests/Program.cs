@@ -349,4 +349,44 @@ Check(JobFeatures.UnarmedPower(20,40,310)==62 && JobFeatures.UnarmedPower(20,40,
 Check(JobFeatures.UnarmedPower(int.MaxValue,int.MaxValue,int.MaxValue)==234,"Barehand arithmetic remains bounded");
 monk.Sub=null;
 Check(!JobFeatures.HasPassive(monk,"monk"),"Unmastered Barehand is lost when unequipped");
+// Mastery derives from earned personal ABP, with no native stat writes or stacking loops.
+var mastery=new Campaign();mastery.StoryFlags.UnionWith(Jobs.UnlockFlags.Values);mastery.Select(1,"black_mage",null);
+Check(Mastery.Bonus(mastery,1,JobStat.Intelligence)==12,"Untrained main keeps its starting stat adjustment");
+foreach(int threshold in Jobs.Thresholds)
+{
+    mastery.Character(1).Abp["black_mage"]=threshold;
+    int rank=Jobs.Rank(threshold);
+    Check(Mastery.ActiveBonus(Jobs.Get("black_mage"),JobStat.Intelligence,threshold)==12+rank,"Positive main stats grow at each ABP rank");
+    Check(Mastery.ActiveBonus(Jobs.Get("black_mage"),JobStat.Strength,threshold)==-4,"Training does not erase negative job tradeoffs");
+}
+mastery.Select(1,"original",null);
+Check(Mastery.Bonus(mastery,1,JobStat.Intelligence)==17 && Mastery.Bonus(mastery,1,JobStat.Strength)==0,"Original inherits positive mastered stats without negatives");
+Check(Mastery.HasCaster(mastery,1),"Original retains caster MP eligibility from earned mastery");
+mastery.Select(1,"dragoon",null);
+Check(Mastery.Bonus(mastery,1,JobStat.Intelligence)==3,"Different main gets modest permanent mastery benefit");
+Check(Mastery.Bonus(mastery,1,JobStat.Agility)==-3,"Mastery does not remove unrelated job tradeoffs");
+mastery.Character(1).Abp["sage"]=310;
+Check(Mastery.Bonus(mastery,1,JobStat.Intelligence)==3,"Masteries take best permanent bonus rather than stacking");
+Check(Mastery.Bonus(mastery,1,JobStat.Intelligence,false,"original")==17,"Job preview includes best inherited mastery");
+Check(Mastery.Bonus(mastery,4,JobStat.Intelligence)==0,"Mastery never grants stats to another character");
+mastery.Character(1).Abp["ninja"]=310;mastery.Character(1).Abp["monk"]=310;mastery.Select(1,"original",null);
+Check(JobFeatures.HasPassive(mastery.Character(1),"ninja") && JobFeatures.HasPassive(mastery.Character(1),"monk"),"Original inherits mastered innate passives without occupying sub slot");
+mastery.Select(1,"bard",null);
+Check(!JobFeatures.HasPassive(mastery.Character(1),"ninja") && !JobFeatures.HasPassive(mastery.Character(1),"monk"),"Other main jobs need the corresponding sub job for passive inheritance");
+var masteryRoundtrip=JsonSerializer.Deserialize<Campaign>(JsonSerializer.Serialize(mastery))!;masteryRoundtrip.Validate();
+foreach(JobStat stat in Enum.GetValues<JobStat>())
+    Check(Mastery.Bonus(masteryRoundtrip,13,stat)==Mastery.Bonus(mastery,1,stat),"Mastery survives save/load and Cecil transformation: "+stat);
+for(int repeat=0;repeat<10;repeat++)
+{
+    masteryRoundtrip.Select(1,"original",null);masteryRoundtrip.Select(1,"bard",null);
+    Check(Mastery.Bonus(masteryRoundtrip,1,JobStat.Intelligence)==3,"Switching cannot compound permanent stats");
+}
+var lockedMastery=new Campaign();lockedMastery.Character(4).Abp["dark_knight"]=310;lockedMastery.Character(4).Abp["ninja"]=310;
+Check(!Mastery.HasAny(lockedMastery,4),"Old test ABP cannot bypass job story or character restrictions");
+lockedMastery.StoryFlags.Add(53);
+Check(Mastery.Earned(lockedMastery,4).Select(j=>j.Id).SequenceEqual(new[]{"ninja"}),"Unlocking story enables earned mastery while respecting restricted jobs");
+foreach(var job in Jobs.All.Where(j=>j.Id!="original")) mastery.Character(1).Abp[job.Id]=310;
+mastery.Select(1,"original",null);
+foreach(JobStat stat in Enum.GetValues<JobStat>()) Check(Mastery.Bonus(mastery,1,stat)<=17,"Mastering all jobs cannot stack unlimited stats");
+Check(Mastery.HasAny(legacyLearning,1)==false,"Old untrained saves gain no free mastery");
 Console.WriteLine($"PASS: {checks} progression, save, and fast-forward checks.");
