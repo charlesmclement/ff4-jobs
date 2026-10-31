@@ -1,4 +1,7 @@
-FF4 JOBS+ 0.4.0 beta 1 — PLAYTEST GUIDE
+FF4 JOBS+ 0.4.1 beta 2 — PLAYTEST GUIDE
+
+Beta 2 priority: newly joined Yang, remove/re-equip each claw, move between
+hands, check inventory counts, then try Optimize. No crash or item loss.
 
 You can continue an existing campaign. Keep your original backup; no new
 game, all-jobs override or ABP reset is required. Story gates remain active.
@@ -7,7 +10,7 @@ PRIORITY CHECKS AS YOU PLAY
 - Save/reload after changing a main/sub job or earning a new ability.
 - Check returning characters and Cecil's transformation retain personal ABP.
 - Monk: fists and claws should each produce two independently calculated
-  strikes per normal Attack. Fists gain 5% damage after defense. Claws
+  strikes per normal Attack. Fists gain 2 attack over native Monk power. Claws
   retain native elemental/status effects. Check misses and first-hit kills.
 - Red Mage: Dualcast at 310 ABP, two spell/target selections, one charge,
   two costs. Check cancelling, insufficient MP, Silence and auto-battle.

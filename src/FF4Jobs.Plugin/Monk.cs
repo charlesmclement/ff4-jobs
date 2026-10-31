@@ -39,7 +39,7 @@ internal static class Monk
     }
 }
 
-// FFV-style base power per fist. Native physical damage processing supplies the
+// Native Monk power for claws; empty hands add just two attack. Native processing supplies the
 // accuracy, defense, strength-based modifiers and damage variance for EACH strike.
 [HarmonyPatch(typeof(Serial.FF4.Management.ParameterProvider),"GetOffensivePower")]
 internal static class MonkAttackPower
@@ -47,40 +47,21 @@ internal static class MonkAttackPower
     static bool Prefix(OwnedCharacterData data,ref int __result)
     {
         if(!Monk.Trained(data) || !Monk.MartialHands(data)) return true;
-        __result=JobFeatures.UnarmedPower(data.Parameter.ConfirmedLevel());
+        __result=JobFeatures.MonkPower(data.Parameter.ConfirmedLevel(),data.Parameter.ConfirmedPower(),Monk.EmptyHands(data));
         return false;
     }
 }
 
-// Both loadouts use the same trained base accuracy; native temporary accuracy,
-// blindness and final limits still run in ConfirmedAccuracyRate.
+// Claws keep native accuracy. Empty hands use the best native claw's accuracy
+// basis (99), then normal level contribution, temporary modifiers and limits.
 [HarmonyPatch(typeof(Serial.FF4.Management.ParameterProvider),"GetAccuracyRate")]
 internal static class MonkAccuracy
 {
     static bool Prefix(OwnedCharacterData data,ref int __result)
     {
-        if(!Monk.Trained(data) || !Monk.MartialHands(data)) return true;
-        __result=JobFeatures.MonkAccuracy(data.Parameter.ConfirmedLevel());
+        if(!Monk.Trained(data) || !Monk.EmptyHands(data)) return true;
+        __result=JobFeatures.UnarmedAccuracy(data.Parameter.ConfirmedLevel());
         return false;
-    }
-}
-
-// The native confirmed getter adds a separate equipment-accuracy cache. Exclude
-// that cache only during this synchronous calculation; restore even on exceptions.
-// Never alter equipped items, their elemental/status data, or saved base stats.
-[HarmonyPatch(typeof(PlayerCharacterParameter),nameof(PlayerCharacterParameter.ConfirmedAccuracyRate))]
-internal static class MonkEquipmentAccuracy
-{
-    static void Prefix(PlayerCharacterParameter __instance,ref int? __state)
-    {
-        var c=__instance.parent;
-        if(c==null || !Monk.Trained(c) || !Monk.MartialHands(c)) return;
-        __state=__instance.EquipAccuracyRate;
-        __instance.EquipAccuracyRate=0;
-    }
-    static void Finalizer(PlayerCharacterParameter __instance,int? __state)
-    {
-        if(__state.HasValue) __instance.EquipAccuracyRate=__state.Value;
     }
 }
 

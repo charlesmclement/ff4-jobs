@@ -1,6 +1,6 @@
-# FF4 JOBS+ 0.4.0 beta 1
+# FF4 JOBS+ 0.4.1 beta 2
 
-Beta 1 is prepared for campaign playtesting with existing saves. It is not
+Beta 2 is prepared for campaign playtesting with existing saves. It is not
 a claim that the whole campaign or every combination has been played through.
 
 ## Completed release work
@@ -8,13 +8,16 @@ a claim that the whole campaign or every combination has been played through.
 - All requested job stages are implemented: Ranger Rapid Fire, Red Mage
   Dualcast, Ninja Dual Wield, Monk fists/claws and personal stat mastery.
 - Rapid Fire now scales freshly calculated damage; its previous small helper
-  hook could be bypassed by native inlining. Barehand's 5% modifier shares
-  the calculation boundary and cannot stack onto Rapid Fire.
+  hook could be bypassed by native inlining. Barehand now uses a fixed
+  2-attack advantage over native Monk power, with no damage multiplier.
 - Dualcast restores both spell/target entries after FF4 overwrites its
   one-action auto-battle history. The shared charge still uses the slower spell.
+- Fixed the native equipment-list hard exit reproduced with disposable Yang.
+  Native model swaps and claw-stat comparisons now pass; live UI retest remains.
 - Monk's menu description matches the current fist/claw rules.
-- Release build: zero warnings/errors. Core suite: 1,550 checks passed.
-- Real Proton startup: all 78 patched methods and both UI/control components
+- Current hotfix validation is recorded in [VALIDATION.md](VALIDATION.md).
+- Beta 1 baseline: zero warnings/errors; 1,550 core checks passed.
+- Beta 1 Proton startup: all 78 patched methods and both UI/control components
   loaded successfully. No initialization errors; both testing overrides false.
 - Startup exited before loading any campaign. The complete current save folder
   was byte-for-byte unchanged, including the user's after-Rosa progress.

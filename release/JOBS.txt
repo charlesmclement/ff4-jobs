@@ -1,4 +1,4 @@
-FF4 JOBS+ 0.4.0 playtest — player guide
+FF4 JOBS+ 0.4.1 playtest — player guide
 
 ## Controls and story unlocks
 
@@ -88,7 +88,7 @@ Ninja learns Dual Wield at 70 personal ABP as a main job, or 150 ABP as a sub jo
 
 ### Monk — Barehand
 
-Monk main jobs gain their fist/claw training immediately; sub jobs need 70 personal Monk ABP. Yang retains it innately. With only fists and/or claws in the two hand slots, normal Attack delivers two independent physical strikes in one ATB turn. Both styles use base attack `2 × own level + 3` and trained base accuracy `50 + floor(own level / 4)`, followed by native temporary modifiers, defense, damage variance and limits. Fully barehanded normal attacks gain **5% damage after defense**, rounded down; claws keep their native elemental weaknesses and status effects instead. One claw plus an empty hand uses the claw profile, with no barehand damage bonus. Trained Monks can equip two claws without Ninja, subject to their main job's weapon access; this does not grant general Dual Wield. Shields or unrelated weapons disable the two-strike technique. Jump, Kick, Focus, counters and Rapid Fire do not gain extra strikes or the 5% normal-Attack bonus. Focus, Kick and Gird retain their native actions and ABP command thresholds. This is an FFV-style adaptation within FF4's combat rules.
+Monk main jobs gain their fist/claw training immediately; sub jobs need 70 personal Monk ABP. Yang retains it innately. With only fists and/or claws in the two hand slots, normal Attack delivers two independent physical strikes in one ATB turn. Claws retain native Monk attack power (`2 × own level + floor(own strength / 4) + 2`), native accuracy, and their elemental/status effects. Fully barehanded attacks use the same power formula plus **2 attack**, with no extra percentage damage multiplier. Empty hands use a 99 accuracy basis, matching the best native claw, plus the normal level contribution and native final modifiers/limits. One claw plus an empty hand uses the claw profile. Trained Monks can equip two claws without Ninja, subject to their main job's weapon access; this does not grant general Dual Wield. Shields or unrelated weapons disable the two-strike technique. Jump, Kick, Focus, counters and Rapid Fire do not gain extra strikes. Focus, Kick and Gird retain their native actions and ABP command thresholds. This is an FFV-style adaptation within FF4's combat rules.
 
 ### Stat growth and mastery
 

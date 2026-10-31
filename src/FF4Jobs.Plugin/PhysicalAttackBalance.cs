@@ -21,7 +21,7 @@ internal static class PhysicalAttackScope
 }
 
 // Runs once on the newly calculated physical result, before display and HP
-// application. Reading the result repeatedly never compounds either modifier.
+// application. Reading the result repeatedly never compounds the modifier.
 [HarmonyPatch(typeof(FuncitonNormalAttack),"Calc")]
 internal static class PhysicalAttackDamage
 {
@@ -30,9 +30,8 @@ internal static class PhysicalAttackDamage
         var act=PhysicalAttackBalance.CalculatingAct;
         if(act==null) return;
         bool rapid=RapidFire.Applies(act);
-        bool barehand=Monk.Fists.TryGetValue(act.Pointer,out var strike) && strike.Barehand;
-        if(!rapid && !barehand) return;
+        if(!rapid) return;
         var result=__instance.GetCalcResult();
-        if(result!=null) result.SetValue(JobFeatures.PhysicalAttackDamage(result.GetValue(false),rapid,barehand));
+        if(result!=null) result.SetValue(JobFeatures.PhysicalAttackDamage(result.GetValue(false),rapid));
     }
 }

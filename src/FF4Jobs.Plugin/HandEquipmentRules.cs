@@ -14,10 +14,10 @@ internal static class HandEquipmentRules
 {
     internal static IEnumerable<OwnedItemData> Items(NativeItems source)
     {
-        var typed=source.GetEnumerator();
-        var iterator=typed.Cast<Il2CppSystem.Collections.IEnumerator>();
-        try { while(iterator.MoveNext()) yield return typed.Current; }
-        finally { typed.Cast<Il2CppSystem.IDisposable>().Dispose(); }
+        // Keep enumeration inside IL2CPP. Casting a generic enumerator to the
+        // non-generic interface hard-crashes while reading native item lists.
+        var list=new Il2CppSystem.Collections.Generic.List<OwnedItemData>(source);
+        for(int i=0;i<list.Count;i++) yield return list[i];
     }
     internal static bool IsHand(EquipSlotType slot) => slot is EquipSlotType.Slot1 or EquipSlotType.Slot2;
     internal static int Kind(OwnedItemData? item) => item==null || item.IsRemoveItem ? HandEquipment.Empty
@@ -60,13 +60,17 @@ internal static class HandEquipmentChoices
         var result=new Il2CppSystem.Collections.Generic.List<OwnedItemData>();
         var seen=new HashSet<int>();
         foreach(var item in HandEquipmentRules.Items(__result))
+        {
             if(item!=null && HandEquipmentRules.Candidate(target,slot,item) && seen.Add(item.Id)) result.Add(item);
+        }
         if(HandEquipmentRules.Shields(target) || Monk.Trained(target))
             foreach(var item in HandEquipmentRules.Items(sourceList))
+            {
                 if(item!=null && ((HandEquipmentRules.Kind(item)==HandEquipment.Shield && HandEquipmentRules.Shields(target))
                         || (HandEquipmentRules.Kind(item)==HandEquipment.Claw && Monk.Trained(target)))
                     && item.Count>item.EquipCount && EquipUtility.CanEquipped(item,target.JobId)
                     && HandEquipmentRules.Candidate(target,slot,item) && seen.Add(item.Id)) result.Add(item);
+            }
         __result=result.Cast<NativeItems>();
     }
 }

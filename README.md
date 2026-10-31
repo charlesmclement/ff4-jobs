@@ -1,8 +1,8 @@
 # FF4 JOBS+
 
-A main-job/sub-job mod (0.4.0 beta 1) for Final Fantasy IV Pixel Remaster on PC.
+A main-job/sub-job mod (0.4.1 beta 2) for Final Fantasy IV Pixel Remaster on PC.
 
-Beta 1 is prepared for campaign playtesting. Use the `FF4JobsPlus-0.4.0-beta1.zip` archive and the verified game/loader in [INSTALL.txt](release/INSTALL.txt). Existing campaigns are supported; keep your pre-mod backup. The older 0.2.0 alpha download does not contain these features. See [beta scope](docs/BETA-REVIEW.md) and [playtest guide](release/TESTING.txt).
+Beta 2 is prepared for campaign playtesting. Use the `FF4JobsPlus-0.4.1-beta2.zip` archive and the verified game/loader in [INSTALL.txt](release/INSTALL.txt). Existing campaigns are supported; keep your pre-mod backup. The older 0.2.0 alpha download does not contain these features. See [beta scope](docs/BETA-REVIEW.md) and [playtest guide](release/TESTING.txt).
 
 ## Project requirements
 
@@ -17,7 +17,7 @@ The beta includes **hold LT/L2 for 4x fast-forward**, including dialogue confirm
 
 ## Status
 
-**Beta 1: intended features implemented; full-campaign and advanced-combat acceptance remain in playtesting.** The installed game is Steam build 20265023. Its IL2CPP metadata and master tables have been inspected locally. BepInEx 6 be.735 loads under Proton. No original game assets have been overwritten.
+**Beta 2: intended features implemented; full-campaign and advanced-combat acceptance remain in playtesting.** The installed game is Steam build 20265023. Its IL2CPP metadata and master tables have been inspected locally. BepInEx 6 be.735 loads under Proton. No original game assets have been overwritten.
 
 Native job-switching interfaces exist in this build, but FF4's job rows have empty command/stat overrides. Their presence alone does not supply an FF5 job system. This mod must supply its own rules and integrate them with combat and saving.
 
@@ -122,7 +122,7 @@ Ninja learns Dual Wield at 70 personal ABP as a main job, or 150 ABP as a sub jo
 
 ### Monk — Barehand
 
-Monk main jobs gain their fist/claw training immediately; sub jobs need 70 personal Monk ABP. Yang retains it innately. With only fists and/or claws in the two hand slots, normal Attack delivers two independent physical strikes in one ATB turn. Both styles use base attack `2 × own level + 3` and trained base accuracy `50 + floor(own level / 4)`, followed by native temporary modifiers, defense, damage variance and limits. Fully barehanded normal attacks gain **5% damage after defense**, rounded down; claws keep their native elemental weaknesses and status effects instead. One claw plus an empty hand uses the claw profile, with no barehand damage bonus. Trained Monks can equip two claws without Ninja, subject to their main job's weapon access; this does not grant general Dual Wield. Shields or unrelated weapons disable the two-strike technique. Jump, Kick, Focus, counters and Rapid Fire do not gain extra strikes or the 5% normal-Attack bonus. Focus, Kick and Gird retain their native actions and ABP command thresholds. This is an FFV-style adaptation within FF4's combat rules.
+Monk main jobs gain their fist/claw training immediately; sub jobs need 70 personal Monk ABP. Yang retains it innately. With only fists and/or claws in the two hand slots, normal Attack delivers two independent physical strikes in one ATB turn. Claws retain native Monk attack power (`2 × own level + floor(own strength / 4) + 2`), native accuracy, and their elemental/status effects. Fully barehanded attacks use the same power formula plus **2 attack**, with no extra percentage damage multiplier. Empty hands use a 99 accuracy basis, matching the best native claw, plus the normal level contribution and native final modifiers/limits. One claw plus an empty hand uses the claw profile. Trained Monks can equip two claws without Ninja, subject to their main job's weapon access; this does not grant general Dual Wield. Shields or unrelated weapons disable the two-strike technique. Jump, Kick, Focus, counters and Rapid Fire do not gain extra strikes. Focus, Kick and Gird retain their native actions and ABP command thresholds. This is an FFV-style adaptation within FF4's combat rules.
 
 ### Stat growth and mastery
 

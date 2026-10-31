@@ -1,4 +1,4 @@
-FF4 JOBS+ 0.4.0 beta 1 — known limits
+FF4 JOBS+ 0.4.1 beta 2 — known limits
 
 A complete campaign and native Windows/clean-prefix installation have not
 been certified. Keep backup saves and use a separate test slot.
@@ -17,13 +17,16 @@ The English Jobs UI is not localized. Other gameplay/UI/save mods are
 unverified. The plugin only enables on the recorded GameAssembly hash.
 
 The isometric experiment, VSync changes and keyboard remaps are separate
-and are not included. Development diagnostics require the explicit
-FF4JOBS_TEST_MODE=1 environment variable; normal launches do not run them.
+and are not included. Development diagnostics require explicit opt-in environment variables
+(FF4JOBS_TEST_MODE, FF4JOBS_STARTUP_SMOKE or FF4JOBS_EQUIPMENT_PROBE);
+normal launches do not run them.
 
 Native command scrolling/triangles and Cecil HP casting were approved in the
 previous live playtest. The new advanced-job changes need their own live pass.
 
-Beta 1 fixes Rapid Fire damage scaling at the native calculation boundary
+Beta 1 fixed Rapid Fire damage scaling at the native calculation boundary
 and preserves both Dualcast spells in auto-battle history. These fixes
 passed compilation and native patch loading; live combat remains to verify.
+Beta 2 fixes the reproduced equipment-list crash and restores native claw
+stats. Native model regression checks passed; live Yang UI retest is pending.
 See TESTING.txt for prioritized playtest cases.

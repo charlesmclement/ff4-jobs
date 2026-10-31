@@ -1,6 +1,17 @@
 # FF4 JOBS+ — validation history
 
-## Current: 0.4.0 beta 1 (2026-10-31)
+## Current: 0.4.1 beta 2 (2026-10-31)
+
+- Fixed the native equipment-list hard exit: IL2CPP materializes the source into a native list; managed code reads it by index. The old generic/non-generic enumerator crossing reproduced a hard process exit while reading Yang's equipment choices.
+- Release build: zero warnings/errors; 4,298 core checks pass.
+- Disposable native Yang probe under Proton: equipment-list generation/enumeration and six alternating equip/unequip cycles pass. The fixture uses native `OwnedCharacterData.SetEquip`, followed by parameter updates and list rebuilding; it does not register a live campaign inventory or exercise the UI client commit.
+- At level 10 / strength 12: Fire Claw attack 25 and accuracy 82 both match the native unmodified calculation; barehand attack is 27 and accuracy 99. Repeated swaps do not accumulate power changes.
+- Removed shared claw accuracy suppression and the 5% post-defense bonus. Claws use native Monk power/accuracy; fully empty hands add 2 attack and use the best native claw accuracy basis (99).
+- The user's current post-Rosa/Mt. Hobs save folder is backed up separately and remains byte-for-byte unchanged after the probes. No campaign loaded, restored or saved. The older after-Rosa backup was retained.
+- Evidence: private `research/yang-unequip/` logs and save hashes. Probe runs only with `FF4JOBS_EQUIPMENT_PROBE=1`, creates a detached character, and quits.
+- Still pending: the user's live Yang equipment-menu reproduction, inventory bookkeeping/Optimize acceptance and battle balance. Passing this regression probe is not a full campaign or UI certification.
+
+## Previous: 0.4.0 beta 1 (2026-10-31)
 
 - Release build: zero warnings/errors; 1,550 core checks pass.
 - Real installed-game startup under Proton: all 78 Harmony-patched methods loaded successfully; JobWindow and FastForward components registered; normal test toggles both false.

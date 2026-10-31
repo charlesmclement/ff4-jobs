@@ -13,7 +13,7 @@ using System.Text.Json.Nodes;
 
 namespace FF4Jobs;
 
-[BepInPlugin("ff4jobs.mainandsub", "FF4 JOBS+", "0.4.0")]
+[BepInPlugin("ff4jobs.mainandsub", "FF4 JOBS+", "0.4.1")]
 public sealed class Plugin : BasePlugin
 {
     internal static ManualLogSource Logger = null!;
@@ -48,9 +48,10 @@ public sealed class Plugin : BasePlugin
             harmony.PatchAll();
             AddComponent<JobWindow>();
             AddComponent<FastForward>();
+            if(Environment.GetEnvironmentVariable("FF4JOBS_EQUIPMENT_PROBE")=="1") AddComponent<EquipmentCrashProbe>();
             if(Environment.GetEnvironmentVariable("FF4JOBS_TEST_MODE")=="1") Application.runInBackground=true;
             Enabled = true;
-            Log.LogInfo("FF4 JOBS+ 0.4.0 beta 1 loaded. Select Jobs from the main menu.");
+            Log.LogInfo("FF4 JOBS+ 0.4.1 beta 2 loaded. Select Jobs from the main menu.");
             StartupSmoke.Report(true,harmony.GetPatchedMethods().Count(),null);
         }
         catch(Exception e)
@@ -89,6 +90,7 @@ internal static class State
     internal static bool Applies(OwnedCharacterData? character,bool includeOriginal=false)
     {
         if (!Plugin.Enabled || BrokenSave || Bypass > 0 || character == null) return false;
+        if(EquipmentCrashProbe.Character!=IntPtr.Zero && character.Pointer==EquipmentCrashProbe.Character) return true;
         int status = character.characterStatusId;
         if (status < 1 || status > 13) return false;
         var phase=GamePhase;

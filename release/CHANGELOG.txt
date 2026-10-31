@@ -1,3 +1,11 @@
+FF4 JOBS+ 0.4.1 beta 2
+- Fixed a native equipment-list hard exit reproduced with Yang: item enumeration stays inside IL2CPP before managed filtering.
+- Restored native claw power and accuracy; elemental/status effects remain intact.
+- Barehand uses native Monk power plus 2 attack, replacing the 5% damage bonus. Empty hands match the best native claw accuracy basis (99).
+- Fists and claws still produce two independent normal Attack strikes.
+- Added an opt-in disposable-character equipment regression probe; it does not load or save a campaign.
+- Existing saves and story/ABP progression remain compatible.
+
 FF4 JOBS+ 0.4.0 beta 1
 - Corrected Rapid Fire's damage hook: half damage now applies at native calculation, before display and HP updates. Repeated result reads cannot compound modifiers.
 - Dualcast auto-battle history retains both selected spells and targets.

@@ -343,24 +343,19 @@ monk.Main="original";monk.Sub="monk";monk.Abp["monk"]=69;
 Check(!JobFeatures.HasPassive(monk,"monk"),"Monk sub needs 70 ABP for Barehand");
 monk.Abp["monk"]=70;
 Check(JobFeatures.HasPassive(monk,"monk"),"Monk sub gains Barehand at 70 ABP");
-Check(JobFeatures.UnarmedPower(20)==43 && JobFeatures.UnarmedPower(70)==143,"FFV-style fist base power uses own level");
-Check(JobFeatures.UnarmedPower(21)-JobFeatures.UnarmedPower(20)==2,"Own level growth improves each fist");
-Check(JobFeatures.UnarmedPower(int.MaxValue)==201 && JobFeatures.UnarmedPower(int.MinValue)==5,"Barehand arithmetic remains bounded");
+Check(JobFeatures.MonkPower(20,40,false)==52 && JobFeatures.MonkPower(20,40,true)==54,"Fists use native Monk claw power plus two attack");
 foreach(bool trained in new[]{false,true}) foreach(bool attack in new[]{false,true})
     foreach(int first in new[]{0,18,1,12,13,-1}) foreach(int second in new[]{0,18,1,12,13,-1})
         Check(JobFeatures.MonkStrikes(trained,first,second,attack)==(trained&&attack&&(first==0||first==18)&&(second==0||second==18)?2:1),
-            "Only trained fist/claw normal attacks gain a second strike; mixed weapons, shields and bows do not");
-for(int level=1;level<=99;level++)
+            "Only trained fist/claw normal attacks gain a second strike");
+for(int level=1;level<=99;level++) for(int strength=1;strength<=99;strength+=7)
 {
-    Check(JobFeatures.MonkAccuracy(level)==50+level/4,"Fists and claws share the level-based trained accuracy curve");
-    Check(JobFeatures.UnarmedPower(level)==2*level+3,"Both fist and claw strikes use the same level-based power");
+    int claw=2*level+strength/4+2;
+    Check(JobFeatures.MonkPower(level,strength,false)==claw,"Claws retain native Monk power");
+    Check(JobFeatures.MonkPower(level,strength,true)==claw+2,"Barehand has only two extra base attack");
 }
-Check(JobFeatures.MonkAccuracy(int.MinValue)==50 && JobFeatures.MonkAccuracy(int.MaxValue)==74,"Monk accuracy bounds are safe");
-Check(JobFeatures.BarehandDamage(1000)==1050 && JobFeatures.BarehandDamage(200)==210,"Barehand has a five percent post-defense damage advantage");
-Check(JobFeatures.BarehandDamage(0)==0 && JobFeatures.BarehandDamage(-100)==-100,"Barehand bonus cannot turn misses or absorption into damage");
-Check(JobFeatures.BarehandDamage(1)==1 && JobFeatures.BarehandDamage(19)==19 && JobFeatures.BarehandDamage(20)==21,"Tiny hits round down rather than doubling one-point damage");
-Check(JobFeatures.BarehandDamage(int.MaxValue)==int.MaxValue,"Barehand damage bonus cannot overflow");
-Check(2*1000*2>2*JobFeatures.BarehandDamage(1000),"A representative doubled weakness hit outweighs the small barehand advantage");
+Check(JobFeatures.UnarmedAccuracy(20)==104 && JobFeatures.UnarmedAccuracy(99)==123,"Unarmed accuracy matches best native claw basis before game limits");
+Check(JobFeatures.MonkPower(int.MaxValue,int.MaxValue,true)==226,"Monk power arithmetic is bounded");
 Check(JobFeatures.HasBarehand(new CharacterProgress(),8),"Yang has innate Barehand without grinding or a story unlock");
 Check(!JobFeatures.HasBarehand(new CharacterProgress(),1),"Other characters do not inherit Yang's innate Barehand");
 Check(JobFeatures.HasBarehand(monk,1),"Trained Monk sub gets both fists on another character");
@@ -427,9 +422,7 @@ Check(monkMastery.Learning.Observe(1,"monk",new[]{"m/mastery/monk"},true).Length
 // Advanced normal-attack modifiers are exclusive and applied after native calc.
 foreach(int damage in new[]{int.MinValue,-100,0,1,19,20,100,9999,int.MaxValue})
 {
-    Check(JobFeatures.PhysicalAttackDamage(damage,false,false)==damage,"Ordinary attacks retain native damage");
-    Check(JobFeatures.PhysicalAttackDamage(damage,true,false)==JobFeatures.RapidFireDamage(damage),"Rapid Fire applies half damage");
-    Check(JobFeatures.PhysicalAttackDamage(damage,false,true)==JobFeatures.BarehandDamage(damage),"Barehand applies only its five-percent bonus");
-    Check(JobFeatures.PhysicalAttackDamage(damage,true,true)==JobFeatures.RapidFireDamage(damage),"Rapid Fire never stacks Barehand damage");
+    Check(JobFeatures.PhysicalAttackDamage(damage,false)==damage,"Ordinary attacks retain native damage");
+    Check(JobFeatures.PhysicalAttackDamage(damage,true)==JobFeatures.RapidFireDamage(damage),"Rapid Fire applies half damage");
 }
 Console.WriteLine($"PASS: {checks} progression, save, and fast-forward checks.");

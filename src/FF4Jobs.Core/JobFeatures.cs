@@ -14,16 +14,15 @@ public static class JobFeatures
         || (p.Main=="original" && PassiveName(job)!=null && p.Points(job)>=310);
     public static bool HasBarehand(CharacterProgress p,int characterStatus,bool test=false) =>
         characterStatus==8 || HasPassive(p,"monk",test); // Yang retains his innate training.
-    public static int UnarmedPower(int level) => 2*Math.Clamp(level,1,99)+3;
+    public static int MonkPower(int level,int strength,bool barehand) =>
+        2*Math.Clamp(level,1,99)+Math.Clamp(strength,1,99)/4+2+(barehand?2:0);
     public static bool MonkHands(int first,int second) =>
         first is HandEquipment.Empty or HandEquipment.Claw && second is HandEquipment.Empty or HandEquipment.Claw;
     public static int MonkStrikes(bool trained,int first,int second,bool normalAttack) =>
         trained && MonkHands(first,second) && normalAttack ? 2 : 1;
-    // Equal trained accuracy keeps claws' native item accuracy from overwhelming
-    // the small barehand damage edge. Temporary accuracy/status modifiers remain native.
-    public static int MonkAccuracy(int level) => 50+Math.Clamp(level,1,99)/4;
-    public static int BarehandDamage(int damage) => damage<=0 ? damage
-        : (int)Math.Min(int.MaxValue,(long)damage*105/100);
+    // Native Cat Claws have 99 accuracy; fists match that basis without
+    // reducing any claw's accuracy. Native final accuracy limits still apply.
+    public static int UnarmedAccuracy(int level) => 99+Math.Clamp(level,1,99)/4;
     public static bool DualWieldWeapon(int category,bool twoHanded) =>
         !twoHanded && category is not (12 or 13 or 43);
     public const int RapidFireHits = 4;
@@ -32,8 +31,8 @@ public static class JobFeatures
     public static bool StoryAllows(Campaign campaign, int command) =>
         command != RapidFire || campaign.StoryFlags.Contains(43);
     public static int RapidFireDamage(int damage) => damage <= 0 ? damage : Math.Max(1, damage / 2);
-    public static int PhysicalAttackDamage(int damage,bool rapidFire,bool barehand) =>
-        rapidFire ? RapidFireDamage(damage) : barehand ? BarehandDamage(damage) : damage;
+    public static int PhysicalAttackDamage(int damage,bool rapidFire) =>
+        rapidFire ? RapidFireDamage(damage) : damage;
     public static float DualcastCharge(float first,float second) => Math.Max(0,Math.Max(first,second));
     public static bool CanPayPair(int mp,int reserved,int cost) =>
         (long)Math.Max(0,reserved)+Math.Max(0,cost)<=mp;
