@@ -51,7 +51,7 @@ public sealed class JobWindow : MonoBehaviour
         if(Time.unscaledTime>=nextSync)
         {
             nextSync=Time.unscaledTime+.25f;
-            Projection.Sync(); PartyClassLabels.Refresh(); Diagnostics.Poll(); ReleaseProbe.Poll();
+            Projection.Sync(); PartyClassLabels.Refresh(); Diagnostics.Poll(); ReleaseProbe.Poll(); BloodMagicProbe.Poll(); CombatMenuTest.Poll();
         }
         if(open && !CanOpen()) { Close(); return; }
         if(RequestOpen && CanOpen())
@@ -148,10 +148,10 @@ public sealed class JobWindow : MonoBehaviour
         if(page==Page.Slot)
         {
             MenuSkin.Choice(parent,"Main Job     "+PartyClassLabels.MainName(c),.08f,.28f,.84f,.10f,slot==0,()=>{slot=0;Confirm();},44);
-            DrawProgress(parent,p.Main,p.Points(p.Main),false,.1f,.39f,.8f);
+            DrawProgress(parent,p.Main,p,false,.1f,.39f,.8f);
             MenuSkin.Choice(parent,"Sub Job         "+(p.Sub==null?"None":Jobs.Get(p.Sub).Name),.08f,.53f,.84f,.10f,slot==1,()=>{slot=1;Confirm();},44);
-            if(p.Sub!=null) DrawProgress(parent,p.Sub,p.Points(p.Sub),true,.1f,.64f,.8f);
-            MenuSkin.Label(parent,"Only the main job earns ABP. Train a job as main to learn its sub job skills.",.09f,.79f,.82f,.09f,30);
+            if(p.Sub!=null) DrawProgress(parent,p.Sub,p,true,.1f,.64f,.8f);
+            MenuSkin.Label(parent,"Main Job: full ABP. Sub Job: 25% ABP, even with Original as main.",.09f,.79f,.82f,.09f,30);
             return;
         }
         MenuSkin.Label(parent,slot==0?"Choose Main Job":"Choose Sub Job",.04f,.235f,.6f,.07f,40);
@@ -165,30 +165,32 @@ public sealed class JobWindow : MonoBehaviour
         if(choices.Count==0) return;
         var current=choices[cursor];
         if(current==null) { MenuSkin.Label(parent,"Remove the sub job.",.6f,.33f,.34f,.2f,36); return; }
-        DrawProgress(parent,current.Id,p.Points(current.Id),slot==1,.6f,.32f,.34f);
+        DrawProgress(parent,current.Id,p,slot==1,.6f,.32f,.34f);
         MenuSkin.Label(parent,current.Description+"\n"+(slot==0?Balance.EquipmentHint(current.Id)+"\n"+Balance.StatHint(current):"Sub Job: learned skills only; no equipment or stat bonus."),.6f,.47f,.35f,.22f,24);
         var lines=new List<string>(); int points=p.Points(current.Id);
         for(int i=0;i<current.Commands.Length;i++)
         {
             int required=current.CommandRequirement(i,slot==1);
-            lines.Add($"{CommandName(current.Commands[i])}: "+(points>=required?"Learned":$"{points}/{required} ABP"));
+            lines.Add($"{CommandName(current.Commands[i])}: "+(points>=required?"Learned":$"{AbpText(p.ExactPoints(current.Id))}/{required} ABP"));
         }
-        if(slot==1 && points<10 && !Plugin.TestAllSkills.Value) lines.Add("Train as main to learn skills.");
+        if(slot==1 && points<10 && !Plugin.TestAllSkills.Value) lines.Add("Sub trains at 25%; main trains faster.");
         if(current.IsCaster) lines.Add("Advanced spells need ABP and story progress.");
         MenuSkin.Label(parent,string.Join("\n",lines),.6f,.71f,.34f,.17f,24);
     }
-    private static void DrawProgress(Transform parent,string jobId,int points,bool sub,float x,float y,float width)
+    private static string AbpText(decimal points) => points.ToString("0.##",System.Globalization.CultureInfo.InvariantCulture);
+    private static void DrawProgress(Transform parent,string jobId,CharacterProgress progress,bool sub,float x,float y,float width)
     {
         if(jobId=="original") { MenuSkin.Label(parent,"Original class does not earn ABP.",x,y,width,.07f,28); return; }
+        int points=progress.Points(jobId); decimal exact=progress.ExactPoints(jobId);
         var job=Jobs.Get(jobId); int next=Jobs.NextThreshold(points);
-        string label=next==0?$"{points} ABP - Mastered":$"{points} / {next} ABP - Rank {Jobs.Rank(points)}";
+        string label=next==0?$"{points} ABP - Mastered":$"{AbpText(exact)} / {next} ABP - Rank {Jobs.Rank(points)}";
         MenuSkin.Label(parent,label,x,y,width,.05f,30);
-        MenuSkin.ProgressBar(parent,x,y+.058f,width,.014f,next==0?1:(float)points/next);
-        string detail=next==0?"All ABP ranks earned.":$"{next-points} ABP to next rank";
+        MenuSkin.ProgressBar(parent,x,y+.058f,width,.014f,next==0?1:(float)exact/next);
+        string detail=next==0?"All ABP ranks earned.":$"{AbpText(next-exact)} ABP to next rank";
         for(int i=0;i<job.Commands.Length;i++)
         {
             int required=job.CommandRequirement(i,sub);
-            if(points<required) { detail=$"{CommandName(job.Commands[i])} in {required-points} ABP"; break; }
+            if(points<required) { detail=$"{CommandName(job.Commands[i])} in {AbpText(required-exact)} ABP"; break; }
         }
         MenuSkin.Label(parent,detail,x,y+.08f,width,.06f,28);
     }

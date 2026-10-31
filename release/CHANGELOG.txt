@@ -1,3 +1,24 @@
+Unreleased playtest update
+- Corrected Cecil's blood-magic execution check: zero MP no longer selects the native "No effect" action before HP payment. In-game retest pending.
+- White native command-list triangles indicate hidden commands above/below.
+- Native skill/spell unlock dialogs track personal Main/Sub progression; old saves seed silently and acknowledged notices persist with saves.
+- Summoner unlocks at adult Rydia/Golbez for both slots; party story-earned summons now use personal Summoner ABP tiers.
+- Native combat-command scrolling prototype: reuses the five original rows and cursor; live acceptance pending.
+- Local playtest launcher verifies a timestamped save backup before each launch.
+- Before becoming a Paladin, Cecil pays 4 HP per spell MP instead of MP.
+- Spell costs stop at 1 HP; Paladin restores normal MP casting.
+- Removed the per-battle ABP cap; boosted EXP continues to increase rewards.
+- Equipped sub jobs now earn 25% ABP, even with Original as main.
+- Fractional progress is displayed and saved per character/job.
+- Sub-only training can reach mastery; skill/story gates stay unchanged.
+- Hold LT/L2 for 4x walking, battles and cutscenes; release for normal speed.
+- Held fast-forward reveals and confirms dialogue, including the final page.
+- Choices and menus remain at normal speed. Release/re-hold after a choice.
+- LT+Start opens the native scene-skip confirmation where supported.
+- Keyboard equivalents: hold F6; F6+F7 for scene-skip confirmation.
+- Controls config can select RT/R2 instead, change speed, or disable the feature.
+- Full campaign and scene-skip controller acceptance remain playtest work.
+
 0.2.0 alpha candidate
 - Added main-job weapon/armor policies and native unequip reconciliation.
 - Added trained Thief detection odds with ABP and enemy-level scaling.

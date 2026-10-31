@@ -8,7 +8,7 @@ public static class Balance
     public static int StealChance(int userLevel, int enemyLevel, int thiefAbp) =>
         (int)Math.Clamp(35L + 5 * Jobs.Rank(Math.Clamp(thiefAbp,0,310)) + 2L * (userLevel-enemyLevel),15,75);
 
-    public static int BattleAbp(int experience) => (int)Math.Clamp(1L + Math.Max(0,experience)/200,1,10);
+    public static int BattleAbp(int experience) => 1 + Math.Max(0,experience)/200;
 
     public static string EquipmentHint(string job) => job switch
     {

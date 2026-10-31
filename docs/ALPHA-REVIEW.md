@@ -5,14 +5,14 @@ This is an experimental public alpha for playtesting. It is not a campaign-certi
 ## Choices made
 
 - Keep the approved story schedule. Thief follows Mist; transferable Dragoon waits until the escape from Zot. Native Kain keeps Jump. Dark Knight remains Cecil/Kain only and never announces an unlock.
-- Keep ABP thresholds at 10/30/70/150/310. Only the main job earns ABP. Rewards are 1 + floor(battle EXP / 200), capped at 10; living eligible result members receive them. Original does not earn ABP.
+- Keep ABP thresholds at 10/30/70/150/310. Main jobs earn full ABP; sub jobs earn 25%, with saved fractional carry and no reduced mastery cap. Rewards are 1 + floor(boosted battle EXP / 200), with no per-battle cap; living eligible result members receive them. Original does not earn ABP.
 - Main signature command at 0 ABP, later commands at 10/30. Subjob commands at 10/30/70. An untrained subjob gives no commands, magic, equipment access or extra MP.
 - Steal detection success: clamp(35 + 5 × Thief rank + 2 × level difference, 15, 75) percent. Equal-level beginner 35%; mastered 60%. Each level of disadvantage subtracts two points. Applies to an active Thief main or trained Thief subjob. Original Edge without a Thief assignment retains native odds. Native item tables, selection and failure consequences remain in place; a passed detection roll cannot invent missing loot.
 - Main job determines equipment; subjob grants learned actions only. Original retains native equipment rules. Switching returns incompatible equipment through native unequip handling. No items are added or deleted by the policy.
 - Preserve Cecil's exclusive holy-sword category, native restrictions on Gold Hairpin/Minerva equipment, native slot/two-hand rules, magnetic effects and inventory counts. Ninja does not grant a new dual-wield implementation.
 - Dragoon: STR +6, VIT +3, AGI -3. Paladin: STR +3, VIT +6, AGI -3, SPR +6. Engineer: STR +4, VIT +8, AGI -4. Other existing main-job adjustments retained. These are additive modifiers to the character's native stats, capped at 1–99, not FF5's exact formulas.
 - Keep original character identities, permanent growth and scripted story behavior. Do not impose a party-wide Jump limit in this alpha: simultaneous/queued Jump and boss behavior need an encounter-level implementation and testing first.
-- No new FF5-exclusive Dualcast, Rapid Fire, mastery inheritance, universal summons or custom unarmed formula in this release. Job descriptions disclose these limits. Summoner uses only summons already learned by that character.
+- No new FF5-exclusive Dualcast, Rapid Fire, mastery inheritance or custom unarmed formula in this release. Job descriptions disclose these limits. The latest local playtest shares only story-earned summons, gated by each character's own Summoner ABP. Later-story live acceptance remains pending.
 - Park the isometric prototype. It is disabled locally and excluded from the jobs archive. Keyboard remapping and DXVK/VSync configuration are also excluded.
 
 ## Verification scope

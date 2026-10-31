@@ -23,6 +23,17 @@ internal static class Projection
         internal NativeDictionary Dictionary = null!;
     }
     private static readonly Dictionary<IntPtr,View> views = new();
+    internal static NativeAbilities OriginalAbilities(OwnedCharacterData c)
+        => views.TryGetValue(c.Pointer,out var view) ? view.Abilities : c.OwnedAbilityList;
+    internal static OwnedCharacterData? AbilityOwner(OwnedAbility ability)
+    {
+        foreach (var v in views.Values)
+        {
+            var list = v.Character.OwnedAbilityList;
+            for (int i=0;i<list.Count;i++) if (list[i].Pointer == ability.Pointer) return v.Character;
+        }
+        return null;
+    }
     internal static void Clear() => RestoreAll();
     internal static void Restore(OwnedCharacterData c)
     {
@@ -84,7 +95,9 @@ internal static class Projection
         var ids = new List<int>();
         for (int i=0;i<original.Count;i++) ids.Add(original[i].Id);
         var result = new NativeCommands();
-        foreach(int id in State.Campaign.Commands(c.characterStatusId,ids,Plugin.TestAllSkills.Value))
+        var selected = State.Campaign.Commands(c.characterStatusId,ids,Plugin.TestAllSkills.Value).AsEnumerable();
+        if(CombatMenuTest.Applies(c)) selected=selected.Concat(CombatMenuTest.Commands).Distinct();
+        foreach(int id in selected)
         {
             var command = MasterManager.Instance.GetData<Command>(id);
             if (command != null) result.Add(command);
@@ -109,6 +122,8 @@ internal static class Projection
             if(ability == null || ability.AbilityGroupId < 1 || ability.AbilityGroupId > 4) continue;
             bool allowed = Allows(Jobs.Get(progress.Main), ability, Plugin.TestAllSkills.Value?310:progress.Points(progress.Main), false, original);
             if(progress.Sub != null) allowed |= Allows(Jobs.Get(progress.Sub), ability, Plugin.TestAllSkills.Value?310:progress.Points(progress.Sub), true, original);
+            if(CombatMenuTest.Applies(c) && SpellProgression.IsPlayerSpell(ability.Id)
+                && ability.AbilityGroupId is 1 or 2 or 4) allowed=true;
             if(allowed && seen.Add(ability.Id)) output.Add(new OwnedAbility(ability,content,0));
         }
         return output;
@@ -122,11 +137,7 @@ internal static class Projection
         string school = job.MagicSchool;
         if(school == "summon")
         {
-            if(group != 3) return false;
-            // Only the current character's story-earned summons, until party-wide
-            // summon unlock tracking is implemented and tested.
-            for(int i=0;i<native.Count;i++) if(native[i].Ability.Id == ability.Id) return true;
-            return false;
+            return group==3 && SummonProgression.CanUse(State.Campaign,ability.Id,points,sub);
         }
         if(school.Length==0 || school=="original") return false;
         bool groupOk = school switch {
@@ -211,6 +222,7 @@ internal static class StatsPatch
         var p=State.Campaign.Character(c.characterStatusId); var job=Jobs.Get(p.Main);
         if(__originalMethod.Name=="ConfirmedMaxMp")
         {
+            if(BloodMagic.UsesHp(c)) return; // Pre-Paladin Cecil casts from HP.
             bool caster=job.IsCaster || (p.Sub!=null && Jobs.Get(p.Sub).IsCaster && (Plugin.TestAllSkills.Value || p.Points(p.Sub)>=10));
             if(caster) __result=Math.Clamp(Math.Max(__result,10+__instance.BaseLevel*3),0,999);
             return;

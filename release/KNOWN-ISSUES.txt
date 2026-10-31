@@ -4,10 +4,10 @@ A complete campaign and native Windows/clean-prefix installation have not
 been certified. Keep backup saves and use a separate test slot.
 
 Jobs use existing FF4 actions, not every FF5 mechanic. No new Dualcast,
-Rapid Fire, universal summon teaching, Freelancer mastery inheritance,
-Ninja dual wield or custom Monk barehand formula. Summoner currently only
-uses that character's native summons (chiefly Rydia); it does not teach
-summons to the whole cast. Stat modifiers are provisional additive values.
+Rapid Fire, Freelancer mastery inheritance, Ninja dual wield or custom
+Monk barehand formula. The local playtest now shares story-earned summons
+with personal Summoner ABP requirements; later-story acceptance is pending.
+Stat modifiers are provisional additive values.
 
 Borrowed Dragoon waits until Zot, but multiple party members can still
 Jump afterward. No party-wide airborne limit is implemented. Encounter
@@ -23,3 +23,6 @@ unverified. The plugin only enables on the recorded GameAssembly hash.
 The isometric experiment, VSync changes and keyboard remaps are separate
 and are not included. Development diagnostics require the explicit
 FF4JOBS_TEST_MODE=1 environment variable; normal launches do not run them.
+
+New local playtest: native command triangles and skill/spell unlock dialogs
+are installed but await visual/controller acceptance by the tester.

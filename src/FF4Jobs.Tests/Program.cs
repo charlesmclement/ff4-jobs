@@ -20,7 +20,7 @@ campaign.Award(1,10);
 campaign.Select(1,"dragoon","white_mage");
 Check(campaign.Commands(1,new[]{1,10,3}).SequenceEqual(new[]{1,11,7,3}), "Main/sub commands compose correctly");
 campaign.Award(1,30);
-Check(campaign.Character(1).Points("white_mage") == 10, "Only main job earns ABP");
+Check(campaign.Character(1).Points("white_mage") == 10, "Direct main-job award leaves sub job unchanged");
 Check(campaign.Character(13).Main == "dragoon", "Cecil's Paladin transformation preserves chosen job");
 Check(campaign.Character(13).Points("dragoon") == 30, "Cecil's ABP survives transformation");
 Check(campaign.Character(2).Points("dragoon") == 0, "Characters have independent progress");
@@ -119,7 +119,12 @@ Check(revised.Commands(4,new[]{1,7,8,9,3}).Contains(11),"Rydia subjob Jump unloc
 Check(Balance.StealChance(4,4,0)==35 && Balance.StealChance(4,8,0)==27,"Steal is useful early but tougher enemies resist");
 Check(Balance.StealChance(4,4,310)==60 && Balance.StealChance(99,1,310)==75,"Steal grows with training and caps below certainty");
 Check(Balance.StealChance(1,99,0)==15,"Steal has a modest failure-heavy floor");
-Check(Balance.BattleAbp(0)==1 && Balance.BattleAbp(199)==1 && Balance.BattleAbp(200)==2 && Balance.BattleAbp(int.MaxValue)==10,"ABP reward curve boundaries");
+Check(Balance.BattleAbp(-1)==1 && Balance.BattleAbp(0)==1 && Balance.BattleAbp(199)==1 && Balance.BattleAbp(200)==2,"ABP reward curve boundaries");
+Check(Balance.BattleAbp(1999)==10 && Balance.BattleAbp(2000)==11 && Balance.BattleAbp(8000)==41,"Battle rewards continue beyond the former cap, including boosted EXP");
+Check(Balance.BattleAbp(int.MaxValue)==10737419,"Uncapped reward calculation handles maximum EXP without overflow");
+var uncappedReward=new Campaign();uncappedReward.StoryFlags.UnionWith(new[]{7,13});uncappedReward.Select(1,"black_mage","thief");
+var uncappedGain=uncappedReward.AwardBattle(1,Balance.BattleAbp(8000));
+Check(uncappedGain==(41,41) && uncappedReward.Character(1).Points("black_mage")==41 && uncappedReward.Character(1).ExactPoints("thief")==10.25m,"Uncapped battle rewards reach both slots at full and quarter rates");
 Check(Balance.WeaponAllowed("dragoon",6,4) && !Balance.WeaponAllowed("dragoon",11,4),"Rydia Dragoon gets spears, not rods");
 Check(!Balance.WeaponAllowed("thief",2,1) && Balance.WeaponAllowed("thief",5,1),"Cecil Thief loses dark sword access and gains daggers");
 Check(!Balance.ArmorAllowed("white_mage",12,true) && Balance.ArmorAllowed("white_mage",9,false),"Caster main rejects heavy armor and gains mage gear");
@@ -155,4 +160,129 @@ foreach(int status in Enumerable.Range(1,13)) {returning.Select(status,"thief",n
 var copy=JsonSerializer.Deserialize<Campaign>(JsonSerializer.Serialize(returning))!;copy.Validate();
 foreach(int status in Enumerable.Range(1,13))Check(copy.Character(status).Points("thief")==returning.Character(status).Points("thief"),"Return/save preserves character "+status);
 Check(copy.Character(13)==copy.Character(1),"Cecil has one canonical progress record");
-Console.WriteLine($"PASS: {checks} progression and save checks.");
+// Sub-job training: exact quarter rewards, old saves, slot changes and caps.
+var trickle = new Campaign(); trickle.StoryFlags.UnionWith(new[]{7,13});
+trickle.Select(4,"original","thief");
+var firstGain=trickle.AwardBattle(4,1);
+Check(firstGain.Main==0 && firstGain.SubQuarters==1 && trickle.Character(4).ExactPoints("thief")==.25m,"Original main permits quarter-ABP sub training on the first battle");
+Check(!trickle.Commands(4,new[]{1,9,3}).Contains(17),"Fractional training does not bypass Steal requirement");
+for(int n=0;n<2;n++)trickle.AwardBattle(4,1);
+var resumed=JsonSerializer.Deserialize<Campaign>(JsonSerializer.Serialize(trickle))!;resumed.Validate();
+Check(resumed.Character(4).ExactPoints("thief")==.75m,"Fractional ABP survives save/load");
+resumed.AwardBattle(4,1);
+Check(resumed.Character(4).Points("thief")==1 && resumed.Character(4).Quarters("thief")==0,"Four early battles accumulate one whole sub ABP");
+for(int n=0;n<35;n++)resumed.AwardBattle(4,1);
+Check(resumed.Character(4).ExactPoints("thief")==9.75m && !resumed.Commands(4,new[]{1,9,3}).Contains(17),"Steal stays locked at 9.75 ABP");
+resumed.AwardBattle(4,1);
+Check(resumed.Character(4).Points("thief")==10 && resumed.Commands(4,new[]{1,9,3}).Contains(17),"Sub-only grinding unlocks Steal at 10 ABP");
+trickle.Select(4,"original","black_mage");trickle.AwardBattle(4,1);
+Check(trickle.Character(4).ExactPoints("thief")==.75m && trickle.Character(4).ExactPoints("black_mage")==.25m,"Changing sub jobs does not transfer or erase fractional progress");
+trickle.Select(4,"thief","black_mage");var both=trickle.AwardBattle(4,3);
+Check(both.Main==3 && both.SubQuarters==3 && trickle.Character(4).ExactPoints("thief")==3.75m && trickle.Character(4).ExactPoints("black_mage")==1,"Both slots train at their rates; promoting a sub preserves fractions");
+trickle.Select(4,"thief",null);trickle.AwardBattle(4,2);
+Check(trickle.Character(4).ExactPoints("black_mage")==1,"Unequipped sub jobs do not train");
+trickle.Select(4,"thief","black_mage");trickle.Award(4,int.MaxValue);
+Check(trickle.Character(4).ExactPoints("thief")==310,"Mastering a promoted job clears excess fractions");
+Check(trickle.AwardBattle(4,10)==(0,10) && trickle.Character(4).ExactPoints("black_mage")==3.5m,"Mastered main still allows normal sub training");
+trickle.AwardBattle(4,int.MaxValue);trickle.Validate();
+Check(trickle.Character(4).ExactPoints("black_mage")==310 && trickle.AwardBattle(4,10)==(0,0),"Sub jobs can reach mastery, cap safely and stop earning");
+var zeroBefore=JsonSerializer.Serialize(trickle);trickle.AwardBattle(4,0);
+Check(JsonSerializer.Serialize(trickle)==zeroBefore,"Zero reward preserves trained progress");
+Reject(()=>trickle.AwardBattle(4,-1),"Negative battle reward rejected");
+var oldFractionSave=JsonSerializer.Deserialize<Campaign>("{\"Schema\":1,\"Characters\":{\"1\":{\"Main\":\"original\",\"Sub\":\"thief\",\"Abp\":{\"thief\":9}}}}")!;
+oldFractionSave.Validate();oldFractionSave.AwardBattle(13,3);
+Check(oldFractionSave.Character(1).ExactPoints("thief")==9.75m,"Old saves initialize carry and Cecil's identity shares fractions");
+Check(oldFractionSave.Character(4).ExactPoints("thief")==0,"Fractional progress remains per character");
+foreach(var bad in new[]{-1,4}) {
+ var invalidFraction=new Campaign();invalidFraction.Character(1).AbpQuarters["thief"]=bad;
+ Reject(invalidFraction.Validate,"Invalid fractional remainder rejected");
+}
+var invalidFractionJob=new Campaign();invalidFractionJob.Character(1).AbpQuarters["original"]=1;
+Reject(invalidFractionJob.Validate,"Original fractional progress rejected");
+
+Check(CommandScroll.Move(0,4,18,5,1)==(1,4),"Sixth command scrolls into the bottom native row");
+Check(CommandScroll.Move(1,0,18,5,-1)==(0,0),"Scrolling up reveals the previous command");
+Check(CommandScroll.Move(0,0,18,5,-1)==(0,0) && CommandScroll.Move(13,4,18,5,1)==(13,4),"Command scrolling stops at both ends");
+Check(CommandScroll.Move(0,0,18,5,-1,true)==(13,4) && CommandScroll.Move(13,4,18,5,1,true)==(0,0),"Native loop navigation wraps the full command list");
+foreach(int total in new[]{1,4,5,6,18,22})
+{
+    (int Start,int Row) pos=(0,0);
+    for(int expected=1;expected<total;expected++)
+    {
+        pos=CommandScroll.Move(pos.Start,pos.Row,total,5,1);
+        Check(pos.Start+pos.Row==expected && pos.Row>=0 && pos.Row<5,"Every command remains reachable in a visible native row");
+    }
+    for(int expected=total-2;expected>=0;expected--)
+    {
+        pos=CommandScroll.Move(pos.Start,pos.Row,total,5,-1);
+        Check(pos.Start+pos.Row==expected && pos.Row>=0 && pos.Row<5,"Reverse navigation preserves command identity");
+    }
+}
+var journal=new LearningJournal();
+Check(journal.Observe(1,"black_mage",new[]{"m/spell/36"},true).Length==0,"Existing spells seed without a popup flood");
+journal.FinishCharacter(1);
+Check(journal.Observe(1,"black_mage",new[]{"m/spell/36","s/spell/36"},true).SequenceEqual(new[]{"s/spell/36"}),"New sub-job use gets its own notification");
+Check(journal.Observe(13,"black_mage",new[]{"m/spell/36","s/spell/36"},true).Length==0,"Cecil transformation does not repeat learning notices");
+Check(journal.Observe(4,"black_mage",new[]{"m/spell/36"},true).Length==0,"New character seeds an independent baseline");
+journal.FinishCharacter(4);
+Check(journal.Observe(4,"black_mage",new[]{"m/spell/36","s/spell/36"},true).Length==1,"Cecil's announcement never suppresses Rydia's unlock");
+journal.Observe(1,"white_mage",new[]{"m/spell/6"},false);
+Check(journal.Observe(1,"white_mage",new[]{"m/spell/6"},true).Length==0,"Switching to an already unlocked job does not repeat its base spells");
+journal.Pending.Add(new LearningNotice{Title="Skills unlocked",Message="Cecil / Black Mage: Fira"});
+var journalSave=JsonSerializer.Deserialize<LearningJournal>(JsonSerializer.Serialize(journal))!;journalSave.Validate();
+Check(journalSave.Pending.Count==1 && journalSave.Observe(1,"black_mage",new[]{"m/spell/36","s/spell/36"},true).Length==0,"Pending notices and known skills survive save/load");
+journalSave.Pending.Clear();
+Check(JsonSerializer.Deserialize<LearningJournal>(JsonSerializer.Serialize(journalSave))!.Pending.Count==0,"Dismissed notices stay dismissed in saved progress");
+var legacyLearning=JsonSerializer.Deserialize<Campaign>("{\"Schema\":1}")!;legacyLearning.Validate();
+Check(legacyLearning.Learning.Known.Count==0 && legacyLearning.LearnedSummons.Count==0,"Legacy saves initialize new learning fields");
+foreach(var job in Jobs.All.Where(j=>j.Id!="original"))
+{
+    var independent=new Campaign();
+    independent.Select(2,job.Id,null,true); independent.Award(2,310);
+    independent.Select(1,job.Id,null,true); independent.Award(1,10);
+    Check(independent.Character(1).Points(job.Id)==10 && independent.Character(2).Points(job.Id)==310,"Independent ABP for every job: "+job.Id);
+}
+var ownMagic=new Campaign(); ownMagic.StoryFlags.UnionWith(new[]{13,20,28,43,68});
+ownMagic.Select(4,"black_mage",null); ownMagic.Award(4,310); ownMagic.Select(1,"black_mage",null);
+Check(!SpellProgression.CanLearn(ownMagic,34,ownMagic.Character(1).Points("black_mage")),"Mastered Rydia cannot unlock Cecil's Fira");
+ownMagic.Award(1,30);
+Check(SpellProgression.CanLearn(ownMagic,34,ownMagic.Character(1).Points("black_mage")),"Cecil's own 30 ABP unlocks Fira after Fabul");
+var summons=new Campaign(); summons.StoryFlags.UnionWith(new[]{28,46});
+summons.LearnedSummons.UnionWith(new[]{65,66,75});
+Check(summons.IsUnlocked("summoner") && !new Campaign().IsUnlocked("summoner"),"Summoner unlocks at adult Rydia's return milestone");
+Check(SummonProgression.CanUse(summons,65,0,false) && !SummonProgression.CanUse(summons,65,9,true) && SummonProgression.CanUse(summons,65,10,true),"Chocobo is usable at main 0 / sub 10 Summoner ABP");
+Check(!SummonProgression.CanUse(summons,66,69,false) && SummonProgression.CanUse(summons,66,70,false),"Shiva requires this character's 70 ABP");
+Check(!SummonProgression.CanUse(summons,75,150,true) && SummonProgression.CanUse(summons,75,310,true),"Bahamut requires mastery even when story learned");
+Check(!SummonProgression.CanUse(summons,73,310,false),"ABP never grants an unearned story summon");
+var earnedLater=new Campaign(); earnedLater.StoryFlags.UnionWith(new[]{28,46});
+earnedLater.Select(1,"summoner",null); earnedLater.Award(1,310);
+Check(!SummonProgression.CanUse(earnedLater,75,earnedLater.Character(1).Points("summoner"),false),"Mastery before the story does not grant Bahamut early");
+earnedLater.LearnedSummons.Add(75);
+Check(SummonProgression.CanUse(earnedLater,75,earnedLater.Character(1).Points("summoner"),false),"Story acquisition immediately unlocks a summon for an already trained character without another reward");
+earnedLater.Select(2,"summoner",null);
+Check(!SummonProgression.CanUse(earnedLater,75,earnedLater.Character(2).Points("summoner"),false),"One Summoner's mastery cannot advance another character");
+earnedLater.Award(2,310);
+Check(SummonProgression.CanUse(earnedLater,75,earnedLater.Character(2).Points("summoner"),false),"Training after story acquisition also unlocks immediately");
+foreach(int id in Enumerable.Range(61,15))
+{
+    summons.LearnedSummons.Add(id); int required=SummonProgression.RequiredAbp(id);
+    Check(SummonProgression.CanUse(summons,id,required,false),"Summon own-ABP threshold "+id);
+    if(required>0) Check(!SummonProgression.CanUse(summons,id,required-1,false),"Summon threshold remains locked below required ABP "+id);
+}
+var speed = new FastForwardSpeed();
+Check(BloodCasting.Applies(1,false) && !BloodCasting.Applies(13,false) && !BloodCasting.Applies(1,true),"Blood casting ends on Paladin identity or milestone");
+foreach(int status in Enumerable.Range(2,12)) Check(!BloodCasting.Applies(status,false),"Blood casting excludes other characters");
+Check(BloodCasting.Cost(5)==20 && BloodCasting.Cost(15)==60,"HP spells cost four times MP");
+Check(BloodCasting.RemainingHp(100,5)==80 && BloodCasting.RemainingHp(20,5)==1 && BloodCasting.RemainingHp(10,5)==1,"Spell cost stops at one HP");
+Check(BloodCasting.RemainingHp(1,5)==1 && BloodCasting.RemainingHp(0,5)==0,"HP cost neither kills nor revives");
+Check(BloodCasting.Cost(0)==0 && BloodCasting.Cost(-1)==0 && BloodCasting.RemainingHp(50,0)==50,"Free spells remain free");
+Check(BloodCasting.Cost(int.MaxValue)==int.MaxValue && BloodCasting.RemainingHp(100,int.MaxValue)==1,"Large HP cost does not overflow");
+Check(speed.Update(1,true,8)==8,"Fast-forward accelerates normal gameplay");
+Check(speed.Update(8,true,8)==8,"Held fast-forward does not compound each frame");
+Check(speed.Update(8,false,8)==1,"Release restores original speed");
+Check(speed.Update(.5f,true,8)==4 && speed.Update(4,false,8)==.5f,"Preserves a pre-existing non-default speed");
+Check(speed.Update(1,true,8)==8 && speed.Update(0,true,8)==0 && speed.Update(0,false,8)==0,"A game pause wins over fast-forward and release");
+Check(speed.Update(1,true,8)==8 && speed.Update(2,false,8)==2,"Release preserves an external speed change");
+Check(speed.Update(1,true,8)==8 && speed.Update(8,false,1)==1,"Scene/modal transition restores normal speed");
+Check(speed.Update(1,true,100)==16 && speed.Update(16,false,1)==1,"Multiplier bounded to 16x");
+Console.WriteLine($"PASS: {checks} progression, save, and fast-forward checks.");

@@ -18,6 +18,7 @@
     <Reference Include="$(GamePath)/BepInEx/interop/UnityEngine.CoreModule.dll" Private="false" />
     <Reference Include="$(GamePath)/BepInEx/interop/UnityEngine.IMGUIModule.dll" Private="false" />
     <Reference Include="$(GamePath)/BepInEx/interop/UnityEngine.InputLegacyModule.dll" Private="false" />
+    <Reference Include="$(GamePath)/BepInEx/interop/Unity.InputSystem.dll" Private="false" />
     <Reference Include="$(GamePath)/BepInEx/interop/UnityEngine.TextRenderingModule.dll" Private="false" />
     <Reference Include="$(GamePath)/BepInEx/interop/UnityEngine.UI.dll" Private="false" />
     <Reference Include="$(GamePath)/BepInEx/interop/UnityEngine.UIModule.dll" Private="false" />

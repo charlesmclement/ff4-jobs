@@ -66,7 +66,7 @@ public static class Jobs
         new("ninja", "Ninja", "Ninjutsu and Throw. Dual wielding remains under development.", new[]{15,16}, "ninja", str:4, agi:8, intel:4),
         new("bard", "Bard", "Sing and Heal using FF4's bard actions.", new[]{22,23}, agi:4, spr:6),
         new("ranger", "Ranger", "Aim; accurate ranged attacks. No Rapid Fire yet.", new[]{13}, str:3, agi:7),
-        new("summoner", "Summoner", "Use summons already learned in this save; story summons stay gated.", new[]{9}, "summon", str:-5, intel:10, spr:2),
+        new("summoner", "Summoner", "Story-earned summons; your Summoner ABP unlocks stronger ones.", new[]{9}, "summon", str:-5, intel:10, spr:2),
         new("engineer", "Engineer", "Study enemies; sturdy combat specialist.", new[]{31}, str:4, vit:8, agi:-4),
         new("sage", "Sage", "White and black magic, with slower movement in battle.", new[]{7,8}, "sage", str:-5, agi:-5, intel:10, spr:10)
     };
@@ -86,7 +86,11 @@ public sealed class CharacterProgress
     public string Main { get; set; } = "original";
     public string? Sub { get; set; }
     public Dictionary<string,int> Abp { get; set; } = new();
+    // Quarter-ABP carry belongs to the job, not the slot. Optional in old saves.
+    public Dictionary<string,int> AbpQuarters { get; set; } = new();
     public int Points(string job) => Abp.TryGetValue(job, out int n) ? n : 0;
+    public int Quarters(string job) => AbpQuarters.TryGetValue(job, out int n) ? n : 0;
+    public decimal ExactPoints(string job) => Points(job) + Quarters(job) / 4m;
 }
 
 public sealed class Campaign
@@ -97,6 +101,8 @@ public sealed class Campaign
 
     public HashSet<int> StoryFlags { get; set; } = new();
     public HashSet<string> AnnouncedJobs { get; set; } = new();
+    public LearningJournal Learning { get; set; } = new();
+    public HashSet<int> LearnedSummons { get; set; } = new();
     public bool Recruit(int statusId) => statusId>=1 && statusId<=13
         && RecruitedCharacters.Add(statusId);
     public bool IsUnlocked(string job) => job == "original"
@@ -153,7 +159,22 @@ public sealed class Campaign
         if (p.Main == "original") return 0;
         int before = p.Points(p.Main);
         p.Abp[p.Main] = (int)Math.Min(Jobs.Thresholds[Jobs.Thresholds.Length-1], (long)before + points);
+        if (p.Points(p.Main) == Jobs.Thresholds[Jobs.Thresholds.Length-1]) p.AbpQuarters.Remove(p.Main);
         return p.Points(p.Main) - before;
+    }
+
+    public (int Main, int SubQuarters) AwardBattle(int statusId, int points)
+    {
+        int main = Award(statusId, points);
+        var p = Character(statusId);
+        if (p.Sub == null || points == 0) return (main, 0);
+        string sub = p.Sub;
+        int before = p.Points(sub) * 4 + p.Quarters(sub);
+        int after = (int)Math.Min(Jobs.Thresholds[Jobs.Thresholds.Length-1] * 4L, (long)before + points);
+        p.Abp[sub] = after / 4;
+        if (after % 4 == 0) p.AbpQuarters.Remove(sub);
+        else p.AbpQuarters[sub] = after % 4;
+        return (main, after - before);
     }
 
     public int[] Commands(int statusId, IEnumerable<int> original, bool testAllSkills = false)
@@ -173,6 +194,10 @@ public sealed class Campaign
 
     public void Validate()
     {
+        if(Learning==null) throw new InvalidOperationException("Missing skill announcement data.");
+        Learning.Validate();
+        if(LearnedSummons==null || LearnedSummons.Any(id=>id<61 || id>75))
+            throw new InvalidOperationException("Invalid learned summons.");
         if (Schema != 1 || Characters == null) throw new InvalidOperationException("Unsupported or invalid job save data.");
         if (RecruitedCharacters == null || RecruitedCharacters.Any(id => id<1 || id>13))
             throw new InvalidOperationException("Invalid recruitment history.");
@@ -188,6 +213,11 @@ public sealed class Campaign
             foreach(var abp in p.Abp)
                 if (!Jobs.Exists(abp.Key) || abp.Value < 0 || abp.Value > Jobs.Thresholds[Jobs.Thresholds.Length-1])
                     throw new InvalidOperationException("Invalid ABP data.");
+            if (p.AbpQuarters == null) throw new InvalidOperationException("Missing fractional ABP data.");
+            foreach (var abp in p.AbpQuarters)
+                if (!Jobs.Exists(abp.Key) || abp.Key == "original" || abp.Value < 0 || abp.Value > 3
+                    || (abp.Value > 0 && p.Points(abp.Key) >= Jobs.Thresholds[Jobs.Thresholds.Length-1]))
+                    throw new InvalidOperationException("Invalid fractional ABP data.");
             // A test-selected subjob may be saved before training; it contributes
             // no unearned commands/spells when the test override is disabled.
             if (p.Sub != null && (!Jobs.Exists(p.Sub) || p.Sub == "original" || p.Sub == p.Main))

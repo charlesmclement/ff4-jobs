@@ -75,7 +75,8 @@ privately when needed; do not post personal paths or unrelated files.
 Different executable hash: use a verified build or wait for validation;
 do not edit the hash file to bypass the check.
 No Jobs row: verify loader type and DLL paths, then inspect the log.
-No subjob command: train that job as main; see JOBS.txt for ABP thresholds.
+No subjob command: earn ABP with it as main (full rate) or sub (25% rate);
+see JOBS.txt for skill thresholds.
 If another mod changes commands, equipment, stats, saves or the camp menu,
 compatibility is unverified. Reproduce on a copy with FF4 Jobs alone.
 

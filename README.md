@@ -6,6 +6,8 @@ An experimental main-job/subjob mod (0.2.0 alpha candidate) for Final Fantasy IV
 
 ## Project requirements
 
+The local development build adds **hold LT/L2 for 4x fast-forward**, including dialogue confirmations. Release to restore normal speed. Menus/choices stay at normal speed; release and hold again after a choice. **LT + Start** opens native scene-skip confirmation only where the game provides it. Keyboard: **F6**, or **F6 + F7** for skip confirmation. In `BepInEx/config/ff4jobs.mainandsub.cfg`, `[Controls] UseLeftTrigger = false` selects RT/R2 instead. This update is not included in the linked alpha1 download yet.
+
 - Preserve FF4's original story, cast, character identities, party departures/returns, and Cecil's transformation.
 - Mix FF4 and FF5 classes. Main job controls combat specialties and stats; subjob provides learned commands without a second set of stat bonuses.
 - Unlock jobs at story milestones; keep unlocks through departures. Kain leaving at Mist unlocks Thief for both slots; Dragoon waits until the escape from Zot. Dark Knight is restricted to Cecil and Kain. A separate all-jobs test toggle does not grant story progress.
@@ -53,9 +55,9 @@ Unlocks use verified native ScenarioFlag1 event flags, synchronized only after c
 | Defeat Rubicante | Ninja | 53 |
 | Complete the Giant of Babil | Sage | 68 |
 
-Story-unlocked jobs can be selected in either slot immediately, except Original (main only) and the currently selected main job. An untrained subjob contributes no skills. The menu displays ABP numbers, a progress bar toward the next rank, and the remaining ABP for the next command. Only the selected main job earns ABP.
+Story-unlocked jobs can be selected in either slot immediately, except Original (main only) and the currently selected main job. An untrained subjob contributes no skills. The menu displays ABP numbers, a progress bar toward the next rank, and the remaining ABP for the next command. Main jobs earn full ABP; the equipped sub job earns 25%, including with Original as the main job. Fractional ABP is shown in the menu and saved per character/job. Sub jobs can be trained all the way to mastery; the same skill thresholds and story gates apply. Battle ABP is 1 + floor(boosted battle EXP / 200), with no per-battle cap.
 
-A native FF4 dialog announces each story milestone once acknowledged and saved. Dark Knight never triggers an announcement. Older saves receive catch-up notices for unlocked jobs.
+A native FF4 dialog announces each story milestone once acknowledged and saved. Dark Knight never triggers a job announcement. Older saves receive catch-up notices for unlocked jobs. New skill/spell unlocks also use native dialogs, grouped by character and job, with Main/Sub availability indicated. Their saved journal prevents repeat announcements; existing skills are seeded silently when upgrading an old save.
 
 A main job starts with its signature command. Additional commands unlock at 10 and 30 ABP; their subjob use unlocks at 10, 30 and 70 ABP. Progress belongs to each character. Cecil retains progress through his transformation.
 
@@ -66,7 +68,27 @@ Job-granted magic requires **both story progress and ABP**, plus the existing sc
 - Curaga, Esuna, Haste, Stop, Osmose, Bio, Break and Drain require Tellah's Meteo scene (flag 28) and 70 ABP.
 - Curaja, Reflect, Firaga/Blizzaga/Thundaga, Tornado, Quake and Death require the completed Tower of Zot (flag 43), Tellah's scene and 150 ABP.
 - Full-Life, Holy, Flare and Meteor require the completed Giant (flag 68), Tellah's scene and 310 ABP. Only Black Mage/Sage can gain Meteor through this system.
-- Summons still require the character's native story-earned summon. Party-wide summon teaching is not implemented yet.
+- Summoner unlocks for Main and Sub Job when adult Rydia returns and Golbez is defeated (flag 46). Story-earned summons are shared party knowledge; each character needs their own Summoner ABP to cast them. Unearned summons stay locked.
+
+
+Black Magic uses the equipped character's cumulative Black Mage ABP, never Rydia's level. Main jobs earn full ABP; Sub Jobs earn 25%. Winning battles trains the job; casting a spell is not required.
+
+| Black Mage ABP | New spells | Story requirement |
+|---|---|---|
+| 0 (Main) / 10 (Sub) | Blizzard, Thunder, Poison, Warp, Pig | Black Mage unlocked |
+| 0 (Main) / 10 (Sub) | Fire | Rydia's Mt. Hobs fire lesson |
+| 10 | Toad | Black Mage unlocked |
+| 30 | Sleep | Black Mage unlocked |
+| 30 | Fira, Blizzara, Thundara | Defense of Fabul complete |
+| 70 | Stop, Osmose, Bio, Break, Drain | Tellah remembers Meteo |
+| 150 | Firaga, Blizzaga, Thundaga, Tornado, Quake, Death | After Zot and Tellah's scene |
+| 310 | Flare, Meteor | After the Giant and Tellah's scene |
+
+Summoner ABP requirements (also require the party to have actually learned the summon): 0 Goblin/Chocobo; 10 Bomb; 30 Cockatrice/Mind Flayer/Mist Dragon; 70 Shiva/Ramuh/Ifrit/Sylph; 150 Titan/Odin; 310 Leviathan/Asura/Bahamut. Sub Job Summon starts at 10 ABP. Original mode keeps native FF4 acquisition.
+
+The battle command list scrolls inside FF4's original five-row window. White native triangles at the top-right/bottom-right indicate commands above/below; each hides at its corresponding end.
+
+Before becoming a Paladin, Cecil casts job-granted spells with HP: 4 HP per normal MP cost (Fire: 20 HP). Costs stop at 1 HP, even if he cannot pay the full amount. Other characters use MP. His transformation restores MP casting. Spell ABP and story requirements still apply.
 
 These restrictions govern the mod's granted abilities. Original/native spell acquisition and scripted scenes are preserved; a full campaign and exploit audit remains outstanding. Main-job equipment policies and initial stat tradeoffs are implemented in 0.2.0. Broader campaign balance and equipment edge cases still need playtesting.
 

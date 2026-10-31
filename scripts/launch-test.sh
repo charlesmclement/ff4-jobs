@@ -10,8 +10,9 @@ export SteamAppId=1173800
 export SteamGameId=1173800
 export WINEDLLOVERRIDES='winhttp=n,b'
 export WINEDEBUG=-all
-export FF4JOBS_TEST_MODE=1
+export FF4JOBS_TEST_MODE="${FF4JOBS_TEST_MODE:-1}"
 unset PROTON_LOG
+python3 "$task_root/scripts/backup-playtest-saves.py"
 cd "$task_game"
 task_display_args=(-screen-fullscreen 1 -window-mode borderless)
 if [[ "${FF4JOBS_WINDOWED:-0}" == 1 ]]; then

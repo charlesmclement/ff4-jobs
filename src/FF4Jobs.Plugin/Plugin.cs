@@ -20,9 +20,19 @@ public sealed class Plugin : BasePlugin
     internal static bool Enabled;
     internal static BepInEx.Configuration.ConfigEntry<bool> TestAllJobs = null!;
     internal static BepInEx.Configuration.ConfigEntry<bool> TestAllSkills = null!;
+    internal static BepInEx.Configuration.ConfigEntry<bool> FastForwardEnabled = null!;
+    internal static BepInEx.Configuration.ConfigEntry<float> FastForwardMultiplier = null!;
+    internal static BepInEx.Configuration.ConfigEntry<bool> FastForwardLeftTrigger = null!;
     public override void Load()
     {
         Logger = Log;
+        FastForwardEnabled = Config.Bind("Controls", "HoldTriggerFastForward", true,
+            "Hold the selected controller trigger or F6 to fast-forward gameplay and confirm dialogue. Trigger+Start (F6+F7) opens native scene-skip confirmation where available.");
+        FastForwardLeftTrigger = Config.Bind("Controls", "UseLeftTrigger", true,
+            "Use LT/L2 for fast-forward. Set false to use RT/R2 instead. Y remains the menu button.");
+        FastForwardMultiplier = Config.Bind("Controls", "FastForwardMultiplier", 4f,
+            new BepInEx.Configuration.ConfigDescription("Gameplay speed while held. Menus and choices stay at normal speed.",
+                new BepInEx.Configuration.AcceptableValueRange<float>(1f,16f)));
         TestAllJobs = Config.Bind("Testing", "AllJobsAvailable", false,
             "Temporarily expose every job without changing saved story unlocks. ABP requirements still apply.");
         TestAllSkills = Config.Bind("Testing", "AllSkillsAvailable", false,
@@ -37,6 +47,7 @@ public sealed class Plugin : BasePlugin
         {
             harmony.PatchAll();
             AddComponent<JobWindow>();
+            AddComponent<FastForward>();
             if(Environment.GetEnvironmentVariable("FF4JOBS_TEST_MODE")=="1") Application.runInBackground=true;
             Enabled = true;
             Log.LogInfo("FF4 Jobs prototype loaded. Select Jobs from the main menu.");
@@ -57,7 +68,7 @@ internal static class State
     internal static int JobGroupScope;
     internal static bool RewardGiven;
     internal static int Generation;
-    internal static string Notice = "Choose a main job to start earning ABP.";
+    internal static string Notice = "Main jobs earn full ABP; sub jobs earn 25%.";
     internal static bool BrokenSave;
     internal const string SaveKey = "FF4Jobs_MainSub_v1";
     internal static SubSceneManagerMainGame.State? GamePhase => SceneManager.Instance?
@@ -65,6 +76,8 @@ internal static class State
 
     internal static void Reset()
     {
+        CombatMenuTest.Reset();
+        BattleCommandScroll.Clear();
         UnlockNotifications.Reset();
         Projection.Clear();
         Campaign = new Campaign(); Generation++; RewardGiven = false; BrokenSave = false;
@@ -85,6 +98,7 @@ internal static class State
                 BattleFlagType.Auto, BattleFlagType.LoseEvent, BattleFlagType.NoResultNoSave, BattleFlagType.FinalBattle})
                 if (battle.IsMatchBattleFlagTypes(flag)) return false;
         }
+        if(CombatMenuTest.Applies(character)) return true;
         var p = Campaign.Character(status);
         if(!Campaign.IsAvailable(status,p.Main,Plugin.TestAllJobs.Value)
             || (p.Sub!=null && !Campaign.IsAvailable(status,p.Sub,Plugin.TestAllJobs.Value))) return false;
