@@ -285,4 +285,17 @@ Check(speed.Update(1,true,8)==8 && speed.Update(0,true,8)==0 && speed.Update(0,f
 Check(speed.Update(1,true,8)==8 && speed.Update(2,false,8)==2,"Release preserves an external speed change");
 Check(speed.Update(1,true,8)==8 && speed.Update(8,false,1)==1,"Scene/modal transition restores normal speed");
 Check(speed.Update(1,true,100)==16 && speed.Update(16,false,1)==1,"Multiplier bounded to 16x");
+// Ranger completion: progression is personal, slot-specific, and story gated.
+var rangerCampaign=new Campaign(); rangerCampaign.StoryFlags.Add(17);
+rangerCampaign.Select(1,"ranger",null); rangerCampaign.Award(1,150);
+Check(!rangerCampaign.Commands(1,new[]{1,3}).Contains(JobFeatures.RapidFire),"Rapid Fire cannot be ground out before Zot");
+rangerCampaign.StoryFlags.Add(43);
+Check(rangerCampaign.Commands(1,new[]{1,3}).Contains(JobFeatures.RapidFire),"Ranger main gains Rapid Fire at 150 after Zot");
+rangerCampaign.Select(1,"original","ranger");
+Check(!rangerCampaign.Commands(1,new[]{1,3}).Contains(JobFeatures.RapidFire),"Rapid Fire sub requires mastery");
+rangerCampaign.Character(1).Abp["ranger"]=310;
+Check(rangerCampaign.Commands(1,new[]{1,3}).Contains(JobFeatures.RapidFire),"Mastered Ranger sub grants Rapid Fire");
+Check(!rangerCampaign.Commands(4,new[]{1,3}).Contains(JobFeatures.RapidFire),"Ranger training does not spread to Rydia");
+Check(JobFeatures.RapidFireDamage(100)==50 && JobFeatures.RapidFireDamage(1)==1 && JobFeatures.RapidFireDamage(0)==0,"Rapid Fire halves damage without turning misses into hits");
+Check(JobFeatures.RapidFireDamage(-100)==-100,"Rapid Fire leaves non-damage result signs alone");
 Console.WriteLine($"PASS: {checks} progression, save, and fast-forward checks.");

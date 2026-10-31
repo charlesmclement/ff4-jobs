@@ -73,4 +73,7 @@ STEAL
 35 + 5 per Thief rank + 2 per level advantage; minimum 15%, maximum 75%.
 This is the initial detection check, not a guarantee that the enemy has loot.
 
-No new Dualcast, Rapid Fire, Ninja dual wield or custom Monk barehand formula. Original retains the character's own native mechanics.
+No new Dualcast, Ninja dual wield or custom Monk barehand formula. Original retains the character's own native mechanics.
+
+RANGER RAPID FIRE
+150 Ranger ABP as Main; 310 as Sub; escape Zot first. Four random-target physical attacks, each at half native damage. Native accuracy, enemy defenses, weapon effects and counters still apply. Each strike retargets a living enemy.

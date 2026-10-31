@@ -12,7 +12,7 @@ This is an experimental public alpha for playtesting. It is not a campaign-certi
 - Preserve Cecil's exclusive holy-sword category, native restrictions on Gold Hairpin/Minerva equipment, native slot/two-hand rules, magnetic effects and inventory counts. Ninja does not grant a new dual-wield implementation.
 - Dragoon: STR +6, VIT +3, AGI -3. Paladin: STR +3, VIT +6, AGI -3, SPR +6. Engineer: STR +4, VIT +8, AGI -4. Other existing main-job adjustments retained. These are additive modifiers to the character's native stats, capped at 1–99, not FF5's exact formulas.
 - Keep original character identities, permanent growth and scripted story behavior. Do not impose a party-wide Jump limit in this alpha: simultaneous/queued Jump and boss behavior need an encounter-level implementation and testing first.
-- No new FF5-exclusive Dualcast, Rapid Fire, mastery inheritance or custom unarmed formula in this release. Job descriptions disclose these limits. The latest local playtest shares only story-earned summons, gated by each character's own Summoner ABP. Later-story live acceptance remains pending.
+- No new FF5-exclusive Dualcast, mastery inheritance or custom unarmed formula in this release. Job descriptions disclose these limits. The latest local playtest shares only story-earned summons, gated by each character's own Summoner ABP. Later-story live acceptance remains pending.
 - Park the isometric prototype. It is disabled locally and excluded from the jobs archive. Keyboard remapping and DXVK/VSync configuration are also excluded.
 
 ## Verification scope

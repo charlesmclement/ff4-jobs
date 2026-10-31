@@ -99,7 +99,7 @@ internal static class Projection
         if(CombatMenuTest.Applies(c)) selected=selected.Concat(CombatMenuTest.Commands).Distinct();
         foreach(int id in selected)
         {
-            var command = MasterManager.Instance.GetData<Command>(id);
+            var command = CustomCommands.Get(id);
             if (command != null) result.Add(command);
         }
         return result;

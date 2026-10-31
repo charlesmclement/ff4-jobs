@@ -17,7 +17,8 @@ public sealed class Job
     public int Intelligence { get; }
     public int Spirit { get; }
     public bool IsCaster => MagicSchool.Length > 0;
-    public int CommandRequirement(int index, bool sub) => sub ? Jobs.Thresholds[index] : index==0 ? 0 : Jobs.Thresholds[index-1];
+    public int CommandRequirement(int index, bool sub) => JobFeatures.CommandAbp(Commands[index],sub,
+        sub ? Jobs.Thresholds[index] : index==0 ? 0 : Jobs.Thresholds[index-1]);
     public int[] LearnedCommands(int points, bool sub) => Commands.Where((_,i)=>points>=CommandRequirement(i,sub)).ToArray();
 
     public Job(string id, string name, string description, int[] commands,
@@ -65,7 +66,7 @@ public static class Jobs
         new("thief", "Thief", "Steal; fast, lightly built adventurer.", new[]{17}, str:1, agi:12, vit:-2),
         new("ninja", "Ninja", "Ninjutsu and Throw. Dual wielding remains under development.", new[]{15,16}, "ninja", str:4, agi:8, intel:4),
         new("bard", "Bard", "Sing and Heal using FF4's bard actions.", new[]{22,23}, agi:4, spr:6),
-        new("ranger", "Ranger", "Aim; accurate ranged attacks. No Rapid Fire yet.", new[]{13}, str:3, agi:7),
+        new("ranger", "Ranger", "Aim. Rapid Fire: four half-damage attacks after Zot; 150 main / 310 sub ABP.", new[]{13,JobFeatures.RapidFire}, str:3, agi:7),
         new("summoner", "Summoner", "Story-earned summons; your Summoner ABP unlocks stronger ones.", new[]{9}, "summon", str:-5, intel:10, spr:2),
         new("engineer", "Engineer", "Study enemies; sturdy combat specialist.", new[]{31}, str:4, vit:8, agi:-4),
         new("sage", "Sage", "White and black magic, with slower movement in battle.", new[]{7,8}, "sage", str:-5, agi:-5, intel:10, spr:10)
@@ -189,7 +190,7 @@ public sealed class Campaign
         }
         result.Add(3);
         if(p.Main != "original") result.AddRange(original.Where(id => id is 2 or 4 or 5 or 6 or 59 or 60 or 61 or 62));
-        return result.Distinct().ToArray();
+        return result.Distinct().Where(id=>testAllSkills || JobFeatures.StoryAllows(this,id)).ToArray();
     }
 
     public void Validate()

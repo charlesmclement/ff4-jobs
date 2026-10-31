@@ -1,4 +1,5 @@
 Unreleased playtest update
+- Ranger Rapid Fire: four native queued attacks at half damage, random living enemy per strike. 150 main / 310 sub ABP, after Zot.
 - Corrected Cecil's blood-magic execution check: zero MP no longer selects the native "No effect" action before HP payment. In-game retest pending.
 - White native command-list triangles indicate hidden commands above/below.
 - Native skill/spell unlock dialogs track personal Main/Sub progression; old saves seed silently and acknowledged notices persist with saves.

@@ -4,7 +4,7 @@ A complete campaign and native Windows/clean-prefix installation have not
 been certified. Keep backup saves and use a separate test slot.
 
 Jobs use existing FF4 actions, not every FF5 mechanic. No new Dualcast,
-Rapid Fire, Freelancer mastery inheritance, Ninja dual wield or custom
+Freelancer mastery inheritance, Ninja dual wield or custom
 Monk barehand formula. The local playtest now shares story-earned summons
 with personal Summoner ABP requirements; later-story acceptance is pending.
 Stat modifiers are provisional additive values.

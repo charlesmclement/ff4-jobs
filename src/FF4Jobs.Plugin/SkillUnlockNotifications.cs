@@ -51,7 +51,8 @@ internal static class SkillUnlockNotifications
                     string prefix=sub?"s/":"m/";
                     foreach(int id in job.LearnedCommands(points,sub))
                     {
-                        var command=MasterManager.Instance.GetData<Command>(id);
+                        if(!JobFeatures.StoryAllows(State.Campaign,id)) continue;
+                        var command=CustomCommands.Get(id);
                         if(command!=null) names[prefix+"command/"+id]=command.MesIdName;
                     }
                     foreach(var spell in spells)
