@@ -53,3 +53,7 @@ Core checks cover the 0 main / 70 sub ABP passive, Yang's innate access, own-lev
 ## Stat mastery / 0.3.0 stage
 
 Core checks cover every ABP rank, negative tradeoffs, best-per-stat inheritance, active vs Original passives, caster eligibility, personal progress, canonical Cecil identity, save round trips, legacy saves, story/character restrictions and repeated job-switch idempotence. Primary stats use derived bonuses; native saved base stats are never changed. The mod ID and save key remain unchanged under the FF4 JOBS+ display name. New advanced-job runtime acceptance remains outstanding; no game was launched and no user save was modified during this stage.
+
+### Monk / Mastery integration follow-up
+
+The suite passes 1,174 checks with a clean plugin build (zero warnings/errors). Added a reward-to-save-to-reload scenario crossing Monk mastery from 309.75 to 310 ABP through sub-job training, including Cecil identity continuity. Original keeps the two-strike Barehand passive with the sub slot empty; another character receives neither its stats nor passive. The mastery notice remains acknowledged across reloads. The protected, persistent and live after-Rosa save sets each match all nine protected hashes; no save restore or game launch was performed. Native combat/controller acceptance remains pending.

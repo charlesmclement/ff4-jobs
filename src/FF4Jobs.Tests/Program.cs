@@ -393,4 +393,22 @@ foreach(var job in Jobs.All.Where(j=>j.Id!="original")) mastery.Character(1).Abp
 mastery.Select(1,"original",null);
 foreach(JobStat stat in Enum.GetValues<JobStat>()) Check(Mastery.Bonus(mastery,1,stat)<=17,"Mastering all jobs cannot stack unlimited stats");
 Check(Mastery.HasAny(legacyLearning,1)==false,"Old untrained saves gain no free mastery");
+// Cross mastery through real quarter-ABP rewards, including a save just before
+// the threshold. Original must retain the new fist mechanic after unequipping sub.
+var monkMastery=new Campaign();monkMastery.StoryFlags.Add(20);
+monkMastery.Select(1,"monk",null);monkMastery.AwardBattle(1,309);
+monkMastery.Select(1,"original","monk");monkMastery.AwardBattle(1,3);
+Check(monkMastery.Character(1).ExactPoints("monk")==309.75m && !Mastery.HasAny(monkMastery,1),"Fractional sub ABP does not grant mastery early");
+monkMastery=JsonSerializer.Deserialize<Campaign>(JsonSerializer.Serialize(monkMastery))!;monkMastery.Validate();
+monkMastery.AwardBattle(13,1);monkMastery.Select(13,"original",null);
+Check(Mastery.Earned(monkMastery,13).Single().Id=="monk","Last quarter ABP grants personal mastery after loading and Cecil transformation");
+Check(JobFeatures.HasBarehand(monkMastery.Character(13),13)
+    && JobFeatures.BarehandStrikes(JobFeatures.HasBarehand(monkMastery.Character(13),13),true,true)==2,
+    "Original inherits mastered two-fist Attack with no Monk sub equipped");
+Check(!JobFeatures.HasBarehand(monkMastery.Character(4),4) && !Mastery.HasAny(monkMastery,4),"Mastering Monk on Cecil grants nothing to Rydia");
+Check(Mastery.Bonus(monkMastery,13,JobStat.Strength)>0 && Mastery.Bonus(monkMastery,13,JobStat.Vitality)>0,"Monk mastery grants Original its earned physical stats");
+var masteryJournal=monkMastery.Learning;masteryJournal.FinishCharacter(13);
+Check(masteryJournal.Observe(13,"monk",new[]{"m/mastery/monk"},true).Length==1,"New mastery can announce once");
+monkMastery=JsonSerializer.Deserialize<Campaign>(JsonSerializer.Serialize(monkMastery))!;monkMastery.Validate();
+Check(monkMastery.Learning.Observe(1,"monk",new[]{"m/mastery/monk"},true).Length==0,"Mastery announcement stays acknowledged after saving and reloading");
 Console.WriteLine($"PASS: {checks} progression, save, and fast-forward checks.");
