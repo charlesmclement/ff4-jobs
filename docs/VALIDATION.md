@@ -48,7 +48,7 @@ No Nexus upload has been made. The package is a reviewable alpha candidate.
 
 ## Monk implementation stage
 
-Core checks cover the 0 main / 70 sub ABP passive, own-character level/strength/rank scaling, mastery saturation, arithmetic bounds and loss of unmastered passive after switching. The native Monk offensive-power helper confirms the base 2*level + strength/4 + 2 formula. The mod extends this at the offensive-power provider boundary, retaining native final combat modifiers. Both hands must be empty. Live Barehand/Focus/Kick damage acceptance remains for playtesting.
+Core checks cover the 0 main / 70 sub ABP passive, Yang's innate access, own-level per-fist power (2*level+3), arithmetic bounds, loss of unmastered passive after switching, and all combinations of training/empty hands/normal Attack eligibility. Normal Attack expands into two native queue entries with fresh calculation state for the second fist, retaining native accuracy and defense for each. Expanded actions cannot recursively expand. Jump, Kick, Focus, counters and Rapid Fire are excluded. The unique native FightActFunctionFF4.GetAttackCount routine is overridden only for marked fists to avoid the original two cosmetic swings per calculation. Markers are held until native battle Clear or campaign reset. Build passes; live two-strike animation, target-death/counter behavior and damage comparison against claws remain playtest acceptance items.
 
 ## Stat mastery / 0.3.0 stage
 

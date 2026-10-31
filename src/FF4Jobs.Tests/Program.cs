@@ -343,10 +343,14 @@ monk.Main="original";monk.Sub="monk";monk.Abp["monk"]=69;
 Check(!JobFeatures.HasPassive(monk,"monk"),"Monk sub needs 70 ABP for Barehand");
 monk.Abp["monk"]=70;
 Check(JobFeatures.HasPassive(monk,"monk"),"Monk sub gains Barehand at 70 ABP");
-Check(JobFeatures.UnarmedPower(20,40,0)==52 && JobFeatures.UnarmedPower(20,40,70)==58,"Barehand uses own level and strength plus own Monk rank");
-Check(JobFeatures.UnarmedPower(21,40,70)-JobFeatures.UnarmedPower(20,40,70)==2,"Own level growth improves barehand power");
-Check(JobFeatures.UnarmedPower(20,40,310)==62 && JobFeatures.UnarmedPower(20,40,int.MaxValue)==62,"Barehand rank bonus caps at mastery");
-Check(JobFeatures.UnarmedPower(int.MaxValue,int.MaxValue,int.MaxValue)==234,"Barehand arithmetic remains bounded");
+Check(JobFeatures.UnarmedPower(20)==43 && JobFeatures.UnarmedPower(70)==143,"FFV-style fist base power uses own level");
+Check(JobFeatures.UnarmedPower(21)-JobFeatures.UnarmedPower(20)==2,"Own level growth improves each fist");
+Check(JobFeatures.UnarmedPower(int.MaxValue)==201 && JobFeatures.UnarmedPower(int.MinValue)==5,"Barehand arithmetic remains bounded");
+foreach(bool trained in new[]{false,true}) foreach(bool empty in new[]{false,true}) foreach(bool attack in new[]{false,true})
+    Check(JobFeatures.BarehandStrikes(trained,empty,attack)==(trained&&empty&&attack?2:1),"Only trained empty-hand normal Attack gains a second strike");
+Check(JobFeatures.HasBarehand(new CharacterProgress(),8),"Yang has innate Barehand without grinding or a story unlock");
+Check(!JobFeatures.HasBarehand(new CharacterProgress(),1),"Other characters do not inherit Yang's innate Barehand");
+Check(JobFeatures.HasBarehand(monk,1),"Trained Monk sub gets both fists on another character");
 monk.Sub=null;
 Check(!JobFeatures.HasPassive(monk,"monk"),"Unmastered Barehand is lost when unequipped");
 // Mastery derives from earned personal ABP, with no native stat writes or stacking loops.

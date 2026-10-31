@@ -122,7 +122,7 @@ Ninja learns Dual Wield at 70 personal ABP as a main job, or 150 ABP as a sub jo
 
 ### Monk — Barehand
 
-Monk main jobs gain Barehand immediately; sub jobs need 70 personal Monk ABP. Both hands must be empty. Base attack is `2 × own level + floor(own STR / 4) + 2 + 2 × Monk rank`, followed by FF4's normal attack processing. Training adds up to 10 attack at 310 ABP. Focus, Kick and Gird retain their native actions and ABP command thresholds. Equipped weapons use their normal rules; Barehand does not stack with equipped hand gear.
+Monk main jobs gain Barehand immediately; sub jobs need 70 personal Monk ABP. Yang also retains innate Barehand. Both hands must be empty. Normal Attack delivers two independent physical strikes in one ATB turn, each with base attack `2 × own level + 3` and its own native accuracy, defense and damage calculation. This makes unarmed combat the intended raw-damage choice; claws retain their native elemental/status effects. Native damage variance still applies; this is an FFV-style adaptation, not a replacement of FF4's entire damage formula. Jump, Kick, Focus, counters and Rapid Fire do not gain extra strikes. Focus, Kick and Gird retain their native actions and ABP command thresholds. Barehand does not stack with equipped hand gear.
 
 ### Stat growth and mastery
 

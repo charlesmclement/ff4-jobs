@@ -12,8 +12,11 @@ public static class JobFeatures
         (p.Main==job && (test || p.Points(job)>=PassiveAbp(job,false)))
         || (p.Sub==job && (test || p.Points(job)>=PassiveAbp(job,true)))
         || (p.Main=="original" && PassiveName(job)!=null && p.Points(job)>=310);
-    public static int UnarmedPower(int level,int strength,int abp) =>
-        2*Math.Clamp(level,1,99)+Math.Clamp(strength,1,99)/4+2+2*Jobs.Rank(Math.Clamp(abp,0,310));
+    public static bool HasBarehand(CharacterProgress p,int characterStatus,bool test=false) =>
+        characterStatus==8 || HasPassive(p,"monk",test); // Yang retains his innate training.
+    public static int UnarmedPower(int level) => 2*Math.Clamp(level,1,99)+3;
+    public static int BarehandStrikes(bool trained,bool emptyHands,bool normalAttack) =>
+        trained && emptyHands && normalAttack ? 2 : 1;
     public static bool DualWieldWeapon(int category,bool twoHanded) =>
         !twoHanded && category is not (12 or 13 or 43);
     public const int RapidFireHits = 4;
