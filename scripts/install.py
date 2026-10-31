@@ -16,6 +16,10 @@ target.mkdir(parents=True,exist_ok=True)
 for name in ['FF4Jobs.dll','FF4Jobs.Core.dll']:
     dest=target/name
     if dest.exists(): shutil.copy2(dest,dest.with_suffix('.dll.previous'))
-    shutil.copy2(source/name,dest)
+    # Replace the inode so a running game can keep its already-loaded DLL.
+    # The new assembly takes effect on the next normal launch.
+    pending=dest.with_suffix('.dll.installing')
+    shutil.copy2(source/name,pending)
+    pending.replace(dest)
 (target/'gameassembly.sha256').write_text(known+'\n')
 print('Installed prototype:',target)

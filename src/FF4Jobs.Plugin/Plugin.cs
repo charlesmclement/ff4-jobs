@@ -13,7 +13,7 @@ using System.Text.Json.Nodes;
 
 namespace FF4Jobs;
 
-[BepInPlugin("ff4jobs.mainandsub", "FF4 JOBS+", "0.4.1")]
+[BepInPlugin("ff4jobs.mainandsub", "FF4 JOBS+", "0.4.2")]
 public sealed class Plugin : BasePlugin
 {
     internal static ManualLogSource Logger = null!;
@@ -51,7 +51,7 @@ public sealed class Plugin : BasePlugin
             if(Environment.GetEnvironmentVariable("FF4JOBS_EQUIPMENT_PROBE")=="1") AddComponent<EquipmentCrashProbe>();
             if(Environment.GetEnvironmentVariable("FF4JOBS_TEST_MODE")=="1") Application.runInBackground=true;
             Enabled = true;
-            Log.LogInfo("FF4 JOBS+ 0.4.1 beta 2 loaded. Select Jobs from the main menu.");
+            Log.LogInfo("FF4 JOBS+ 0.4.2 beta 3 loaded. Select Jobs from the main menu.");
             StartupSmoke.Report(true,harmony.GetPatchedMethods().Count(),null);
         }
         catch(Exception e)

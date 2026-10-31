@@ -1,6 +1,9 @@
-FF4 JOBS+ 0.4.1 beta 2 — PLAYTEST GUIDE
+FF4 JOBS+ 0.4.2 beta 3 — PLAYTEST GUIDE
 
-Beta 2 priority: newly joined Yang, remove/re-equip each claw, move between
+Beta 3 priority: change Confirm/Back in FF4 settings and verify Jobs uses
+only the newly assigned buttons on every page. Rebind again and repeat.
+
+Equipment regression: newly joined Yang, remove/re-equip each claw, move between
 hands, check inventory counts, then try Optimize. No crash or item loss.
 
 You can continue an existing campaign. Keep your original backup; no new

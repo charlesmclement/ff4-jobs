@@ -1,8 +1,8 @@
 # FF4 JOBS+
 
-A main-job/sub-job mod (0.4.1 beta 2) for Final Fantasy IV Pixel Remaster on PC.
+A main-job/sub-job mod (0.4.2 beta 3) for Final Fantasy IV Pixel Remaster on PC.
 
-Beta 2 is prepared for campaign playtesting. Use the `FF4JobsPlus-0.4.1-beta2.zip` archive and the verified game/loader in [INSTALL.txt](release/INSTALL.txt). Existing campaigns are supported; keep your pre-mod backup. The older 0.2.0 alpha download does not contain these features. See [beta scope](docs/BETA-REVIEW.md) and [playtest guide](release/TESTING.txt).
+Beta 3 is prepared for campaign playtesting. Use the `FF4JobsPlus-0.4.2-beta3.zip` archive and the verified game/loader in [INSTALL.txt](release/INSTALL.txt). Existing campaigns are supported; keep your pre-mod backup. The older 0.2.0 alpha download does not contain these features. See [beta scope](docs/BETA-REVIEW.md) and [playtest guide](release/TESTING.txt).
 
 ## Project requirements
 
@@ -17,7 +17,7 @@ The beta includes **hold LT/L2 for 4x fast-forward**, including dialogue confirm
 
 ## Status
 
-**Beta 2: intended features implemented; full-campaign and advanced-combat acceptance remain in playtesting.** The installed game is Steam build 20265023. Its IL2CPP metadata and master tables have been inspected locally. BepInEx 6 be.735 loads under Proton. No original game assets have been overwritten.
+**Beta 3: intended features implemented; full-campaign and advanced-combat acceptance remain in playtesting.** The installed game is Steam build 20265023. Its IL2CPP metadata and master tables have been inspected locally. BepInEx 6 be.735 loads under Proton. No original game assets have been overwritten.
 
 Native job-switching interfaces exist in this build, but FF4's job rows have empty command/stat overrides. Their presence alone does not supply an FF5 job system. This mod must supply its own rules and integrate them with combat and saving.
 

@@ -2,7 +2,6 @@ using FF4Jobs.Core;
 using Last.Data.User;
 using Last.Management;
 using UnityEngine;
-using NativeInput=Il2CppSystem.Input.InputSystemManager;
 using ActionType=Il2CppSystem.Input.InputSystemManager.InputActionType;
 
 namespace FF4Jobs;
@@ -66,9 +65,7 @@ public sealed class JobWindow : MonoBehaviour
             Plugin.Logger.LogInfo("Jobs character selection opened."); return;
         }
         if(!open || Time.unscaledTime<inputReady) return;
-        var input=NativeInput.Instance;
-        if(input==null) return;
-        if(MenuInput.Down(ActionType.Cancel) || Input.GetKeyDown(KeyCode.Escape)) { Back(); return; }
+        if(MenuInput.Down(ActionType.Cancel)) { Back(); return; }
         int direction=MenuInput.Held(ActionType.Down) || MenuInput.Held(ActionType.Right)?1:
             MenuInput.Held(ActionType.Up) || MenuInput.Held(ActionType.Left)?-1:0;
         if(direction!=heldDirection) { heldDirection=direction; repeatAt=0; }
@@ -127,7 +124,7 @@ public sealed class JobWindow : MonoBehaviour
         MenuSkin.Label(parent,"FF4 JOBS+",.035f,.025f,.6f,.065f,52);
         string test="Jobs: "+(Plugin.TestAllJobs.Value?"All":"Story")+"\nSkills: "+(Plugin.TestAllSkills.Value?"All":"Earned");
         MenuSkin.Label(parent,test,.73f,.015f,.24f,.09f,28);
-        MenuSkin.Label(parent,"Confirm: A / Enter       Back: B / Backspace       Move: D-pad / Stick",.04f,.91f,.92f,.055f,30);
+        MenuSkin.Label(parent,"Uses your FF4 Confirm, Back and movement bindings",.04f,.91f,.92f,.055f,30);
         if(page==Page.Characters)
         {
             MenuSkin.Label(parent,"Choose a character",.04f,.105f,.85f,.065f,42);

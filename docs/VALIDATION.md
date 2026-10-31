@@ -1,6 +1,14 @@
 # FF4 JOBS+ — validation history
 
-## Current: 0.4.1 beta 2 (2026-10-31)
+## Current: 0.4.2 beta 3 (2026-10-31)
+
+- Jobs input now reads logical Action/Cancel/direction keys solely through the game's InputListener. Native inspection confirms its gamepad path resolves the current KeyConfig mapping through GetInputActionType before polling the controller action.
+- Removed the competing raw action reads and hard-coded Escape fallback. The footer no longer assumes A/B or fixed keyboard keys.
+- Release build passed with zero warnings/errors; all 4,298 existing core checks passed. These do not simulate physical controller input.
+- Controller acceptance: swap Confirm/Back in FF4 settings; open Jobs, traverse characters/slots/jobs, confirm and back out using the assigned buttons. Repeat after changing bindings again. Physical-controller retest remains pending.
+- No game restart forced and no campaign/save/configuration files changed by this fix.
+
+## Previous: 0.4.1 beta 2 (2026-10-31)
 
 - Fixed the native equipment-list hard exit: IL2CPP materializes the source into a native list; managed code reads it by index. The old generic/non-generic enumerator crossing reproduced a hard process exit while reading Yang's equipment choices.
 - Release build: zero warnings/errors; 4,298 core checks pass.

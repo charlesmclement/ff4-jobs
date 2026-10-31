@@ -1,3 +1,8 @@
+FF4 JOBS+ 0.4.2 beta 3
+- Jobs follows the current FF4 Confirm, Back and directional bindings for controllers and keyboards.
+- Removed raw default-button checks that conflicted with remapped controls, including the separate Escape override.
+- Replaced fixed A/B button instructions with a reminder that Jobs uses the in-game bindings.
+
 FF4 JOBS+ 0.4.1 beta 2
 - Fixed a native equipment-list hard exit reproduced with Yang: item enumeration stays inside IL2CPP before managed filtering.
 - Restored native claw power and accuracy; elemental/status effects remain intact.

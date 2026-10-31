@@ -1,9 +1,12 @@
-# FF4 JOBS+ 0.4.1 beta 2
+# FF4 JOBS+ 0.4.2 beta 3
 
-Beta 2 is prepared for campaign playtesting with existing saves. It is not
+Beta 3 is prepared for campaign playtesting with existing saves. It is not
 a claim that the whole campaign or every combination has been played through.
 
 ## Completed release work
+
+- Jobs uses the current FF4 input bindings, with no competing default-button
+  checks. Swapped-controller acceptance remains for the live playtest.
 
 - All requested job stages are implemented: Ranger Rapid Fire, Red Mage
   Dualcast, Ninja Dual Wield, Monk fists/claws and personal stat mastery.
