@@ -48,7 +48,11 @@ No Nexus upload has been made. The package is a reviewable alpha candidate.
 
 ## Monk implementation stage
 
-Core checks cover the 0 main / 70 sub ABP passive, Yang's innate access, own-level per-fist power (2*level+3), arithmetic bounds, loss of unmastered passive after switching, and all combinations of training/empty hands/normal Attack eligibility. Normal Attack expands into two native queue entries with fresh calculation state for the second fist, retaining native accuracy and defense for each. Expanded actions cannot recursively expand. Jump, Kick, Focus, counters and Rapid Fire are excluded. The unique native FightActFunctionFF4.GetAttackCount routine is overridden only for marked fists to avoid the original two cosmetic swings per calculation. Markers are held until native battle Clear or campaign reset. Build passes; live two-strike animation, target-death/counter behavior and damage comparison against claws remain playtest acceptance items.
+Core checks cover the 0 main / 70 sub ABP passive, Yang's innate access, own-level power (2*level+3), shared trained accuracy (50+level/4), and fist/claw/empty/mixed/shield/bow hand combinations. Normal Attack expands into two native queue entries with fresh calculation state for the second strike. Expanded actions cannot recursively expand. Jump, Kick, Focus, counters and Rapid Fire are excluded. The native FightActFunctionFF4.GetAttackCount and IsRepertEffect routines suppress duplicate cosmetic swings only for marked strikes.
+
+The native SetUpFunctions routine calls the normal-attack calculation synchronously. A scoped context identifies marked barehand actions; the FuncitonNormalAttack.Calc postfix applies 5% to the newly calculated damage before display/HP updates. It does not patch result reads, so repeated display queries do not compound the bonus. The tiny GetSumCalcResult helper is inlined at native callers and is not used for this adjustment. Fists and claws share the offensive-power provider override; Ninja's provider patch yields to this profile. The confirmed-accuracy getter temporarily excludes the equipment accuracy cache, restores it in a finalizer, and preserves native temporary accuracy and final limits. No equipped item or elemental/status data is changed.
+
+Manual equipment/Optimize selection and commit validation allow offhand claws for trained Monks within main-job equipment access, without enabling arbitrary dual weapons. Live two-strike animation, two-claw selection/Optimize, target-death/counter behavior, blind status and elemental/status acceptance remain playtest items.
 
 ## Stat mastery / 0.3.0 stage
 
@@ -57,3 +61,7 @@ Core checks cover every ABP rank, negative tradeoffs, best-per-stat inheritance,
 ### Monk / Mastery integration follow-up
 
 The suite passes 1,174 checks with a clean plugin build (zero warnings/errors). Added a reward-to-save-to-reload scenario crossing Monk mastery from 309.75 to 310 ABP through sub-job training, including Cecil identity continuity. Original keeps the two-strike Barehand passive with the sub slot empty; another character receives neither its stats nor passive. The mastery notice remains acknowledged across reloads. The protected, persistent and live after-Rosa save sets each match all nine protected hashes; no save restore or game launch was performed. Native combat/controller acceptance remains pending.
+
+### Claw / barehand balance follow-up
+
+Build and 1,514 core checks pass with zero warnings/errors. Checks include every combination of fist/claw/unrelated-weapon/shield/bow eligibility, levels 1–99 for shared power/accuracy, five-percent post-defense scaling, zero/negative damage, tiny-hit rounding and integer overflow. These are implementation checks, not live combat acceptance. All nine live and persistent campaign saves still match the protected after-Rosa backup.

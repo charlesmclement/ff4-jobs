@@ -15,8 +15,15 @@ public static class JobFeatures
     public static bool HasBarehand(CharacterProgress p,int characterStatus,bool test=false) =>
         characterStatus==8 || HasPassive(p,"monk",test); // Yang retains his innate training.
     public static int UnarmedPower(int level) => 2*Math.Clamp(level,1,99)+3;
-    public static int BarehandStrikes(bool trained,bool emptyHands,bool normalAttack) =>
-        trained && emptyHands && normalAttack ? 2 : 1;
+    public static bool MonkHands(int first,int second) =>
+        first is HandEquipment.Empty or HandEquipment.Claw && second is HandEquipment.Empty or HandEquipment.Claw;
+    public static int MonkStrikes(bool trained,int first,int second,bool normalAttack) =>
+        trained && MonkHands(first,second) && normalAttack ? 2 : 1;
+    // Equal trained accuracy keeps claws' native item accuracy from overwhelming
+    // the small barehand damage edge. Temporary accuracy/status modifiers remain native.
+    public static int MonkAccuracy(int level) => 50+Math.Clamp(level,1,99)/4;
+    public static int BarehandDamage(int damage) => damage<=0 ? damage
+        : (int)Math.Min(int.MaxValue,(long)damage*105/100);
     public static bool DualWieldWeapon(int category,bool twoHanded) =>
         !twoHanded && category is not (12 or 13 or 43);
     public const int RapidFireHits = 4;

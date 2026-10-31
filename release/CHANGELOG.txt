@@ -1,7 +1,7 @@
 FF4 JOBS+ 0.3.0 development playtest
 - Red Mage Dualcast at 310 ABP: two spell/target selections, one charge, separate costs.
 - Ninja Dual Wield at main 70 / sub 150 ABP, with hand-pair validation.
-- Monk Barehand at main 0 / sub 70 ABP: two separately calculated normal Attack strikes, each with base power 2*level+3. Yang has innate Barehand.
+- Monk fist/claw training at main 0 / sub 70 ABP: two independently calculated normal Attack strikes for fists or claws; Yang has it innately. Both share level-based power/accuracy. Barehanded normal attacks gain 5% post-defense damage; claws retain elemental/status effects. Two claws do not require Ninja.
 - Main-job positive stats grow with rank; mastered stats and innate passives benefit Original.
 - Permanent mastery benefits use the best per-stat bonus, avoiding unlimited stacking.
 - Existing saves and the internal mod ID remain compatible.

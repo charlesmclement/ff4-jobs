@@ -78,7 +78,7 @@ internal static class State
     {
         CombatMenuTest.Reset();
         Dualcast.Selecting=null; Dualcast.SecondCasts.Clear();
-        Monk.Fists.Clear();
+        Monk.Clear();
         BattleCommandScroll.Clear();
         UnlockNotifications.Reset();
         Projection.Clear();

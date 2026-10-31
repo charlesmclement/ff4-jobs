@@ -2,7 +2,7 @@ namespace FF4Jobs.Core;
 
 public static class HandEquipment
 {
-    public const int Empty=0, Shield=-1, Bow=12, Arrow=13;
+    public const int Empty=0, Shield=-1, Bow=12, Arrow=13, Claw=18;
     public static bool AllowsShields(string main) => main is "paladin" or "engineer" or "dragoon";
     // Empty hands are allowed while assembling/changing equipment. An unloaded
     // bow keeps FF4's native ineffective attack; it never becomes a second bow.

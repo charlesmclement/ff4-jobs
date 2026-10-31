@@ -27,9 +27,10 @@ internal static class HandEquipmentRules
         HandEquipment.AllowsShields(State.Campaign.Character(c.characterStatusId).Main);
     internal static bool PairAllowed(OwnedCharacterData c,OwnedItemData? first,OwnedItemData? second) =>
         HandEquipment.PairAllowed(Kind(first),Kind(second),first?.IsTwoHanded??false,
-            second?.IsTwoHanded??false,c.HasTwoSwordStyle,Shields(c));
+            second?.IsTwoHanded??false,c.HasTwoSwordStyle || (Monk.Trained(c) && JobFeatures.MonkHands(Kind(first),Kind(second))),Shields(c));
     internal static bool SlotAllowed(OwnedCharacterData c,OwnedItemData item,EquipSlotType slot) =>
         (IsHand(slot) && Kind(item)==HandEquipment.Shield && Shields(c))
+        || (IsHand(slot) && Kind(item)==HandEquipment.Claw && Monk.Trained(c))
         || item.PartsGroup==null || EquipUtility.IsEquipSlot(item.PartsGroup,slot,c.GetDominantArm(),c.HasTwoSwordStyle);
     internal static bool Candidate(OwnedCharacterData c,EquipSlotType slot,OwnedItemData item)
     {
@@ -60,9 +61,10 @@ internal static class HandEquipmentChoices
         var seen=new HashSet<int>();
         foreach(var item in HandEquipmentRules.Items(__result))
             if(item!=null && HandEquipmentRules.Candidate(target,slot,item) && seen.Add(item.Id)) result.Add(item);
-        if(HandEquipmentRules.Shields(target))
+        if(HandEquipmentRules.Shields(target) || Monk.Trained(target))
             foreach(var item in HandEquipmentRules.Items(sourceList))
-                if(item!=null && HandEquipmentRules.Kind(item)==HandEquipment.Shield
+                if(item!=null && ((HandEquipmentRules.Kind(item)==HandEquipment.Shield && HandEquipmentRules.Shields(target))
+                        || (HandEquipmentRules.Kind(item)==HandEquipment.Claw && Monk.Trained(target)))
                     && item.Count>item.EquipCount && EquipUtility.CanEquipped(item,target.JobId)
                     && HandEquipmentRules.Candidate(target,slot,item) && seen.Add(item.Id)) result.Add(item);
         __result=result.Cast<NativeItems>();

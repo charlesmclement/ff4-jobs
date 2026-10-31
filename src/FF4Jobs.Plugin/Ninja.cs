@@ -45,6 +45,7 @@ internal static class NinjaAttackPower
     static bool Prefix(Serial.FF4.Management.ParameterProvider __instance,OwnedCharacterData data,ref int __result)
     {
         if(!Ninja.Trained(data) || !Ninja.TwoWeapons(data)) return true;
+        if(Monk.Trained(data) && Monk.MartialHands(data)) return true;
         __result=__instance.GetTwoHandNinjaOffensivePower(data);
         return false;
     }

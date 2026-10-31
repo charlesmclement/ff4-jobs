@@ -1,6 +1,8 @@
 using FF4Jobs.Core;
 using HarmonyLib;
 using Last.Battle;
+using Last.Battle.Function;
+using Last.Data;
 using Last.Data.Master;
 using Last.Data.User;
 using Last.Defaine;
@@ -16,10 +18,15 @@ internal static class Monk
     internal static bool EmptyHands(OwnedCharacterData c) =>
         HandEquipmentRules.Kind(Ninja.Hand(c,EquipSlotType.Slot1))==HandEquipment.Empty
         && HandEquipmentRules.Kind(Ninja.Hand(c,EquipSlotType.Slot2))==HandEquipment.Empty;
+    internal static bool MartialHands(OwnedCharacterData c) => JobFeatures.MonkHands(
+        HandEquipmentRules.Kind(Ninja.Hand(c,EquipSlotType.Slot1)),
+        HandEquipmentRules.Kind(Ninja.Hand(c,EquipSlotType.Slot2)));
 
     // Keep native wrappers alive until battle cleanup so native addresses cannot be
     // reused while they identify the two separate fist actions.
-    internal static readonly Dictionary<IntPtr,BattleActData> Fists=new();
+    internal static readonly Dictionary<IntPtr,(BattleActData Act,bool Barehand)> Fists=new();
+    [ThreadStatic] internal static BattleActData? CalculatingAct;
+    internal static void Clear() { Fists.Clear();CalculatingAct=null; }
     internal static bool IsFist(BattleActData? act) => act!=null && Fists.ContainsKey(act.Pointer);
     internal static int Strikes(BattleActData act)
     {
@@ -28,7 +35,9 @@ internal static class Monk
         bool normal=act.Command?.Id==1 && act.CurrentActType==BattleActData.ActType.Normal
             && act.CurrentUseType==BattleActData.UseType.Ability
             && act.abilityList?.Count==1 && act.abilityList[0]?.Id==1;
-        return JobFeatures.BarehandStrikes(Trained(c),EmptyHands(c),normal);
+        return JobFeatures.MonkStrikes(Trained(c),
+            HandEquipmentRules.Kind(Ninja.Hand(c,EquipSlotType.Slot1)),
+            HandEquipmentRules.Kind(Ninja.Hand(c,EquipSlotType.Slot2)),normal);
     }
 }
 
@@ -39,9 +48,41 @@ internal static class MonkAttackPower
 {
     static bool Prefix(OwnedCharacterData data,ref int __result)
     {
-        if(!Monk.Trained(data) || !Monk.EmptyHands(data)) return true;
+        if(!Monk.Trained(data) || !Monk.MartialHands(data)) return true;
         __result=JobFeatures.UnarmedPower(data.Parameter.ConfirmedLevel());
         return false;
+    }
+}
+
+// Both loadouts use the same trained base accuracy; native temporary accuracy,
+// blindness and final limits still run in ConfirmedAccuracyRate.
+[HarmonyPatch(typeof(Serial.FF4.Management.ParameterProvider),"GetAccuracyRate")]
+internal static class MonkAccuracy
+{
+    static bool Prefix(OwnedCharacterData data,ref int __result)
+    {
+        if(!Monk.Trained(data) || !Monk.MartialHands(data)) return true;
+        __result=JobFeatures.MonkAccuracy(data.Parameter.ConfirmedLevel());
+        return false;
+    }
+}
+
+// The native confirmed getter adds a separate equipment-accuracy cache. Exclude
+// that cache only during this synchronous calculation; restore even on exceptions.
+// Never alter equipped items, their elemental/status data, or saved base stats.
+[HarmonyPatch(typeof(PlayerCharacterParameter),nameof(PlayerCharacterParameter.ConfirmedAccuracyRate))]
+internal static class MonkEquipmentAccuracy
+{
+    static void Prefix(PlayerCharacterParameter __instance,ref int? __state)
+    {
+        var c=__instance.parent;
+        if(c==null || !Monk.Trained(c) || !Monk.MartialHands(c)) return;
+        __state=__instance.EquipAccuracyRate;
+        __instance.EquipAccuracyRate=0;
+    }
+    static void Finalizer(PlayerCharacterParameter __instance,int? __state)
+    {
+        if(__state.HasValue) __instance.EquipAccuracyRate=__state.Value;
     }
 }
 
@@ -60,13 +101,50 @@ internal static class MonkAttackQueue
         var second=new BattleActData(battleActData.AttackUnitData,battleActData.TargetUnitDatas,
             battleActData.Command,abilities,battleActData.CurrentActType,
             battleActData.CurrentTargetType,battleActData.UseArmType);
-        Monk.Fists[battleActData.Pointer]=battleActData;
-        Monk.Fists[second.Pointer]=second;
+        bool barehand=Monk.EmptyHands(battleActData.AttackUnitData.GetOwnedCharacterData());
+        Monk.Fists[battleActData.Pointer]=(battleActData,barehand);
+        Monk.Fists[second.Pointer]=(second,barehand);
         var pair=new NativeActs();pair.Add(battleActData);pair.Add(second);
         expanding=true;
         try { __instance.SetBattleActData(pair); }
         finally { expanding=false; }
         return false;
+    }
+}
+
+// FF4 can repeat each weapon's animation within an action. Our two independent
+// actions already supply the two strikes, so don't repeat both claws per action.
+[HarmonyPatch(typeof(FightActFunctionFF4),"IsRepertEffect")]
+internal static class MonkStrikeAnimation
+{
+    static bool Prefix(FightActFunctionFF4 __instance,ref bool __result)
+    {
+        if(!Monk.IsFist(__instance.BattleActData)) return true;
+        __result=false;return false;
+    }
+}
+
+// Carry the action through native synchronous calculation. Use this substantial
+// routine rather than GetSumCalcResult, whose calls are inlined in this build.
+[HarmonyPatch(typeof(BattleBasicFunction),"SetUpFunctions")]
+internal static class MonkCalculationScope
+{
+    static void Prefix(BattleBasicFunction __instance,ref BattleActData? __state)
+    { __state=Monk.CalculatingAct;Monk.CalculatingAct=__instance.battleActData; }
+    static void Finalizer(BattleActData? __state) => Monk.CalculatingAct=__state;
+}
+
+// Adjust the freshly computed result once, before native display and HP updates.
+// Reads never multiply the bonus again. Defense is already included here.
+[HarmonyPatch(typeof(FuncitonNormalAttack),"Calc")]
+internal static class MonkBarehandDamage
+{
+    static void Postfix(FuncitonNormalAttack __instance)
+    {
+        var act=Monk.CalculatingAct;
+        if(act==null || !Monk.Fists.TryGetValue(act.Pointer,out var strike) || !strike.Barehand) return;
+        var result=__instance.GetCalcResult();
+        if(result!=null) result.SetValue(JobFeatures.BarehandDamage(result.GetValue(false)));
     }
 }
 
@@ -84,5 +162,5 @@ internal static class MonkFistAnimation
 [HarmonyPatch(typeof(BattleProgressATB),nameof(BattleProgressATB.Clear))]
 internal static class MonkBattleCleanup
 {
-    static void Postfix() => Monk.Fists.Clear();
+    static void Postfix() => Monk.Clear();
 }
