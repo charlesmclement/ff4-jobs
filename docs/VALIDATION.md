@@ -31,3 +31,9 @@ The native equipment probe checks that the real hook returns the intended policy
 Full campaign through all unlocks, magic gates, scripted battles, departures/returns and Cecil's transformation; physical-controller use; late-game Jump stacking and boss balance; all equipment/inventory edge cases; native Windows and a fresh Proton installation. These are explicit alpha acceptance items, detailed in ALPHA-REVIEW.md and the shipped known-issues file.
 
 No Nexus upload has been made. The package is a reviewable alpha candidate.
+
+## Red Mage implementation stage
+
+- Built against the installed FF4 PR interop, zero warnings/errors; core suite covers personal 310 ABP main/sub gates, combined MP reservation/overflow and shared charge timing.
+- Native NumberSelect=2 loops the spell/target windows. ATB SetActData normally creates separate chant entries; the patch synchronizes their wait to the slower spell and suppresses the second chanting effect. Native costs, effects and queue completion are retained.
+- This is source/build verification, not a live controller acceptance pass. Check two different targets, mixed healing/damage, cancel at each selection step, insufficient MP, Silence, reflection and auto-battle in playtesting.

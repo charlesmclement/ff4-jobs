@@ -77,6 +77,7 @@ internal static class State
     internal static void Reset()
     {
         CombatMenuTest.Reset();
+        Dualcast.Selecting=null; Dualcast.SecondCasts.Clear();
         BattleCommandScroll.Clear();
         UnlockNotifications.Reset();
         Projection.Clear();

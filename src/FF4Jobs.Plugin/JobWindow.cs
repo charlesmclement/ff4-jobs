@@ -197,6 +197,7 @@ public sealed class JobWindow : MonoBehaviour
     private static string CommandName(int id) => id switch
     {
         JobFeatures.RapidFire=>"Rapid Fire",
+        JobFeatures.Dualcast=>"Dualcast",
         7=>"White Magic",8=>"Black Magic",9=>"Summon",10=>"Darkness",11=>"Jump",12=>"Pray",13=>"Aim",14=>"Cover",
         15=>"Ninjutsu",16=>"Throw",17=>"Steal",20=>"Bluff",22=>"Sing",23=>"Heal",25=>"Focus",26=>"Kick",27=>"Gird",31=>"Study",_=>id.ToString()
     };

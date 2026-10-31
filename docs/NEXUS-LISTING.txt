@@ -20,8 +20,9 @@ Meteo scene and later milestones. Character identities and story events
 remain FF4's own.
 
 This alpha uses existing FF4 actions. It does NOT reproduce every FF5
-mechanic. Dualcast, Rapid Fire, universal summons, mastery inheritance and
-new Ninja dual wield / Monk unarmed formulas are not implemented. See the
+mechanic. Ranger Rapid Fire and Red Mage Dualcast are implemented in source.
+Mastery inheritance and new Ninja dual wield / Monk unarmed formulas are
+still being completed. See the
 included known-issues file. A full campaign playtest remains outstanding.
 
 REQUIREMENTS

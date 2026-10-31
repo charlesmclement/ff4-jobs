@@ -298,4 +298,16 @@ Check(rangerCampaign.Commands(1,new[]{1,3}).Contains(JobFeatures.RapidFire),"Mas
 Check(!rangerCampaign.Commands(4,new[]{1,3}).Contains(JobFeatures.RapidFire),"Ranger training does not spread to Rydia");
 Check(JobFeatures.RapidFireDamage(100)==50 && JobFeatures.RapidFireDamage(1)==1 && JobFeatures.RapidFireDamage(0)==0,"Rapid Fire halves damage without turning misses into hits");
 Check(JobFeatures.RapidFireDamage(-100)==-100,"Rapid Fire leaves non-damage result signs alone");
+// Red Mage: individual mastery, one charge, and combined spell affordability.
+var red=new Campaign();red.StoryFlags.Add(43);red.Select(1,"red_mage",null);red.Award(1,309);
+Check(!red.Commands(1,new[]{1,3}).Contains(JobFeatures.Dualcast),"Dualcast requires full Red Mage mastery");
+red.Award(1,1);
+Check(red.Commands(1,new[]{1,3}).Contains(JobFeatures.Dualcast),"Mastered Red Mage main unlocks Dualcast");
+red.Select(1,"original","red_mage");
+Check(red.Commands(1,new[]{1,3}).Contains(JobFeatures.Dualcast),"Mastered Red Mage sub unlocks Dualcast");
+Check(!red.Commands(4,new[]{1,3}).Contains(JobFeatures.Dualcast),"Dualcast mastery belongs to its character");
+Check(JobFeatures.CanPayPair(20,5,15) && !JobFeatures.CanPayPair(19,5,15),"Second spell must fit remaining MP after first selection");
+Check(!JobFeatures.CanPayPair(int.MaxValue,int.MaxValue,int.MaxValue),"Combined spell cost cannot overflow");
+Check(JobFeatures.DualcastCharge(3,8)==8 && JobFeatures.DualcastCharge(8,3)==8,"Dualcast charges once for the slower selected spell");
+Check(JobFeatures.DualcastCharge(0,0)==0,"Instant spells do not gain an artificial charge");
 Console.WriteLine($"PASS: {checks} progression, save, and fast-forward checks.");

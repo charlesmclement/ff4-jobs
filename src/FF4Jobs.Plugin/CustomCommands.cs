@@ -12,16 +12,18 @@ internal static class CustomCommands
     internal static Command Get(int id)
     {
         var master=MasterManager.Instance;
-        if(id!=JobFeatures.RapidFire) return master.GetData<Command>(id);
+        if(id is not (JobFeatures.RapidFire or JobFeatures.Dualcast)) return master.GetData<Command>(id);
         var table=master.GetList<Command>();
         if(table.ContainsKey(id)) return table[id];
-        var source=master.GetData<Command>(1);
+        bool dual=id==JobFeatures.Dualcast;
+        var source=master.GetData<Command>(dual?7:1);
+        string key=dual?"FF4JOBS_DUALCAST":"FF4JOBS_RAPID_FIRE";
         var command=new Command {
-            Id=id, CommandLv=source.CommandLv, MesIdName="FF4JOBS_RAPID_FIRE",
-            MesIdName2="FF4JOBS_RAPID_FIRE", MesIdDescription="FF4JOBS_RAPID_FIRE_HELP",
+            Id=id, CommandLv=source.CommandLv, MesIdName=key,
+            MesIdName2=key, MesIdDescription=key+"_HELP",
             ConsumeType=source.ConsumeType,CommandType=source.CommandType,
             ExecutionType=source.ExecutionType,ListType=source.ListType,
-            NumberSelect=source.NumberSelect,AbilityGroupId=source.AbilityGroupId,
+            NumberSelect=dual?2:source.NumberSelect,AbilityGroupId=source.AbilityGroupId,
             AbilityId=source.AbilityId,JobGroupId=source.JobGroupId,
             ConditionGroupId=source.ConditionGroupId,ReleaseType=0,
             ReleaseValue1=0,ReleaseValue2=0,CommandWait=source.CommandWait,
@@ -33,6 +35,8 @@ internal static class CustomCommands
     internal static string? Text(string key) => key switch {
         "FF4JOBS_RAPID_FIRE"=>"Rapid Fire",
         "FF4JOBS_RAPID_FIRE_HELP"=>"Four half-damage attacks against random living enemies.",
+        "FF4JOBS_DUALCAST"=>"Dualcast",
+        "FF4JOBS_DUALCAST_HELP"=>"Select two learned white or black spells and their targets. Each spell pays its normal cost.",
         _=>null
     };
 }

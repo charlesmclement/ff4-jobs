@@ -61,7 +61,7 @@ public static class Jobs
         new("monk", "Monk", "Focus, Kick and Gird. Barehand bonuses are not yet implemented.", new[]{25,26,27}, str:8, vit:6, intel:-5, spr:-3),
         new("white_mage", "White Mage", "White magic and Pray.", new[]{7,12}, "white", str:-4, intel:3, spr:12),
         new("black_mage", "Black Mage", "Black magic and Bluff.", new[]{8,20}, "black", str:-4, vit:-2, intel:12),
-        new("red_mage", "Red Mage", "White and black magic up to intermediate spells. No Dualcast yet.", new[]{7,8}, "red", str:2, agi:3, intel:6, spr:6),
+        new("red_mage", "Red Mage", "Intermediate white/black magic. At 310 ABP, Dualcast selects two learned spells and targets.", new[]{7,8,JobFeatures.Dualcast}, "red", str:2, agi:3, intel:6, spr:6),
         new("time_mage", "Time Mage", "Haste, Slow, Stop and related magic drawn from FF4.", new[]{7,8}, "time", agi:5, intel:9, spr:3),
         new("thief", "Thief", "Steal; fast, lightly built adventurer.", new[]{17}, str:1, agi:12, vit:-2),
         new("ninja", "Ninja", "Ninjutsu and Throw. Dual wielding remains under development.", new[]{15,16}, "ninja", str:4, agi:8, intel:4),

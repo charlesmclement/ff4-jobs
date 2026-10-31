@@ -59,7 +59,9 @@ internal static class Projection
             {
                 var command=c.CommandList[i]; var list=new NativeAbilities();
                 for(int j=0;j<c.OwnedAbilityList.Count;j++)
-                    if(c.OwnedAbilityList[j].Ability.AbilityGroupId==command.AbilityGroupId) list.Add(c.OwnedAbilityList[j]);
+                    if(command.Id==JobFeatures.Dualcast
+                        ? Dualcast.IsSpell(c.OwnedAbilityList[j].Ability)
+                        : c.OwnedAbilityList[j].Ability.AbilityGroupId==command.AbilityGroupId) list.Add(c.OwnedAbilityList[j]);
                 dictionary[command]=list;
             }
             c.AbilityDictionary=dictionary;

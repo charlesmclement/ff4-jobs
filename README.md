@@ -111,3 +111,7 @@ Install a .NET SDK capable of building the net8.0 tests and net6.0 plugin, and t
 Set `FF4JOBS_GAME_PATH` to the FF4 Pixel Remaster installation if it is not at the default sibling SteamLibrary path. Run `bash scripts/build.sh`; set `FF4JOBS_DOTNET` if `dotnet` is not on PATH. Core checks can be run independently with `dotnet run --project src/FF4Jobs.Tests/FF4Jobs.Tests.csproj`. The scripts use `verified-game.json` for the approved game build.
 
 The separate `src/FF4Iso.Plugin` source is a parked courtyard experiment. It is not part of the jobs build or release archive. Local research and validation screenshots referenced by the audit notes are intentionally excluded from GitHub.
+
+### Red Mage — Dualcast
+
+At 310 personal Red Mage ABP, main or sub job gains Dualcast. Choose two learned white/black spells and targets in the native spell window. Both charge together for the slower spell's normal wait, then execute in selection order without charging again. Each spell pays its normal MP cost (Cecil's pre-Paladin HP casting still applies). Second-spell selection reserves the first spell's MP. Dualcast does not unlock higher-tier magic or bypass story gates. Native status, targeting, reflection and counter rules still apply.
