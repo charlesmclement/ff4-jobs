@@ -413,6 +413,10 @@ whatever build it launched with, so always say which build is live.
     Defend, his Kick after the Mom Bomb split was uncharged, and the bombs
     wiped the party. Now the rule picked this turn (turnActor/turnRule,
     cleared whenever the menu leaves input) stays allowed for that turn.
+47. **Rosa low: anyone heals her (user).** When Rosa is under half HP,
+    every other actor (Edward and Yang included) heals her before their own
+    action: Cure if they can cast, else a Potion even though Rosa counts as
+    a caster.
 
 ## Stuck detection (all segments, always on)
 
