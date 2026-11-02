@@ -29,6 +29,8 @@ public sealed class Route
             if(s.Until?.Phase!=null && !KnownPhases.Contains(s.Until.Phase))throw new ArgumentException("Unknown completion phase");
             if(s.Kind=="navigate" && (s.Goal==null || s.MapId==null || s.Goal.X is <0 or >1024 || s.Goal.Y is <0 or >1024 || s.Goal.Layer is <0 or >15))
                 throw new ArgumentException("Navigation needs a map and valid destination");
+            if(s.Waypoints!=null && (s.Kind!="navigate" || s.Waypoints.Length>256 || s.Waypoints.Any(w=>w==null || w.X is <0 or >1024 || w.Y is <0 or >1024 || w.Layer is <0 or >15)))
+                throw new ArgumentException("Waypoints need a navigate step and valid cells");
             if(s.Facing!=null && s.Facing is not ("Up" or "Down" or "Left" or "Right"))throw new ArgumentException("Invalid facing direction");
             if(s.Until?.StoryFlag is <0 or >255)throw new ArgumentException("Invalid story flag");
             if(s.Until?.AtDestination==true && s.Kind!="navigate")throw new ArgumentException("Destination condition requires navigation");
@@ -58,6 +60,9 @@ public sealed class Step
     public int PressedFrames { get; set; } = 1;
     public Condition? Until { get; set; }
     public Destination? Goal {get;set;}
+    // Optional hand/offline-planned cells walked in order before Goal, for maps
+    // where the native search cannot plan (the overworld has no collision layer).
+    public Destination[]? Waypoints {get;set;}
     public string? Facing {get;set;}
     public bool HandleBattles {get;set;}
 }
