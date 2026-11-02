@@ -4,6 +4,17 @@ Running log kept by Claude while working on the TAS. Newest last. "Live" means
 the user ran it in the game. Everything else is compile-only or static
 analysis. See also `CLAUDE_HANDOFF.txt` and `docs/TAS-SEGMENT-2.md`.
 
+## How we fix bugs (user's standing workflow)
+
+1. The user presses **F10** (stop) and **quicksaves** where the run went wrong.
+2. Fix it, rebuild with `tas/build.sh --build-only`, and log it below.
+3. The user closes the game, opens **FF4 TAS: Segment 2**
+   (`tas.py launch --resume`), and loads the quicksave. The route picks the
+   step from the map and story flags.
+
+Never make the user restart from New Game for a fix. The running game keeps
+whatever build it launched with, so always say which build is live.
+
 ## Bugs found and fixed (Nov 1 2026)
 
 1. **Stuck on the controls help after the opening (live fixed).** Phase
