@@ -281,7 +281,9 @@ Keep this behaviour in any navigation rewrite.
 * **Later (user): edge cases where Cecil SHOULD heal** even though a caster
   can Cure. To be specified with the user. Candidates: the caster is far
   back in the ATB order (`GetAtbGaugeByUnitData`), someone is about to die
-  before the caster acts, or the caster is the one in danger.
+  before the caster acts, or the caster is the one in danger. These matter
+  most once Rosa (character 3) joins as the main healer; she already counts
+  as a Cure caster in `casterCanCure`.
 
 * **Shopping (user): stock up on Potions.** With Cure-first healing, Potion
   use should drop, but the route still needs a shop stop. The community

@@ -53,7 +53,7 @@ internal sealed class BattlePilot
             alive++;
             float ratio=hp/(float)Math.Max(1,stats.ConfirmedMaxHp());
             int who=p!.GetOwnedCharacterData()?.characterStatusId??0;
-            if(who is Rydia or Tellah && stats.CurrentMP>=CureMp)casterCanCure=true;
+            if(who is Rydia or Tellah or Rosa && stats.CurrentMP>=CureMp)casterCanCure=true;
             if(ratio>=HealBelow)continue;
             if(IsCecil(p!))ratio-=1;
             if(ratio<injuredRatio) {injured=p;injuredRatio=ratio;injuredRatioNow=hp/(float)Math.Max(1,stats.ConfirmedMaxHp());}
@@ -211,7 +211,7 @@ internal sealed class BattlePilot
     private float fightSeconds;private int fightFrame=-1;
     // Back attack flips the rows: one non-Cecil actor uses Row once to fix it.
     private bool rowDone;
-    private const int Row=5,Rydia=4;
+    private const int Row=5,Rydia=4,Rosa=3;
     internal Dictionary<int,int[]> Weaknesses=new();
     internal BattleDb Db=new();
     private string decision="",enemyLine="";
