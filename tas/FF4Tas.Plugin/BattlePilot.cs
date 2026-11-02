@@ -43,7 +43,7 @@ internal sealed class BattlePilot
             alive++;
             float ratio=hp/(float)Math.Max(1,stats.ConfirmedMaxHp());
             if(ratio>=HealBelow)continue;
-            if(IsCecil(p))ratio-=1;
+            if(IsCecil(p!))ratio-=1;
             if(ratio<injuredRatio) {injured=p;injuredRatio=ratio;}
         }
         // Scripted losses (Titan at Mist) wipe the party and the story goes on;
@@ -123,7 +123,7 @@ internal sealed class BattlePilot
         bool living=selected!=null && selected.Count>0;
         for(int i=0;living && i<selected!.Count;i++)living=selected[i].BattleUnitDataInfo.Parameter.CurrentHP>0;
         bool onWanted=wanted==null || (selected!=null && selected.Count>1);
-        for(int i=0;!onWanted && selected!=null && i<selected.Count;i++)onWanted=selected[i].Pointer==wanted.Pointer;
+        for(int i=0;!onWanted && selected!=null && i<selected.Count;i++)onWanted=selected[i].Pointer==wanted!.Pointer;
         // Cycle toward the wanted (weakest/undead) enemy; give up after a lap.
         if(living && (onWanted || targetPresses>=8)) {targetPresses=0;Pulse(state,frame,"Confirm",action);return;}
         if(frame%12==0)targetPresses++;
