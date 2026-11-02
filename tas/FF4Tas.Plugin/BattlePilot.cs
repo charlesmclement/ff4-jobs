@@ -49,7 +49,7 @@ internal sealed class BattlePilot
         // Scripted losses (Titan at Mist) wipe the party and the story goes on;
         // a real game over leaves the battle for GotoTitle, which no step allows.
         if(players.Length>0 && alive==0) {state.Detail="Party down; waiting for the game";return;}
-        bool mist=false,hasEnemy=false;scripted=false;undead=null;weakest=null;undeadCount=livingEnemies=0;tough=boss=false;Array.Clear(elementCounts);
+        var enemyText=new System.Text.StringBuilder();bool mist=false,hasEnemy=false;scripted=false;undead=null;weakest=null;undeadCount=livingEnemies=0;tough=boss=false;Array.Clear(elementCounts);
         for(int i=0;i<enemies.Length;i++)
         {
             var e=enemies[i];var p=e?.BattleUnitDataInfo?.Parameter;
@@ -60,7 +60,8 @@ internal sealed class BattlePilot
             {
                 if(master.Defense>=ToughDefense)tough=true;
                 if(master.Boss!=0)boss=true;
-                if(Weaknesses.TryGetValue(master.Id,out var weak))foreach(var el in weak)if(el is >=1 and <=3)elementCounts[el]++;
+                foreach(var el in WeakTo(master))if(el is >=1 and <=3)elementCounts[el]++;
+                enemyText.Append(enemyText.Length>0?", ":"").Append(Db.MonsterName(master.Id)).Append(' ').Append(p.CurrentHP).Append("hp");
             }
             // Story fights you can't win or lose normally (the Girl at Mist has
             // 60000 HP): never spend items or MP on them.
@@ -80,6 +81,8 @@ internal sealed class BattlePilot
                 state.Detail=$"Mist Dragon HP {p.CurrentHP}; mode {ep.CurrentMode}";
             }
         }
+        enemyLine=enemyText.ToString();
+        state.Battle=decision.Length>0?$"{enemyLine} | {decision}":enemyLine;
         bestElement=bestElementCount=0;
         for(int el=1;el<=3;el++)if(elementCounts[el]>bestElementCount) {bestElement=el;bestElementCount=elementCounts[el];}
         // Community strat: after the Mist Dragon's mist phase, Darkness again.
@@ -159,6 +162,9 @@ internal sealed class BattlePilot
     private int undeadCount,livingEnemies;
     private bool targetAll,tough,boss;
     internal Dictionary<int,int[]> Weaknesses=new();
+    internal BattleDb Db=new();
+    private string decision="",enemyLine="";
+    private int[] WeakTo(Last.Data.Master.Monster master)=>Db.Monsters.TryGetValue(master.Id,out var m)?m.WeakIds:Weaknesses.TryGetValue(master.Id,out var w)?w:Array.Empty<int>();
     private readonly int[] elementCounts=new int[4];
     private int bestElement,bestElementCount;
     private const int ToughDefense=200;
@@ -167,6 +173,12 @@ internal sealed class BattlePilot
     private const int Defend=2,UndeadSpecies=4,WhiteMagic=7,CureAbility=6,CureMp=3,Tellah=6;
     private bool scripted,castOnUndead;
     private BattleEnemyData? undead,weakest;
+    private void Log(BattlePlayerData actor,string what)
+    {
+        string who=Names.TryGetValue(actor.GetOwnedCharacterData()?.characterStatusId??0,out var n)?n:"?";
+        decision=who+": "+what;
+    }
+    private static readonly Dictionary<int,string> Names=new(){[1]="Cecil",[13]="Cecil",[2]="Kain",[4]="Rydia",[6]="Tellah",[3]="Rosa",[7]="Edward",[8]="Yang"};
     private static bool IsCecil(BattlePlayerData p)=>p.GetOwnedCharacterData()?.characterStatusId is 1 or 13;
     // One decision per turn. Order: scripted fights just attack; revive;
     // heal (Cure first, Potion if no MP); Cure on undead; route plan; Attack
@@ -176,22 +188,24 @@ internal sealed class BattlePilot
     {
         pendingItem=0;pendingTarget=0;pendingCommand=1;pendingAbility=0;pendingRule=-1;castOnUndead=false;targetAll=false;
         abilityConfirms=abilityStuck=abilityStride=0;abilityLastIndex=-1;abilityLastKey=null;
-        if(mist || scripted)return;
+        if(mist) {Log(actor,"Defend: Mist Dragon in mist");return;}
+        if(scripted) {Log(actor,"Attack: scripted fight, no items or MP");return;}
         var stats=actor.BattleUnitDataInfo?.Parameter;
         bool isTellah=actor.GetOwnedCharacterData()?.characterStatusId==Tellah;
         bool canCure=stats!=null && stats.CurrentMP>=CureMp && CommandEnabled(info,WhiteMagic) && !blockedCure.Contains(actor.Pointer);
-        if(dead!=null && HasItem(9)) {pendingItem=9;pendingTarget=dead.GetOwnedCharacterData().characterStatusId;return;}
+        if(dead!=null && HasItem(9)) {pendingItem=9;pendingTarget=dead.GetOwnedCharacterData().characterStatusId;Log(actor,"Phoenix Down on #"+pendingTarget);return;}
         if(injured!=null)
         {
             int target=injured.GetOwnedCharacterData().characterStatusId;
-            if(canCure && (!isTellah || !HasItem(2))) {pendingCommand=WhiteMagic;pendingAbility=CureAbility;pendingTarget=target;return;}
-            if(HasItem(2)) {pendingItem=2;pendingTarget=target;return;}
+            if(canCure && (!isTellah || !HasItem(2))) {pendingCommand=WhiteMagic;pendingAbility=CureAbility;pendingTarget=target;Log(actor,"Cure ally #"+target+" (under half HP)");return;}
+            if(HasItem(2)) {pendingItem=2;pendingTarget=target;Log(actor,"Potion on ally #"+target+" (under half HP)");return;}
         }
         // Cure hurts undead: cast it (on all of them when there are several).
         // Tellah joins in while he stays above the MP his route plan reserves.
         if(undead!=null && canCure && (!isTellah || stats!.CurrentMP>=CureMp+Reserve(plan,Tellah)))
-        {pendingCommand=WhiteMagic;pendingAbility=CureAbility;castOnUndead=true;return;}
+        {pendingCommand=WhiteMagic;pendingAbility=CureAbility;castOnUndead=true;Log(actor,$"Cure{(undeadCount>1?" on all":"")} vs undead");return;}
         ChoosePlan(info,actor,plan);
+        if(pendingCommand==1)Log(actor,"Attack weakest enemy");
     }
     private readonly HashSet<IntPtr> blockedCure=new();
     private readonly HashSet<(int,IntPtr)> usedOnce=new();
@@ -228,10 +242,12 @@ internal sealed class BattlePilot
                 // One spell on all when several enemies share the weakness.
                 all=bestElementCount>1;
             }
+            if(ability>0 && stats!=null && stats.CurrentMP<Db.SpellMp(ability,0))continue;
             // Defend sits in the side command group; SelectCommand switches to it.
             if(rule.Command!=Defend && !CommandEnabled(info,rule.Command))continue;
             pendingCommand=rule.Command;pendingAbility=ability;pendingRule=r;targetAll=all;
-            if(rule.OncePerBattle)usedOnce.Add((r,actor.Pointer));abilityConfirms=abilityStuck=0;abilityStride=0;abilityLastIndex=-1;abilityLastKey=null;
+            if(rule.OncePerBattle)usedOnce.Add((r,actor.Pointer));
+            Log(actor,$"{(ability>0?Db.SpellName(ability):"command "+rule.Command)}{(all?" on all":"")} (plan rule {r+1})");abilityConfirms=abilityStuck=0;abilityStride=0;abilityLastIndex=-1;abilityLastKey=null;
             return;
         }
     }

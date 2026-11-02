@@ -138,6 +138,18 @@ analysis. See also `CLAUDE_HANDOFF.txt` and `docs/TAS-SEGMENT-2.md`.
     enters mist) and `BossOnly` (monster master `Boss != 0`). Mist Dragon and
     Octomammoth plans: Cecil Darkness once (boss only), then Attack.
 
+19. **Battle knowledge base and fight log (compile-only).**
+    `tas/battle_db.py` builds `research/tas-battle/battle.json` from master
+    data (264 monsters: HP, defense, magic defense, weaknesses from
+    attribute_group types 1/401, raw resist codes, undead = species 4, boss,
+    steals, maps; 446 spells/abilities: MP, element, target range), plus
+    `monsters.md` and `spells.md` for humans. `tas.py` copies battle.json
+    into the session on every start, and `BattleDb` loads it. The pilot takes
+    weaknesses from it (falling back to Route.Weaknesses) and skips spell
+    rules the actor can't afford. Each frame `Snapshot.Battle` =
+    "enemies with HP | who: decision (reason)" goes into status.json and the
+    trace. `tas/battle_log.py [trace]` prints fights for review and coaching.
+
 ## Stuck detection (all segments, always on)
 
 The user's standing requirement: every movement must be confirmed. It lives

@@ -157,7 +157,7 @@ public sealed class Controller : MonoBehaviour
                     {
                         if(Engine?.Running==true)throw new InvalidOperationException("Stop the current route first");
                         var route=command.Route??throw new InvalidOperationException("Missing route");
-                        var next=new RouteEngine(route);navigation.Reset();battle.Reset();battle.Weaknesses=route.Weaknesses;lastPhase="";Engine=next;routeName=route.Name;error="";RunClock.Reset();
+                        var next=new RouteEngine(route);navigation.Reset();battle.Reset();battle.Weaknesses=route.Weaknesses;battle.Db=BattleDb.Load(Path.Combine(Plugin.DirectoryPath,"battle.json"));lastPhase="";Engine=next;routeName=route.Name;error="";RunClock.Reset();
                         // First synthetic input begins next frame, never partway through this one.
                     }
                     else throw new InvalidOperationException("Unknown command");
@@ -207,11 +207,11 @@ public sealed class Controller : MonoBehaviour
             session=Session,utc=DateTime.UtcNow,frame,route=routeName,status=Engine?.Paused==true?"paused":Engine?.Status??"idle",
             step=Engine?.Index,label=Engine?.Label,reason=Engine?.Reason,error,elapsedSeconds=Math.Round(RunClock.RealSeconds,2),gameSeconds=Math.Round(RunClock.GameSeconds,2),speedBoost=RunClock.Boost,speedMultiplier=RunClock.Multiplier,
             phase=snapshot.Phase,mapId=snapshot.MapId,focused=snapshot.Focused,
-            x=snapshot.X,y=snapshot.Y,layer=snapshot.Layer,storyFlags=snapshot.StoryFlags,detail=snapshot.Detail,
+            x=snapshot.X,y=snapshot.Y,layer=snapshot.Layer,storyFlags=snapshot.StoryFlags,detail=snapshot.Detail,battle=snapshot.Battle,
             scope="Untested scripted Baron/Mist Dragon route; observed Unity frames, no deterministic savestates"
         },Plugin.Json));
         File.Move(target+".tmp",target,true);
-        string record=$"{Engine?.Status}|{Engine?.Index}|{snapshot.Phase}|{snapshot.MapId}|{snapshot.Detail}|{Engine?.Reason}";
+        string record=$"{Engine?.Status}|{Engine?.Index}|{snapshot.Phase}|{snapshot.MapId}|{snapshot.Detail}|{snapshot.Battle}|{Engine?.Reason}";
         if(record!=lastRecord || Time.unscaledTime>=nextRecord)
         {
             File.AppendAllText(Path.Combine(Plugin.DirectoryPath,"trace-"+Session+".jsonl"),File.ReadAllText(target).Replace("\r","").Replace("\n","")+"\n");

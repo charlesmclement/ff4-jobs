@@ -140,7 +140,7 @@ def launch(route_path,smoke,resume=False):
                     if route and not started and s['focused'] and (s['phase']=='Event' if not resume else s['phase']=='Player' and s.get('mapId')):
                         # resume: the player loaded a save; start from the step for this map.
                         started=True
-                        if not resume:request('start',route)
+                        if not resume:install_battle_db();request('start',route)
                         else:
                             time.sleep(1)
                             try:start_route(route,auto_step(route))
@@ -182,7 +182,14 @@ def auto_step(route):
     if best is None:raise RuntimeError(f'No route step starts on map {m} with story flags {sorted(flags)}; stand where the segment begins')
     return best[1]
 
+def install_battle_db():
+    """Copy the local monster/spell database (tas/battle_db.py) into the session."""
+    source=ROOT/'research/tas-battle/battle.json'
+    if source.is_file():shutil.copyfile(source,DATA/'battle.json')
+    else:print('TAS: no battle database; run tas/battle_db.py for smarter fights',flush=True)
+
 def start_route(route,from_step,delay=0):
+    install_battle_db()
     route=json.loads(json.dumps(route))
     if not 1<=from_step<=len(route.get('steps',[])):raise ValueError('Step is outside the route')
     print(f'Starting at step {from_step}: {route["steps"][from_step-1]["label"]}',flush=True)

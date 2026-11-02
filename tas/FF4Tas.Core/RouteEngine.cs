@@ -147,6 +147,8 @@ public sealed class Snapshot
     public int? ChoiceIndex {get;set;}
     public string? Failure {get;set;}
     public string Detail {get;set;}="";
+    // Battle log line: enemies on screen and the last decision with its reason.
+    public string Battle {get;set;}="";
 }
 
 // Frames are observed Unity updates, not emulated/savestated simulation frames.
