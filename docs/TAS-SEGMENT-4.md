@@ -9,7 +9,7 @@ flag 19. Fabul is segment 5. Shortcut: **FF4 TAS: Segment 4**.
 
 1. Board the hovercraft by the den (141,44); hovercraft to Kaipo (planned
    with `plan_path.py --transport 2`, 19 waypoints); get off at (130,92).
-2. Kaipo → Rosa's house (37). Talk to Rosa (16,6) from (16,7): the event
+2. Kaipo → Rosa's house (37). Talk to Rosa (16,6) from (15,6) facing Right (the bed blocks (16,7)): the event
    opens the native item list (`SystemCall.Current.ItemSelectWindow` →
    `SelectFieldContentClient`). The route picks the Sand Ruby (content 64)
    through the new `itemChoice`. Rosa joins, then the night scene and Edward's

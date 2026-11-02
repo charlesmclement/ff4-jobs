@@ -329,6 +329,10 @@ whatever build it launched with, so always say which build is live.
     enemies and Yang Kick (26) on 2+ in all segment 3/4 plans; Mom Bomb plan
     = Cecil Darkness above 50% HP. The user wants segments to end on save
     rooms or outside (they keep saves in slots).
+36. **Rosa's bed blocks (16,7).** Segment 4 stood Cecil under Rosa and he
+    wandered beside the bed. The house 37 collision shows (16,7) is blocked;
+    the free tile next to her is (15,6). Talk facing Right. Check
+    `collision.json` before choosing a stand tile for a check event.
 
 ## Stuck detection (all segments, always on)
 

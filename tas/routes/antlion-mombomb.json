@@ -260,12 +260,12 @@
       ]
     },
     {
-      "label": "Rosa's house: stand below Rosa",
+      "label": "Rosa's house: stand beside Rosa's bed (left of her)",
       "kind": "navigate",
       "mapId": 37,
       "goal": {
-        "x": 16,
-        "y": 7,
+        "x": 15,
+        "y": 6,
         "layer": 0
       },
       "phases": [
@@ -302,7 +302,7 @@
       "label": "Rosa's house: talk to Rosa",
       "kind": "interact",
       "mapId": 37,
-      "facing": "Up",
+      "facing": "Right",
       "phases": [
         "Player",
         "Event",
