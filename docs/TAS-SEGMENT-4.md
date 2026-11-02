@@ -31,8 +31,6 @@ flag 19. Fabul is segment 5. Shortcut: **FF4 TAS: Segment 4**.
 * Mom Bomb (community strat, minus Darkness): Cecil Attack. Yang Attack x2,
   Focus x2, Defend until it explodes (it is timed), then Kick all bombs.
   Rydia Blizzard on all after the split. Only Rosa heals while she can.
-* Community notes also use Yang's Focus and target the split bombs; not
-  modelled yet.
 
 ## New engine support
 
