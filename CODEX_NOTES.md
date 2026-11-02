@@ -247,7 +247,8 @@ whatever build it launched with, so always say which build is live.
     (163 (34,14), flag 39, opened facing Up from (34,15)) before Tellah. Kaipo
     sells more once the shop driver exists. User's call: a toad/mini in an
     ordinary fight is a reason to run; the Kiss/Mallet is used in the next
-    fight actually fought (including Octomammoth's first turns). With no
+    fight actually fought (including Octomammoth's first turns). The user
+    added the 4 Toadgre group (party 27, monster 19) to `fleeParties`. With no
     item, an unaffected caster casts the same spell on the ally, which toggles
     it back: Toad (Black ability 45, 7 MP) or Mini (White ability 26, 6 MP),
     targeted through the ally path (stage 5 with `pendingTarget`). A spell
