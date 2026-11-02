@@ -173,7 +173,7 @@ public sealed class Controller : MonoBehaviour
                         menuStep=active;
                         if(active.Shop!=null)shopDriver.Reset(active.Shop,active.Facing);
                         else if(active.Equip!=null)equipMenu.Reset(active.Equip);
-                        else if(active.Formation)formationMenu.Reset();
+                        else if(active.Formation!=null)formationMenu.Reset(active.Formation);
                         else if(active.MenuItem!=null)fieldMenu.Reset(useItem:active.MenuItem.Value);
                         else fieldCare.Reset();
                     }
@@ -181,7 +181,7 @@ public sealed class Controller : MonoBehaviour
                     {
                         if(active.Shop!=null)shopDriver.Read(snapshot,frame);
                         else if(active.Equip!=null)equipMenu.Read(snapshot,frame);
-                        else if(active.Formation) {if(snapshot.Phase is "Player" or "Menu")formationMenu.Read(snapshot,frame);}
+                        else if(active.Formation!=null) {if(snapshot.Phase is "Player" or "Menu")formationMenu.Read(snapshot,frame);}
                         else if(active.MenuItem!=null) {if(snapshot.Phase is "Player" or "Menu")fieldMenu.Read(snapshot,frame);}
                         else if(snapshot.Phase is "Player" or "Menu")fieldCare.Read(snapshot,frame);
                     }
