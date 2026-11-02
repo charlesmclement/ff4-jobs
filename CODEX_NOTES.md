@@ -278,6 +278,11 @@ Keep this behaviour in any navigation rewrite.
 
 ## Known gaps / next work (segment 2)
 
+* **Later (user): edge cases where Cecil SHOULD heal** even though a caster
+  can Cure. To be specified with the user. Candidates: the caster is far
+  back in the ATB order (`GetAtbGaugeByUnitData`), someone is about to die
+  before the caster acts, or the caster is the one in danger.
+
 * **Shopping (user): stock up on Potions.** With Cure-first healing, Potion
   use should drop, but the route still needs a shop stop. The community
   route buys in Kaipo (2 Potion, 1 Phoenix Down, 2 Emergency Exit, after
