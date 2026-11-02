@@ -141,13 +141,15 @@ public sealed class RouteEngine
             if(state.BattleInput!=null)current.Add(state.BattleInput);
             return;
         }
-        // FieldHelp is the native controls window shown when the player first
-        // gains control (after the opening audience). FieldHelpManager.Open takes
-        // an onCancelAction: it is dismissed with Back and ignores Confirm.
-        // Mash/navigate/interact steps pulse Back here instead of their keys.
+        // FieldHelp is the native controls/pause window. The opening audience ends
+        // with ShowHelpAndExit, which opens it with FieldHelpManager.IsOpenHelp set;
+        // UpdateDisplayHelp then ignores Back and Confirm and only closes on Start
+        // (onCancelAction). Back still matters when the pause menu is shown without
+        // that flag, so alternate Start and Back pulses.
         if(state.Phase=="FieldHelp" && step.Kind is "mash" or "navigate" or "interact" or "battle")
         {
-            if(elapsed%8==0)current.Add("Back");
+            if(elapsed%16==0)current.Add("Start");
+            else if(elapsed%16==8)current.Add("Back");
             return;
         }
         if(step.Kind is "navigate" or "interact" or "battle")

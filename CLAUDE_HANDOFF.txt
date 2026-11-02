@@ -10,10 +10,20 @@ UPDATE — NOV 1 EVENING (SUPERSEDES "CURRENT PRIORITY" BELOW)
   while step 1 pulsed Confirm, until the user alt-tabbed (stop: focus lost).
   dump.cs: FieldHelpManager/FieldHelpClient.Open(Action onCancelAction) — the
   window closes on Back/cancel and ignores Confirm.
-- FIX (written, user rebuilt with --build-only, NOT yet run): RouteEngine.Tick
-  pulses "Back" every 8 frames whenever phase==FieldHelp for mash/navigate/
-  interact/battle steps; FieldHelp removed from the Confirm branch. Built
-  18:40 PST; source committed with [skip ci] (see git log).
+- First FIX (pulse Back) FAILED live: session fea15c0dad3545499be195e2f980fd1b
+  stalled in FieldHelp again on map 6 the same way.
+- ROOT CAUSE (static disassembly, not yet proven live): the opening event
+  map_20011__sc_e_0001_12 ends with ShowHelpAndExit, which opens
+  Last.UI.KeyInput.FieldHelpController in DisplayHelp with
+  FieldHelpManager.IsOpenHelp (+0x18) set. UpdateDisplayHelp (0x18072B2B0):
+  Cancel only switches to the pause menu when IsOpenHelp is false (otherwise
+  ignored); Confirm is never read; Key.Start invokes onCancelAction = close.
+  (The field opens the same window as a pause menu on Key.PageDown from
+  FieldMap.UpdatePlayerStatePlay; that pause menu reads Up/Down/Action/Cancel/
+  PageDown.)
+- FIX 2 (compiled, NOT yet run): in FieldHelp, RouteEngine pulses Start at
+  elapsed%16==0 and Back at elapsed%16==8. The user's keyboard Start is probably
+  Backspace; the TAS injects the logical Key, so the binding doesn't matter.
 - Key bindings are irrelevant to the TAS (logical native Key injection); the
   user asked about resetting controls — not needed.
 - Next: user retests; if FieldHelp closes, watch step 2 (first real navigation,
