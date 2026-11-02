@@ -10,7 +10,13 @@ PREFIX=Path('/dev/shm/ff4-tas-proton')
 PROTON=Path('/home/desktop/.steam/debian-installation/steamapps/common/Proton - Experimental/proton')
 
 def state(require_fresh=True):
-    value=json.loads((DATA/'status.json').read_text())
+    # The runner replaces status.json every 0.1 s; a read can land between the
+    # delete and the rename. Retry briefly instead of aborting the launcher.
+    for attempt in range(20):
+        try:value=json.loads((DATA/'status.json').read_text());break
+        except (FileNotFoundError,json.JSONDecodeError):
+            if attempt==19:raise
+            time.sleep(.05)
     from datetime import datetime, timezone
     stamp=datetime.fromisoformat(value['utc'].replace('Z','+00:00'))
     if require_fresh and (datetime.now(timezone.utc)-stamp).total_seconds()>30:raise RuntimeError('Runner status is stale; launch the TAS session first')
