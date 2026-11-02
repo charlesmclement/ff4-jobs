@@ -30,7 +30,7 @@ internal sealed class BattlePilot
         menu=null;pendingItem=pendingTarget=pendingAbility=stalled=abilityStride=0;pendingCommand=1;
         abilityLastIndex=-1;abilityLastKey=null;lastInfo=lastCursor=-1;lastActor=IntPtr.Zero;previousHp=-1;
         pendingRule=-1;abilityConfirms=abilityStuck=targetPresses=0;decision="";
-        blockedRules.Clear();blockedCure.Clear();blockedItems.Clear();usedOnce.Clear();wasMist=false;
+        blockedRules.Clear();blockedCure.Clear();blockedItems.Clear();blockedStatusSpell.Clear();usedOnce.Clear();wasMist=false;
         fleeFrames=0;fightSeconds=0;fightFrame=-1;rowDone=false;
     }
     internal void Read(Snapshot state,int frame,BattleRule[]? plan=null)
@@ -225,6 +225,8 @@ internal sealed class BattlePilot
     // Master condition ids (both entries named Toad/Mini) and their cure items.
     private const int ToadCondition=14,ToadCondition2=58,MiniCondition=13,MiniCondition2=57,MaidensKiss=11,Mallet=12;
     private BattlePlayerData? toad,mini;
+    private const int BlackMagic=8,ToadSpell=45,MiniSpell=26;
+    private readonly HashSet<IntPtr> blockedStatusSpell=new();
     internal Dictionary<int,int[]> Weaknesses=new();
     internal BattleDb Db=new();
     private string decision="",enemyLine="";
@@ -266,6 +268,15 @@ internal sealed class BattlePilot
         // Status cures before healing: Maiden's Kiss for Toad, Mallet for Mini.
         if(toad!=null && HasItem(MaidensKiss)) {pendingItem=MaidensKiss;pendingTarget=toad.GetOwnedCharacterData().characterStatusId;Log(actor,"Maiden's Kiss on #"+pendingTarget+" (toad)");return;}
         if(mini!=null && HasItem(Mallet)) {pendingItem=Mallet;pendingTarget=mini.GetOwnedCharacterData().characterStatusId;Log(actor,"Mallet on #"+pendingTarget+" (mini)");return;}
+        // No item: the same spell toggles the status back (Toad on a toad, Mini
+        // on a mini), cast by someone who isn't affected and can afford it.
+        if(stats!=null && !blockedStatusSpell.Contains(actor.Pointer) && actor.Pointer!=(toad?.Pointer??IntPtr.Zero) && actor.Pointer!=(mini?.Pointer??IntPtr.Zero))
+        {
+            if(toad!=null && stats.CurrentMP>=Db.SpellMp(ToadSpell,7) && CommandEnabled(info,BlackMagic))
+            {pendingCommand=BlackMagic;pendingAbility=ToadSpell;pendingTarget=toad.GetOwnedCharacterData().characterStatusId;Log(actor,"Toad on #"+pendingTarget+" (undo toad)");return;}
+            if(mini!=null && stats.CurrentMP>=Db.SpellMp(MiniSpell,6) && CommandEnabled(info,WhiteMagic))
+            {pendingCommand=WhiteMagic;pendingAbility=MiniSpell;pendingTarget=mini.GetOwnedCharacterData().characterStatusId;Log(actor,"Mini on #"+pendingTarget+" (undo mini)");return;}
+        }
         if(dead!=null && HasItem(9)) {pendingItem=9;pendingTarget=dead.GetOwnedCharacterData().characterStatusId;Log(actor,"Phoenix Down on #"+pendingTarget);return;}
         if(injured!=null)
         {
@@ -337,6 +348,7 @@ internal sealed class BattlePilot
     {
         if(pendingRule>=0)blockedRules.Add(pendingRule);
         else if(pendingAbility==CureAbility && lastActor!=IntPtr.Zero)blockedCure.Add(lastActor);
+        else if(pendingAbility is ToadSpell or MiniSpell && lastActor!=IntPtr.Zero)blockedStatusSpell.Add(lastActor);
         pendingRule=-1;pendingAbility=0;pendingTarget=0;castOnUndead=false;
     }
     private static bool CommandEnabled(BattleInfomationController info,int id)
