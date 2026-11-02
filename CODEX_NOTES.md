@@ -229,6 +229,13 @@ Keep this behaviour in any navigation rewrite.
 
 ## Known gaps / next work (segment 2)
 
+* **Shopping (user): stock up on Potions.** With Cure-first healing, Potion
+  use should drop, but the route still needs a shop stop. The community
+  route buys in Kaipo (2 Potion, 1 Phoenix Down, 2 Emergency Exit, after
+  selling spare gear). This needs a shop/menu driver: talk to the shopkeeper,
+  Buy, pick the item, set the quantity, confirm. That's the top menu feature,
+  ahead of equipment and job changes.
+
 * **Run from slow random fights (user, live).** Waterfall B1 (map 172), 2
   Sahagin + 2 Tiny Mage took too long: the mages have 69 HP and no weakness,
   and the party fell into healing. Add an escape action: the community notes
