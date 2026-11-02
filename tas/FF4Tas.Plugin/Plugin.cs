@@ -92,6 +92,9 @@ public sealed class Controller : MonoBehaviour
             }
             if(active!=null)
             {
+                // PopupManager's filter is up whenever a modal popup owns input
+                // (same test Jobs fast-forward uses); movement is frozen meanwhile.
+                snapshot.Modal=Last.UI.PopupManager.Instance?.Filter?.activeInHierarchy==true;
                 if(active.Choice!=null)
                 {
                     var select=Last.Message.MessageSelectWindowManager.Instance;
@@ -105,7 +108,7 @@ public sealed class Controller : MonoBehaviour
                 }
                 // While paused for focus, skip movement/battle reads so stall
                 // detection does not count frames the route is not driving.
-                if(!snapshot.Focused)navigation.Reset();
+                if(!snapshot.Focused || snapshot.Modal)navigation.Reset();
                 else if(snapshot.Phase=="Player")
                 {
                     if((field==null || !field) && Time.unscaledTime>=nextFieldFind)

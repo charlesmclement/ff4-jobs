@@ -113,6 +113,9 @@ public sealed class Snapshot
     public bool AtDestination {get;set;}
     public string? NavigationInput {get;set;}
     public string? BattleInput {get;set;}
+    // A one-button modal popup (native or a mod's, e.g. "Job unlocked!") is
+    // open over the field; it blocks movement until confirmed.
+    public bool Modal {get;set;}
     // Cursor index of an open native choice window, null when none is open.
     public int? ChoiceIndex {get;set;}
     public string? Failure {get;set;}
@@ -194,6 +197,13 @@ public sealed class RouteEngine
         {
             if(elapsed%16==0)current.Add("Start");
             else if(elapsed%16==8)current.Add("Back");
+            return;
+        }
+        // Popups block field movement without changing the game phase: confirm
+        // them away before any step-specific input. Choice windows are handled below.
+        if(state.Modal && state.ChoiceIndex==null && state.Phase!="Battle")
+        {
+            if(elapsed%8==0)current.Add("Confirm");
             return;
         }
         // Steer an open choice window to the requested option, then confirm it.

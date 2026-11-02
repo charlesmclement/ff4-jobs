@@ -45,6 +45,15 @@ analysis. See also `CLAUDE_HANDOFF.txt` and `docs/TAS-SEGMENT-2.md`.
   boosted movement.
 * Tools: `tas/extract_maps.py`, `tas/map_links.py`, `tas/plan_path.py`, `tas/audit_items.py`.
 
+7. **Stuck on the Jobs+ "Job unlocked!" popup (fixed, compile-only).** At flag 7
+   Jobs+ opens a CommonPopup over the field during the Player phase and blocks
+   `FieldMap.UpdatePlayerStatePlay`. The navigate step only sent directions,
+   so it failed as "Movement stalled at (108,106)". The plugin now sets
+   `Snapshot.Modal` from `PopupManager.Instance.Filter.activeInHierarchy` (the
+   same modal test as Jobs fast-forward), resets navigation while it's up, and
+   the engine pulses Confirm for every step kind outside battle. Jobs'
+   `MenuInput` reads `InputListener`, so the injected Confirm reaches it.
+
 ## Segment 2 build (compile-only)
 
 * `Step.BattlePlan`: ordered `BattleRule{character, command, ability, minHpPercent, minMp}`.
