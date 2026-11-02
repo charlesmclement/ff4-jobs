@@ -39,7 +39,9 @@ internal sealed class Navigation
         // arrival window to the observed stride so points are never stepped over.
         if(havePrevious)tolerance=Math.Min(tile*.45f,Math.Max(tolerance,Distance(pos,previousFrame)*.6f));
         previousFrame=pos;havePrevious=true;
-        state.AtDestination=Near(pos,destination,tolerance) && (int)cell.z==goal.Layer;
+        // Positions are compared in world x/y; layer mismatches are reported but
+        // a goal cell reached on another layer still counts.
+        state.AtDestination=Near(pos,destination,tolerance);
         if(state.AtDestination) {state.Detail="At route destination";return;}
         if(observed && Near(lastPosition,pos,tile*.01f))unchanged++;
         else {lastPosition=pos;unchanged=0;observed=true;}
@@ -61,7 +63,7 @@ internal sealed class Navigation
         if(path.Count==0 && frame>=retryAt)
         {
             retryAt=frame+30;greedy=false;
-            foreach(var candidate in Candidates(cell,goalCell))
+            foreach(var candidate in Candidates(cell,goalCell,cell.z))
             {
                 var route=MapRouteSearcher.Search(accessor,cell,candidate,true);
                 if(route==null || route.Count==0)continue;
@@ -97,6 +99,10 @@ internal sealed class Navigation
             }
             retryAt=frame;state.Detail="Planning next leg";return;
         }
+        // Every push must move him. The native search ignores wandering NPCs,
+        // so when a step doesn't move him, let go briefly for the way to
+        // clear, then push again; every 90 still frames the path is replanned.
+        if(unchanged%90 is >=12 and <36) {state.Detail=$"Blocked at ({cell.x},{cell.y}); waiting for the way to clear";return;}
         var next=path[cursor];float dx=next.x-pos.x,dy=next.y-pos.y;
         // Straight native path segments stay aligned; ordinary movement handles stairs/layers.
         state.NavigationInput=Math.Abs(dx)>Math.Abs(dy)?(dx>0?"Right":"Left"):(dy>0?"Up":"Down");
@@ -106,9 +112,12 @@ internal sealed class Navigation
     // The native search fails when the goal is a trigger tile it marks as blocked
     // or lies beyond its 64x64 window. Try the goal, its neighbours, then cells
     // progressively closer to us along the straight line, with small offsets.
-    private static IEnumerable<Vector3> Candidates(Vector3 from,Vector3 goal)
+    private static IEnumerable<Vector3> Candidates(Vector3 from,Vector3 goal,float playerLayer)
     {
         yield return goal;
+        // A route written with the wrong collision layer (Bottom 0, Ground 1,
+        // Upper 2) never finds a path; retry the same cell on the player's layer.
+        if((int)playerLayer!=(int)goal.z)yield return new Vector3(goal.x,goal.y,playerLayer);
         foreach(var (ox,oy) in Offsets(1))yield return new Vector3(goal.x+ox,goal.y+oy,goal.z);
         foreach(var f in new[]{.75f,.5f,.3f,.15f})
         {

@@ -80,7 +80,7 @@
       "goal": {
         "x": 9,
         "y": 13,
-        "layer": 0
+        "layer": 1
       },
       "phases": [
         "Player",
@@ -184,7 +184,7 @@
       "goal": {
         "x": 16,
         "y": 25,
-        "layer": 0
+        "layer": 2
       },
       "phases": [
         "Player",
@@ -265,7 +265,7 @@
       "goal": {
         "x": 29,
         "y": 12,
-        "layer": 0
+        "layer": 2
       },
       "phases": [
         "Player",
@@ -373,7 +373,7 @@
       "goal": {
         "x": 16,
         "y": 30,
-        "layer": 0
+        "layer": 2
       },
       "phases": [
         "Player",
@@ -444,7 +444,7 @@
       "goal": {
         "x": 12,
         "y": 16,
-        "layer": 0
+        "layer": 1
       },
       "phases": [
         "Player",
@@ -547,7 +547,7 @@
       "goal": {
         "x": 8,
         "y": 7,
-        "layer": 0
+        "layer": 1
       },
       "phases": [
         "Player",
@@ -574,7 +574,7 @@
       "goal": {
         "x": 9,
         "y": 10,
-        "layer": 0
+        "layer": 1
       },
       "phases": [
         "Player",
@@ -601,7 +601,7 @@
       "goal": {
         "x": 27,
         "y": 7,
-        "layer": 0
+        "layer": 1
       },
       "phases": [
         "Player",
@@ -727,7 +727,7 @@
       "goal": {
         "x": 9,
         "y": 15,
-        "layer": 0
+        "layer": 1
       },
       "phases": [
         "Player",

@@ -54,6 +54,30 @@ analysis. See also `CLAUDE_HANDOFF.txt` and `docs/TAS-SEGMENT-2.md`.
    the engine pulses Confirm for every step kind outside battle. Jobs'
    `MenuInput` reads `InputListener`, so the injected Confirm reaches it.
 
+8. **Kaipo: "no native route", walking up and down (fixed, compile-only).**
+   Collision layer index = Bottom 0, Ground 1, Upper 2 (confirmed from trace
+   cell z: Kaipo 2, overworld/Mist 1, Baron/Mist Cave 0). Kaipo walks on
+   UpperCollision, so goals written with layer 0 never planned, and the
+   direct-steering fallback rotated directions. Segment 2 goal layers were
+   recomputed from each map's collision (first free layer at the goal). The
+   navigator now also retries the goal on the player's own layer, and arrival
+   compares world x/y only.
+   **Rule for new routes:** set `layer` from the map's collision file (that
+   index mapping), never assume 0.
+
+## Stuck detection (all segments, always on)
+
+The user's standing requirement: every movement must be confirmed. It lives
+in the shared `Navigation` code, so every navigate step in every route gets
+it:
+* each frame compares the player's world position with the last one
+  (`unchanged` counter);
+* within every 90 still frames: frames 12-35 release input so a wandering NPC
+  can move away; then it pushes again, and at 90 the path is replanned;
+* 600 still frames fails the step ("Movement stalled"), never loops forever;
+* modal popups and focus loss reset the counter (not counted as stuck).
+Keep this behaviour in any navigation rewrite.
+
 ## Segment 2 build (compile-only)
 
 * `Step.BattlePlan`: ordered `BattleRule{character, command, ability, minHpPercent, minMp}`.
