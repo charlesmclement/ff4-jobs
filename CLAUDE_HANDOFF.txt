@@ -63,6 +63,11 @@ UPDATE — NOV 1 EVENING (SUPERSEDES "CURRENT PRIORITY" BELOW)
   status.json (gameSeconds, elapsedSeconds). OnGUI overlay top-left (IL2CPP
   OnGUI not yet observed live). Navigation arrival tolerance widens with the
   observed per-frame stride for boosted movement.
+- MILESTONE: session 5a0ab570dc5848aaab0780d3c16a2f2e ran the whole
+  baron-mist-dragon route from New Game to "complete" (Mist Dragon defeated,
+  flag 6, map 162). TAS (game) time 953.84 s = 15:53.84; wall clock 570.17 s
+  with F8 3x on for part of it. One focus pause during the boss. Choice pick,
+  overworld waypoints, F8 boost and timer all worked live.
 - Key bindings are irrelevant to the TAS (logical native Key injection); the
   user asked about resetting controls — not needed.
 - Next: user retests; if FieldHelp closes, watch step 2 (first real navigation,
