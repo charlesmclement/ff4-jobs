@@ -10,16 +10,16 @@ namespace FF4Tas;
 // in the back (user: never in battle). Keys only; the result is read back from
 // UserDataManager.corpsList (order = slots, Corps.Id Front 1 / Back 2).
 // StatusWindowController: SortSourceSelect 3 picks a member (selectCursor),
-// SortTargetSelect 4 the slot to swap with (targetSelectCursor); Left/Right on
-// a member is tried for the row change and checked against the data.
+// SortTargetSelect 4 the slot to swap with (targetSelectCursor); the same
+// member as source and target changes rows (user: press A twice on a portrait).
 internal sealed class FormationMenu
 {
     private const int MenuSort=5,SortSource=3,SortTarget=4,Front=1,MaxActions=60;
     private const int CecilDark=1,CecilPaladin=13,Yang=8,CecilSlot=1,YangSlot=3;
-    private bool finished,rowRight;
-    private int actions,stuck,lastRows=-1;
+    private bool finished;
+    private int actions;
     private MainMenuController? main;
-    internal void Reset() {finished=rowRight=false;actions=stuck=0;lastRows=-1;main=null;}
+    internal void Reset() {finished=false;actions=0;main=null;}
     internal void Read(Snapshot s,int frame)
     {
         var slots=Slots(out var rows);
@@ -63,28 +63,20 @@ internal sealed class FormationMenu
             int at=status.selectCursor?.Index??-1;if(at<0)return;
             int want=source>=0?source:wrongRow;
             if(at!=want) {Pulse(s,frame,want<at?"Up":"Down");return;}
-            if(source>=0) {Count(frame);Pulse(s,frame,"Confirm");return;}
-            // Row change on this member: Left first; if the rows don't change
-            // after a few presses, Right.
-            int now=RowsKey(rows);
-            if(frame%12==0)
-            {
-                if(now==lastRows && ++stuck>=3) {rowRight=!rowRight;stuck=0;}
-                else if(now!=lastRows)stuck=0;
-                lastRows=now;actions++;
-            }
-            Pulse(s,frame,rowRight?"Right":"Left");return;
+            // Order swap, or a row change: picking the same member as source
+            // and target swaps the rows (user).
+            Count(frame);Pulse(s,frame,"Confirm");return;
         }
         if(state==SortTarget)
         {
             int at=status.targetSelectCursor?.Index??-1;if(at<0)return;
+            if(dest<0)dest=wrongRow;
             if(dest<0) {Pulse(s,frame,"Back");return;}
             if(at!=dest) {Pulse(s,frame,dest<at?"Up":"Down");return;}
             Count(frame);Pulse(s,frame,"Confirm");return;
         }
     }
     private void Count(int frame) {if(frame%12==0)actions++;}
-    private static int RowsKey(int[] rows) {int k=0;foreach(var r in rows)k=k*3+r;return k;}
     // character_status id and row per corps slot (0 = empty).
     private static int[] Slots(out int[] rows)
     {

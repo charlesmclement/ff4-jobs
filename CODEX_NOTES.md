@@ -549,3 +549,4 @@ Run after note 56: growth detection worked (sprite 32x32 MN_FF4_044_C00 → 72x6
 * New FormationMenu (`formation: true` menu step): Menu → Sort (5) → StatusWindowController SortSourceSelect 3 / SortTargetSelect 4 swaps until Cecil is slot 2 and Yang slot 4; then Left/Right on a member in the wrong row (Corps.Id Front 1/Back 2), verified against corpsList. Never in battle (user). Added after the Mom Bomb (segment 4) and at the start of segment 5.
 * Segment 4 now buys 5 Phoenix Downs + 10 Potions at Kaipo's item shop (map 34, counter (36,6) facing Up, group 8) after Rosa joins (guide: stock up in Kaipo before Mount Hobs).
 * tas.py auto_step starts from the first of several menu steps on the resume map.
+* Row change (user): select the same portrait as source and target (Confirm twice on one member) instead of Left/Right.
