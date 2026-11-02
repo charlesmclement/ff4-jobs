@@ -235,8 +235,10 @@ public sealed class Controller : MonoBehaviour
         string state=Engine==null?"idle":Engine.Paused?"paused":Engine.Status;
         string speed=RunClock.Boost?$"  {RunClock.Multiplier:0.#}x ON (F8)":"  1x (F8 for speed)";
         string text=$"TAS {RunClock.Format(RunClock.GameSeconds)}  (wall clock {RunClock.Format(RunClock.RealSeconds)}){speed}\n{state}: {Engine?.Label}";
-        GUI.Label(new Rect(11,9,900,60),text,shadowStyle);
-        GUI.Label(new Rect(10,8,900,60),text,overlayStyle);
+        // In battle, a third line shows the enemies and the latest decision.
+        if(snapshot.Phase=="Battle" && snapshot.Battle.Length>0)text+="\n"+snapshot.Battle;
+        GUI.Label(new Rect(11,9,1400,90),text,shadowStyle);
+        GUI.Label(new Rect(10,8,1400,90),text,overlayStyle);
     }
     private sealed class Request
     {
