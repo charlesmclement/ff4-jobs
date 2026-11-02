@@ -189,6 +189,17 @@ whatever build it launched with, so always say which build is live.
     Also to check: the fight log named 2 of "4 Sahagins" as Tiny Mage (69 HP).
     The battle_db monster names/ids may be off for some entries.
 
+23. **Run away (user, live; I had only noted it).** Escape input is
+    holding SwitchLeft + SwitchRight (`Last.UI.KeyInput.BattleMenuController.IsEscapeInput`).
+    `Snapshot.BattleInput` takes "A+B" for several held keys. New
+    `Route.FleeFrom` monster ids: segment 2 = [9] Tiny Mage, which drains
+    Tellah's MP and casts Mini. The user warned about this. Never in boss or
+    story fights; gives up after 600 frames and fights. Tellah's MP reserve
+    (40) now applies on every random-fight step: the reserve keyed on route
+    position broke when resuming from a save made after the camp.
+    Segment 1 route restored to the version that completed live (4a731d7):
+    the user had said segment 1 was fine, and I had changed it anyway.
+
 ## Stuck detection (all segments, always on)
 
 The user's standing requirement: every movement must be confirmed. It lives

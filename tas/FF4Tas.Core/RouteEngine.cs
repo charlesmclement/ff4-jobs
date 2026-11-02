@@ -8,6 +8,9 @@ public sealed class Route
     // Monster id -> elements it is weak to (1 fire, 2 ice, 3 lightning), from the
     // master monster/attribute_group tables (tas/weaknesses.py). Read by plans.
     public Dictionary<int,int[]> Weaknesses { get; set; } = new();
+    // Monster ids to always run from in non-boss fights (e.g. Tiny Mage 9,
+    // whose Mini wastes the fight). Escape = hold SwitchLeft + SwitchRight.
+    public int[] FleeFrom { get; set; } = Array.Empty<int>();
     public void Validate()
     {
         if(Schema!=1 || string.IsNullOrWhiteSpace(Name) || Steps==null || Steps.Length is <1 or >10000)
@@ -214,7 +217,8 @@ public sealed class RouteEngine
         if(step.Kind=="checkpoint") { Fail("Checkpoint mismatch: "+step.Label);return; }
         if(step.HandleBattles && state.Phase=="Battle")
         {
-            if(state.BattleInput!=null)current.Add(state.BattleInput);
+            // "A+B" holds several keys at once (escape needs both shoulders).
+            if(state.BattleInput!=null)foreach(var key in state.BattleInput.Split('+'))current.Add(key);
             return;
         }
         // FieldHelp is the native controls/pause window. The opening audience ends

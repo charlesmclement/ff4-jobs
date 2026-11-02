@@ -49,7 +49,7 @@ internal sealed class BattlePilot
         // Scripted losses (Titan at Mist) wipe the party and the story goes on;
         // a real game over leaves the battle for GotoTitle, which no step allows.
         if(players.Length>0 && alive==0) {state.Detail="Party down; waiting for the game";return;}
-        var enemyText=new System.Text.StringBuilder();bool mist=false,hasEnemy=false;scripted=false;undead=null;weakest=null;undeadCount=livingEnemies=0;tough=boss=false;Array.Clear(elementCounts);
+        var enemyText=new System.Text.StringBuilder();bool mist=false,hasEnemy=false;scripted=false;fleeTarget=false;undead=null;weakest=null;undeadCount=livingEnemies=0;tough=boss=false;Array.Clear(elementCounts);
         for(int i=0;i<enemies.Length;i++)
         {
             var e=enemies[i];var p=e?.BattleUnitDataInfo?.Parameter;
@@ -66,6 +66,7 @@ internal sealed class BattlePilot
             // Story fights you can't win or lose normally (the Girl at Mist has
             // 60000 HP): never spend items or MP on them.
             if(e.MonsterMaster?.Id==207 || p.ConfirmedMaxHp()>=30000)scripted=true;
+            if(e.MonsterMaster!=null && FleeFrom.Contains(e.MonsterMaster.Id))fleeTarget=true;
             if(weakest==null || p.CurrentHP<weakest.BattleUnitDataInfo.Parameter.CurrentHP)weakest=e;
             if(e.MonsterMaster?.Species==UndeadSpecies)
             {
@@ -89,6 +90,15 @@ internal sealed class BattlePilot
         if(mist && !wasMist)usedOnce.Clear();
         wasMist=mist;
         if(!hasEnemy) {Pulse(state,frame,"Confirm","Waiting for battle result");return;}
+        // Run from listed monsters (never bosses or story fights): hold both
+        // shoulder keys, which BattleMenuController.IsEscapeInput polls. If the
+        // party hasn't escaped after ~10 s (fight can't be fled), fight on.
+        if(fleeTarget && !boss && !scripted && fleeFrames<FleeGiveUp)
+        {
+            fleeFrames++;state.BattleInput="SwitchLeft+SwitchRight";
+            state.Detail="Running away";decision="Party: run away (listed enemy)";
+            state.Battle=$"{enemyLine} | {decision}";return;
+        }
         if(menu==null || !menu)menu=UnityEngine.Object.FindObjectOfType<BattleMenuController>();
         if(menu==null || !menu.IsShow)return;
         if(menu.IsSpecialHelpPause) {Pulse(state,frame,"Confirm","Advance battle tutorial");return;}
@@ -173,7 +183,10 @@ internal sealed class BattlePilot
     private const float HealBelow=.5f;
     private const int EnemySingleState=3,EnemyAllState=4;
     private int undeadCount,livingEnemies;
-    private bool targetAll,tough,boss;
+    private bool targetAll,tough,boss,fleeTarget;
+    internal HashSet<int> FleeFrom=new();
+    private int fleeFrames;
+    private const int FleeGiveUp=600;
     internal Dictionary<int,int[]> Weaknesses=new();
     internal BattleDb Db=new();
     private string decision="",enemyLine="";
