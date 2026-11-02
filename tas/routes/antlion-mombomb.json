@@ -369,6 +369,142 @@
       ]
     },
     {
+      "label": "Kaipo: into the inn building (item shop)",
+      "kind": "navigate",
+      "mapId": 32,
+      "goal": {
+        "x": 15,
+        "y": 16,
+        "layer": 2
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Player",
+        "mapId": 34
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 54000,
+      "battlePlan": [
+        {
+          "character": 8,
+          "command": 26,
+          "minEnemies": 2
+        }
+      ]
+    },
+    {
+      "label": "Kaipo item shop: up to the counter",
+      "kind": "navigate",
+      "mapId": 34,
+      "goal": {
+        "x": 36,
+        "y": 6,
+        "layer": 0
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "atDestination": true
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 54000,
+      "battlePlan": [
+        {
+          "character": 8,
+          "command": 26,
+          "minEnemies": 2
+        }
+      ]
+    },
+    {
+      "label": "Kaipo item shop: Phoenix Downs and Potions (guide: stock up before Mount Hobs)",
+      "kind": "menu",
+      "mapId": 34,
+      "phases": [
+        "Player",
+        "Menu",
+        "Shop",
+        "Message",
+        "FieldReady",
+        "ChangeMap"
+      ],
+      "until": {
+        "menuDone": true
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 10800,
+      "facing": "Up",
+      "shop": {
+        "buy": [
+          {
+            "content": 9,
+            "count": 5
+          },
+          {
+            "content": 2,
+            "count": 10
+          }
+        ],
+        "sell": []
+      }
+    },
+    {
+      "label": "Kaipo item shop: back outside",
+      "kind": "navigate",
+      "mapId": 34,
+      "goal": {
+        "x": 30,
+        "y": 13,
+        "layer": 0
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Player",
+        "mapId": 32
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 54000,
+      "battlePlan": [
+        {
+          "character": 8,
+          "command": 26,
+          "minEnemies": 2
+        }
+      ]
+    },
+    {
       "label": "Kaipo: leave town",
       "kind": "navigate",
       "mapId": 32,
@@ -892,6 +1028,43 @@
           "minEnemies": 2
         }
       ]
+    },
+    {
+      "label": "Mount Hobs summit: revive and heal after the Mom Bomb (Life/Cure first, then items)",
+      "kind": "menu",
+      "mapId": 180,
+      "phases": [
+        "Player",
+        "Menu",
+        "Shop",
+        "Message",
+        "FieldReady",
+        "ChangeMap"
+      ],
+      "until": {
+        "menuDone": true
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 10800
+    },
+    {
+      "label": "Mount Hobs summit: formation - Cecil slot 2, Yang slot 4, both front; the rest back",
+      "kind": "menu",
+      "mapId": 180,
+      "phases": [
+        "Player",
+        "Menu",
+        "Shop",
+        "Message",
+        "FieldReady",
+        "ChangeMap"
+      ],
+      "until": {
+        "menuDone": true
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 10800,
+      "formation": true
     },
     {
       "label": "Mount Hobs summit: north path down the far side",

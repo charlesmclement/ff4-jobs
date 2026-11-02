@@ -222,12 +222,14 @@
   "fleeTough": true,
   "steps": [
     {
-      "label": "Overworld: heal before the walk to Fabul (Phoenix Down, Potions)",
+      "label": "Overworld: revive and heal before the walk to Fabul (Life/Cure first, then Phoenix Down, Potions)",
       "kind": "menu",
       "mapId": 1,
       "phases": [
         "Player",
         "Menu",
+        "Shop",
+        "Message",
         "FieldReady",
         "ChangeMap"
       ],
@@ -236,6 +238,25 @@
       },
       "stableFrames": 2,
       "timeoutFrames": 7200
+    },
+    {
+      "label": "Overworld: formation - Cecil slot 2, Yang slot 4, both front; the rest back",
+      "kind": "menu",
+      "mapId": 1,
+      "phases": [
+        "Player",
+        "Menu",
+        "Shop",
+        "Message",
+        "FieldReady",
+        "ChangeMap"
+      ],
+      "until": {
+        "menuDone": true
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 10800,
+      "formation": true
     },
     {
       "label": "Overworld: east from Mount Hobs to the front of Fabul (step right first: (165,36) is the Hobs door)",

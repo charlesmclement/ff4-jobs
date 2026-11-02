@@ -30,7 +30,7 @@ internal sealed class BattlePilot
         menu=null;pendingItem=pendingTarget=pendingAbility=stalled=abilityStride=0;pendingCommand=1;
         abilityLastIndex=-1;abilityLastKey=null;lastInfo=lastCursor=-1;lastActor=IntPtr.Zero;previousHp=-1;
         pendingRule=-1;abilityConfirms=abilityStuck=targetPresses=0;decision="";
-        blockedRules.Clear();blockedCure.Clear();blockedItems.Clear();blockedStatusSpell.Clear();usedOnce.Clear();wasMist=false;
+        blockedRules.Clear();blockedCure.Clear();blockedLife.Clear();blockedItems.Clear();blockedStatusSpell.Clear();usedOnce.Clear();wasMist=false;
         fleeFrames=0;sidePresses=0;bossSeen=false;turnActor=IntPtr.Zero;turnRule=-1;fightSeconds=0;fightFrame=-1;rowDone=false;firstSprite.Clear();grown=false;spriteLine="";queuedHeals.Clear();
     }
     internal void Read(Snapshot state,int frame,BattleRule[]? plan=null,int[]? fleeMonsters=null)
@@ -63,10 +63,7 @@ internal sealed class BattlePilot
             hpByStatus[member]=hp;
             if(queuedHeals.TryGetValue(member,out var queued) && (hp>queued.Hp || fightSeconds-queued.At>HealLandSeconds))queuedHeals.Remove(member);
             bool taken=queuedHeals.TryGetValue(member,out queued) && queued.Healer!=deciding;
-            // Rydia and Edward leave the party after Mount Hobs: once dead they
-            // stay down and the rest keep killing (user: "they can die").
-            bool skipRevive=rosaParty && p!.GetOwnedCharacterData()?.characterStatusId is Rydia or Edward;
-            if(hp<=0) {if(rank>=0 && !skipRevive && !taken && (dead==null || rank<HealRank(dead)))dead=p;continue;}
+            if(hp<=0) {if(rank>=0 && !taken && (dead==null || rank<HealRank(dead)))dead=p;continue;}
             alive++;
             float ratio=hp/(float)Math.Max(1,stats.ConfirmedMaxHp());
             int who=p!.GetOwnedCharacterData()?.characterStatusId??0;
@@ -306,7 +303,7 @@ internal sealed class BattlePilot
     private const int ToughDefense=200;
     // Element -> native black magic ability: Fire 33, Blizzard 36, Thunder 39.
     private static readonly int[] ElementSpell={0,33,36,39};
-    private const int Defend=2,UndeadSpecies=4,WhiteMagic=7,CureAbility=6,CureMp=3,Tellah=6;
+    private const int Defend=2,UndeadSpecies=4,WhiteMagic=7,CureAbility=6,CureMp=3,Tellah=6,LifeAbility=11,LifeMp=8;
     private bool scripted,castOnUndead,casterCanCure;
     private float injuredRatioNow=1;
     private BattleEnemyData? undead,weakest;
@@ -365,6 +362,10 @@ internal sealed class BattlePilot
         // Rydia/Edward under 50%; else she Defends.
         if(me==Rosa && rosaTarget!=null && canCure)
         {pendingCommand=WhiteMagic;pendingAbility=CureAbility;pendingTarget=rosaTarget.GetOwnedCharacterData().characterStatusId;Queue(actor,pendingTarget);Log(actor,"Cure #"+pendingTarget+" (Rosa heals)");return;}
+        // Revive: Life (white magic) from anyone who knows it and has the MP,
+        // else a Phoenix Down.
+        if(dead!=null && stats!=null && stats.CurrentMP>=LifeMp && CommandEnabled(info,WhiteMagic) && !blockedLife.Contains(actor.Pointer) && Knows(actor,LifeAbility))
+        {pendingCommand=WhiteMagic;pendingAbility=LifeAbility;pendingTarget=dead.GetOwnedCharacterData().characterStatusId;Queue(actor,pendingTarget);Log(actor,"Life on #"+pendingTarget);return;}
         if(dead!=null && HasItem(9)) {pendingItem=9;pendingTarget=dead.GetOwnedCharacterData().characterStatusId;Queue(actor,pendingTarget);Log(actor,"Phoenix Down on #"+pendingTarget);return;}
         // With Rosa alive and able to Cure, nobody else heals: Rydia Cured and
         // Yang/Cecil used Potions through the Mom Bomb split instead of
@@ -411,7 +412,13 @@ internal sealed class BattlePilot
         if(pendingCommand==1 && me==Rydia) {pendingCommand=Defend;Log(actor,"Defend (her Attack does nothing)");return;}
         if(pendingCommand==1)Log(actor,"Attack weakest enemy");
     }
-    private readonly HashSet<IntPtr> blockedCure=new();
+    private readonly HashSet<IntPtr> blockedCure=new(),blockedLife=new();
+    private static bool Knows(BattlePlayerData actor,int ability)
+    {
+        var list=actor.GetOwnedCharacterData()?.OwnedAbilityList;
+        for(int i=0;list!=null && i<list.Count;i++)if(list[i]?.Ability?.Id==ability)return true;
+        return false;
+    }
     // Member (character_status id) -> heal queued on them: their HP then, the
     // fight time and the healer. Cleared once their HP rises or after a while.
     private readonly Dictionary<int,(int Hp,float At,IntPtr Healer)> queuedHeals=new();
@@ -485,6 +492,7 @@ internal sealed class BattlePilot
     {
         if(pendingRule>=0)blockedRules.Add(pendingRule);
         else if(pendingAbility==CureAbility && lastActor!=IntPtr.Zero)blockedCure.Add(lastActor);
+        else if(pendingAbility==LifeAbility && lastActor!=IntPtr.Zero)blockedLife.Add(lastActor);
         else if(pendingAbility is ToadSpell or MiniSpell && lastActor!=IntPtr.Zero)blockedStatusSpell.Add(lastActor);
         pendingRule=-1;pendingAbility=0;pendingTarget=0;castOnUndead=false;
     }

@@ -48,11 +48,13 @@ public sealed class Controller : MonoBehaviour
     private static readonly FieldMenu fieldMenu=new();
     private static readonly ShopDriver shopDriver=new();
     private static readonly EquipMenu equipMenu=new();
+    private static readonly FormationMenu formationMenu=new();
+    private static readonly FieldCare fieldCare=new();
     private static Step? menuStep;
     // Between fights: after a battle on a walking step, revive and top up
     // through the field menu before walking on (user: run from the skeletons,
     // then Phoenix Down Rosa and heal out of combat).
-    private static readonly FieldMenu fightHeal=new();
+    private static readonly FieldCare fightHeal=new();
     private static bool healArmed,healing;private static int healFrames;
     private const float FightHealBelow=.5f;private const int FightHealTimeout=3600;
     private static string lastPhase="";
@@ -136,9 +138,11 @@ public sealed class Controller : MonoBehaviour
                 }
                 // While paused for focus, skip movement/battle reads so stall
                 // detection does not count frames the route is not driving.
+                // Any fight arms it, boss fights in mash steps included (the Mom
+                // Bomb's dead stayed dead); the heal runs on the next walk.
+                if(snapshot.Phase=="Battle")healArmed=true;
                 if(active.HandleBattles && active.Kind=="navigate" && snapshot.Focused && !snapshot.Modal)
                 {
-                    if(snapshot.Phase=="Battle")healArmed=true;
                     if(!healing && healArmed && snapshot.Phase=="Player" && fightHeal.Wanted()) {fightHeal.Reset(FightHealBelow);healing=true;healFrames=0;}
                     if(!healing && healArmed && snapshot.Phase=="Player")healArmed=false;
                     if(healing && snapshot.Phase is "Player" or "Menu")
@@ -169,13 +173,17 @@ public sealed class Controller : MonoBehaviour
                         menuStep=active;
                         if(active.Shop!=null)shopDriver.Reset(active.Shop,active.Facing);
                         else if(active.Equip!=null)equipMenu.Reset(active.Equip);
-                        else fieldMenu.Reset(useItem:active.MenuItem??0);
+                        else if(active.Formation)formationMenu.Reset();
+                        else if(active.MenuItem!=null)fieldMenu.Reset(useItem:active.MenuItem.Value);
+                        else fieldCare.Reset();
                     }
                     if(snapshot.Focused && snapshot.Phase is "Player" or "Menu" or "Shop" or "Message")
                     {
                         if(active.Shop!=null)shopDriver.Read(snapshot,frame);
                         else if(active.Equip!=null)equipMenu.Read(snapshot,frame);
-                        else if(snapshot.Phase is "Player" or "Menu")fieldMenu.Read(snapshot,frame);
+                        else if(active.Formation) {if(snapshot.Phase is "Player" or "Menu")formationMenu.Read(snapshot,frame);}
+                        else if(active.MenuItem!=null) {if(snapshot.Phase is "Player" or "Menu")fieldMenu.Read(snapshot,frame);}
+                        else if(snapshot.Phase is "Player" or "Menu")fieldCare.Read(snapshot,frame);
                     }
                 }
             }

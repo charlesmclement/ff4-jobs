@@ -47,7 +47,7 @@ public sealed class Route
             if(s.BattlePlan!=null && (!s.HandleBattles || s.BattlePlan.Length>32 || s.BattlePlan.Any(r=>r==null || r.Command is <1 or >64 || r.MinHpPercent is <0 or >100 || r.MinMp is <0 or >999 || r.ReserveMp is <0 or >999 || r.MinEnemies is <0 or >8 || r.Item is <1 or >5000 || r.Ability is <1 or >2000)))
                 throw new ArgumentException("Battle plans need handleBattles and valid rules");
             if(s.Choice is <0 or >15)throw new ArgumentException("Invalid choice index");
-            if((s.MenuItem!=null || s.Equip!=null || s.Shop!=null) && s.Kind!="menu")throw new ArgumentException("Item/equip/shop need a menu step");
+            if((s.MenuItem!=null || s.Equip!=null || s.Shop!=null || s.Formation) && s.Kind!="menu")throw new ArgumentException("Item/equip/shop need a menu step");
             if(s.Shop!=null && (s.Shop.Buy.Any(b=>b==null || b.Content<1 || b.Count is <1 or >99) || s.Shop.Sell.Any(c=>c<1)))throw new ArgumentException("Invalid shop order");
             if(s.Facing!=null && s.Facing is not ("Up" or "Down" or "Left" or "Right"))throw new ArgumentException("Invalid facing direction");
             if(s.Until?.StoryFlag is <0 or >255)throw new ArgumentException("Invalid story flag");
@@ -111,6 +111,8 @@ public sealed class Step
     // Shop: talk to the shopkeeper the step faces, then sell, then buy in
     // order (each buy only while affordable and owned+equipped < Count).
     public ShopOrder? Shop {get;set;}
+    // Formation: Cecil slot 2, Yang slot 4, both front, everyone else back.
+    public bool Formation {get;set;}
     public bool HandleBattles {get;set;}
     // Ordered per-character battle rules; the first usable one is taken, and
     // anything unusable falls back to Attack. Recovery items still come first.
