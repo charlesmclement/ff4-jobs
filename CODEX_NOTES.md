@@ -377,6 +377,14 @@ whatever build it launched with, so always say which build is live.
     survival before Ordeals only matter for winning the fights at hand.
     Candidate: flee more random fights in segments 4-5. Not implemented;
     asked the user.
+44. **Mom Bomb lost; plan rebuilt from the strat.** Log: the Mom Bomb
+    exploded at ~9555/11000 HP (timed, not an HP threshold). After the split
+    Rydia Cured instead of Blizzard, and Yang/Cecil spent turns on Phoenix
+    Downs and Potions. Now: with Rosa alive and able to Cure, nobody else
+    heals. Strat plan (Darkness ignored): Cecil Attack; Yang Attack x2,
+    Focus (command 25) x2, then Defend while the Mom Bomb lives, then Kick
+    (all bombs); Rydia Blizzard on all after the split. New rule field
+    `whileMonster` (rule applies only while that monster id is alive).
 
 ## Stuck detection (all segments, always on)
 

@@ -793,6 +793,45 @@
         },
         {
           "character": 8,
+          "command": 1,
+          "oncePerBattle": true,
+          "bossOnly": true,
+          "whileMonster": 165
+        },
+        {
+          "character": 8,
+          "command": 1,
+          "oncePerBattle": true,
+          "bossOnly": true,
+          "whileMonster": 165
+        },
+        {
+          "character": 8,
+          "command": 25,
+          "oncePerBattle": true,
+          "bossOnly": true,
+          "whileMonster": 165
+        },
+        {
+          "character": 8,
+          "command": 25,
+          "oncePerBattle": true,
+          "bossOnly": true,
+          "whileMonster": 165
+        },
+        {
+          "character": 8,
+          "command": 2,
+          "bossOnly": true,
+          "whileMonster": 165
+        },
+        {
+          "character": 8,
+          "command": 26,
+          "bossOnly": true
+        },
+        {
+          "character": 8,
           "command": 26,
           "minEnemies": 2
         }

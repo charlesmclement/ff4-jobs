@@ -46,7 +46,7 @@ internal sealed class BattlePilot
         // Yang come first (lowest of them), then Rydia and Edward.
         // Without Rosa: lowest percentage first, Cecil wins near-ties.
         BattlePlayerData? injured=null,dead=null;int alive=0,totalHp=0;float injuredRatio=2;casterCanCure=false;injuredRatioNow=1;toad=mini=null;
-        rosaParty=false;rosaTarget=null;float rosaKey=99;
+        rosaParty=rosaCanCure=false;rosaTarget=null;float rosaKey=99;
         for(int i=0;i<players.Length;i++)if(players[i]?.GetOwnedCharacterData()?.characterStatusId==Rosa)rosaParty=true;
         for(int i=0;i<players.Length;i++)
         {
@@ -69,6 +69,7 @@ internal sealed class BattlePilot
                 if(cid is MiniCondition or MiniCondition2 && mini==null)mini=p;
             }
             if(who is Rydia or Tellah or Rosa && stats.CurrentMP>=CureMp)casterCanCure=true;
+            if(who==Rosa && stats.CurrentMP>=CureMp)rosaCanCure=true;
             if(rank<0)continue;
             // Rosa tops up her priority allies earlier (under 75%).
             if(rosaParty && ratio<(rank==0?RosaHealBelow:HealBelow) && rank+ratio<rosaKey) {rosaTarget=p;rosaKey=rank+ratio;}
@@ -79,12 +80,13 @@ internal sealed class BattlePilot
         // Scripted losses (Titan at Mist) wipe the party and the story goes on;
         // a real game over leaves the battle for GotoTitle, which no step allows.
         if(players.Length>0 && alive==0) {state.Detail="Party down; waiting for the game";return;}
-        var enemyText=new System.Text.StringBuilder();bool mist=false,hasEnemy=false;scripted=false;fleeTarget=false;undead=null;weakest=null;undeadCount=livingEnemies=0;tough=boss=false;Array.Clear(elementCounts);
+        var enemyText=new System.Text.StringBuilder();bool mist=false,hasEnemy=false;scripted=false;fleeTarget=false;undead=null;weakest=null;undeadCount=livingEnemies=0;tough=boss=false;Array.Clear(elementCounts);livingIds.Clear();
         for(int i=0;i<enemies.Length;i++)
         {
             var e=enemies[i];var p=e?.BattleUnitDataInfo?.Parameter;
             if(e==null || p==null || p.CurrentHP<=0 || e.IsRemove)continue;
             hasEnemy=true;livingEnemies++;
+            if(e.MonsterMaster!=null)livingIds.Add(e.MonsterMaster.Id);
             var master=e.MonsterMaster;
             if(master!=null)
             {
@@ -273,7 +275,8 @@ internal sealed class BattlePilot
     }
     private static readonly Dictionary<int,string> Names=new(){[1]="Cecil",[13]="Cecil",[2]="Kain",[4]="Rydia",[6]="Tellah",[3]="Rosa",[7]="Edward",[8]="Yang"};
     private static bool IsCecil(BattlePlayerData p)=>p.GetOwnedCharacterData()?.characterStatusId is 1 or 13;
-    private bool rosaParty,bossSeen;private BattlePlayerData? rosaTarget;
+    private bool rosaParty,rosaCanCure,bossSeen;
+    private readonly HashSet<int> livingIds=new();private BattlePlayerData? rosaTarget;
     private const float RosaHealBelow=.75f;
     private const int Summon=9,ChocoboSummon=65,ChocoboMp=7,RydiaBossReserve=14,Edward=7;
     // Heal order with Rosa in the party: Rosa, Cecil and Yang (rank 0, the
@@ -320,7 +323,11 @@ internal sealed class BattlePilot
         if(me==Rosa && rosaTarget!=null && canCure)
         {pendingCommand=WhiteMagic;pendingAbility=CureAbility;pendingTarget=rosaTarget.GetOwnedCharacterData().characterStatusId;Log(actor,"Cure #"+pendingTarget+" (Rosa heals)");return;}
         if(dead!=null && HasItem(9)) {pendingItem=9;pendingTarget=dead.GetOwnedCharacterData().characterStatusId;Log(actor,"Phoenix Down on #"+pendingTarget);return;}
-        if(injured!=null)
+        // With Rosa alive and able to Cure, nobody else heals: Rydia Cured and
+        // Yang/Cecil used Potions through the Mom Bomb split instead of
+        // fighting, and the party lost.
+        bool leaveToRosa=rosaParty && me!=Rosa && rosaCanCure;
+        if(injured!=null && !leaveToRosa)
         {
             int target=injured.GetOwnedCharacterData().characterStatusId;
             // White Magic first for everyone; Tellah only above his plan's MP
@@ -377,6 +384,7 @@ internal sealed class BattlePilot
             if(stats!=null && rule.MinHpPercent>0 && stats.CurrentHP*100<rule.MinHpPercent*Math.Max(1,stats.ConfirmedMaxHp()))continue;
             if(stats!=null && rule.MinMp>0 && stats.CurrentMP<rule.MinMp)continue;
             if(rule.MinEnemies>0 && livingEnemies<rule.MinEnemies && !(rule.OrTough && tough))continue;
+            if(rule.WhileMonster is int whileId && !livingIds.Contains(whileId))continue;
             // Darkness is an HP-costing wave that can kill Cecil (user rule).
             // Only on large groups (4+), and only while Cecil is healthy.
             if(rule.Command==DarknessCommand && (livingEnemies<4 || (stats!=null && stats.CurrentHP*10<8*Math.Max(1,stats.ConfirmedMaxHp()))))continue;
