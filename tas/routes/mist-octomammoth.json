@@ -517,14 +517,14 @@
           "character": 6,
           "command": 8,
           "byWeakness": true,
-          "minEnemies": 3,
+          "minEnemies": 2,
           "orTough": true,
-          "minMp": 45
+          "minMp": 5
         },
         {
           "character": 6,
           "command": 2,
-          "reserveMp": 40
+          "reserveMp": 10
         }
       ]
     },
@@ -558,14 +558,14 @@
           "character": 6,
           "command": 8,
           "byWeakness": true,
-          "minEnemies": 3,
+          "minEnemies": 2,
           "orTough": true,
-          "minMp": 45
+          "minMp": 5
         },
         {
           "character": 6,
           "command": 2,
-          "reserveMp": 40
+          "reserveMp": 10
         }
       ]
     },
@@ -595,14 +595,14 @@
           "character": 6,
           "command": 8,
           "byWeakness": true,
-          "minEnemies": 3,
+          "minEnemies": 2,
           "orTough": true,
-          "minMp": 45
+          "minMp": 5
         },
         {
           "character": 6,
           "command": 2,
-          "reserveMp": 40
+          "reserveMp": 10
         }
       ]
     },
@@ -637,14 +637,14 @@
           "character": 6,
           "command": 8,
           "byWeakness": true,
-          "minEnemies": 3,
+          "minEnemies": 2,
           "orTough": true,
-          "minMp": 45
+          "minMp": 5
         },
         {
           "character": 6,
           "command": 2,
-          "reserveMp": 40
+          "reserveMp": 10
         }
       ]
     },
@@ -678,14 +678,14 @@
           "character": 6,
           "command": 8,
           "byWeakness": true,
-          "minEnemies": 3,
+          "minEnemies": 2,
           "orTough": true,
-          "minMp": 45
+          "minMp": 5
         },
         {
           "character": 6,
           "command": 2,
-          "reserveMp": 40
+          "reserveMp": 10
         }
       ]
     },
@@ -721,14 +721,14 @@
           "character": 6,
           "command": 8,
           "byWeakness": true,
-          "minEnemies": 3,
+          "minEnemies": 2,
           "orTough": true,
-          "minMp": 45
+          "minMp": 5
         },
         {
           "character": 6,
           "command": 2,
-          "reserveMp": 40
+          "reserveMp": 10
         }
       ]
     },
@@ -763,14 +763,14 @@
           "character": 6,
           "command": 8,
           "byWeakness": true,
-          "minEnemies": 3,
+          "minEnemies": 2,
           "orTough": true,
-          "minMp": 45
+          "minMp": 5
         },
         {
           "character": 6,
           "command": 2,
-          "reserveMp": 40
+          "reserveMp": 10
         }
       ]
     },
@@ -805,14 +805,14 @@
           "character": 6,
           "command": 8,
           "byWeakness": true,
-          "minEnemies": 3,
+          "minEnemies": 2,
           "orTough": true,
-          "minMp": 45
+          "minMp": 5
         },
         {
           "character": 6,
           "command": 2,
-          "reserveMp": 40
+          "reserveMp": 10
         }
       ]
     },
@@ -847,14 +847,14 @@
           "character": 6,
           "command": 8,
           "byWeakness": true,
-          "minEnemies": 3,
+          "minEnemies": 2,
           "orTough": true,
-          "minMp": 45
+          "minMp": 5
         },
         {
           "character": 6,
           "command": 2,
-          "reserveMp": 40
+          "reserveMp": 10
         }
       ]
     },
@@ -889,14 +889,14 @@
           "character": 6,
           "command": 8,
           "byWeakness": true,
-          "minEnemies": 3,
+          "minEnemies": 2,
           "orTough": true,
-          "minMp": 45
+          "minMp": 5
         },
         {
           "character": 6,
           "command": 2,
-          "reserveMp": 40
+          "reserveMp": 10
         }
       ]
     },
@@ -930,14 +930,14 @@
           "character": 6,
           "command": 8,
           "byWeakness": true,
-          "minEnemies": 3,
+          "minEnemies": 2,
           "orTough": true,
-          "minMp": 45
+          "minMp": 5
         },
         {
           "character": 6,
           "command": 2,
-          "reserveMp": 40
+          "reserveMp": 10
         }
       ]
     },
@@ -967,14 +967,14 @@
           "character": 6,
           "command": 8,
           "byWeakness": true,
-          "minEnemies": 3,
+          "minEnemies": 2,
           "orTough": true,
-          "minMp": 45
+          "minMp": 5
         },
         {
           "character": 6,
           "command": 2,
-          "reserveMp": 40
+          "reserveMp": 10
         }
       ]
     },
@@ -1009,14 +1009,14 @@
           "character": 6,
           "command": 8,
           "byWeakness": true,
-          "minEnemies": 3,
+          "minEnemies": 2,
           "orTough": true,
-          "minMp": 45
+          "minMp": 5
         },
         {
           "character": 6,
           "command": 2,
-          "reserveMp": 40
+          "reserveMp": 10
         }
       ]
     },
@@ -1068,14 +1068,14 @@
           "character": 6,
           "command": 8,
           "byWeakness": true,
-          "minEnemies": 3,
+          "minEnemies": 2,
           "orTough": true,
-          "minMp": 45
+          "minMp": 5
         },
         {
           "character": 6,
           "command": 2,
-          "reserveMp": 40
+          "reserveMp": 10
         }
       ]
     },
@@ -1109,14 +1109,14 @@
           "character": 6,
           "command": 8,
           "byWeakness": true,
-          "minEnemies": 3,
+          "minEnemies": 2,
           "orTough": true,
-          "minMp": 45
+          "minMp": 5
         },
         {
           "character": 6,
           "command": 2,
-          "reserveMp": 40
+          "reserveMp": 10
         }
       ]
     },
@@ -1153,14 +1153,14 @@
           "character": 6,
           "command": 8,
           "byWeakness": true,
-          "minEnemies": 3,
+          "minEnemies": 2,
           "orTough": true,
-          "minMp": 45
+          "minMp": 5
         },
         {
           "character": 6,
           "command": 2,
-          "reserveMp": 40
+          "reserveMp": 10
         }
       ]
     },
@@ -1195,14 +1195,14 @@
           "character": 6,
           "command": 8,
           "byWeakness": true,
-          "minEnemies": 3,
+          "minEnemies": 2,
           "orTough": true,
-          "minMp": 45
+          "minMp": 5
         },
         {
           "character": 6,
           "command": 2,
-          "reserveMp": 40
+          "reserveMp": 10
         }
       ]
     },
@@ -1236,14 +1236,14 @@
           "character": 6,
           "command": 8,
           "byWeakness": true,
-          "minEnemies": 3,
+          "minEnemies": 2,
           "orTough": true,
-          "minMp": 45
+          "minMp": 5
         },
         {
           "character": 6,
           "command": 2,
-          "reserveMp": 40
+          "reserveMp": 10
         }
       ]
     },
@@ -1273,14 +1273,14 @@
           "character": 6,
           "command": 8,
           "byWeakness": true,
-          "minEnemies": 3,
+          "minEnemies": 2,
           "orTough": true,
-          "minMp": 45
+          "minMp": 5
         },
         {
           "character": 6,
           "command": 2,
-          "reserveMp": 40
+          "reserveMp": 10
         }
       ]
     },
@@ -1310,14 +1310,14 @@
           "character": 6,
           "command": 8,
           "byWeakness": true,
-          "minEnemies": 3,
+          "minEnemies": 2,
           "orTough": true,
-          "minMp": 45
+          "minMp": 5
         },
         {
           "character": 6,
           "command": 2,
-          "reserveMp": 40
+          "reserveMp": 10
         }
       ]
     },
@@ -1351,14 +1351,14 @@
           "character": 6,
           "command": 8,
           "byWeakness": true,
-          "minEnemies": 3,
+          "minEnemies": 2,
           "orTough": true,
-          "minMp": 45
+          "minMp": 5
         },
         {
           "character": 6,
           "command": 2,
-          "reserveMp": 40
+          "reserveMp": 10
         }
       ]
     },

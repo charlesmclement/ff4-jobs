@@ -24,17 +24,27 @@ internal sealed class BattlePilot
     private int stalled,lastCursor=-1;
     private IntPtr lastActor;
     private int previousHp=-1;
-    internal void Reset() {menu=null;pendingItem=pendingTarget=pendingAbility=stalled=abilityStride=0;pendingCommand=1;abilityLastIndex=-1;abilityLastKey=null;lastInfo=lastCursor=-1;lastActor=IntPtr.Zero;previousHp=-1;}
+    // Called whenever the game leaves the Battle phase: everything below is per fight.
+    internal void Reset()
+    {
+        menu=null;pendingItem=pendingTarget=pendingAbility=stalled=abilityStride=0;pendingCommand=1;
+        abilityLastIndex=-1;abilityLastKey=null;lastInfo=lastCursor=-1;lastActor=IntPtr.Zero;previousHp=-1;
+        pendingRule=-1;abilityConfirms=abilityStuck=targetPresses=0;decision="";
+        blockedRules.Clear();blockedCure.Clear();blockedItems.Clear();usedOnce.Clear();wasMist=false;
+        fleeFrames=0;fightSeconds=0;fightFrame=-1;rowDone=false;
+    }
     internal void Read(Snapshot state,int frame,BattleRule[]? plan=null)
     {
         var plug=BattlePlugManager.Instance();
         if(plug==null)return;
+        // Game-time length of this fight (unaffected by the speed boost).
+        if(fightFrame!=frame) {fightFrame=frame;fightSeconds+=Time.deltaTime;}
         if(plug.IsWinResult()) {Pulse(state,frame,"Confirm","Advance victory rewards");return;}
         var players=plug.GetPlayerUnits();var enemies=plug.GetEnemyUnits();
         if(players==null || enemies==null)return;
         // Heal anyone under half HP. Cecil comes first (he carries every fight),
         // then whoever is lowest by percentage.
-        BattlePlayerData? injured=null,dead=null;int alive=0,totalHp=0;float injuredRatio=2;
+        BattlePlayerData? injured=null,dead=null;int alive=0,totalHp=0;float injuredRatio=2;casterCanCure=false;injuredRatioNow=1;
         for(int i=0;i<players.Length;i++)
         {
             var p=players[i];var stats=p?.BattleUnitDataInfo?.Parameter;if(stats==null)continue;
@@ -42,9 +52,11 @@ internal sealed class BattlePilot
             if(hp<=0) {dead??=p;continue;}
             alive++;
             float ratio=hp/(float)Math.Max(1,stats.ConfirmedMaxHp());
+            int who=p!.GetOwnedCharacterData()?.characterStatusId??0;
+            if(who is Rydia or Tellah && stats.CurrentMP>=CureMp)casterCanCure=true;
             if(ratio>=HealBelow)continue;
             if(IsCecil(p!))ratio-=1;
-            if(ratio<injuredRatio) {injured=p;injuredRatio=ratio;}
+            if(ratio<injuredRatio) {injured=p;injuredRatio=ratio;injuredRatioNow=hp/(float)Math.Max(1,stats.ConfirmedMaxHp());}
         }
         // Scripted losses (Titan at Mist) wipe the party and the story goes on;
         // a real game over leaves the battle for GotoTitle, which no step allows.
@@ -97,10 +109,12 @@ internal sealed class BattlePilot
         // Run from listed encounter groups (never bosses or story fights): hold both
         // shoulder keys, which BattleMenuController.IsEscapeInput polls. If the
         // party hasn't escaped after ~10 s (fight can't be fled), fight on.
-        if(fleeTarget && !boss && !scripted && fleeFrames<FleeGiveUp)
+        // ...and run from any ordinary fight that is taking too long.
+        bool slow=fightSeconds>SlowFightSeconds;
+        if((fleeTarget || slow) && !boss && !scripted && fleeFrames<FleeGiveUp)
         {
             fleeFrames++;state.BattleInput="SwitchLeft+SwitchRight";
-            state.Detail="Running away";decision="Party: run away (listed encounter)";
+            state.Detail="Running away";decision=fleeTarget?"Party: run away (listed encounter)":$"Party: run away (fight past {SlowFightSeconds:0} s)";
             state.Battle=$"{enemyLine} | {decision}";return;
         }
         if(menu==null || !menu)menu=UnityEngine.Object.FindObjectOfType<BattleMenuController>();
@@ -191,6 +205,11 @@ internal sealed class BattlePilot
     internal List<HashSet<int>> FleeParties=new();
     private int fleeFrames;
     private const int FleeGiveUp=600;
+    private const float SlowFightSeconds=15;
+    private float fightSeconds;private int fightFrame=-1;
+    // Back attack flips the rows: one non-Cecil actor uses Row once to fix it.
+    private bool rowDone;
+    private const int Row=5,Rydia=4;
     internal Dictionary<int,int[]> Weaknesses=new();
     internal BattleDb Db=new();
     private string decision="",enemyLine="";
@@ -201,7 +220,8 @@ internal sealed class BattlePilot
     // Element -> native black magic ability: Fire 33, Blizzard 36, Thunder 39.
     private static readonly int[] ElementSpell={0,33,36,39};
     private const int Defend=2,UndeadSpecies=4,WhiteMagic=7,CureAbility=6,CureMp=3,Tellah=6;
-    private bool scripted,castOnUndead;
+    private bool scripted,castOnUndead,casterCanCure;
+    private float injuredRatioNow=1;
     private BattleEnemyData? undead,weakest;
     private void Log(BattlePlayerData actor,string what)
     {
@@ -223,6 +243,11 @@ internal sealed class BattlePilot
         var stats=actor.BattleUnitDataInfo?.Parameter;
         bool isTellah=actor.GetOwnedCharacterData()?.characterStatusId==Tellah;
         bool canCure=stats!=null && stats.CurrentMP>=CureMp && CommandEnabled(info,WhiteMagic) && !blockedCure.Contains(actor.Pointer);
+        int me=actor.GetOwnedCharacterData()?.characterStatusId??0;
+        // Back attack: the weak front-liner (Rydia now; anyone but Cecil) swaps
+        // the party's rows back with Row, once per fight.
+        if(info.isBackAttack && !rowDone && !IsCecil(actor) && livingEnemies>0)
+        {rowDone=true;pendingCommand=Row;Log(actor,"Row (back attack)");return;}
         if(dead!=null && HasItem(9)) {pendingItem=9;pendingTarget=dead.GetOwnedCharacterData().characterStatusId;Log(actor,"Phoenix Down on #"+pendingTarget);return;}
         if(injured!=null)
         {
@@ -231,13 +256,18 @@ internal sealed class BattlePilot
             // reserve. Potions are the fallback when nobody can cast.
             bool tellahCanSpare=!isTellah || stats!.CurrentMP>=CureMp+Reserve(plan,Tellah);
             if(canCure && tellahCanSpare) {pendingCommand=WhiteMagic;pendingAbility=CureAbility;pendingTarget=target;Log(actor,"Cure ally #"+target+" (under half HP)");return;}
-            if(HasItem(2)) {pendingItem=2;pendingTarget=target;Log(actor,"Potion on ally #"+target+" (under half HP)");return;}
+            // Potions only when it matters: Cecil under half, anyone under a
+            // quarter, or no caster left who could Cure instead.
+            if(HasItem(2) && (IsCecil(injured) || injuredRatioNow<.25f || !casterCanCure))
+            {pendingItem=2;pendingTarget=target;Log(actor,"Potion on ally #"+target);return;}
         }
         // Cure hurts undead: cast it (on all of them when there are several).
         // Tellah joins in while he stays above the MP his route plan reserves.
         if(undead!=null && canCure && (!isTellah || stats!.CurrentMP>=CureMp+Reserve(plan,Tellah)))
         {pendingCommand=WhiteMagic;pendingAbility=CureAbility;castOnUndead=true;Log(actor,$"Cure{(undeadCount>1?" on all":"")} vs undead");return;}
         ChoosePlan(info,actor,plan);
+        // Rydia's attacks do ~1 damage: she Defends instead of wasting the turn.
+        if(pendingCommand==1 && me==Rydia) {pendingCommand=Defend;Log(actor,"Defend (her Attack does nothing)");return;}
         if(pendingCommand==1)Log(actor,"Attack weakest enemy");
     }
     private readonly HashSet<IntPtr> blockedCure=new();
@@ -339,19 +369,22 @@ internal sealed class BattlePilot
         var items=UserDataManager.Instance()?.normalOwnedItems;
         return items!=null && items.TryGetValue(contentId,out var item) && item!=null && item.Count>0;
     }
-    private static void SelectCommand(BattleInfomationController info,int wanted,Snapshot state,int frame)
+    // Command groups (KeyInput BattleCommandSelectController.State): Change 1
+    // (Left: Row), Normal 2, Defence 3 (Right: Defend).
+    private void SelectCommand(BattleInfomationController info,int wanted,Snapshot state,int frame)
     {
         var c=info.commandSelectController;if(c?.selectCursor==null || c.stateMachine==null)return;
-        int group=(int)c.stateMachine.Current;
-        if(wanted==2 && group!=3) {Pulse(state,frame,"Right","Open Defend commands");return;}
-        if(wanted!=2 && group!=2) {Pulse(state,frame,group==3?"Left":"Right","Return to normal commands");return;}
+        int group=(int)c.stateMachine.Current,needed=wanted==Defend?3:wanted==Row?1:2;
+        if(group!=needed) {Pulse(state,frame,group<needed?"Right":"Left",needed==3?"Open Defend commands":needed==1?"Open Row command":"Return to normal commands");return;}
         int index=c.selectCursor.Index;
         if(c.contentList==null || index<0 || index>=c.contentList.Count)return;
         var selected=c.contentList[index];
         if(selected?.TargetCommand?.Id==wanted && selected.IsEnable)
-        {Pulse(state,frame,"Confirm",wanted==2?"Choose Defend":wanted==3?"Use recovery item":"Choose Attack");return;}
+        {Pulse(state,frame,"Confirm",wanted==Defend?"Choose Defend":wanted==Row?"Choose Row":wanted==3?"Use recovery item":"Choose Attack");return;}
         int wantedIndex=-1;
         for(int i=0;i<c.contentList.Count;i++)if(c.contentList[i]?.TargetCommand?.Id==wanted) {wantedIndex=i;break;}
+        // Row missing from its group: Defend instead of stopping the run.
+        if(wantedIndex<0 && wanted==Row) {pendingCommand=Defend;return;}
         if(wantedIndex<0) {state.Failure=$"Required native command {wanted} not visible; stop instead of guessing";return;}
         Pulse(state,frame,wantedIndex<index?"Up":"Down","Select battle command");
     }

@@ -203,6 +203,29 @@ whatever build it launched with, so always say which build is live.
     Segment 1 route restored to the version that completed live (4a731d7):
     the user had said segment 1 was fine, and I had changed it anyway.
 
+24. **Battle overhaul from the user's live run (compile-only).**
+    * **Per-fight state was never cleared (real bug).** An earlier edit to
+      `BattlePilot.Reset()` silently didn't apply (unasserted string
+      replace), so blocked rules/items/Cure, the once-per-battle set and the
+      flee counter carried across every fight: a spell blocked once stayed
+      blocked for the whole run. `Reset()` now clears all per-fight state.
+      Every later edit asserts its match; the other earlier edits were
+      checked and are present.
+    * **Run from fights that drag:** any non-boss, non-story fight past 15 s
+      of game time (summed `Time.deltaTime`, so the speed boost doesn't
+      change it) runs (hold both shoulders). The listed group flee stays.
+    * **Back attack:** the first non-Cecil actor uses Row (command 5, in the
+      KeyInput command group "Change" = 1, reached with Left; Defend is in
+      "Defence" = 3, reached with Right). Once per fight; falls back to
+      Defend if Row isn't visible.
+    * **Rydia never Attacks** (about 1 damage): she Defends unless healing,
+      Cure vs undead, or a plan rule applies.
+    * **Potions:** only for Cecil under 50%, anyone under 25%, or when no
+      caster (Rydia/Tellah) has 3+ MP. Otherwise Cecil Attacks.
+    * **Tellah:** weakness spell (Fire on Red Mousse, etc.) on 2+ enemies or
+      a high-defense enemy, at MP >= 5, else Defend. His Cure reserve is 10
+      (Osmose refills him at Octomammoth).
+
 ## Stuck detection (all segments, always on)
 
 The user's standing requirement: every movement must be confirmed. It lives
