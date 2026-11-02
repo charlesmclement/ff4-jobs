@@ -78,3 +78,9 @@ Version 0.2.0 is compiled, **not tested**. The previous 0.1.0 input prototype ha
 Live acceptance still needs to establish: field alignment and stair traversal, all Baron triggers, native battle cursor/target selection, item recovery, mist transitions, and the victory checkpoint. Later work includes extending beyond Mist Dragon, routing supplies and jobs, and reproducible timing/RNG. No full-game completion or measured segment time is claimed.
 
 The route coordinates and milestones were read from this installation's map/event assets. Mist behavior comes from its `sc_ai_162_MistDragon` script. No proprietary map files or scripts are included in the repository.
+
+## Pre-title exit investigation (November 1, 2026)
+
+The first user attempts with 0.2.0 closed before the title screen, at recorded frame 2 with no route running. Steam was not running during investigation. That is a likely startup prerequisite failure, not a proven diagnosis of the exit.
+
+The launcher now starts Steam if absent, retains local Unity/Wine logs and an exit report, archives prior startup logs, and keeps terminal errors visible. A live Steam process does not guarantee login/API readiness; finish any Steam update or sign-in if prompted. This launcher change has not been executed or tested. If the exit persists, inspect `research/tas-session/unity.log`, `game.log`, `exit.json`, and `BepInEx-last.log` before changing the DLL. See `CLAUDE_HANDOFF.txt` for continuation context.

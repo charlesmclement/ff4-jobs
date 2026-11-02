@@ -1,0 +1,219 @@
+FF4 JOBS+ / LOCAL SCRIPTED RUN — HANDOFF FOR CLAUDE
+Prepared November 1, 2026 (America/Los_Angeles)
+
+READ THIS FIRST
+The user is about to test the scripted run. Their explicit instruction is:
+"do not test i will do all testing"
+Do not launch FF4, run automated tests, smoke tests, or play the game yourself.
+Compilation and code/log inspection are allowed. Do not mistake compilation for
+runtime acceptance. Keep commits marked [skip ci] while this instruction applies.
+
+CURRENT PRIORITY: PRE-TITLE EXIT
+The user attempted the new scripted-run shortcut twice and reported a crash
+BEFORE the title screen. The route never started. Do not call this resolved yet.
+
+Evidence from the user's runs (read-only investigation):
+- Latest recorded session: 85113197970f44cda7a9ca03fe69ec29.
+- status.json stopped at Unity frame 2, phase None, status idle, empty route,
+  map 0, no recorded error. Earlier session: 668e8ed5f0214ec09552e46e7abc0c36.
+- BepInEx loaded FF4 JOBS+ 0.4.2 and FF4 Scripted Run 0.2.0 and reported
+  chainloader startup complete. No exception was logged there.
+- game.log only contained "fsync: up and running." Previous launcher disabled
+  Wine diagnostics; no useful Unity Player log or crash dump was found.
+- NO live Linux Steam process was running during investigation. steam.pid and
+  steam.pipe still existed from an earlier session and were stale.
+- Static inspection of SteamManager.Awake in the installed GameAssembly shows
+  SteamAPI initialization/restart checks and an Application.Quit path.
+
+Working hypothesis: missing Steam caused an early exit. This is plausible,
+NOT a proven crash diagnosis. The new route's movement and battle branches
+could not have run yet. Startup hooks, native reads, rendering, and environment
+issues remain candidates if starting Steam does not solve it.
+
+LATEST CHANGE (NOT EXECUTED OR TESTED)
+tas/tas.py now:
+- Checks live /proc entries for Steam instead of trusting stale PID/FIFO files.
+- Starts the installed Linux Steam client with -silent when absent; waits up to
+  60 seconds for a process and allows a five-second settling interval.
+- Does NOT claim a live process proves Steam login or SteamAPI readiness.
+  User may need to finish Steam updates/sign-in.
+- Rechecks that another FF4 process did not start before installing TAS DLLs.
+- Archives previous startup logs/status under research/tas-session/logs/.
+- Adds a local Unity -logFile and Wine exception logging (-all,+seh).
+- Records exit.json (return code, route-start status, Steam process state,
+  last runner snapshot) and BepInEx-last.log after game exit.
+- Keeps launcher failures visible until Enter in an interactive terminal,
+  and records launcher-error.txt.
+No game or Steam client was launched by the assistant for this change.
+No DLL changes were made in response to the pre-title exit yet.
+
+WORKSPACE / VERSION / GIT
+Actual repository: /media/desktop/New Volume/FF4 JOBS
+The chat cwd /home/desktop/Documents/ChatGPT/FF4 JOBS is NOT the real checkout.
+Game: /media/desktop/New Volume/SteamLibrary/steamapps/common/FINAL FANTASY IV PR
+Repository: https://github.com/charlesmclement/ff4-jobs (public, user approved)
+Local branch: codex/ff4-jobs; established push: git push origin HEAD:main
+Main Jobs mod: 0.4.2 beta 3. TAS plugin: 0.2.0, separately opt-in.
+Relevant existing commits:
+  ff18885  Baron/Mist Dragon route, navigation and battle pilot [skip ci]
+  03f372a  First local input/state prototype
+  045a487  Jobs menu respects configured confirm/cancel (user approved live)
+The launcher correction and this handoff are being committed after ff18885;
+consult git log for their hash. STATUS.md is ignored and stale (0.4.0 notes).
+Use source, README.md, docs/BETA-REVIEW.md and docs/VALIDATION.md instead.
+
+USER INTENT / CONSTRAINTS
+- A SCRIPT should run the game. Neither an assistant nor a cloud model pilots it.
+- All runtime game-state reads, screenshots, decisions and matching stay local.
+  Do not add remote inference, uploads, or cloud screenshot analysis.
+- Native game-state guidance is preferred. They watch and report issues.
+- Wanted a substantial first segment, not just intro dialogue. Current intended
+  endpoint: Mist Dragon victory, inside Mist Cave, control returned to user.
+- Start with ordinary FF4 PR routing; jobs optimizations can be added later.
+- Work on New Volume. Reuse the installed game; do not make game copies.
+- User most recently said their campaign is disposable for this TAS effort.
+  Nevertheless the TAS already has isolated saves; no restoration is needed.
+  Older original-save backups exist. Do not automatically restore old saves.
+- Be autonomous with implementation, avoid unnecessary questions, update Git
+  after stages, and accurately distinguish written code from proven behavior.
+- The 3D/isometric experiment was set aside. Do not resume it.
+
+HOW THE USER RUNS IT
+Desktop: /home/desktop/Desktop/FF4 Scripted Run.desktop
+Displayed name: FF4 Scripted Run (Prototype)
+Exec: python3 "/media/desktop/New Volume/FF4 JOBS/tas/tas.py" launch --route
+      "/media/desktop/New Volume/FF4 JOBS/tas/routes/baron-mist-dragon.json"
+User selects New Game. Launcher queues the route on focused Event phase.
+F10 stops; focus loss also stops. No automatic resume after stop/failure.
+The existing FF4 JOBS+ desktop shortcut is separate and unchanged.
+The launcher installs the two built TAS DLLs when the user next launches it;
+no separate manual install should be necessary after rebuilding.
+
+PATHS / BUILD (COMPILE ONLY)
+SDK: /media/desktop/New Volume/Projects/lsl-3d/.tools/dotnet/dotnet
+From the actual repository:
+  FF4JOBS_DOTNET='/media/desktop/New Volume/Projects/lsl-3d/.tools/dotnet/dotnet' bash tas/build.sh --build-only
+IMPORTANT: omitting --build-only runs automated tests. Do not omit it now.
+Latest 0.2.0 C# compilation had zero warnings and errors.
+Normal Jobs scripts/build.sh also runs checks; inspect before using it.
+
+TAS plugin output: tas/FF4Tas.Plugin/bin/Release/net6.0/
+Installed opt-in DLLs: <game>/BepInEx/plugins/FF4Tas/
+  FF4Tas.dll and FF4Tas.Core.dll
+Loader: BepInEx 6 bleeding-edge 735, Unity IL2CPP, Proton Experimental.
+Verified Steam build 20265023; GameAssembly.dll SHA256:
+  bb2f4c9db44c8ee9b065696aeafb77561a1709492130f045433e6d215abc42ed
+
+Proton: /home/desktop/.steam/debian-installation/steamapps/common/Proton - Experimental/proton
+TAS RAM prefix: /dev/shm/ff4-tas-proton
+Persistent TAS Documents: <repo>/research/tas-session/documents
+NTFS/fuseblk drive cannot hold Wine c: symlinks, hence the RAM prefix.
+Documents is linked to New Volume and registry Personal paths point to it.
+TAS env: FF4JOBS_TAS=1, FF4JOBS_TAS_DIR=<Windows Z: path to session directory>.
+Normal launches do not enable the TAS input patches.
+
+LOCAL EVIDENCE FOR NEXT USER ATTEMPT
+All under <repo>/research/tas-session/ unless specified:
+  attempt.json          Steam state before launch
+  status.json           route/step/phase/map/coordinates/flags/detail/time
+  trace-<session>.jsonl  local progress history, unique session names
+  unity.log             explicit Unity log (new launcher)
+  game.log              Proton output / Wine exceptions (new verbosity)
+  exit.json             exit code and last status (new launcher)
+  BepInEx-last.log       loader log copied after exit
+  launcher-error.txt    launcher error retained for diagnosis
+  steam-startup.log     Steam client stdout/stderr when auto-started
+  prefix.log            prefix preparation; contains historical earlier errors
+  logs/<UTC timestamp>/ previous logs preserved before the next attempt
+Original current loader log: <game>/BepInEx/LogOutput.log
+These files and extracted assets are ignored by Git. Do not commit them.
+
+TAS CODE MAP
+- tas/FF4Tas.Core/RouteEngine.cs: schema, step validation, observed-frame input
+  edges, completion conditions, timeouts, focus stop. New step kinds navigate,
+  interact, battle; old hold/wait/mash/checkpoint remain. Completion can check
+  phase, map, story flag, destination or optional local visual label.
+- tas/FF4Tas.Plugin/Plugin.cs: opt-in/hash gate, Harmony input hooks, frame state
+  sampling, request/status protocol, local traces. ActiveStep accounts for the
+  pending step transition before the bridge prepares input for the next tick.
+- tas/FF4Tas.Plugin/Navigation.cs: reads FieldMap/player; queries native
+  MapRouteSearcher.Search with collision enabled. Returned world-space route
+  is followed using directional inputs, not position writes. Replans after
+  events/encounters or stalls; bounded failure if no progress.
+- tas/FF4Tas.Plugin/BattlePilot.cs: reads native KeyInput battle controllers,
+  chooses menu directions and Confirm. Attack normally; owned Potion content 2
+  or Phoenix Down content 9 when needed. Native command IDs: Attack 1, Defend 2,
+  Item 3. Command 5 is Row, NOT Defend.
+  Mist Dragon enemy 162, party 223; EnemyCharacterParameter.CurrentMode 1/3
+  means mist, 0/2 solid. Uses Defend in mist and cancels unconfirmed attacks.
+  Already committed attacks cannot be recalled. Auto-battle or manual pause
+  stops the run. Battle tutorial confirmation has a separate handling path.
+- tas/tas.py: local launcher/CLI and process-session request protocol.
+- tas/routes/baron-mist-dragon.json: 16-step route, current desktop default.
+- tas/routes/opening-prototype.json: older short isolation route.
+- tas/vision.py: optional local Pillow crop matching, not semantic vision/OCR;
+  not used by the default route.
+
+INPUT IMPLEMENTATION / NATIVE PITFALLS
+Logical Confirm/Back etc are mapped via native Key names, not physical A/B.
+Harmony patches InputListener and KeyConfig GetKey/GetKeyDown/GetKeyUp.
+Field movement also patches InputDevice.get_InputAxis (nontrivial unique RVA
+0x394750). No raw transform edits, map warps, story flag edits, invented items,
+HP manipulation, collision disabling or forced victory.
+Do not patch shared IL2CPP trivial getters: many unrelated functions share RVAs.
+Avoid generic interface enumerators across IL2CPP; use concrete lists/arrays by
+index or dictionary lookup. Jobs previously crashed in equipment enumeration.
+Unity/native calls should remain on the main thread with per-frame sampling.
+Startup hooks and singleton reads are NOT exonerated by compile success. If
+Steam does not resolve the exit, use the new logs before guessing at DLL fixes.
+
+ROUTE / STORY CHECKPOINTS (1-BASED STEPS)
+1. Opening scripted battles and audience: Player, map 6, ScenarioFlag1[0].
+2. Map 6 (25,12) -> map 5.
+3. Map 5 (6,7) -> courtyard map 4.
+4. Map 4 (12,15) -> west corridor map 9.
+5. Map 9 (3,13) -> map 4, Rosa flag 1.
+6-7. Map 4 (10,12), Cid conversation, flag 2.
+8. Map 4 (10,11) -> tower map 13.
+9. Map 13 (6,5) -> bedroom landing map 14.
+10-11. Map 14 (7,5), face Right and speak to attendant, flag 3.
+12. Map 14 (10,5), trigger bedroom Event.
+13. Night scene/departure -> Player, overworld map 1, flag 4.
+14. Overworld (81,119) -> Mist Cave map 162; handle encounters.
+15. Mist Cave (34,5), warnings and boss; require flag 6 and Player in map 162.
+16. Final victory checkpoint; release synthetic input.
+Layer goals are 0; native pathfinding handles intermediate layers.
+Route geometry/event sequencing has NOT been accepted live.
+
+Resume tooling (user-controlled, not an instruction to execute):
+  python3 tas/tas.py start tas/routes/baron-mist-dragon.json --from-step 14
+Gives five seconds to refocus. CLI uses 1-based steps; status.step is 0-based.
+Must match actual game state. Does not load/reposition/set flags.
+
+LOCAL RESEARCH (STATIC CODE/ASSET INSPECTION)
+research/ff4-metadata/dump.cs: native declarations + RVAs.
+research/ff4-metadata/script.json: address/name mapping.
+GameAssembly native base: 0x180000000; objdump can inspect without running FF4.
+research/ff4-master/: extracted CSV tables (filenames have no extension).
+research/ff4-events/: extracted event JSON, e.g. map_30011__sc_e_0007_1.json.
+research/ff4-message/: localized message TSVs.
+research/tas-maps/mist-ai.json: installed sc_ai_162_MistDragon AI.
+research/tas-maps/container/Assets/GameAssets/Serial/Res/Map/: map text assets
+with full container hierarchy preserved. Use this hierarchy: the earlier flat
+extraction overwrote duplicate collision/entity filenames across submaps.
+Local UnityPy interpreter:
+  /media/desktop/New Volume/Projects/lsl-3d/.tools/venv/bin/python
+Game bundles: <game>/FINAL FANTASY IV_Data/StreamingAssets/aa/StandaloneWindows64/
+Do not distribute extracted proprietary scripts/assets in Git or releases.
+
+VALIDATION BOUNDARY / NEXT WORK
+- Previous 0.1.0 had 20 pure route checks and four native input-query checks.
+  Those do NOT validate 0.2.0 navigation/battles or a full graphical startup.
+- 0.2.0 only compiled. User's first graphical attempt exits before title.
+- Launcher correction is written but untested. No confirmed fix yet.
+- Next: user retries same shortcut; inspect its new logs if it still exits.
+- Once startup works, user checks each route transition, stairs/alignment,
+  recovery targeting, mist behavior and actual victory checkpoint.
+- Then extend the route meaningfully beyond Mist Dragon and later optimize jobs.
+No full-game script, deterministic savestates, RNG restoration, verified segment
+time, shopping route, or fully proven TAS exists yet. Be candid about this.
