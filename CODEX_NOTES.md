@@ -177,7 +177,8 @@ whatever build it launched with, so always say which build is live.
     Octomammoth has 293 MP), else Defend. Segment 2 now ends outside the
     waterfall cave: the B1 north door (20,6) leads to the overworld, then a
     checkpoint (map 1, flag 13). The user saved there, so segment 3 starts
-    there.
+    there. Later (user): no Darkness on Octomammoth. It counts as one target,
+    so the AoE wave only costs Cecil HP; Cecil just Attacks.
 
 ## Stuck detection (all segments, always on)
 

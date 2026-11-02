@@ -1816,7 +1816,7 @@
       ]
     },
     {
-      "label": "Octomammoth: Cecil Darkness then Attack; Tellah Thunder, Osmose when dry",
+      "label": "Octomammoth: Cecil Attack; Tellah Thunder, Osmose when dry",
       "kind": "interact",
       "mapId": 172,
       "facing": "Up",
@@ -1839,12 +1839,6 @@
       "stableFrames": 30,
       "timeoutFrames": 72000,
       "battlePlan": [
-        {
-          "character": 1,
-          "command": 10,
-          "oncePerBattle": true,
-          "bossOnly": true
-        },
         {
           "character": 6,
           "command": 8,
