@@ -220,6 +220,16 @@ Keep this behaviour in any navigation rewrite.
 
 ## Known gaps / next work (segment 2)
 
+* **Run from slow random fights (user, live).** Waterfall B1 (map 172), 2
+  Sahagin + 2 Tiny Mage took too long: the mages have 69 HP and no weakness,
+  and the party fell into healing. Add an escape action: the community notes
+  mention the "Run Away" key(s). In PR, holding the shoulder keys
+  (SwitchLeft + SwitchRight) is assumed but must be verified in
+  `BattleMenuController`/battle input code first. Rule idea: flee non-boss
+  fights unless the route needs the EXP, or when the fight drags past N
+  turns, or always on listed maps. Start with Watery Pass after the camp and
+  the waterfall floors.
+
 * **Battle plans:** the pilot only does Attack, Potion, Phoenix Down and Mist
   Dragon Defend. Octomammoth is weak to lightning and dark, so it should do
   Tellah Thunder and Cecil Darkness. Proposed per-step `battlePlan`: an

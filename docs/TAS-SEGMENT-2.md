@@ -153,3 +153,11 @@ Not yet possible (needs a menu/shop driver), noted for later:
   Darkness instead.
 * Their route doesn't mention the camp. We take it for the free full restore;
   measure later whether skipping it is faster.
+
+## Live tuning notes
+
+* Waterfall B1 random fight (2 Sahagin + 2 Tiny Mage) takes too long: run
+  from it once escape is implemented (see CODEX_NOTES "Run from slow random
+  fights").
+* Octomammoth: Cecil attacks only (Darkness wasted on one target); Tellah
+  Thunder, Osmose when under 5 MP (Recall costs MP in PR).
