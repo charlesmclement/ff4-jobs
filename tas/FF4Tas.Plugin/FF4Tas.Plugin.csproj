@@ -1,6 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <Version>0.1.0</Version>
+    <Version>0.2.0</Version>
     <TargetFramework>net6.0</TargetFramework><LangVersion>latest</LangVersion><Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings><EnableNETAnalyzers>false</EnableNETAnalyzers>
     <GamePath Condition="'$(GamePath)' == '' and '$(FF4JOBS_GAME_PATH)' != ''">$(FF4JOBS_GAME_PATH)</GamePath>

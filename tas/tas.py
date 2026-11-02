@@ -67,7 +67,7 @@ def launch(route_path,smoke):
     args=['-batchmode','-nographics'] if smoke else ['-screen-fullscreen','0','-screen-width','1280','-screen-height','720']
     route=json.loads(Path(route_path).read_text()) if route_path else None
     print('TAS save directory:',docs/'My Games/FINAL FANTASY IV PR',flush=True)
-    if route:print('Select New Game. The opening prototype starts when the game enters Event. F10 stops it.',flush=True)
+    if route:print('Select New Game. The scripted route starts when the game enters Event. F10 stops it.',flush=True)
     with (DATA/'game.log').open('w') as log:
         child=subprocess.Popen([str(PROTON),'run',str(GAME/'FINAL FANTASY IV.exe'),*args],cwd=GAME,env=env,stdout=log,stderr=log)
         try:
@@ -93,13 +93,19 @@ def launch(route_path,smoke):
 
 p=argparse.ArgumentParser(description=__doc__);sub=p.add_subparsers(dest='command',required=True)
 a=sub.add_parser('launch');a.add_argument('--route');a.add_argument('--smoke',action='store_true')
-a=sub.add_parser('start');a.add_argument('route');a.add_argument('--delay',type=float,default=5,help='seconds to refocus FF4')
+a=sub.add_parser('start');a.add_argument('route');a.add_argument('--from-step',type=int,default=1,help='resume at this numbered route step (1-based)');a.add_argument('--delay',type=float,default=5,help='seconds to refocus FF4')
 sub.add_parser('stop');sub.add_parser('status')
 a=p.parse_args()
 try:
     if a.command=='launch':launch(a.route,a.smoke)
     elif a.command=='start':
-        route=json.loads(Path(a.route).read_text());print(f'Refocus the TAS game within {a.delay:g} seconds.',flush=True);time.sleep(max(0,a.delay));request('start',route)
+        route=json.loads(Path(a.route).read_text())
+        if not 1<=a.from_step<=len(route.get('steps',[])):raise ValueError('Step is outside the route')
+        if a.from_step>1:
+            route['steps']=route['steps'][a.from_step-1:]
+            route['name']+=f' (resume at step {a.from_step})'
+        print(f'Refocus the TAS game within {a.delay:g} seconds.',flush=True)
+        time.sleep(max(0,a.delay));request('start',route)
     elif a.command=='stop':request('stop')
     else:print(json.dumps(state(),indent=2))
 except (OSError,ValueError,RuntimeError,subprocess.CalledProcessError) as e:

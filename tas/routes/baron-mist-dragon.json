@@ -1,0 +1,394 @@
+{
+  "schema": 1,
+  "name": "New Game → Mist Dragon victory — UNTESTED",
+  "steps": [
+    {
+      "label": "Opening: airship, scripted battles, and audience with the King",
+      "kind": "mash",
+      "keys": [
+        "Confirm"
+      ],
+      "phases": [
+        "None",
+        "Init",
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp"
+      ],
+      "until": {
+        "phase": "Player",
+        "mapId": 6,
+        "storyFlag": 0
+      },
+      "stableFrames": 30,
+      "periodFrames": 8,
+      "pressedFrames": 1,
+      "timeoutFrames": 108000
+    },
+    {
+      "label": "Baron: descend from the audience hall",
+      "kind": "navigate",
+      "mapId": 6,
+      "goal": {
+        "x": 25,
+        "y": 12,
+        "layer": 0
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Player",
+        "mapId": 5
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 72000
+    },
+    {
+      "label": "Baron: take the west exit into the courtyard",
+      "kind": "navigate",
+      "mapId": 5,
+      "goal": {
+        "x": 6,
+        "y": 7,
+        "layer": 0
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Player",
+        "mapId": 4
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 72000
+    },
+    {
+      "label": "Baron: enter the west corridor",
+      "kind": "navigate",
+      "mapId": 4,
+      "goal": {
+        "x": 12,
+        "y": 15,
+        "layer": 0
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Player",
+        "mapId": 9
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 72000
+    },
+    {
+      "label": "Baron: Rosa conversation and south corridor exit",
+      "kind": "navigate",
+      "mapId": 9,
+      "goal": {
+        "x": 3,
+        "y": 13,
+        "layer": 0
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Player",
+        "mapId": 4,
+        "storyFlag": 1
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 72000
+    },
+    {
+      "label": "Baron: approach Cid outside the west tower",
+      "kind": "navigate",
+      "mapId": 4,
+      "goal": {
+        "x": 10,
+        "y": 12,
+        "layer": 0
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Player",
+        "storyFlag": 2
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 72000
+    },
+    {
+      "label": "Baron: finish the Cid conversation",
+      "kind": "interact",
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp"
+      ],
+      "until": {
+        "phase": "Player",
+        "storyFlag": 2
+      },
+      "handleBattles": true,
+      "stableFrames": 15,
+      "timeoutFrames": 108000
+    },
+    {
+      "label": "Baron: enter the west tower",
+      "kind": "navigate",
+      "mapId": 4,
+      "goal": {
+        "x": 10,
+        "y": 11,
+        "layer": 0
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Player",
+        "mapId": 13
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 72000
+    },
+    {
+      "label": "Baron: climb to the bedroom landing",
+      "kind": "navigate",
+      "mapId": 13,
+      "goal": {
+        "x": 6,
+        "y": 5,
+        "layer": 0
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Player",
+        "mapId": 14
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 72000
+    },
+    {
+      "label": "Baron: approach the bedroom attendant",
+      "kind": "navigate",
+      "mapId": 14,
+      "goal": {
+        "x": 7,
+        "y": 5,
+        "layer": 0
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Player",
+        "atDestination": true
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 72000
+    },
+    {
+      "label": "Baron: speak to the attendant",
+      "kind": "interact",
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp"
+      ],
+      "until": {
+        "phase": "Player",
+        "storyFlag": 3
+      },
+      "handleBattles": true,
+      "stableFrames": 15,
+      "timeoutFrames": 108000,
+      "facing": "Right"
+    },
+    {
+      "label": "Baron: enter Cecil’s bedroom and trigger the night scene",
+      "kind": "navigate",
+      "mapId": 14,
+      "goal": {
+        "x": 10,
+        "y": 5,
+        "layer": 0
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Event"
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 72000
+    },
+    {
+      "label": "Baron: night scene, Kain joins, and departure credits",
+      "kind": "interact",
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp"
+      ],
+      "until": {
+        "phase": "Player",
+        "mapId": 1,
+        "storyFlag": 4
+      },
+      "handleBattles": true,
+      "stableFrames": 15,
+      "timeoutFrames": 108000
+    },
+    {
+      "label": "Overworld: walk northwest to Mist Cave; handle random encounters",
+      "kind": "navigate",
+      "mapId": 1,
+      "goal": {
+        "x": 81,
+        "y": 119,
+        "layer": 0
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Player",
+        "mapId": 162
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 72000
+    },
+    {
+      "label": "Mist Cave: follow the path, answer the warnings, and fight Mist Dragon",
+      "kind": "navigate",
+      "mapId": 162,
+      "goal": {
+        "x": 34,
+        "y": 5,
+        "layer": 0
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Player",
+        "mapId": 162,
+        "storyFlag": 6
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 72000
+    },
+    {
+      "label": "Mist Dragon defeated: segment complete, control returned to you",
+      "kind": "checkpoint",
+      "phases": [
+        "Player"
+      ],
+      "until": {
+        "phase": "Player",
+        "mapId": 162,
+        "storyFlag": 6
+      }
+    }
+  ]
+}

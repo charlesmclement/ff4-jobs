@@ -3,6 +3,7 @@ using BepInEx.Unity.IL2CPP;
 using HarmonyLib;
 using FF4Tas.Core;
 using Last.Management;
+using Last.Interpreter;
 using UnityEngine;
 using Il2CppSystem.Input;
 using System.Reflection;
@@ -10,7 +11,7 @@ using System.Text.Json;
 
 namespace FF4Tas;
 
-[BepInPlugin("ff4jobs.scriptedrun", "FF4 Scripted Run Prototype", "0.1.0")]
+[BepInPlugin("ff4jobs.scriptedrun", "FF4 Scripted Run Prototype", "0.2.0")]
 public sealed class Plugin : BasePlugin
 {
     internal static string DirectoryPath="";
@@ -41,6 +42,14 @@ public sealed class Controller : MonoBehaviour
     internal static readonly string Session=Guid.NewGuid().ToString("N");
     private static Snapshot snapshot=new();
     private static int frame=-1;
+    private static FieldMap? field;
+    private static readonly Navigation navigation=new();
+    private static readonly BattlePilot battle=new();
+    private static string lastPhase="";
+    private string lastRecord="";
+    private float nextRecord;
+    private float runStarted=-1,runElapsed;
+    private static float nextFieldFind;
     private static float nextVision;
     private static Vision? vision;
     private sealed class Vision
@@ -69,6 +78,36 @@ public sealed class Controller : MonoBehaviour
         {
             var phase=SceneManager.Instance?.GetCurrentSubSceneManager()?.TryCast<SubSceneManagerMainGame>()?.GetCurrentState();
             snapshot=new Snapshot{Phase=phase?.ToString()??"None",MapId=UserDataManager.Instance()?.CurrentMapId??0,Focused=Application.isFocused};
+            var active=Engine?.ActiveStep;
+            if(active!=null)
+            {
+                var storage=DataStorage.Instance;
+                if(storage!=null)
+                {
+                    var flags=new List<int>();
+                    for(int i=0;i<=6;i++)if(storage.Get(DataStorage.Category.kScenarioFlag1,i)!=0)flags.Add(i);
+                    int? requested=active.Until?.StoryFlag;
+                    if(requested>6 && storage.Get(DataStorage.Category.kScenarioFlag1,requested.Value)!=0)flags.Add(requested.Value);
+                    snapshot.StoryFlags=flags.ToArray();
+                }
+                if(snapshot.Phase!=lastPhase)
+                {
+                    navigation.Reset();
+                    if(snapshot.Phase!="Battle")battle.Reset();
+                    lastPhase=snapshot.Phase;
+                }
+                if(snapshot.Phase=="Player")
+                {
+                    if((field==null || !field) && Time.unscaledTime>=nextFieldFind)
+                    {field=UnityEngine.Object.FindObjectOfType<FieldMap>();nextFieldFind=Time.unscaledTime+.5f;}
+                    if(field!=null && field)
+                    {
+                        snapshot.MapId=field.mapManager?.CurrentMapModel?.GetId()??snapshot.MapId;
+                        navigation.Read(field,active,snapshot,frame);
+                    }
+                }
+                else if(snapshot.Phase=="Battle" && active.HandleBattles)battle.Read(snapshot,frame);
+            }
             if(Time.unscaledTime>=nextVision)
             {
                 nextVision=Time.unscaledTime+.2f;
@@ -103,7 +142,7 @@ public sealed class Controller : MonoBehaviour
                     {
                         if(Engine?.Running==true)throw new InvalidOperationException("Stop the current route first");
                         var route=command.Route??throw new InvalidOperationException("Missing route");
-                        var next=new RouteEngine(route);Engine=next;routeName=route.Name;error="";
+                        var next=new RouteEngine(route);navigation.Reset();battle.Reset();lastPhase="";Engine=next;routeName=route.Name;error="";runStarted=Time.realtimeSinceStartup;runElapsed=0;
                         // First synthetic input begins next frame, never partway through this one.
                     }
                     else throw new InvalidOperationException("Unknown command");
@@ -147,14 +186,22 @@ public sealed class Controller : MonoBehaviour
     }
     private void Report()
     {
+        if(Engine?.Running==true && runStarted>=0)runElapsed=Time.realtimeSinceStartup-runStarted;
         string target=Path.Combine(Plugin.DirectoryPath,"status.json");
         File.WriteAllText(target+".tmp",JsonSerializer.Serialize(new{
             session=Session,utc=DateTime.UtcNow,frame,route=routeName,status=Engine?.Status??"idle",
-            step=Engine?.Index,label=Engine?.Label,reason=Engine?.Reason,error,
+            step=Engine?.Index,label=Engine?.Label,reason=Engine?.Reason,error,elapsedSeconds=Math.Round(runElapsed,1),
             phase=snapshot.Phase,mapId=snapshot.MapId,focused=snapshot.Focused,
-            scope="Observed Unity frames; deterministic TAS/savestates and complete route not implemented"
+            x=snapshot.X,y=snapshot.Y,layer=snapshot.Layer,storyFlags=snapshot.StoryFlags,detail=snapshot.Detail,
+            scope="Untested scripted Baron/Mist Dragon route; observed Unity frames, no deterministic savestates"
         },Plugin.Json));
         File.Move(target+".tmp",target,true);
+        string record=$"{Engine?.Status}|{Engine?.Index}|{snapshot.Phase}|{snapshot.MapId}|{snapshot.Detail}|{Engine?.Reason}";
+        if(record!=lastRecord || Time.unscaledTime>=nextRecord)
+        {
+            File.AppendAllText(Path.Combine(Plugin.DirectoryPath,"trace-"+Session+".jsonl"),File.ReadAllText(target).Replace("\r","").Replace("\n","")+"\n");
+            lastRecord=record;nextRecord=Time.unscaledTime+1;
+        }
     }
     private void OnApplicationFocus(bool focused)
     {
@@ -187,6 +234,22 @@ internal static class ScriptInput
         string? logical=name==null?null:Controller.Logical(name);
         if(logical==null)return true;
         __result=__originalMethod.Name switch {"GetKeyDown"=>engine.Down(logical),"GetKeyUp"=>engine.Up(logical),_=>engine.Held(logical)};
+        return false;
+    }
+}
+
+// This is the nontrivial field-axis query (RVA 0x394750 in the verified build),
+// not a shared IL2CPP backing-field getter. Movement still passes through the
+// native player's input, collision, encounters and foot-trigger handling.
+[HarmonyPatch(typeof(InputDevice),"get_InputAxis")]
+internal static class ScriptFieldAxis
+{
+    static bool Prefix(ref Vector2 __result)
+    {
+        Controller.Sample();var engine=Controller.Engine;
+        if(engine?.Running!=true)return true;
+        __result=new Vector2((engine.Held("Right")?1:0)-(engine.Held("Left")?1:0),
+            (engine.Held("Up")?1:0)-(engine.Held("Down")?1:0));
         return false;
     }
 }

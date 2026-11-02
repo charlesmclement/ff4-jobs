@@ -2,7 +2,9 @@
 
 The intended run is **scripted**: a route file chooses actions from observed game state. A person can watch and report problems; no person or remote model pilots the run. Start from a Pixel Remaster route, then measure job changes as separate optimizations.
 
-Current coverage: a route engine and an **unverified opening-dialogue segment**, ending at the first stable Player phase. There is no complete-game route, navigation/pathfinding, boss decision policy, save-state system, RNG restoration or deterministic frame advance yet. Do not mistake this prototype for a finished TAS. Input durations count observed Unity updates; loading and frame timing can vary.
+Current coverage: **an untested New Game → Mist Dragon victory route**. It advances the opening, walks through Baron's Rosa/Cid/bedroom sequence, waits through departure, travels to Mist Cave, handles encounters, and attempts Mist Dragon. The final checkpoint requires native ScenarioFlag1[6] and field control in Mist Cave, so escaping an encounter cannot count as boss victory.
+
+This is a scripted run prototype, not a verified speedrun or a finished TAS. There are no deterministic savestates, RNG restoration, frame advance, complete-game route, shop optimization, or jobs optimization. Input durations count observed Unity updates; loading and frame timing can vary.
 
 ## Local operation
 
@@ -13,11 +15,13 @@ Native game state is primary. Optional `vision.py` captures only the focused FF4
 ## Build and run
 
 ```
-FF4JOBS_DOTNET=/path/to/dotnet bash tas/build.sh
-python3 tas/tas.py launch --route tas/routes/opening-prototype.json
+FF4JOBS_DOTNET=/path/to/dotnet bash tas/build.sh --build-only
+python3 tas/tas.py launch --route tas/routes/baron-mist-dragon.json
 ```
 
-Use the new **FF4 Scripted Run (Prototype)** desktop shortcut on this machine. Choose **New Game** in its game window; the script arms when the opening enters Event. It repeats Confirm during the opening and stops at first field control. This segment needs live acceptance; it is not a battle strategy or a route through Baron yet.
+Use **FF4 Scripted Run (Prototype)** on the desktop. Choose **New Game**; the script arms when the opening enters Event. Leave FF4 focused. It is intended to stop after Mist Dragon's victory scene, with control returned to you inside the cave. The shorter `opening-prototype.json` remains available for isolating opening issues.
+
+The new route has **not been run**. At the user's request, no automated tests or game launches were performed for this extension; only compilation. The user owns all live acceptance testing.
 
 **F10 stops the runner. Losing focus also stops it.** To stop from a terminal:
 
@@ -30,6 +34,16 @@ Do not run it alongside another FF4 process. The launcher refuses to interrupt a
 
 To start another route in the running TAS session, `python3 tas/tas.py start path/to/route.json` gives five seconds to refocus the game. Route requests are tied to the current process session and stale startup requests are discarded.
 
+If you stop or lose focus, the script does not resume by itself. To resume at a numbered step while still in the correct game state:
+
+```
+python3 tas/tas.py start tas/routes/baron-mist-dragon.json --from-step 14
+```
+
+Step numbers here start at 1; `status.json`'s `step` index starts at 0. Step 14 is overworld travel, 15 is Mist Cave and the boss. Resuming does not load a save, reposition the party, or set story flags. Only choose a step appropriate to where the game actually is.
+
+`status.json` reports the current label, position, story flags, decision and elapsed wall-clock seconds. `trace-<session>.jsonl` records progress locally, including stopped/failed reasons. These traces and saves are ignored by Git.
+
 ## Route format
 
 Each step has a label, kind, allowed `phases`, optional expected `mapId`, and a finite `timeoutFrames`. Unknown controls/phases are rejected before execution.
@@ -38,8 +52,13 @@ Each step has a label, kind, allowed `phases`, optional expected `mapId`, and a 
 - `mash`: press/release pulses using `periodFrames` and `pressedFrames`, until a condition matches.
 - `wait`: no input; wait for a condition.
 - `checkpoint`: require a matching condition immediately or stop.
+- `navigate`: `mapId` plus `goal: {x,y,layer}`. Query native collision-aware pathfinding, then feed ordinary field movement. Recalculate after encounters/events or when movement stalls. Stop after a bounded stall rather than teleporting.
+- `interact`: optionally face a direction once, then pulse Confirm through field dialogue/events until the condition matches.
+- `battle`: allow the battle controller to run until its condition matches; advance post-battle dialogue.
 
-`until` can match `phase`, `mapId` and/or `visual` (all specified fields must match). `stableFrames` requires repeated observations. Input is released immediately on a matching destination, including while checking stability. An unexpected state/map, timeout, focus loss or F10 stops all synthetic input. Logical names include Confirm, Back, directional keys and Menu; physical A/B assignments are not scripted.
+`handleBattles: true` enables native menu-driven combat during a step. The policy selects Attack on ordinary enemies, uses owned Potions/Phoenix Downs when available, and uses Defend in Mist Dragon modes 1/3. It cancels an unconfirmed attack if the dragon becomes mist. Already committed attacks cannot be recalled; timing still needs live tuning. The script does not deliberately toggle auto-battle or change battle-speed settings.
+
+`until` can match `phase`, `mapId`, `storyFlag` (set in ScenarioFlag1), `atDestination` and/or `visual` (all specified fields must match). `stableFrames` requires repeated observations. Input is released immediately on a matching destination, including while checking stability. An unexpected state/map, timeout, focus loss or F10 stops all synthetic input. Logical names include Confirm, Back, directional keys and Menu; physical A/B assignments are not scripted.
 
 The route engine does not edit inventory, damage, story flags, ABP or job selections. Future job optimizations should use legitimate menu inputs and personal progression.
 
@@ -52,11 +71,10 @@ python3 tas/vision.py --watch --profile /absolute/path/to/profile.json
 
 A profile is a JSON list, e.g. `[{"label":"battle-menu","template":"battle-menu.png","box":[100,400,200,120],"maxError":5}]`. The template must be a crop of the same window size/resolution. Box values are x, y, width, height. `maxError` is mean absolute RGB error, not a probability. Labels appear in local `vision.json` for native route conditions. Avoid backgrounds that animate. Primary game-state checks are preferable.
 
-## Validation and remaining work
+## Build status and remaining work
 
-- 20 pure route checks passed: input edges, pulse releases, same-frame polling, phase/map mismatch, timeouts, focus loss, checkpoints, backward frames, explicit stop and visual conditions.
-- Local image-matching checks passed: synthetic exact-match, mismatch and crop checks.
-- Four native input-query checks passed in the installed FF4 build under Proton (Confirm down/held, Back exclusion, direct configured-controller polling). `python3 tas/tas.py launch --smoke` repeats them and quits before loading a campaign.
-- Still needed: live opening replay, state/position observation for each route segment, native menus/target selection, encounter recovery, boss strategies, complete run replay and timing/RNG reproducibility.
+Version 0.2.0 is compiled, **not tested**. The previous 0.1.0 input prototype had 20 core checks and four native input-query checks, but those results do not validate this new movement/battle route. All tests are deferred to the user for this iteration. `tas/build.sh --build-only` deliberately skips the test executable.
 
-Reference candidates: [Zic3's FFIV Pixel Remaster notes](https://docs.google.com/document/d/1BDBmvgWAxpJM5qveSEnqOBQlgV7J0T2Ot5jS9HhyOQ4/edit) and [JamesRuns' PR Any% notes](https://drive.google.com/file/d/1hVepwHTRNHVl2dNqRh3ohsrXNs-x0WAd/view). These are route references to inspect, not imported or verified instructions. SNES timing/RNG exploits are not assumed to work on this PR build.
+Live acceptance still needs to establish: field alignment and stair traversal, all Baron triggers, native battle cursor/target selection, item recovery, mist transitions, and the victory checkpoint. Later work includes extending beyond Mist Dragon, routing supplies and jobs, and reproducible timing/RNG. No full-game completion or measured segment time is claimed.
+
+The route coordinates and milestones were read from this installation's map/event assets. Mist behavior comes from its `sc_ai_162_MistDragon` script. No proprietary map files or scripts are included in the repository.
