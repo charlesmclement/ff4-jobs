@@ -12,12 +12,20 @@ namespace FF4Tas;
 internal sealed class BattlePilot
 {
     private BattleMenuController? menu;
-    private int pendingItem,pendingTarget,lastInfo=-1;
+    private int pendingItem,pendingTarget,pendingCommand=1,pendingAbility,lastInfo=-1;
+    // Ability lists are grids of unknown width; learn the row stride from the
+    // first vertical move instead of assuming the item grid's two columns.
+    private int abilityStride,abilityLastIndex=-1;
+    private string? abilityLastKey;
+    // Plan rules that failed this battle (spell missing or not castable, e.g.
+    // out of MP) are skipped until the next battle so the menu never loops.
+    private readonly HashSet<int> blockedRules=new();
+    private int pendingRule=-1,abilityConfirms;
     private int stalled,lastCursor=-1;
     private IntPtr lastActor;
     private int previousHp=-1;
-    internal void Reset() {menu=null;pendingItem=pendingTarget=stalled=0;lastInfo=lastCursor=-1;lastActor=IntPtr.Zero;previousHp=-1;}
-    internal void Read(Snapshot state,int frame)
+    internal void Reset() {menu=null;pendingItem=pendingTarget=pendingAbility=stalled=abilityStride=0;pendingCommand=1;abilityLastIndex=-1;abilityLastKey=null;lastInfo=lastCursor=-1;lastActor=IntPtr.Zero;previousHp=-1;}
+    internal void Read(Snapshot state,int frame,BattleRule[]? plan=null)
     {
         var plug=BattlePlugManager.Instance();
         if(plug==null)return;
@@ -62,6 +70,7 @@ internal sealed class BattlePilot
         if(actor==null)return;
         int cursor=stage==1?info.commandSelectController?.selectCursor?.Index??-1:
                    stage==2?info.itemSelectController?.selectCursor?.Index??-1:
+                   stage==4?info.abilityController?.selectCursorIndex??-1:
                    info.targetSelectController?.selectCursor?.Index??-1;
         if(stage!=lastInfo || actor.Pointer!=lastActor || cursor!=lastCursor || totalHp!=previousHp)stalled=0;
         else if(++stalled>3600) {state.Failure=$"Battle menu stalled (state {stage}, cursor {cursor})";return;}
@@ -74,8 +83,15 @@ internal sealed class BattlePilot
                 var victim=dead!=null && HasItem(9)?dead:injured!=null && HasItem(2)?injured:null;
                 if(victim!=null)
                 {pendingItem=victim==dead?9:2;pendingTarget=victim.GetOwnedCharacterData().characterStatusId;}
-                SelectCommand(info,pendingItem!=0?3:mist?2:1,state,frame);
+                pendingCommand=1;pendingAbility=0;
+                if(pendingItem==0 && !mist)ChoosePlan(info,actor,plan);
+                SelectCommand(info,pendingItem!=0?3:mist?2:pendingCommand,state,frame);
                 break;
+            case 4:
+                if(pendingAbility==0) {Block();Pulse(state,frame,"Back","Cancel unexpected ability list");break;}
+                SelectAbility(info,state,frame);break;
+            case 5:
+                SelectEnemy(info,state,frame,"Cast on selected enemy");break;
             case 2:
                 if(pendingItem==0) {Pulse(state,frame,"Back","Cancel unexpected item list");break;}
                 SelectItem(info,pendingItem,state,frame);break;
@@ -83,17 +99,70 @@ internal sealed class BattlePilot
                 SelectHealingTarget(info,state,frame);break;
             case 6:
                 if(mist) {Pulse(state,frame,"Back","Cancel attack: dragon became mist");break;}
-                var t=info.targetSelectController;
-                if(t?.stateMachine==null)break;
-                if((int)t.stateMachine.Current!=3) {Pulse(state,frame,"Left","Select enemy side");break;}
-                var selected=t.GetEnemyTarget();
-                if(selected!=null && selected.Count==1 && selected[0].BattleUnitDataInfo.Parameter.CurrentHP>0)
-                    Pulse(state,frame,"Confirm","Attack selected enemy");
-                else Pulse(state,frame,"Down","Select living enemy");
-                break;
+                SelectEnemy(info,state,frame,"Attack selected enemy");break;
             case 0:break;
             default:Pulse(state,frame,"Back","Return to supported battle commands");break;
         }
+    }
+    private static void SelectEnemy(BattleInfomationController info,Snapshot state,int frame,string action)
+    {
+        var t=info.targetSelectController;
+        if(t?.stateMachine==null)return;
+        if((int)t.stateMachine.Current!=3) {Pulse(state,frame,"Left","Select enemy side");return;}
+        var selected=t.GetEnemyTarget();
+        // Whole-side targeting (e.g. Darkness) selects every living enemy.
+        bool living=selected!=null && selected.Count>0;
+        for(int i=0;living && i<selected!.Count;i++)living=selected[i].BattleUnitDataInfo.Parameter.CurrentHP>0;
+        if(living)Pulse(state,frame,"Confirm",action);
+        else Pulse(state,frame,"Down","Select living enemy");
+    }
+    // First plan rule for this actor whose command is visible and enabled and
+    // whose HP condition holds. Ability availability is checked in the list.
+    private void ChoosePlan(BattleInfomationController info,BattlePlayerData actor,BattleRule[]? plan)
+    {
+        if(plan==null)return;
+        var stats=actor.BattleUnitDataInfo?.Parameter;
+        int id=actor.GetOwnedCharacterData()?.characterStatusId??0;
+        for(int r=0;r<plan.Length;r++)
+        {
+            var rule=plan[r];
+            if(blockedRules.Contains(r))continue;
+            if(rule.Character!=null && rule.Character!=id)continue;
+            if(stats!=null && rule.MinHpPercent>0 && stats.CurrentHP*100<rule.MinHpPercent*Math.Max(1,stats.ConfirmedMaxHp()))continue;
+            if(stats!=null && rule.MinMp>0 && stats.CurrentMP<rule.MinMp)continue;
+            if(!CommandEnabled(info,rule.Command))continue;
+            pendingCommand=rule.Command;pendingAbility=rule.Ability??0;pendingRule=r;abilityConfirms=0;abilityStride=0;abilityLastIndex=-1;abilityLastKey=null;
+            return;
+        }
+    }
+    private void Block() {if(pendingRule>=0)blockedRules.Add(pendingRule);pendingRule=-1;pendingAbility=0;}
+    private static bool CommandEnabled(BattleInfomationController info,int id)
+    {
+        var list=info.commandSelectController?.contentList;
+        if(list==null)return false;
+        for(int i=0;i<list.Count;i++)if(list[i]?.TargetCommand?.Id==id)return list[i].IsEnable;
+        return false;
+    }
+    private void SelectAbility(BattleInfomationController info,Snapshot state,int frame)
+    {
+        var baseController=info.abilityController;
+        var list=baseController?.TryCast<Serial.FF0.UI.KeyInput.BattleQuantityAbilityInfomationController>()?.dataList;
+        if(baseController==null || list==null)return;
+        int index=baseController.selectCursorIndex,desired=-1;
+        for(int i=0;i<list.Count;i++)if(list[i]?.Ability?.Id==pendingAbility) {desired=i;break;}
+        // Not learned (or no list): back out; the next command pass falls through to Attack.
+        if(desired<0 || abilityConfirms>3) {Block();Pulse(state,frame,"Back","Planned ability not available");return;}
+        if(frame%12!=0) {state.Detail="Find planned ability";return;}
+        if(abilityLastKey is "Down" or "Up" && abilityStride==0 && abilityLastIndex>=0)
+            abilityStride=index!=abilityLastIndex?Math.Abs(index-abilityLastIndex):int.MaxValue;
+        abilityLastIndex=index;
+        string key;
+        if(index==desired) {key="Confirm";abilityConfirms++;}
+        else if(abilityStride==0)key=desired>index?"Down":"Up";
+        else if(abilityStride==int.MaxValue || index/abilityStride==desired/abilityStride)key=desired>index?"Right":"Left";
+        else key=desired>index?"Down":"Up";
+        abilityLastKey=key;
+        Pulse(state,frame,key,key=="Confirm"?"Choose planned ability":"Find planned ability");
     }
     private static bool HasItem(int contentId)
     {

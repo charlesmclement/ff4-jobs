@@ -1,6 +1,6 @@
 # TAS segment 2 design: Mist Dragon → Octomammoth
 
-Status: **design only, nothing below has run yet.** All map, event and item
+Status: **route built (`tas/routes/mist-octomammoth.json`, 28 steps), not yet run.** All map, event and item
 facts come from local extracted game data (tools listed at the end) and should
 be confirmed by the first live run.
 
@@ -56,7 +56,9 @@ needed for Thunder, and the later Damcyan story expects him.
 Octomammoth: 2350 HP, level 10, **weak to lightning and dark** (attribute
 group 15), steals Potion. Fastest kill:
 
-* Tellah: Black Magic → Thunder each turn.
+* Tellah: Black Magic → Thunder (ability 39) while he has ≥5 MP, then Recall.
+* MP is conserved: only the Octomammoth step has a battle plan, so every
+  random encounter on the way is plain Attack.
 * Cecil: Darkness (dark, costs HP) while his HP stays above roughly 40%,
   otherwise Attack.
 * Rydia: Attack, or a Potion when someone is low.
@@ -114,3 +116,16 @@ Default: take nothing; the Hermes Shoes detour is the first experiment.
 * `tas/map_links.py <numbers> [--events]`: doors, arrival points and event objects per sub-map.
 * `tas/plan_path.py`: overworld waypoints from terrain (foot walkability, avoids entrances).
 * `tas/audit_items.py --trace ... | --maps ...`: chests and pickups vs. the path walked.
+
+## Community route (not yet merged)
+
+Zic3's FF4 PR current-patch notes are linked from speedrun.com
+(https://www.speedrun.com/ff4/guides/6ity4 → a Google Doc). The doc couldn't
+be fetched from this environment. Segment 1 pickups from it should be added
+once someone pastes the relevant section.
+
+## Starting segment 2
+
+Desktop button "FF4 TAS: Segment 2": press once to open the TAS game (no
+route), load the save, press again; `tas.py play` picks the step from the live
+map and cell, then waits until the game is focused.

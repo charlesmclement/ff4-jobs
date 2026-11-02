@@ -45,6 +45,25 @@ analysis. See also `CLAUDE_HANDOFF.txt` and `docs/TAS-SEGMENT-2.md`.
   boosted movement.
 * Tools: `tas/extract_maps.py`, `tas/map_links.py`, `tas/plan_path.py`, `tas/audit_items.py`.
 
+## Segment 2 build (compile-only)
+
+* `Step.BattlePlan`: ordered `BattleRule{character, command, ability, minHpPercent, minMp}`.
+  `BattlePilot` picks the first usable rule. It handles AbilitySelect (state 4)
+  through `abilityController.selectCursorIndex` and
+  `Serial.FF0.UI.KeyInput.BattleQuantityAbilityInfomationController.dataList`,
+  learning the grid row stride from the first vertical move. AbilityTargetSelect
+  (5) and TargetSelect (6) share `SelectEnemy`. A rule that fails in a battle
+  (missing spell, or Confirm doesn't take) is blocked until the next battle.
+* Ids: Cecil 1, Rydia 4, Tellah 6. Black Magic 8, Darkness 10 (all enemies,
+  HP cost), Recall 28; Thunder ability 39 (5 MP).
+* Route `tas/routes/mist-octomammoth.json`: 28 steps. Step-on triggers (Bomb
+  Ring, Kaipo arrival, Rosa, waterfall) are navigate-until-Event steps followed
+  by mash steps; Tellah and Octomammoth are navigate + interact facing Up.
+* `tas.py play <route>`: opens the game with no route if it's closed, otherwise
+  `auto_step` picks a step from the map id and cell. While idle, story flags
+  aren't reported, so ambiguous maps (Kaipo) pick the nearest target.
+* Desktop file `~/Desktop/FF4 TAS Segment 2.desktop`.
+
 ## Known gaps / next work (segment 2)
 
 * **Battle plans:** the pilot only does Attack, Potion, Phoenix Down and Mist

@@ -31,6 +31,8 @@ public sealed class Route
                 throw new ArgumentException("Navigation needs a map and valid destination");
             if(s.Waypoints!=null && (s.Kind!="navigate" || s.Waypoints.Length>256 || s.Waypoints.Any(w=>w==null || w.X is <0 or >1024 || w.Y is <0 or >1024 || w.Layer is <0 or >15)))
                 throw new ArgumentException("Waypoints need a navigate step and valid cells");
+            if(s.BattlePlan!=null && (!s.HandleBattles || s.BattlePlan.Length>32 || s.BattlePlan.Any(r=>r==null || r.Command is <1 or >64 || r.MinHpPercent is <0 or >100 || r.MinMp is <0 or >999 || r.Ability is <1 or >2000)))
+                throw new ArgumentException("Battle plans need handleBattles and valid rules");
             if(s.Choice is <0 or >15)throw new ArgumentException("Invalid choice index");
             if(s.Facing!=null && s.Facing is not ("Up" or "Down" or "Left" or "Right"))throw new ArgumentException("Invalid facing direction");
             if(s.Until?.StoryFlag is <0 or >255)throw new ArgumentException("Invalid story flag");
@@ -69,6 +71,22 @@ public sealed class Step
     // step (e.g. the Mist Cave warning defaults to "No"; 0 is "Yes").
     public int? Choice {get;set;}
     public bool HandleBattles {get;set;}
+    // Ordered per-character battle rules; the first usable one is taken, and
+    // anything unusable falls back to Attack. Recovery items still come first.
+    public BattleRule[]? BattlePlan {get;set;}
+}
+public sealed class BattleRule
+{
+    // Native character_status id (Cecil 1, Rydia 4, Tellah 6); null = anyone.
+    public int? Character {get;set;}
+    // Native command id (Attack 1, Black Magic 8, Darkness 10, ...).
+    public int Command {get;set;}=1;
+    // Native ability id inside a list command (Thunder 39, Fire 33, ...).
+    public int? Ability {get;set;}
+    // Only while the actor's HP is at least this percent of max.
+    public int MinHpPercent {get;set;}
+    // Only while the actor has at least this much MP (e.g. Thunder costs 5).
+    public int MinMp {get;set;}
 }
 public sealed class Condition
 {

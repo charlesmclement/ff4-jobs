@@ -113,7 +113,7 @@ public sealed class Controller : MonoBehaviour
                         navigation.Read(field,active,snapshot,frame);
                     }
                 }
-                else if(snapshot.Phase=="Battle" && active.HandleBattles)battle.Read(snapshot,frame);
+                else if(snapshot.Phase=="Battle" && active.HandleBattles)battle.Read(snapshot,frame,active.BattlePlan);
             }
             if(Time.unscaledTime>=nextVision)
             {

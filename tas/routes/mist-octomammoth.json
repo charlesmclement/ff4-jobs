@@ -1,0 +1,830 @@
+{
+  "schema": 1,
+  "name": "Mist Dragon → Octomammoth — UNTESTED",
+  "steps": [
+    {
+      "label": "Mist Cave: walk out the north exit",
+      "kind": "navigate",
+      "mapId": 162,
+      "goal": {
+        "x": 34,
+        "y": 2,
+        "layer": 0
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Player",
+        "mapId": 1
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 36000
+    },
+    {
+      "label": "Overworld: Mist Cave to the village of Mist",
+      "kind": "navigate",
+      "mapId": 1,
+      "goal": {
+        "x": 101,
+        "y": 106,
+        "layer": 0
+      },
+      "waypoints": [
+        {
+          "x": 99,
+          "y": 107,
+          "layer": 0
+        },
+        {
+          "x": 99,
+          "y": 106,
+          "layer": 0
+        },
+        {
+          "x": 100,
+          "y": 106,
+          "layer": 0
+        }
+      ],
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Player",
+        "mapId": 67
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 36000
+    },
+    {
+      "label": "Mist: walk into the village (Bomb Ring triggers)",
+      "kind": "navigate",
+      "mapId": 67,
+      "goal": {
+        "x": 9,
+        "y": 13,
+        "layer": 0
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Event"
+      },
+      "stableFrames": 1,
+      "timeoutFrames": 36000
+    },
+    {
+      "label": "Mist: Bomb Ring, Rydia, Titan; Kain leaves",
+      "kind": "mash",
+      "keys": [
+        "Confirm"
+      ],
+      "phases": [
+        "None",
+        "Init",
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Player",
+        "mapId": 1,
+        "storyFlag": 7
+      },
+      "stableFrames": 30,
+      "periodFrames": 8,
+      "pressedFrames": 1,
+      "timeoutFrames": 72000
+    },
+    {
+      "label": "Overworld: to Kaipo",
+      "kind": "navigate",
+      "mapId": 1,
+      "goal": {
+        "x": 130,
+        "y": 91,
+        "layer": 0
+      },
+      "waypoints": [
+        {
+          "x": 109,
+          "y": 106,
+          "layer": 0
+        },
+        {
+          "x": 109,
+          "y": 96,
+          "layer": 0
+        },
+        {
+          "x": 130,
+          "y": 96,
+          "layer": 0
+        },
+        {
+          "x": 130,
+          "y": 92,
+          "layer": 0
+        }
+      ],
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Player",
+        "mapId": 32
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 36000
+    },
+    {
+      "label": "Kaipo: walk in (arrival scene)",
+      "kind": "navigate",
+      "mapId": 32,
+      "goal": {
+        "x": 16,
+        "y": 25,
+        "layer": 0
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Event"
+      },
+      "stableFrames": 1,
+      "timeoutFrames": 36000
+    },
+    {
+      "label": "Kaipo: inn, Baron soldiers, Rydia joins",
+      "kind": "mash",
+      "keys": [
+        "Confirm"
+      ],
+      "phases": [
+        "None",
+        "Init",
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Player",
+        "storyFlag": 8
+      },
+      "stableFrames": 30,
+      "periodFrames": 8,
+      "pressedFrames": 1,
+      "timeoutFrames": 72000
+    },
+    {
+      "label": "Kaipo inn: leave",
+      "kind": "navigate",
+      "mapId": 34,
+      "goal": {
+        "x": 30,
+        "y": 13,
+        "layer": 0
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Player",
+        "mapId": 32
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 36000
+    },
+    {
+      "label": "Kaipo: enter the house in the northeast",
+      "kind": "navigate",
+      "mapId": 32,
+      "goal": {
+        "x": 29,
+        "y": 12,
+        "layer": 0
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Player",
+        "mapId": 37
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 36000
+    },
+    {
+      "label": "Kaipo house: walk to Rosa (scene triggers)",
+      "kind": "navigate",
+      "mapId": 37,
+      "goal": {
+        "x": 13,
+        "y": 9,
+        "layer": 0
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Event"
+      },
+      "stableFrames": 1,
+      "timeoutFrames": 36000
+    },
+    {
+      "label": "Kaipo house: Rosa's desert fever",
+      "kind": "mash",
+      "keys": [
+        "Confirm"
+      ],
+      "phases": [
+        "None",
+        "Init",
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Player",
+        "storyFlag": 9
+      },
+      "stableFrames": 30,
+      "periodFrames": 8,
+      "pressedFrames": 1,
+      "timeoutFrames": 72000
+    },
+    {
+      "label": "Kaipo house: leave",
+      "kind": "navigate",
+      "mapId": 37,
+      "goal": {
+        "x": 13,
+        "y": 21,
+        "layer": 0
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Player",
+        "mapId": 32
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 36000
+    },
+    {
+      "label": "Kaipo: leave town",
+      "kind": "navigate",
+      "mapId": 32,
+      "goal": {
+        "x": 16,
+        "y": 30,
+        "layer": 0
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Player",
+        "mapId": 1
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 36000
+    },
+    {
+      "label": "Overworld: to the Watery Pass",
+      "kind": "navigate",
+      "mapId": 1,
+      "goal": {
+        "x": 143,
+        "y": 70,
+        "layer": 0
+      },
+      "waypoints": [
+        {
+          "x": 140,
+          "y": 92,
+          "layer": 0
+        },
+        {
+          "x": 140,
+          "y": 71,
+          "layer": 0
+        },
+        {
+          "x": 143,
+          "y": 71,
+          "layer": 0
+        }
+      ],
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Player",
+        "mapId": 163
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 36000
+    },
+    {
+      "label": "Watery Pass: walk below Tellah",
+      "kind": "navigate",
+      "mapId": 163,
+      "goal": {
+        "x": 12,
+        "y": 16,
+        "layer": 0
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick"
+      ],
+      "handleBattles": true,
+      "until": {
+        "atDestination": true
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 36000
+    },
+    {
+      "label": "Watery Pass: talk to Tellah; he joins",
+      "kind": "interact",
+      "mapId": 163,
+      "facing": "Up",
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Player",
+        "storyFlag": 10
+      },
+      "stableFrames": 30,
+      "timeoutFrames": 36000
+    },
+    {
+      "label": "Watery Pass 1: north stairs",
+      "kind": "navigate",
+      "mapId": 163,
+      "goal": {
+        "x": 7,
+        "y": 1,
+        "layer": 0
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Player",
+        "mapId": 165
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 36000
+    },
+    {
+      "label": "Watery Pass 2: north door, skipping the camp room",
+      "kind": "navigate",
+      "mapId": 165,
+      "goal": {
+        "x": 21,
+        "y": 7,
+        "layer": 0
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Player",
+        "mapId": 167
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 36000
+    },
+    {
+      "label": "Watery Pass 3: west door",
+      "kind": "navigate",
+      "mapId": 167,
+      "goal": {
+        "x": 8,
+        "y": 7,
+        "layer": 0
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Player",
+        "mapId": 168
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 36000
+    },
+    {
+      "label": "Watery Pass 4: north door",
+      "kind": "navigate",
+      "mapId": 168,
+      "goal": {
+        "x": 9,
+        "y": 10,
+        "layer": 0
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Player",
+        "mapId": 169
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 36000
+    },
+    {
+      "label": "Watery Pass 5: exit to the overworld",
+      "kind": "navigate",
+      "mapId": 169,
+      "goal": {
+        "x": 27,
+        "y": 7,
+        "layer": 0
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Player",
+        "mapId": 1
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 36000
+    },
+    {
+      "label": "Overworld: to the waterfall",
+      "kind": "navigate",
+      "mapId": 1,
+      "goal": {
+        "x": 139,
+        "y": 59,
+        "layer": 0
+      },
+      "waypoints": [
+        {
+          "x": 140,
+          "y": 65,
+          "layer": 0
+        },
+        {
+          "x": 140,
+          "y": 60,
+          "layer": 0
+        },
+        {
+          "x": 139,
+          "y": 60,
+          "layer": 0
+        }
+      ],
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Player",
+        "mapId": 170
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 36000
+    },
+    {
+      "label": "Waterfall: walk to the falls (Tellah spots Octomammoth)",
+      "kind": "navigate",
+      "mapId": 170,
+      "goal": {
+        "x": 13,
+        "y": 9,
+        "layer": 0
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Event"
+      },
+      "stableFrames": 1,
+      "timeoutFrames": 36000
+    },
+    {
+      "label": "Waterfall: jump down",
+      "kind": "mash",
+      "keys": [
+        "Confirm"
+      ],
+      "phases": [
+        "None",
+        "Init",
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Player",
+        "mapId": 171,
+        "storyFlag": 12
+      },
+      "stableFrames": 30,
+      "periodFrames": 8,
+      "pressedFrames": 1,
+      "timeoutFrames": 72000
+    },
+    {
+      "label": "Waterfall B2: north door",
+      "kind": "navigate",
+      "mapId": 171,
+      "goal": {
+        "x": 9,
+        "y": 15,
+        "layer": 0
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Player",
+        "mapId": 172
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 36000
+    },
+    {
+      "label": "Waterfall B1: walk up to Octomammoth",
+      "kind": "navigate",
+      "mapId": 172,
+      "goal": {
+        "x": 20,
+        "y": 8,
+        "layer": 0
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick"
+      ],
+      "handleBattles": true,
+      "until": {
+        "atDestination": true
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 36000
+    },
+    {
+      "label": "Octomammoth: Thunder and Darkness",
+      "kind": "interact",
+      "mapId": 172,
+      "facing": "Up",
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Player",
+        "mapId": 172,
+        "storyFlag": 13
+      },
+      "stableFrames": 30,
+      "timeoutFrames": 72000,
+      "battlePlan": [
+        {
+          "character": 6,
+          "command": 8,
+          "ability": 39,
+          "minMp": 5
+        },
+        {
+          "character": 6,
+          "command": 28
+        },
+        {
+          "character": 1,
+          "command": 10,
+          "minHpPercent": 50
+        }
+      ]
+    },
+    {
+      "label": "Segment 2 complete: Octomammoth defeated",
+      "kind": "checkpoint",
+      "phases": [
+        "Player"
+      ],
+      "until": {
+        "phase": "Player",
+        "mapId": 172,
+        "storyFlag": 13
+      }
+    }
+  ]
+}

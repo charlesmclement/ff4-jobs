@@ -148,26 +148,58 @@ def launch(route_path,smoke):
         elif route and not started:
             raise RuntimeError('FF4 closed before the route started. If this was unexpected, check Steam is signed in. Startup evidence is in unity.log, game.log and exit.json.')
 
+def auto_step(route):
+    """1-based step to resume at, from the live map id and cell.
+
+    Picks navigate/interact steps on the current map; among several, the one
+    whose next target (first waypoint, else goal) is nearest the player.
+    Story flags aren't reported while idle, so check the printed choice."""
+    s=state();m,x,y=s.get('mapId'),s.get('x'),s.get('y')
+    best=None
+    for i,step in enumerate(route['steps'],1):
+        if step.get('mapId')!=m or step.get('kind') not in ('navigate','interact'):continue
+        target=(step.get('waypoints') or [step.get('goal')])[0]
+        d=0 if target is None or x is None else abs(target['x']-x)+abs(target['y']-y)
+        if best is None or d<best[0]:best=(d,i)
+    if best is None:raise RuntimeError(f'No route step starts on map {m}; stand where the segment begins (phase {s.get("phase")})')
+    return best[1]
+
+def start(path,from_step,delay):
+    route=json.loads(Path(path).read_text())
+    if from_step==0:from_step=auto_step(route)
+    if not 1<=from_step<=len(route.get('steps',[])):raise ValueError('Step is outside the route')
+    print(f'Starting at step {from_step}: {route["steps"][from_step-1]["label"]}',flush=True)
+    if from_step>1:
+        route['steps']=route['steps'][from_step-1:]
+        route['name']+=f' (resume at step {from_step})'
+    # Focus loss pauses the runner, so starting while another window is
+    # focused is safe: it waits until the game is clicked.
+    if delay>0:print(f'Refocus the TAS game within {delay:g} seconds.',flush=True)
+    time.sleep(max(0,delay));request('start',route)
+
 p=argparse.ArgumentParser(description=__doc__);sub=p.add_subparsers(dest='command',required=True)
 a=sub.add_parser('launch');a.add_argument('--route');a.add_argument('--smoke',action='store_true')
 a=sub.add_parser('start');a.add_argument('route');a.add_argument('--from-step',type=int,default=1,help='resume at this numbered route step (1-based)');a.add_argument('--delay',type=float,default=5,help='seconds to refocus FF4')
+a=sub.add_parser('play',help='one button: open the TAS game if closed, else start the route from where the player stands')
+a.add_argument('route')
 sub.add_parser('stop');sub.add_parser('status')
 a=p.parse_args()
 try:
     if a.command=='launch':launch(a.route,a.smoke)
-    elif a.command=='start':
-        route=json.loads(Path(a.route).read_text())
-        if not 1<=a.from_step<=len(route.get('steps',[])):raise ValueError('Step is outside the route')
-        if a.from_step>1:
-            route['steps']=route['steps'][a.from_step-1:]
-            route['name']+=f' (resume at step {a.from_step})'
-        print(f'Refocus the TAS game within {a.delay:g} seconds.',flush=True)
-        time.sleep(max(0,a.delay));request('start',route)
+    elif a.command=='start':start(a.route,a.from_step,a.delay)
+    elif a.command=='play':
+        if not game_running():
+            print('Opening the TAS game. Load your save, then press this button again.',flush=True)
+            launch(None,False)
+        else:
+            start(a.route,0,0)
+            print('Started. Click the game window; the run waits while it is unfocused.',flush=True)
+            time.sleep(4)
     elif a.command=='stop':request('stop')
     else:print(json.dumps(state(),indent=2))
 except (OSError,ValueError,RuntimeError,subprocess.CalledProcessError) as e:
     print('TAS:',e,file=sys.stderr,flush=True)
-    if a.command=='launch':
+    if a.command in ('launch','play'):
         try:
             DATA.mkdir(parents=True,exist_ok=True)
             (DATA/'launcher-error.txt').write_text(datetime.now(timezone.utc).isoformat()+'\n'+str(e)+'\n')
