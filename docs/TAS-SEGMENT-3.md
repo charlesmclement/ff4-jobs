@@ -29,6 +29,10 @@ Shortcut: **FF4 TAS: Segment 3** (`tas.py launch --resume`).
   jail (42)): hidden Elixir (2,6, flag 70) and Ether (4,6, flag 67), both
   opened from (3,6); Phoenix Down (5,6, flag 68), opened from (5,7).
 * Antlion's Den 1: Spider's Silk (7,7, flag 73), opened from (8,7).
+* Extra Potions (user: stock up): jail B1 Potion (4,5, flag 64) from (3,5);
+  den 1 Potions (14,4, flag 74) from (14,5) and (27,9, flag 75) from (27,10).
+  Gear (Crossbow, Feathered Cap, Ruby Ring) is skipped until the script can
+  equip.
 
 ## Battle plan
 

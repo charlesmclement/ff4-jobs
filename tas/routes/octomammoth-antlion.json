@@ -332,6 +332,56 @@
       "timeoutFrames": 3600
     },
     {
+      "label": "Jail B1: step up beside the Potion",
+      "kind": "navigate",
+      "mapId": 43,
+      "goal": {
+        "x": 3,
+        "y": 5,
+        "layer": 0
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "atDestination": true
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 36000
+    },
+    {
+      "label": "Jail B1: open the Potion",
+      "kind": "interact",
+      "mapId": 43,
+      "facing": "Right",
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "treasureFlag": 64
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 3600
+    },
+    {
       "label": "Jail B1: stand below the Phoenix Down",
       "kind": "navigate",
       "mapId": 43,
@@ -682,6 +732,56 @@
       "timeoutFrames": 36000
     },
     {
+      "label": "Antlion's Den 1: walk below the first Potion",
+      "kind": "navigate",
+      "mapId": 173,
+      "goal": {
+        "x": 14,
+        "y": 5,
+        "layer": 0
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "atDestination": true
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 36000
+    },
+    {
+      "label": "Antlion's Den 1: open the Potion",
+      "kind": "interact",
+      "mapId": 173,
+      "facing": "Up",
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "treasureFlag": 74
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 3600
+    },
+    {
       "label": "Antlion's Den 1: walk to the Spider's Silk",
       "kind": "navigate",
       "mapId": 173,
@@ -727,6 +827,56 @@
       "handleBattles": true,
       "until": {
         "treasureFlag": 73
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 3600
+    },
+    {
+      "label": "Antlion's Den 1: walk below the second Potion",
+      "kind": "navigate",
+      "mapId": 173,
+      "goal": {
+        "x": 27,
+        "y": 10,
+        "layer": 0
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "atDestination": true
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 36000
+    },
+    {
+      "label": "Antlion's Den 1: open the second Potion",
+      "kind": "interact",
+      "mapId": 173,
+      "facing": "Up",
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "treasureFlag": 75
       },
       "stableFrames": 2,
       "timeoutFrames": 3600
