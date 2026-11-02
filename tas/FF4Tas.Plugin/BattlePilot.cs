@@ -258,9 +258,10 @@ internal sealed class BattlePilot
             // reserve. Potions are the fallback when nobody can cast.
             bool tellahCanSpare=!isTellah || stats!.CurrentMP>=CureMp+Reserve(plan,Tellah);
             if(canCure && tellahCanSpare) {pendingCommand=WhiteMagic;pendingAbility=CureAbility;pendingTarget=target;Log(actor,"Cure ally #"+target+" (under half HP)");return;}
-            // Potions only when it matters: Cecil under half, anyone under a
-            // quarter, or no caster left who could Cure instead.
-            if(HasItem(2) && (IsCecil(injured) || injuredRatioNow<.25f || !casterCanCure))
+            // Non-casters (Cecil) leave healing to the casters: a Potion only
+            // when no caster has the MP to Cure (user: Cecil kept healing with
+            // Rydia right behind him in the ATB).
+            if(HasItem(2) && !casterCanCure)
             {pendingItem=2;pendingTarget=target;Log(actor,"Potion on ally #"+target);return;}
         }
         // Cure hurts undead: cast it (on all of them when there are several).

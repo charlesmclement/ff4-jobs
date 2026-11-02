@@ -233,6 +233,11 @@ whatever build it launched with, so always say which build is live.
     enemies only at MP >= 45, else Defend; Cure reserve 40. Flee triggers
     now: listed group, tough enemy, or fight past 15 s.
 
+26. **Cecil doesn't heal while a caster can (user).** Potions now only when
+    no caster (Rydia/Tellah) has 3+ MP for Cure. Reading the ATB gauge was
+    considered (`GetAtbGaugeByUnitData`, `GetATBGaugeByPlayer`) and set aside
+    for this simpler rule.
+
 ## Stuck detection (all segments, always on)
 
 The user's standing requirement: every movement must be confirmed. It lives
