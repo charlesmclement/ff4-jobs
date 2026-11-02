@@ -12,6 +12,11 @@ analysis. See also `CLAUDE_HANDOFF.txt` and `docs/TAS-SEGMENT-2.md`.
    (`tas.py launch --resume`), and loads the quicksave. The route picks the
    step from the map and story flags.
 
+**Every segment ends on saveable ground:** a save point or the overworld
+(`map.save_availability` = 1; dungeons such as Mist Cave are 0). End with a
+walk-out step plus a checkpoint, so the user can save and resume the next
+segment from there (confirmed live for segment 1 → 2, 2026-11-02).
+
 Never make the user restart from New Game for a fix. The running game keeps
 whatever build it launched with, so always say which build is live.
 
