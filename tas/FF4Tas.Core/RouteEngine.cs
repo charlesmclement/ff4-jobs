@@ -85,6 +85,9 @@ public sealed class Step
     // Ordered per-character battle rules; the first usable one is taken, and
     // anything unusable falls back to Attack. Recovery items still come first.
     public BattleRule[]? BattlePlan {get;set;}
+    // During this step, run from any non-boss fight containing one of these
+    // monster ids (e.g. Toadgre 19 / Tiny Mage 9 right before Octomammoth).
+    public int[]? FleeMonsters {get;set;}
 }
 public sealed class BattleRule
 {

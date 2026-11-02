@@ -33,7 +33,7 @@ internal sealed class BattlePilot
         blockedRules.Clear();blockedCure.Clear();blockedItems.Clear();blockedStatusSpell.Clear();usedOnce.Clear();wasMist=false;
         fleeFrames=0;fightSeconds=0;fightFrame=-1;rowDone=false;
     }
-    internal void Read(Snapshot state,int frame,BattleRule[]? plan=null)
+    internal void Read(Snapshot state,int frame,BattleRule[]? plan=null,int[]? fleeMonsters=null)
     {
         var plug=BattlePlugManager.Instance();
         if(plug==null)return;
@@ -114,6 +114,7 @@ internal sealed class BattlePilot
         var group=new HashSet<int>();
         for(int i=0;i<enemies.Length;i++)if(enemies[i]?.MonsterMaster!=null)group.Add(enemies[i].MonsterMaster.Id);
         foreach(var flee in FleeParties)if(flee.SetEquals(group))fleeTarget=true;
+        if(fleeMonsters!=null)foreach(var id in fleeMonsters)if(group.Contains(id))fleeTarget=true;
         // Run from listed encounter groups (never bosses or story fights): hold both
         // shoulder keys, which BattleMenuController.IsEscapeInput polls. If the
         // party hasn't escaped after ~10 s (fight can't be fled), fight on.
@@ -217,7 +218,7 @@ internal sealed class BattlePilot
     internal bool FleeTough;
     private int fleeFrames;
     private const int FleeGiveUp=600;
-    private const float SlowFightSeconds=15;
+    private const float SlowFightSeconds=60;
     private float fightSeconds;private int fightFrame=-1;
     // Back attack flips the rows: one non-Cecil actor uses Row once to fix it.
     private bool rowDone;

@@ -248,7 +248,11 @@ whatever build it launched with, so always say which build is live.
     sells more once the shop driver exists. User's call: a toad/mini in an
     ordinary fight is a reason to run; the Kiss/Mallet is used in the next
     fight actually fought (including Octomammoth's first turns). The user
-    added the 4 Toadgre group (party 27, monster 19) to `fleeParties`. With no
+    added the 4 Toadgre group (party 27, monster 19) to `fleeParties`.
+    Later: new `Step.FleeMonsters` (run from any fight containing these
+    ids). Set to [19 Toadgre, 9 Tiny Mage] on the waterfall B2/B1 steps
+    before Octomammoth. Slow-fight flee raised from 15 s to 60 s of game
+    time (15 s cut fights the party was about to win). With no
     item, an unaffected caster casts the same spell on the ally, which toggles
     it back: Toad (Black ability 45, 7 MP) or Mini (White ability 26, 6 MP),
     targeted through the ally path (stage 5 with `pendingTarget`). A spell

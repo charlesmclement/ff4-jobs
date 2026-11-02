@@ -1686,6 +1686,10 @@
           "command": 2,
           "reserveMp": 40
         }
+      ],
+      "fleeMonsters": [
+        19,
+        9
       ]
     },
     {
@@ -1726,6 +1730,10 @@
           "command": 2,
           "reserveMp": 40
         }
+      ],
+      "fleeMonsters": [
+        19,
+        9
       ]
     },
     {
@@ -1762,6 +1770,10 @@
           "command": 2,
           "reserveMp": 40
         }
+      ],
+      "fleeMonsters": [
+        19,
+        9
       ]
     },
     {
@@ -1798,6 +1810,10 @@
           "command": 2,
           "reserveMp": 40
         }
+      ],
+      "fleeMonsters": [
+        19,
+        9
       ]
     },
     {
@@ -1838,6 +1854,10 @@
           "command": 2,
           "reserveMp": 40
         }
+      ],
+      "fleeMonsters": [
+        19,
+        9
       ]
     },
     {
@@ -1906,7 +1926,11 @@
         "mapId": 1
       },
       "stableFrames": 2,
-      "timeoutFrames": 36000
+      "timeoutFrames": 36000,
+      "fleeMonsters": [
+        19,
+        9
+      ]
     },
     {
       "label": "Segment 2 complete: Octomammoth defeated, outside the waterfall cave",
