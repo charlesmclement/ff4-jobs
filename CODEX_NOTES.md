@@ -278,6 +278,14 @@ whatever build it launched with, so always say which build is live.
     The overlay and status.json show the setting and the applied speed. The
     TAS timer is still game time, so speed never changes the recorded time.
 
+30. **Segment 3 built (compile-only): Octomammoth → Antlion.** Route
+    `tas/routes/octomammoth-antlion.json`, shortcut "FF4 TAS: Segment 3",
+    design in `docs/TAS-SEGMENT-3.md`. New engine pieces: `riding`
+    condition/snapshot from `Last.Entity.Field.FieldPlayer.moveState` (int
+    0/1 = walking); navigation and input also run in the `Transport` phase,
+    and the walking speed cap covers it; battle-plan `item` rules (Hermes
+    Shoes 55 on self, once, boss only). Ends outside the den (saveable).
+
 ## Stuck detection (all segments, always on)
 
 The user's standing requirement: every movement must be confirmed. It lives

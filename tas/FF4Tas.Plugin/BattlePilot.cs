@@ -297,6 +297,7 @@ internal sealed class BattlePilot
         if(undead!=null && canCure && (!isTellah || stats!.CurrentMP>=CureMp+Reserve(plan,Tellah)))
         {pendingCommand=WhiteMagic;pendingAbility=CureAbility;castOnUndead=true;Log(actor,$"Cure{(undeadCount>1?" on all":"")} vs undead");return;}
         ChoosePlan(info,actor,plan);
+        if(pendingItem!=0)return;
         // Rydia's attacks do ~1 damage: she Defends instead of wasting the turn.
         if(pendingCommand==1 && me==Rydia) {pendingCommand=Defend;Log(actor,"Defend (her Attack does nothing)");return;}
         if(pendingCommand==1)Log(actor,"Attack weakest enemy");
@@ -328,6 +329,14 @@ internal sealed class BattlePilot
             if(stats!=null && rule.MinHpPercent>0 && stats.CurrentHP*100<rule.MinHpPercent*Math.Max(1,stats.ConfirmedMaxHp()))continue;
             if(stats!=null && rule.MinMp>0 && stats.CurrentMP<rule.MinMp)continue;
             if(rule.MinEnemies>0 && livingEnemies<rule.MinEnemies && !(rule.OrTough && tough))continue;
+            if(rule.Item is int item)
+            {
+                if(!HasItem(item))continue;
+                pendingItem=item;pendingTarget=rule.TargetCharacter??id;pendingRule=r;
+                if(rule.OncePerBattle)usedOnce.Add((r,actor.Pointer));
+                Log(actor,$"item {item} on #{pendingTarget} (plan rule {r+1})");
+                return;
+            }
             int ability=rule.Ability??0;bool all=rule.TargetAll;
             if(rule.ByWeakness)
             {

@@ -111,7 +111,7 @@ public sealed class Controller : MonoBehaviour
                 // While paused for focus, skip movement/battle reads so stall
                 // detection does not count frames the route is not driving.
                 if(!snapshot.Focused || snapshot.Modal)navigation.Reset();
-                else if(snapshot.Phase=="Player")
+                else if(snapshot.Phase is "Player" or "Transport")
                 {
                     if((field==null || !field) && Time.unscaledTime>=nextFieldFind)
                     {field=UnityEngine.Object.FindObjectOfType<FieldMap>();nextFieldFind=Time.unscaledTime+.5f;}
@@ -165,7 +165,7 @@ public sealed class Controller : MonoBehaviour
             }
             // Walking under route control is capped (RunClock.FieldCap) so path
             // following can still land on cells; battles/events get full speed.
-            RunClock.Update(Engine?.Running==true && !Engine.Paused,Engine?.Running==true && snapshot.Phase=="Player");
+            RunClock.Update(Engine?.Running==true && !Engine.Paused,Engine?.Running==true && snapshot.Phase is "Player" or "Transport");
             if(Time.unscaledTime>=nextReport) {nextReport=Time.unscaledTime+.1f;Report();}
         }
         catch(Exception e) { error=e.Message;Engine?.Stop(error);Report(); }

@@ -35,13 +35,13 @@ public sealed class Route
             if(s.Kind=="mash" && (s.Keys.Length==0 || s.PeriodFrames<2 || s.PressedFrames<1 || s.PressedFrames>=s.PeriodFrames))
                 throw new ArgumentException("Mash requires a release interval");
             if(s.Kind is "wait" or "mash" or "checkpoint" or "navigate" or "interact" or "battle")
-                if(s.Until==null || (s.Until.Phase==null && s.Until.MapId==null && s.Until.StoryFlag==null && s.Until.TreasureFlag==null && !s.Until.AtDestination && string.IsNullOrWhiteSpace(s.Until.Visual)))throw new ArgumentException("Step needs a completion condition");
+                if(s.Until==null || (s.Until.Phase==null && s.Until.MapId==null && s.Until.StoryFlag==null && s.Until.TreasureFlag==null && s.Until.Riding==null && !s.Until.AtDestination && string.IsNullOrWhiteSpace(s.Until.Visual)))throw new ArgumentException("Step needs a completion condition");
             if(s.Until?.Phase!=null && !KnownPhases.Contains(s.Until.Phase))throw new ArgumentException("Unknown completion phase");
             if(s.Kind=="navigate" && (s.Goal==null || s.MapId==null || s.Goal.X is <0 or >1024 || s.Goal.Y is <0 or >1024 || s.Goal.Layer is <0 or >15))
                 throw new ArgumentException("Navigation needs a map and valid destination");
             if(s.Waypoints!=null && (s.Kind!="navigate" || s.Waypoints.Length>256 || s.Waypoints.Any(w=>w==null || w.X is <0 or >1024 || w.Y is <0 or >1024 || w.Layer is <0 or >15)))
                 throw new ArgumentException("Waypoints need a navigate step and valid cells");
-            if(s.BattlePlan!=null && (!s.HandleBattles || s.BattlePlan.Length>32 || s.BattlePlan.Any(r=>r==null || r.Command is <1 or >64 || r.MinHpPercent is <0 or >100 || r.MinMp is <0 or >999 || r.ReserveMp is <0 or >999 || r.MinEnemies is <0 or >8 || r.Ability is <1 or >2000)))
+            if(s.BattlePlan!=null && (!s.HandleBattles || s.BattlePlan.Length>32 || s.BattlePlan.Any(r=>r==null || r.Command is <1 or >64 || r.MinHpPercent is <0 or >100 || r.MinMp is <0 or >999 || r.ReserveMp is <0 or >999 || r.MinEnemies is <0 or >8 || r.Item is <1 or >5000 || r.Ability is <1 or >2000)))
                 throw new ArgumentException("Battle plans need handleBattles and valid rules");
             if(s.Choice is <0 or >15)throw new ArgumentException("Invalid choice index");
             if(s.Facing!=null && s.Facing is not ("Up" or "Down" or "Left" or "Right"))throw new ArgumentException("Invalid facing direction");
@@ -118,6 +118,10 @@ public sealed class BattleRule
     // (community Mist Dragon/Octomammoth strat: one Darkness wave, then
     // Attack; re-armed after the Mist Dragon's mist phase).
     public bool OncePerBattle {get;set;}
+    // Use this item (content id, e.g. Hermes Shoes 55) instead of a command,
+    // on TargetCharacter (character_status id) or, when null, on the actor.
+    public int? Item {get;set;}
+    public int? TargetCharacter {get;set;}
     // Only in boss battles (monster master boss = 1), e.g. HP-costing Darkness.
     public bool BossOnly {get;set;}
 }
@@ -130,11 +134,14 @@ public sealed class Condition
     // Treasure chest opened (DataStorage kTreasureFlag1, the map entity's flag_id).
     public int? TreasureFlag {get;set;}
     public bool AtDestination {get;set;}
+    // Riding a vehicle (hovercraft, ship...) or on foot.
+    public bool? Riding {get;set;}
     public bool Matches(Snapshot state)=>(Phase==null || state.Phase==Phase) && (MapId==null || state.MapId==MapId)
         && (Visual==null || state.VisualMatches.Contains(Visual))
         && (StoryFlag==null || state.StoryFlags.Contains(StoryFlag.Value))
         && (TreasureFlag==null || state.TreasureFlags.Contains(TreasureFlag.Value))
-        && (!AtDestination || state.AtDestination);
+        && (!AtDestination || state.AtDestination)
+        && (Riding==null || state.Riding==Riding);
 }
 public sealed class Snapshot
 {
@@ -148,6 +155,8 @@ public sealed class Snapshot
     public float? Y {get;set;}
     public int? Layer {get;set;}
     public bool AtDestination {get;set;}
+    // FieldPlayer.moveState is a vehicle (not Walk/Dush).
+    public bool Riding {get;set;}
     public string? NavigationInput {get;set;}
     public string? BattleInput {get;set;}
     // A one-button modal popup (native or a mod's, e.g. "Job unlocked!") is
@@ -218,7 +227,7 @@ public sealed class RouteEngine
             return;
         }
         stable=0;
-        if(!step.Phases.Contains(state.Phase) || (step.MapId.HasValue && step.MapId!=state.MapId && (step.Kind!="navigate" || state.Phase=="Player")))
+        if(!step.Phases.Contains(state.Phase) || (step.MapId.HasValue && step.MapId!=state.MapId && (step.Kind!="navigate" || state.Phase is "Player" or "Transport")))
         { Fail($"Unexpected state at {step.Label}: {state.Phase}, map {state.MapId}");return; }
         if(++elapsed>step.TimeoutFrames) { Fail("Timed out at "+step.Label);return; }
         if(step.Kind=="checkpoint") { Fail("Checkpoint mismatch: "+step.Label);return; }
@@ -255,7 +264,7 @@ public sealed class RouteEngine
         }
         if(step.Kind is "navigate" or "interact" or "battle")
         {
-            if(state.Phase=="Player")
+            if(state.Phase is "Player" or "Transport")
             {
                 if(step.Kind=="navigate")
                 {

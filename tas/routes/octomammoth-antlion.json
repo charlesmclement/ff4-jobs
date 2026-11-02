@@ -1,0 +1,1030 @@
+{
+  "schema": 1,
+  "name": "Octomammoth → Antlion (segment 3) — UNTESTED",
+  "steps": [
+    {
+      "label": "Overworld: west to Damcyan (bombing scene on the way)",
+      "kind": "navigate",
+      "mapId": 1,
+      "goal": {
+        "x": 124,
+        "y": 45,
+        "layer": 0
+      },
+      "waypoints": [
+        {
+          "x": 130,
+          "y": 55,
+          "layer": 0
+        },
+        {
+          "x": 125,
+          "y": 55,
+          "layer": 0
+        },
+        {
+          "x": 125,
+          "y": 51,
+          "layer": 0
+        },
+        {
+          "x": 124,
+          "y": 51,
+          "layer": 0
+        },
+        {
+          "x": 124,
+          "y": 46,
+          "layer": 0
+        }
+      ],
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Player",
+        "mapId": 38
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 36000
+    },
+    {
+      "label": "Damcyan courtyard: east door to the jail",
+      "kind": "navigate",
+      "mapId": 38,
+      "goal": {
+        "x": 29,
+        "y": 13,
+        "layer": 0
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Player",
+        "mapId": 42
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 36000
+    },
+    {
+      "label": "Damcyan jail: stairs down",
+      "kind": "navigate",
+      "mapId": 42,
+      "goal": {
+        "x": 5,
+        "y": 10,
+        "layer": 0
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Player",
+        "mapId": 43
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 36000
+    },
+    {
+      "label": "Jail B1: stand between the Elixir and the Ether",
+      "kind": "navigate",
+      "mapId": 43,
+      "goal": {
+        "x": 3,
+        "y": 6,
+        "layer": 0
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "atDestination": true
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 36000
+    },
+    {
+      "label": "Jail B1: take the hidden Elixir",
+      "kind": "interact",
+      "mapId": 43,
+      "facing": "Left",
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "treasureFlag": 70
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 3600
+    },
+    {
+      "label": "Jail B1: open the Ether",
+      "kind": "interact",
+      "mapId": 43,
+      "facing": "Right",
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "treasureFlag": 67
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 3600
+    },
+    {
+      "label": "Jail B1: stand below the Phoenix Down",
+      "kind": "navigate",
+      "mapId": 43,
+      "goal": {
+        "x": 5,
+        "y": 7,
+        "layer": 0
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "atDestination": true
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 36000
+    },
+    {
+      "label": "Jail B1: open the Phoenix Down",
+      "kind": "interact",
+      "mapId": 43,
+      "facing": "Up",
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "treasureFlag": 68
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 3600
+    },
+    {
+      "label": "Jail B1: stairs up",
+      "kind": "navigate",
+      "mapId": 43,
+      "goal": {
+        "x": 5,
+        "y": 2,
+        "layer": 0
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Player",
+        "mapId": 42
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 36000
+    },
+    {
+      "label": "Damcyan jail: back to the courtyard",
+      "kind": "navigate",
+      "mapId": 42,
+      "goal": {
+        "x": 17,
+        "y": 12,
+        "layer": 0
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Player",
+        "mapId": 38
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 36000
+    },
+    {
+      "label": "Damcyan courtyard: into the keep",
+      "kind": "navigate",
+      "mapId": 38,
+      "goal": {
+        "x": 16,
+        "y": 12,
+        "layer": 0
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Player",
+        "mapId": 39
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 36000
+    },
+    {
+      "label": "Damcyan 1F: stairs up",
+      "kind": "navigate",
+      "mapId": 39,
+      "goal": {
+        "x": 9,
+        "y": 9,
+        "layer": 0
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Player",
+        "mapId": 40
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 36000
+    },
+    {
+      "label": "Damcyan 2F: to the throne room",
+      "kind": "navigate",
+      "mapId": 40,
+      "goal": {
+        "x": 9,
+        "y": 14,
+        "layer": 0
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Player",
+        "mapId": 41
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 36000
+    },
+    {
+      "label": "Damcyan throne room: walk to Anna (scene triggers)",
+      "kind": "navigate",
+      "mapId": 41,
+      "goal": {
+        "x": 14,
+        "y": 13,
+        "layer": 0
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Event"
+      },
+      "stableFrames": 1,
+      "timeoutFrames": 36000
+    },
+    {
+      "label": "Damcyan: Anna, Edward vs Tellah, hovercraft; Tellah leaves, Edward joins",
+      "kind": "mash",
+      "keys": [
+        "Confirm"
+      ],
+      "phases": [
+        "None",
+        "Init",
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "mapId": 1,
+        "storyFlag": 15
+      },
+      "stableFrames": 30,
+      "periodFrames": 8,
+      "pressedFrames": 1,
+      "timeoutFrames": 72000
+    },
+    {
+      "label": "Hovercraft: across the shoals to the Antlion's Den; get off beside it",
+      "kind": "navigate",
+      "mapId": 1,
+      "goal": {
+        "x": 141,
+        "y": 44,
+        "layer": 0
+      },
+      "waypoints": [
+        {
+          "x": 129,
+          "y": 45,
+          "layer": 0
+        },
+        {
+          "x": 129,
+          "y": 35,
+          "layer": 0
+        },
+        {
+          "x": 132,
+          "y": 35,
+          "layer": 0
+        },
+        {
+          "x": 132,
+          "y": 33,
+          "layer": 0
+        },
+        {
+          "x": 136,
+          "y": 33,
+          "layer": 0
+        },
+        {
+          "x": 136,
+          "y": 36,
+          "layer": 0
+        },
+        {
+          "x": 138,
+          "y": 36,
+          "layer": 0
+        },
+        {
+          "x": 138,
+          "y": 44,
+          "layer": 0
+        },
+        {
+          "x": 140,
+          "y": 44,
+          "layer": 0
+        }
+      ],
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "mapId": 1,
+        "riding": false,
+        "atDestination": true
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 36000
+    },
+    {
+      "label": "Overworld: walk into the Antlion's Den",
+      "kind": "navigate",
+      "mapId": 1,
+      "goal": {
+        "x": 141,
+        "y": 43,
+        "layer": 0
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Player",
+        "mapId": 173
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 36000
+    },
+    {
+      "label": "Antlion's Den 1: walk to the Spider's Silk",
+      "kind": "navigate",
+      "mapId": 173,
+      "goal": {
+        "x": 8,
+        "y": 7,
+        "layer": 1
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "atDestination": true
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 36000
+    },
+    {
+      "label": "Antlion's Den 1: open the Spider's Silk",
+      "kind": "interact",
+      "mapId": 173,
+      "facing": "Left",
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "treasureFlag": 73
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 3600
+    },
+    {
+      "label": "Antlion's Den 1: east passage down",
+      "kind": "navigate",
+      "mapId": 173,
+      "goal": {
+        "x": 31,
+        "y": 23,
+        "layer": 0
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Player",
+        "mapId": 175
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 36000
+    },
+    {
+      "label": "Antlion's Den 2: south passage to the nest",
+      "kind": "navigate",
+      "mapId": 175,
+      "goal": {
+        "x": 19,
+        "y": 29,
+        "layer": 0
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Player",
+        "mapId": 177
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 36000
+    },
+    {
+      "label": "Antlion's nest: walk in (Antlion appears)",
+      "kind": "navigate",
+      "mapId": 177,
+      "goal": {
+        "x": 14,
+        "y": 18,
+        "layer": 0
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Event"
+      },
+      "stableFrames": 1,
+      "timeoutFrames": 36000
+    },
+    {
+      "label": "Antlion: Cecil Hermes Shoes then Attack; Edward and Rydia Defend",
+      "kind": "mash",
+      "keys": [
+        "Confirm"
+      ],
+      "phases": [
+        "None",
+        "Init",
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Player",
+        "mapId": 177,
+        "storyFlag": 16
+      },
+      "stableFrames": 30,
+      "periodFrames": 8,
+      "pressedFrames": 1,
+      "timeoutFrames": 72000,
+      "battlePlan": [
+        {
+          "character": 1,
+          "item": 55,
+          "oncePerBattle": true,
+          "bossOnly": true
+        },
+        {
+          "character": 7,
+          "command": 2
+        }
+      ]
+    },
+    {
+      "label": "Antlion's nest: back up",
+      "kind": "navigate",
+      "mapId": 177,
+      "goal": {
+        "x": 14,
+        "y": 1,
+        "layer": 0
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Player",
+        "mapId": 175
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 36000
+    },
+    {
+      "label": "Antlion's Den 2: north passage up",
+      "kind": "navigate",
+      "mapId": 175,
+      "goal": {
+        "x": 32,
+        "y": 1,
+        "layer": 0
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Player",
+        "mapId": 173
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 36000
+    },
+    {
+      "label": "Antlion's Den 1: exit to the overworld",
+      "kind": "navigate",
+      "mapId": 173,
+      "goal": {
+        "x": 19,
+        "y": 2,
+        "layer": 1
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Player",
+        "mapId": 1
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 36000
+    },
+    {
+      "label": "Segment 3 complete: Antlion defeated, outside the Antlion's Den",
+      "kind": "checkpoint",
+      "phases": [
+        "Player"
+      ],
+      "until": {
+        "phase": "Player",
+        "mapId": 1,
+        "storyFlag": 16
+      }
+    }
+  ],
+  "weaknesses": {
+    "7": [
+      1
+    ],
+    "10": [
+      2
+    ],
+    "14": [
+      2
+    ],
+    "15": [
+      3
+    ],
+    "16": [
+      1
+    ],
+    "17": [
+      3
+    ],
+    "18": [
+      1
+    ],
+    "19": [
+      2
+    ],
+    "20": [
+      1
+    ],
+    "21": [
+      3
+    ],
+    "22": [
+      3
+    ],
+    "26": [
+      2
+    ],
+    "27": [
+      2
+    ],
+    "29": [
+      1
+    ],
+    "33": [
+      3
+    ],
+    "34": [
+      1
+    ],
+    "36": [
+      1
+    ],
+    "42": [
+      3
+    ],
+    "43": [
+      2
+    ],
+    "44": [
+      3
+    ],
+    "48": [
+      1
+    ],
+    "49": [
+      1
+    ],
+    "50": [
+      1
+    ],
+    "51": [
+      1
+    ],
+    "52": [
+      1
+    ],
+    "54": [
+      1
+    ],
+    "56": [
+      2
+    ],
+    "57": [
+      3
+    ],
+    "58": [
+      3
+    ],
+    "62": [
+      2
+    ],
+    "68": [
+      1
+    ],
+    "70": [
+      1
+    ],
+    "72": [
+      1
+    ],
+    "74": [
+      3
+    ],
+    "82": [
+      1
+    ],
+    "83": [
+      2
+    ],
+    "89": [
+      2
+    ],
+    "91": [
+      2
+    ],
+    "93": [
+      2
+    ],
+    "94": [
+      1
+    ],
+    "96": [
+      2
+    ],
+    "102": [
+      1
+    ],
+    "103": [
+      2
+    ],
+    "104": [
+      2
+    ],
+    "113": [
+      1
+    ],
+    "115": [
+      1
+    ],
+    "118": [
+      1
+    ],
+    "120": [
+      1
+    ],
+    "121": [
+      1
+    ],
+    "126": [
+      1
+    ],
+    "130": [
+      2
+    ],
+    "148": [
+      2
+    ],
+    "150": [
+      1
+    ],
+    "160": [
+      2
+    ],
+    "163": [
+      3
+    ],
+    "167": [
+      1
+    ],
+    "181": [
+      1
+    ],
+    "189": [
+      3
+    ],
+    "190": [
+      3
+    ],
+    "194": [
+      1
+    ],
+    "195": [
+      3
+    ],
+    "209": [
+      1
+    ],
+    "210": [
+      3
+    ],
+    "212": [
+      1
+    ],
+    "227": [
+      2
+    ],
+    "229": [
+      1
+    ],
+    "231": [
+      2
+    ],
+    "236": [
+      2
+    ],
+    "246": [
+      2
+    ],
+    "251": [
+      2
+    ],
+    "252": [
+      2
+    ],
+    "274": [
+      1
+    ]
+  },
+  "fleeTough": true
+}
