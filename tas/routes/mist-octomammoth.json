@@ -1357,7 +1357,7 @@
       ]
     },
     {
-      "label": "Octomammoth: Thunder and Darkness",
+      "label": "Octomammoth: Cecil Darkness then Attack; Tellah Thunder, then Recall",
       "kind": "interact",
       "mapId": 172,
       "facing": "Up",
@@ -1381,6 +1381,12 @@
       "timeoutFrames": 72000,
       "battlePlan": [
         {
+          "character": 1,
+          "command": 10,
+          "oncePerBattle": true,
+          "bossOnly": true
+        },
+        {
           "character": 6,
           "command": 8,
           "ability": 39,
@@ -1389,11 +1395,6 @@
         {
           "character": 6,
           "command": 28
-        },
-        {
-          "character": 1,
-          "command": 10,
-          "minHpPercent": 50
         }
       ]
     },

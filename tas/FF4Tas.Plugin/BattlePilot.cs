@@ -49,7 +49,7 @@ internal sealed class BattlePilot
         // Scripted losses (Titan at Mist) wipe the party and the story goes on;
         // a real game over leaves the battle for GotoTitle, which no step allows.
         if(players.Length>0 && alive==0) {state.Detail="Party down; waiting for the game";return;}
-        bool mist=false,hasEnemy=false;scripted=false;undead=null;weakest=null;undeadCount=livingEnemies=0;tough=false;Array.Clear(elementCounts);
+        bool mist=false,hasEnemy=false;scripted=false;undead=null;weakest=null;undeadCount=livingEnemies=0;tough=boss=false;Array.Clear(elementCounts);
         for(int i=0;i<enemies.Length;i++)
         {
             var e=enemies[i];var p=e?.BattleUnitDataInfo?.Parameter;
@@ -59,6 +59,7 @@ internal sealed class BattlePilot
             if(master!=null)
             {
                 if(master.Defense>=ToughDefense)tough=true;
+                if(master.Boss!=0)boss=true;
                 if(Weaknesses.TryGetValue(master.Id,out var weak))foreach(var el in weak)if(el is >=1 and <=3)elementCounts[el]++;
             }
             // Story fights you can't win or lose normally (the Girl at Mist has
@@ -81,6 +82,9 @@ internal sealed class BattlePilot
         }
         bestElement=bestElementCount=0;
         for(int el=1;el<=3;el++)if(elementCounts[el]>bestElementCount) {bestElement=el;bestElementCount=elementCounts[el];}
+        // Community strat: after the Mist Dragon's mist phase, Darkness again.
+        if(mist && !wasMist)usedOnce.Clear();
+        wasMist=mist;
         if(!hasEnemy) {Pulse(state,frame,"Confirm","Waiting for battle result");return;}
         if(menu==null || !menu)menu=UnityEngine.Object.FindObjectOfType<BattleMenuController>();
         if(menu==null || !menu.IsShow)return;
@@ -153,7 +157,7 @@ internal sealed class BattlePilot
     private const float HealBelow=.5f;
     private const int EnemySingleState=3,EnemyAllState=4;
     private int undeadCount,livingEnemies;
-    private bool targetAll,tough;
+    private bool targetAll,tough,boss;
     internal Dictionary<int,int[]> Weaknesses=new();
     private readonly int[] elementCounts=new int[4];
     private int bestElement,bestElementCount;
@@ -190,6 +194,8 @@ internal sealed class BattlePilot
         ChoosePlan(info,actor,plan);
     }
     private readonly HashSet<IntPtr> blockedCure=new();
+    private readonly HashSet<(int,IntPtr)> usedOnce=new();
+    private bool wasMist;
     // MP a character's plan keeps back for the boss (BattleRule.ReserveMp).
     private static int Reserve(BattleRule[]? plan,int character)
     {
@@ -208,6 +214,8 @@ internal sealed class BattlePilot
         {
             var rule=plan[r];
             if(blockedRules.Contains(r))continue;
+            if(rule.OncePerBattle && usedOnce.Contains((r,actor.Pointer)))continue;
+            if(rule.BossOnly && !boss)continue;
             if(rule.Character!=null && rule.Character!=id)continue;
             if(stats!=null && rule.MinHpPercent>0 && stats.CurrentHP*100<rule.MinHpPercent*Math.Max(1,stats.ConfirmedMaxHp()))continue;
             if(stats!=null && rule.MinMp>0 && stats.CurrentMP<rule.MinMp)continue;
@@ -222,7 +230,8 @@ internal sealed class BattlePilot
             }
             // Defend sits in the side command group; SelectCommand switches to it.
             if(rule.Command!=Defend && !CommandEnabled(info,rule.Command))continue;
-            pendingCommand=rule.Command;pendingAbility=ability;pendingRule=r;targetAll=all;abilityConfirms=abilityStuck=0;abilityStride=0;abilityLastIndex=-1;abilityLastKey=null;
+            pendingCommand=rule.Command;pendingAbility=ability;pendingRule=r;targetAll=all;
+            if(rule.OncePerBattle)usedOnce.Add((r,actor.Pointer));abilityConfirms=abilityStuck=0;abilityStride=0;abilityLastIndex=-1;abilityLastKey=null;
             return;
         }
     }

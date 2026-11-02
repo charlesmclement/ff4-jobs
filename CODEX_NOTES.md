@@ -131,6 +131,13 @@ analysis. See also `CLAUDE_HANDOFF.txt` and `docs/TAS-SEGMENT-2.md`.
     interact facing it. A summary of the community notes, plus everything
     that still needs a menu/shop driver, is in docs/TAS-SEGMENT-2.md.
 
+18. **Darkness is an HP-costing AoE wave in PR** (ability 165, battle range
+    4 = all enemies; the user confirmed it isn't a stance). The community
+    strat is one Darkness, then Attack, with another after the Mist Dragon's
+    mist phase. Rules gained `OncePerBattle` (re-armed when the Mist Dragon
+    enters mist) and `BossOnly` (monster master `Boss != 0`). Mist Dragon and
+    Octomammoth plans: Cecil Darkness once (boss only), then Attack.
+
 ## Stuck detection (all segments, always on)
 
 The user's standing requirement: every movement must be confirmed. It lives

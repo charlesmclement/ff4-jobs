@@ -104,6 +104,12 @@ public sealed class BattleRule
     // Also allowed below MinEnemies when an enemy shrugs off physical hits
     // (defense >= 200, e.g. Red Mousse / Yellow Jelly at 254).
     public bool OrTough {get;set;}
+    // Use once per battle per character, then fall through to the next rule
+    // (community Mist Dragon/Octomammoth strat: one Darkness wave, then
+    // Attack; re-armed after the Mist Dragon's mist phase).
+    public bool OncePerBattle {get;set;}
+    // Only in boss battles (monster master boss = 1), e.g. HP-costing Darkness.
+    public bool BossOnly {get;set;}
 }
 public sealed class Condition
 {

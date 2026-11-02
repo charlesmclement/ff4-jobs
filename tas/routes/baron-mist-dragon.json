@@ -439,7 +439,15 @@
         "storyFlag": 6
       },
       "stableFrames": 2,
-      "timeoutFrames": 72000
+      "timeoutFrames": 72000,
+      "battlePlan": [
+        {
+          "character": 1,
+          "command": 10,
+          "oncePerBattle": true,
+          "bossOnly": true
+        }
+      ]
     },
     {
       "label": "Mist Dragon defeated: segment complete, control returned to you",
