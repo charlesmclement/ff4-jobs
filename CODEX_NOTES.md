@@ -304,6 +304,15 @@ whatever build it launched with, so always say which build is live.
     27 → stairs. Static collision can't see NPCs or scripted doors; check a
     map's `sc_map_*` for SetEntities/Show/Hide gates when building routes.
 
+33. **A random fight was mistaken for the Antlion scene (live).** A random
+    encounter starts with a few frames of SubScene `Event` before `Battle`,
+    which completed "walk into the nest (until Event)" early. The mash step
+    then sat in the nest; the overlay's step label ("Hermes Shoes…") made it
+    look like an item problem. Every navigate step whose only condition is
+    phase Event now needs it held for 15 frames (`stableFrames: 15`). The
+    battle flash was under 6 frames; story scenes last far longer.
+    **Rule:** scene-trigger steps keep stableFrames >= 15.
+
 ## Stuck detection (all segments, always on)
 
 The user's standing requirement: every movement must be confirmed. It lives

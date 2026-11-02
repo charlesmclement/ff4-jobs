@@ -33,7 +33,7 @@
       "until": {
         "phase": "Event"
       },
-      "stableFrames": 1,
+      "stableFrames": 15,
       "timeoutFrames": 36000
     },
     {
@@ -595,7 +595,7 @@
       "until": {
         "phase": "Event"
       },
-      "stableFrames": 1,
+      "stableFrames": 15,
       "timeoutFrames": 36000
     },
     {
@@ -961,7 +961,7 @@
       "until": {
         "phase": "Event"
       },
-      "stableFrames": 1,
+      "stableFrames": 15,
       "timeoutFrames": 36000
     },
     {

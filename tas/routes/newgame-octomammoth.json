@@ -313,7 +313,7 @@
       "until": {
         "phase": "Event"
       },
-      "stableFrames": 2,
+      "stableFrames": 15,
       "timeoutFrames": 72000
     },
     {
@@ -547,7 +547,7 @@
       "until": {
         "phase": "Event"
       },
-      "stableFrames": 1,
+      "stableFrames": 15,
       "timeoutFrames": 36000
     },
     {
@@ -651,7 +651,7 @@
       "until": {
         "phase": "Event"
       },
-      "stableFrames": 1,
+      "stableFrames": 15,
       "timeoutFrames": 36000
     },
     {
@@ -759,7 +759,7 @@
       "until": {
         "phase": "Event"
       },
-      "stableFrames": 1,
+      "stableFrames": 15,
       "timeoutFrames": 36000
     },
     {
@@ -1166,7 +1166,7 @@
       "until": {
         "phase": "Event"
       },
-      "stableFrames": 1,
+      "stableFrames": 15,
       "timeoutFrames": 36000,
       "battlePlan": [
         {
@@ -1587,7 +1587,7 @@
       "until": {
         "phase": "Event"
       },
-      "stableFrames": 1,
+      "stableFrames": 15,
       "timeoutFrames": 36000,
       "battlePlan": [
         {

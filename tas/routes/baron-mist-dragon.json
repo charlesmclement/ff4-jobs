@@ -313,7 +313,7 @@
       "until": {
         "phase": "Event"
       },
-      "stableFrames": 2,
+      "stableFrames": 15,
       "timeoutFrames": 72000
     },
     {

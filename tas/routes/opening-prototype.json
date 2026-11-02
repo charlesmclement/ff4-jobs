@@ -5,16 +5,36 @@
     {
       "label": "Wait for the new-game opening event",
       "kind": "wait",
-      "phases": ["None", "Init", "ChangeMap", "FieldReady", "Event", "Message", "Battle"],
-      "until": {"phase": "Event"},
+      "phases": [
+        "None",
+        "Init",
+        "ChangeMap",
+        "FieldReady",
+        "Event",
+        "Message",
+        "Battle"
+      ],
+      "until": {
+        "phase": "Event"
+      },
       "timeoutFrames": 18000
     },
     {
       "label": "Advance opening; stop pressing at first field control",
       "kind": "mash",
-      "keys": ["Confirm"],
-      "phases": ["Event", "Message", "Battle", "ChangeMap", "FieldReady"],
-      "until": {"phase": "Player"},
+      "keys": [
+        "Confirm"
+      ],
+      "phases": [
+        "Event",
+        "Message",
+        "Battle",
+        "ChangeMap",
+        "FieldReady"
+      ],
+      "until": {
+        "phase": "Player"
+      },
       "stableFrames": 60,
       "periodFrames": 6,
       "pressedFrames": 1,
@@ -23,8 +43,12 @@
     {
       "label": "First controllable field segment reached",
       "kind": "checkpoint",
-      "phases": ["Player"],
-      "until": {"phase": "Player"}
+      "phases": [
+        "Player"
+      ],
+      "until": {
+        "phase": "Player"
+      }
     }
   ]
 }
