@@ -96,7 +96,10 @@ public sealed class Controller : MonoBehaviour
                     if(snapshot.Phase!="Battle")battle.Reset();
                     lastPhase=snapshot.Phase;
                 }
-                if(snapshot.Phase=="Player")
+                // While paused for focus, skip movement/battle reads so stall
+                // detection does not count frames the route is not driving.
+                if(!snapshot.Focused)navigation.Reset();
+                else if(snapshot.Phase=="Player")
                 {
                     if((field==null || !field) && Time.unscaledTime>=nextFieldFind)
                     {field=UnityEngine.Object.FindObjectOfType<FieldMap>();nextFieldFind=Time.unscaledTime+.5f;}
@@ -189,7 +192,7 @@ public sealed class Controller : MonoBehaviour
         if(Engine?.Running==true && runStarted>=0)runElapsed=Time.realtimeSinceStartup-runStarted;
         string target=Path.Combine(Plugin.DirectoryPath,"status.json");
         File.WriteAllText(target+".tmp",JsonSerializer.Serialize(new{
-            session=Session,utc=DateTime.UtcNow,frame,route=routeName,status=Engine?.Status??"idle",
+            session=Session,utc=DateTime.UtcNow,frame,route=routeName,status=Engine?.Paused==true?"paused":Engine?.Status??"idle",
             step=Engine?.Index,label=Engine?.Label,reason=Engine?.Reason,error,elapsedSeconds=Math.Round(runElapsed,1),
             phase=snapshot.Phase,mapId=snapshot.MapId,focused=snapshot.Focused,
             x=snapshot.X,y=snapshot.Y,layer=snapshot.Layer,storyFlags=snapshot.StoryFlags,detail=snapshot.Detail,
@@ -202,10 +205,6 @@ public sealed class Controller : MonoBehaviour
             File.AppendAllText(Path.Combine(Plugin.DirectoryPath,"trace-"+Session+".jsonl"),File.ReadAllText(target).Replace("\r","").Replace("\n","")+"\n");
             lastRecord=record;nextRecord=Time.unscaledTime+1;
         }
-    }
-    private void OnApplicationFocus(bool focused)
-    {
-        if(!focused)Engine?.Stop("Game lost focus");
     }
     private void OnDisable()=>Engine?.Stop("Runner disabled");
     private void OnDestroy()=>Engine?.Stop("Runner destroyed");

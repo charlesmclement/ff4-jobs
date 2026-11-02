@@ -97,7 +97,10 @@ public sealed class RouteEngine
     private readonly Route route;
     private readonly HashSet<string> current=new(), previous=new();
     private long lastFrame=-1;
-    private int elapsed,stable;
+    private int elapsed,stable,refocused;
+    // Below this many focused frames after a pause, input stays released so the
+    // click that refocused the window settles before the route acts again.
+    private const int RefocusFrames=30;
     private bool finishStep;
     public RouteEngine(Route route) { route.Validate();this.route=route; }
     public int Index { get; private set; }
@@ -105,12 +108,13 @@ public sealed class RouteEngine
     public string Reason { get; private set; } = "";
     public string Label=>Index<route.Steps.Length?route.Steps[Index].Label:"Finished";
     public bool Running=>Status=="running";
+    public bool Paused { get; private set; }
     // The bridge prepares the upcoming step before Tick advances the index.
     public Step? ActiveStep=>Running && Index+(finishStep?1:0)<route.Steps.Length ? route.Steps[Index+(finishStep?1:0)] : null;
     public bool Held(string key)=>current.Contains(key);
     public bool Down(string key)=>current.Contains(key) && !previous.Contains(key);
     public bool Up(string key)=>!current.Contains(key) && previous.Contains(key);
-    public void Stop(string reason) { Status="stopped";Reason=reason;current.Clear();previous.Clear(); }
+    public void Stop(string reason) { Status="stopped";Paused=false;Reason=reason;current.Clear();previous.Clear(); }
     private void Fail(string reason) { Stop(reason);Status="failed"; }
     public void Tick(long frame,Snapshot state)
     {
@@ -118,7 +122,18 @@ public sealed class RouteEngine
         if(frame<lastFrame) { Fail("Frame counter moved backwards");return; }
         lastFrame=frame;
         previous.Clear();previous.UnionWith(current);current.Clear();
-        if(!state.Focused) { Stop("Game lost focus");return; }
+        // Focus loss pauses instead of stopping: input is released and step timers
+        // freeze until the window is focused again, then the run continues.
+        if(!state.Focused)
+        {
+            if(!Paused) { Paused=true;Reason="Paused: game not focused (click the game to resume)"; }
+            refocused=0;current.Clear();previous.Clear();return;
+        }
+        if(Paused)
+        {
+            if(++refocused<RefocusFrames)return;
+            Paused=false;Reason="";
+        }
         if(state.Failure!=null) { Fail(state.Failure);return; }
         if(finishStep) { Index++;elapsed=stable=0;finishStep=false; }
         if(Index==route.Steps.Length) { Status="complete";return; }

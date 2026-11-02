@@ -30,6 +30,10 @@ UPDATE — NOV 1 EVENING (SUPERSEDES "CURRENT PRIORITY" BELOW)
   state Gimmick (11), missing from every step's phases. Route JSON now allows
   Gimmick on all steps (no input is sent during it; navigation replans on the
   phase change). Route-only change, NOT yet run.
+- Focus loss now PAUSES instead of stopping (compiled, NOT yet run; needs a
+  fresh game launch to load the new DLL): input released, step timers frozen,
+  navigation reset; resumes 30 focused frames after refocus. status.json shows
+  status "paused". F10 is still the hard stop.
 - Key bindings are irrelevant to the TAS (logical native Key injection); the
   user asked about resetting controls — not needed.
 - Next: user retests; if FieldHelp closes, watch step 2 (first real navigation,
