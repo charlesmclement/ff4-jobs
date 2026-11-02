@@ -721,6 +721,22 @@
       ]
     },
     {
+      "label": "Mount Hobs summit: heal before the Mom Bomb (Phoenix Down, Potions)",
+      "kind": "menu",
+      "mapId": 180,
+      "phases": [
+        "Player",
+        "Menu",
+        "FieldReady",
+        "ChangeMap"
+      ],
+      "until": {
+        "menuDone": true
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 7200
+    },
+    {
       "label": "Mount Hobs summit: walk up to Yang (scene triggers)",
       "kind": "navigate",
       "mapId": 180,

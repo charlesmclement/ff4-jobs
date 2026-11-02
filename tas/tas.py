@@ -188,6 +188,9 @@ def auto_step(route):
         # A satisfied story flag means every step up to here is done.
         elif flag is not None and not blocked:best=None
     if best is None:raise RuntimeError(f'No route step starts on map {m} with story flags {sorted(flags)}; stand where the segment begins')
+    # A field-menu step (heal) right before it on the same map runs first.
+    prev=route['steps'][best[1]-2] if best[1]>1 else None
+    if prev and prev.get('kind')=='menu' and prev.get('mapId')==m:return best[1]-1
     return best[1]
 
 def install_battle_db():

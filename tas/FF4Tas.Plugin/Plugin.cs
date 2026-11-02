@@ -45,6 +45,8 @@ public sealed class Controller : MonoBehaviour
     private static FieldMap? field;
     private static readonly Navigation navigation=new();
     private static readonly BattlePilot battle=new();
+    private static readonly FieldMenu fieldMenu=new();
+    private static Step? menuStep;
     private static string lastPhase="";
     private string lastRecord="";
     private float nextRecord;
@@ -137,6 +139,11 @@ public sealed class Controller : MonoBehaviour
                     }
                 }
                 else if(snapshot.Phase=="Battle" && active.HandleBattles)battle.Read(snapshot,frame,active.BattlePlan,active.FleeMonsters);
+                if(active.Kind=="menu")
+                {
+                    if(!ReferenceEquals(active,menuStep)) {fieldMenu.Reset();menuStep=active;}
+                    if(snapshot.Focused && snapshot.Phase is "Player" or "Menu")fieldMenu.Read(snapshot,frame);
+                }
             }
             if(Time.unscaledTime>=nextVision)
             {

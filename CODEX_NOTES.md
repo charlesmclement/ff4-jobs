@@ -385,6 +385,21 @@ whatever build it launched with, so always say which build is live.
     Focus (command 25) x2, then Defend while the Mom Bomb lives, then Kick
     (all bombs); Rydia Blizzard on all after the split. New rule field
     `whileMonster` (rule applies only while that monster id is alive).
+45. **Field-menu healing (new, untested): step kind `menu`.**
+    `FieldMenu.cs` drives the native menu with keys only: Menu, Items
+    (MenuCommandId 1), Use (ItemCommandId 1), the item, the target, Confirm,
+    then Back to the field. Phoenix Down (9) on the first fallen member, else
+    Potion (2) on the lowest member under 70%; at most 12 uses, 48-frame wait
+    after each. It reads MainMenuController.stateMachine (Non 0 = command
+    list), ItemWindowController.stateMachine (CommandSelect 1, UseSelect 2,
+    TargetSelect 5), ItemListController.dataList/selectCursor (two columns,
+    flips to one column if a key doesn't move the cursor 3 times), and
+    ItemUseController.targetList/selectCursor. Party from
+    UserDataManager.corpsList + OwnedCharacterList. Engine: Snapshot
+    MenuInput/MenuDone, Condition `menuDone`. Segment 4 step 16 heals on the
+    summit before Yang. `tas.py` resume starts at a menu step that sits
+    right before the picked navigate step on the same map. Not yet: Cure by
+    magic (Rosa), Tents at save points; both use the same menu.
 
 ## Stuck detection (all segments, always on)
 
@@ -457,8 +472,8 @@ Keep this behaviour in any navigation rewrite.
   Native command ids: Attack 1, Defend 2, Item 3, Row 5 (not Defend). Jobs
   data names Darkness as command 10 and Black Magic as 8. Verify the native
   ids before relying on them.
-* **Menu automation:** nothing yet. Job changes and equipping (Hades gear)
-  need a menu driver.
+* **Menu automation:** item healing only (note 45). Job changes, equipping
+  and shops still need menu drivers.
 * **"Check" events:** objects with `action_id` 2 (Rosa event at house 37
   (13,9), Tellah at 163 (12,15), waterfall at 170 (13,9)) trigger on Confirm
   while facing them, not on stepping. Use `interact` with `facing`. Doors
