@@ -31,7 +31,7 @@ internal sealed class BattlePilot
         abilityLastIndex=-1;abilityLastKey=null;lastInfo=lastCursor=-1;lastActor=IntPtr.Zero;previousHp=-1;
         pendingRule=-1;abilityConfirms=abilityStuck=targetPresses=0;decision="";
         blockedRules.Clear();blockedCure.Clear();blockedItems.Clear();blockedStatusSpell.Clear();usedOnce.Clear();wasMist=false;
-        fleeFrames=0;sidePresses=0;bossSeen=false;turnActor=IntPtr.Zero;turnRule=-1;fightSeconds=0;fightFrame=-1;rowDone=false;firstSprite.Clear();grown=false;
+        fleeFrames=0;sidePresses=0;bossSeen=false;turnActor=IntPtr.Zero;turnRule=-1;fightSeconds=0;fightFrame=-1;rowDone=false;firstSprite.Clear();grown=false;spriteLine="";queuedHeals.Clear();
     }
     internal void Read(Snapshot state,int frame,BattleRule[]? plan=null,int[]? fleeMonsters=null)
     {
@@ -48,15 +48,25 @@ internal sealed class BattlePilot
         BattlePlayerData? injured=null,dead=null;int alive=0,totalHp=0;float injuredRatio=2;casterCanCure=false;injuredRatioNow=1;toad=mini=null;
         rosaParty=rosaCanCure=false;rosaTarget=rosaLow=null;float rosaKey=99;
         for(int i=0;i<players.Length;i++)if(players[i]?.GetOwnedCharacterData()?.characterStatusId==Rosa)rosaParty=true;
+        // A heal or revive someone else already queued on a member makes that
+        // member nobody else's target until it lands (user: no double heals,
+        // Rosa Cured herself right after Rydia Cured her).
+        if(menu==null || !menu)menu=UnityEngine.Object.FindObjectOfType<BattleMenuController>();
+        var deciding=(menu!=null && menu.IsShow)?menu.SelectedTarget?.Pointer??IntPtr.Zero:IntPtr.Zero;
+        hpByStatus.Clear();
         for(int i=0;i<players.Length;i++)
         {
             var p=players[i];var stats=p?.BattleUnitDataInfo?.Parameter;if(stats==null)continue;
             int hp=stats.CurrentHP;totalHp+=hp;
             int rank=HealRank(p!);
+            int member=p!.GetOwnedCharacterData()?.characterStatusId??0;
+            hpByStatus[member]=hp;
+            if(queuedHeals.TryGetValue(member,out var queued) && (hp>queued.Hp || fightSeconds-queued.At>HealLandSeconds))queuedHeals.Remove(member);
+            bool taken=queuedHeals.TryGetValue(member,out queued) && queued.Healer!=deciding;
             // Rydia and Edward leave the party after Mount Hobs: once dead they
             // stay down and the rest keep killing (user: "they can die").
             bool skipRevive=rosaParty && p!.GetOwnedCharacterData()?.characterStatusId is Rydia or Edward;
-            if(hp<=0) {if(rank>=0 && !skipRevive && (dead==null || rank<HealRank(dead)))dead=p;continue;}
+            if(hp<=0) {if(rank>=0 && !skipRevive && !taken && (dead==null || rank<HealRank(dead)))dead=p;continue;}
             alive++;
             float ratio=hp/(float)Math.Max(1,stats.ConfirmedMaxHp());
             int who=p!.GetOwnedCharacterData()?.characterStatusId??0;
@@ -70,8 +80,8 @@ internal sealed class BattlePilot
             }
             if(who is Rydia or Tellah or Rosa && stats.CurrentMP>=CureMp)casterCanCure=true;
             if(who==Rosa && stats.CurrentMP>=CureMp)rosaCanCure=true;
-            if(who==Rosa && ratio<HealBelow)rosaLow=p;
-            if(rank<0)continue;
+            if(who==Rosa && ratio<HealBelow && !taken)rosaLow=p;
+            if(rank<0 || taken)continue;
             // Rosa tops up her priority allies earlier (under 75%).
             if(rosaParty && ratio<(rank==0?RosaHealBelow:HealBelow) && rank+ratio<rosaKey) {rosaTarget=p;rosaKey=rank+ratio;}
             if(ratio>=HealBelow)continue;
@@ -118,16 +128,27 @@ internal sealed class BattlePilot
         // A boss fight stays one after the boss splits or leaves (Mom Bomb
         // explodes into plain Bombs): never flee it.
         if(bossSeen)boss=true;
-        // Mom Bomb "gets big": its grow action swaps the enemy sprite, so any
-        // enemy whose MonsterAssetId differs from the one it started with has
-        // grown. Latched for the fight; only read when the plan asks.
+        // Mom Bomb "gets big": its grow action is ChangeSprite (function 45),
+        // which swaps the drawn sprite while MonsterAssetId stays the same (the
+        // first try watched the asset id and never fired). Watch each enemy
+        // view's drawn sprite and size, and as a backup the "I'M GONNA BLOW!"
+        // line (E0020_01_180_b_01) in the battle message. Latched per fight.
         if(frame%12==0 && !grown && plan!=null && Array.Exists(plan,r=>r.WhileMonsterGrown!=null))
+        {
             foreach(var view in UnityEngine.Object.FindObjectsOfType<BattleEnemyEntity>())
             {
                 if(view==null)continue;
-                if(!firstSprite.TryGetValue(view.Pointer,out int sprite))firstSprite[view.Pointer]=view.MonsterAssetId;
-                else if(sprite!=view.MonsterAssetId)grown=true;
+                var sr=view.characterSR;
+                string sig=$"{view.MonsterAssetId}/{(sr!=null?sr.Width:0)}x{(sr!=null?sr.Height:0)}/{(sr?.sprite!=null?sr.sprite.name:"")}";
+                spriteLine=sig;
+                if(!firstSprite.TryGetValue(view.Pointer,out var first))firstSprite[view.Pointer]=sig;
+                else if(first!=sig)grown=true;
             }
+            var warning=Last.Management.MessageManager.Instance?.GetMessage(GrowWarning,false);
+            var shown=UnityEngine.Object.FindObjectOfType<Last.UI.KeyInput.BattleCommandMessageController>()?.view?.messageText?.nameText?.text;
+            if(!string.IsNullOrEmpty(warning) && !string.IsNullOrEmpty(shown) && shown.Contains(warning.Trim()))grown=true;
+        }
+        if(spriteLine.Length>0 && livingIds.Contains(MomBomb))enemyText.Append(" {").Append(spriteLine).Append('}');
         if(grown)enemyText.Append(" [grown]");
         enemyLine=enemyText.ToString();
         state.Battle=decision.Length>0?$"{enemyLine} | {decision}":enemyLine;
@@ -298,7 +319,7 @@ internal sealed class BattlePilot
     private static bool IsCecil(BattlePlayerData p)=>p.GetOwnedCharacterData()?.characterStatusId is 1 or 13;
     private bool rosaParty,rosaCanCure,bossSeen;
     private IntPtr turnActor;private int turnRule=-1;private bool itemOnEnemies;
-    private readonly HashSet<int> livingIds=new();private readonly Dictionary<int,int> livingHp=new();private readonly Dictionary<IntPtr,int> firstSprite=new();private bool grown;private BattlePlayerData? rosaTarget,rosaLow;
+    private readonly HashSet<int> livingIds=new();private readonly Dictionary<int,int> livingHp=new();private readonly Dictionary<IntPtr,string> firstSprite=new();private bool grown;private string spriteLine="";private const string GrowWarning="E0020_01_180_b_01";private const int MomBomb=165;private BattlePlayerData? rosaTarget,rosaLow;
     private const float RosaHealBelow=.75f;
     private const int Summon=9,ChocoboSummon=65,ChocoboMp=7,RydiaBossReserve=14,Edward=7;
     // Heal order with Rosa in the party: Rosa, Cecil and Yang (rank 0, the
@@ -343,8 +364,8 @@ internal sealed class BattlePilot
         // Rosa always heals: Rosa/Cecil/Yang under 75% (lowest first), then
         // Rydia/Edward under 50%; else she Defends.
         if(me==Rosa && rosaTarget!=null && canCure)
-        {pendingCommand=WhiteMagic;pendingAbility=CureAbility;pendingTarget=rosaTarget.GetOwnedCharacterData().characterStatusId;Log(actor,"Cure #"+pendingTarget+" (Rosa heals)");return;}
-        if(dead!=null && HasItem(9)) {pendingItem=9;pendingTarget=dead.GetOwnedCharacterData().characterStatusId;Log(actor,"Phoenix Down on #"+pendingTarget);return;}
+        {pendingCommand=WhiteMagic;pendingAbility=CureAbility;pendingTarget=rosaTarget.GetOwnedCharacterData().characterStatusId;Queue(actor,pendingTarget);Log(actor,"Cure #"+pendingTarget+" (Rosa heals)");return;}
+        if(dead!=null && HasItem(9)) {pendingItem=9;pendingTarget=dead.GetOwnedCharacterData().characterStatusId;Queue(actor,pendingTarget);Log(actor,"Phoenix Down on #"+pendingTarget);return;}
         // With Rosa alive and able to Cure, nobody else heals: Rydia Cured and
         // Yang/Cecil used Potions through the Mom Bomb split instead of
         // fighting, and the party lost.
@@ -358,12 +379,12 @@ internal sealed class BattlePilot
             // White Magic first for everyone; Tellah only above his plan's MP
             // reserve. Potions are the fallback when nobody can cast.
             bool tellahCanSpare=!isTellah || stats!.CurrentMP>=CureMp+Reserve(plan,Tellah);
-            if(canCure && tellahCanSpare) {pendingCommand=WhiteMagic;pendingAbility=CureAbility;pendingTarget=target;Log(actor,"Cure ally #"+target+" (under half HP)");return;}
+            if(canCure && tellahCanSpare) {pendingCommand=WhiteMagic;pendingAbility=CureAbility;pendingTarget=target;Queue(actor,target);Log(actor,"Cure ally #"+target+" (under half HP)");return;}
             // Non-casters (Cecil) leave healing to the casters: a Potion only
             // when no caster has the MP to Cure (user: Cecil kept healing with
             // Rydia right behind him in the ATB).
             if(HasItem(2) && (!casterCanCure || (injured==rosaLow && me!=Rosa)))
-            {pendingItem=2;pendingTarget=target;Log(actor,"Potion on ally #"+target);return;}
+            {pendingItem=2;pendingTarget=target;Queue(actor,target);Log(actor,"Potion on ally #"+target);return;}
         }
         // Cure hurts undead: cast it (on all of them when there are several).
         // Tellah joins in while he stays above the MP his route plan reserves.
@@ -391,6 +412,12 @@ internal sealed class BattlePilot
         if(pendingCommand==1)Log(actor,"Attack weakest enemy");
     }
     private readonly HashSet<IntPtr> blockedCure=new();
+    // Member (character_status id) -> heal queued on them: their HP then, the
+    // fight time and the healer. Cleared once their HP rises or after a while.
+    private readonly Dictionary<int,(int Hp,float At,IntPtr Healer)> queuedHeals=new();
+    private readonly Dictionary<int,int> hpByStatus=new();
+    private const float HealLandSeconds=10;
+    private void Queue(BattlePlayerData healer,int target)=>queuedHeals[target]=(hpByStatus.TryGetValue(target,out int hp)?hp:0,fightSeconds,healer.Pointer);
     private readonly HashSet<(int,IntPtr)> usedOnce=new();
     private bool wasMist;
     // MP a character's plan keeps back for the boss (BattleRule.ReserveMp).
@@ -425,9 +452,10 @@ internal sealed class BattlePilot
                (monsterHp>rule.WhileMonsterHpAtMost || monsterHp<=rule.WhileMonsterHpAbove))continue;
             if(rule.WhileMonsterGrown is bool wantGrown && wantGrown!=grown)continue;
             // Darkness is an HP-costing wave that can kill Cecil (user rule).
-            // Only on large groups (4+), and only while Cecil is above half HP
-            // (the Mom Bomb's split bombs: user wants it there).
-            if(rule.Command==DarknessCommand && (livingEnemies<4 || (stats!=null && stats.CurrentHP*2<Math.Max(1,stats.ConfirmedMaxHp()))))continue;
+            // Only on large groups (4+), and only while Cecil is above a quarter
+            // of his HP (it costs ~8-9% a use; at half he skipped it right after
+            // the Mom Bomb's explosion, and the user wants it on the split bombs).
+            if(rule.Command==DarknessCommand && (livingEnemies<4 || (stats!=null && stats.CurrentHP*4<Math.Max(1,stats.ConfirmedMaxHp()))))continue;
             if(rule.Item is int item)
             {
                 if(!HasItem(item))continue;
