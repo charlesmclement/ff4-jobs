@@ -81,7 +81,7 @@ def environment(smoke):
                FF4JOBS_TAS_DIR='Z:'+str(DATA).replace('/','\\'),FF4JOBS_TAS_SMOKE='1' if smoke else '0')
     return env
 
-def launch(route_path,smoke):
+def launch(route_path,smoke,resume=False):
     if game_running():raise RuntimeError('Close FF4 normally first; this launcher will not interrupt your game')
     expected=json.loads((ROOT/'verified-game.json').read_text())['exe_sha256']
     if hashlib.sha256((GAME/'GameAssembly.dll').read_bytes()).hexdigest()!=expected:raise RuntimeError('Unverified game executable')
@@ -121,7 +121,8 @@ def launch(route_path,smoke):
     args=['-batchmode','-nographics'] if smoke else ['-screen-fullscreen','0','-screen-width','1280','-screen-height','720']
     args+=['-logFile','Z:'+str(DATA/'unity.log').replace('/','\\')]
     print('TAS save directory:',docs/'My Games/FINAL FANTASY IV PR',flush=True)
-    if route:print('Select New Game. The scripted route starts when the game enters Event. F10 stops it.',flush=True)
+    if route and resume:print('Load your save. The route starts from where you stand once you have control. F10 stops it.',flush=True)
+    elif route:print('Select New Game. The scripted route starts when the game enters Event. F10 stops it.',flush=True)
     with (DATA/'game.log').open('w') as log:
         child=subprocess.Popen([str(PROTON),'run',str(GAME/'FINAL FANTASY IV.exe'),*args],cwd=GAME,env=env,stdout=log,stderr=log)
         try:
@@ -130,8 +131,14 @@ def launch(route_path,smoke):
                 if smoke and time.monotonic()>deadline:raise RuntimeError('TAS startup smoke check timed out')
                 if (DATA/'status.json').exists():
                     s=state(require_fresh=False)
-                    if route and not started and s['phase']=='Event' and s['focused']:
-                        request('start',route);started=True
+                    if route and not started and s['focused'] and (s['phase']=='Event' if not resume else s['phase']=='Player' and s.get('mapId')):
+                        # resume: the player loaded a save; start from the step for this map.
+                        started=True
+                        if not resume:request('start',route)
+                        else:
+                            time.sleep(1)
+                            try:start_route(route,auto_step(route))
+                            except (RuntimeError,ValueError) as e:print('TAS: route not started:',e,flush=True)
                     display=(s['status'],s['step'],s['label'],s['reason'],s['error'])
                     if display!=last:print(display,flush=True);last=display
                 time.sleep(.1)
@@ -149,24 +156,28 @@ def launch(route_path,smoke):
             raise RuntimeError('FF4 closed before the route started. If this was unexpected, check Steam is signed in. Startup evidence is in unity.log, game.log and exit.json.')
 
 def auto_step(route):
-    """1-based step to resume at, from the live map id and cell.
+    """1-based step to resume at, from the live map id, cell and story flags.
 
-    Picks navigate/interact steps on the current map; among several, the one
-    whose next target (first waypoint, else goal) is nearest the player.
-    Story flags aren't reported while idle, so check the printed choice."""
-    s=state();m,x,y=s.get('mapId'),s.get('x'),s.get('y')
-    best=None
+    Steps up to the last story flag already set are done; steps past the first
+    unset flag aren't reachable yet. Among reachable navigate steps on the
+    current map, the one whose next target (first waypoint, else goal) is
+    nearest the player wins; the step choice is printed for checking."""
+    s=state();m,x,y=s.get('mapId'),s.get('x'),s.get('y');flags=set(s.get('storyFlags') or [])
+    best=None;blocked=False
     for i,step in enumerate(route['steps'],1):
-        if step.get('mapId')!=m or step.get('kind') not in ('navigate','interact'):continue
-        target=(step.get('waypoints') or [step.get('goal')])[0]
-        d=0 if target is None or x is None else abs(target['x']-x)+abs(target['y']-y)
-        if best is None or d<best[0]:best=(d,i)
-    if best is None:raise RuntimeError(f'No route step starts on map {m}; stand where the segment begins (phase {s.get("phase")})')
+        flag=(step.get('until') or {}).get('storyFlag')
+        if not blocked and step.get('mapId')==m and step.get('kind')=='navigate' and flag not in flags:
+            target=(step.get('waypoints') or [step.get('goal')])[0]
+            d=0 if x is None else abs(target['x']-x)+abs(target['y']-y)
+            if best is None or d<best[0]:best=(d,i)
+        if flag is not None and flag not in flags:blocked=True
+        # A satisfied story flag means every step up to here is done.
+        elif flag is not None and not blocked:best=None
+    if best is None:raise RuntimeError(f'No route step starts on map {m} with story flags {sorted(flags)}; stand where the segment begins')
     return best[1]
 
-def start(path,from_step,delay):
-    route=json.loads(Path(path).read_text())
-    if from_step==0:from_step=auto_step(route)
+def start_route(route,from_step,delay=0):
+    route=json.loads(json.dumps(route))
     if not 1<=from_step<=len(route.get('steps',[])):raise ValueError('Step is outside the route')
     print(f'Starting at step {from_step}: {route["steps"][from_step-1]["label"]}',flush=True)
     if from_step>1:
@@ -177,29 +188,23 @@ def start(path,from_step,delay):
     if delay>0:print(f'Refocus the TAS game within {delay:g} seconds.',flush=True)
     time.sleep(max(0,delay));request('start',route)
 
+def start(path,from_step,delay):
+    route=json.loads(Path(path).read_text())
+    start_route(route,from_step or auto_step(route),delay)
+
 p=argparse.ArgumentParser(description=__doc__);sub=p.add_subparsers(dest='command',required=True)
-a=sub.add_parser('launch');a.add_argument('--route');a.add_argument('--smoke',action='store_true')
-a=sub.add_parser('start');a.add_argument('route');a.add_argument('--from-step',type=int,default=1,help='resume at this numbered route step (1-based)');a.add_argument('--delay',type=float,default=5,help='seconds to refocus FF4')
-a=sub.add_parser('play',help='one button: open the TAS game if closed, else start the route from where the player stands')
-a.add_argument('route')
+a=sub.add_parser('launch');a.add_argument('--route');a.add_argument('--smoke',action='store_true');a.add_argument('--resume',action='store_true',help='after a save loads, start the route at the step for the current map')
+a=sub.add_parser('start');a.add_argument('route');a.add_argument('--from-step',type=int,default=1,help='resume at this numbered route step (1-based); 0 = pick from the current map');a.add_argument('--delay',type=float,default=5,help='seconds to refocus FF4')
 sub.add_parser('stop');sub.add_parser('status')
 a=p.parse_args()
 try:
-    if a.command=='launch':launch(a.route,a.smoke)
+    if a.command=='launch':launch(a.route,a.smoke,a.resume)
     elif a.command=='start':start(a.route,a.from_step,a.delay)
-    elif a.command=='play':
-        if not game_running():
-            print('Opening the TAS game. Load your save, then press this button again.',flush=True)
-            launch(None,False)
-        else:
-            start(a.route,0,0)
-            print('Started. Click the game window; the run waits while it is unfocused.',flush=True)
-            time.sleep(4)
     elif a.command=='stop':request('stop')
     else:print(json.dumps(state(),indent=2))
 except (OSError,ValueError,RuntimeError,subprocess.CalledProcessError) as e:
     print('TAS:',e,file=sys.stderr,flush=True)
-    if a.command in ('launch','play'):
+    if a.command=='launch':
         try:
             DATA.mkdir(parents=True,exist_ok=True)
             (DATA/'launcher-error.txt').write_text(datetime.now(timezone.utc).isoformat()+'\n'+str(e)+'\n')

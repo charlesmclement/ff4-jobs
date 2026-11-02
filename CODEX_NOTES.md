@@ -59,10 +59,16 @@ analysis. See also `CLAUDE_HANDOFF.txt` and `docs/TAS-SEGMENT-2.md`.
 * Route `tas/routes/mist-octomammoth.json`: 28 steps. Step-on triggers (Bomb
   Ring, Kaipo arrival, Rosa, waterfall) are navigate-until-Event steps followed
   by mash steps; Tellah and Octomammoth are navigate + interact facing Up.
-* `tas.py play <route>`: opens the game with no route if it's closed, otherwise
-  `auto_step` picks a step from the map id and cell. While idle, story flags
-  aren't reported, so ambiguous maps (Kaipo) pick the nearest target.
-* Desktop file `~/Desktop/FF4 TAS Segment 2.desktop`.
+* `tas.py launch --resume --route <route>`: after a save loads (focused Player
+  phase), `auto_step` picks the step from the map id, cell and story flags.
+  Steps up to the last set flag are done; steps past the first unset flag are
+  unreachable. The plugin now reports ScenarioFlag1 0..40 even while idle.
+  `tas.py start --from-step 0` uses the same picker. (A `play` command was
+  tried and removed at the user's request.)
+* Desktop file `~/Desktop/FF4 TAS Segment 2.desktop` runs `launch --resume`.
+* The speed boost is ON at launch (`FF4JOBS_TAS_BOOST=0` disables it); F8 toggles.
+  The OnGUI timer overlay was confirmed visible live, so keep it (a uGUI
+  rewrite was started and reverted).
 
 ## Known gaps / next work (segment 2)
 

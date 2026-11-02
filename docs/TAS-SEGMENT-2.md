@@ -126,6 +126,6 @@ once someone pastes the relevant section.
 
 ## Starting segment 2
 
-Desktop button "FF4 TAS: Segment 2": press once to open the TAS game (no
-route), load the save, press again; `tas.py play` picks the step from the live
-map and cell, then waits until the game is focused.
+Desktop shortcut "FF4 TAS: Segment 2" runs `tas.py launch --resume`: it opens
+the TAS game, you load a save, and once you have control the route starts at
+the step that matches the map and story flags. 3x speed is on; F8 toggles it.

@@ -51,6 +51,7 @@ public sealed class Controller : MonoBehaviour
     private static float nextFieldFind;
     private static float nextVision;
     private static Vision? vision;
+    private const int StoryFlagScan=40;
     private sealed class Vision
     {
         public DateTime Utc {get;set;}
@@ -78,17 +79,19 @@ public sealed class Controller : MonoBehaviour
             var phase=SceneManager.Instance?.GetCurrentSubSceneManager()?.TryCast<SubSceneManagerMainGame>()?.GetCurrentState();
             snapshot=new Snapshot{Phase=phase?.ToString()??"None",MapId=UserDataManager.Instance()?.CurrentMapId??0,Focused=Application.isFocused};
             var active=Engine?.ActiveStep;
+            // Early story flags are reported even while idle so the launcher can
+            // tell which step a loaded save is at (e.g. arriving vs leaving Kaipo).
+            var storage=DataStorage.Instance;
+            if(storage!=null && UserDataManager.Instance()!=null)
+            {
+                var flags=new List<int>();
+                for(int i=0;i<=StoryFlagScan;i++)if(storage.Get(DataStorage.Category.kScenarioFlag1,i)!=0)flags.Add(i);
+                int? requested=active?.Until?.StoryFlag;
+                if(requested>StoryFlagScan && storage.Get(DataStorage.Category.kScenarioFlag1,requested.Value)!=0)flags.Add(requested.Value);
+                snapshot.StoryFlags=flags.ToArray();
+            }
             if(active!=null)
             {
-                var storage=DataStorage.Instance;
-                if(storage!=null)
-                {
-                    var flags=new List<int>();
-                    for(int i=0;i<=6;i++)if(storage.Get(DataStorage.Category.kScenarioFlag1,i)!=0)flags.Add(i);
-                    int? requested=active.Until?.StoryFlag;
-                    if(requested>6 && storage.Get(DataStorage.Category.kScenarioFlag1,requested.Value)!=0)flags.Add(requested.Value);
-                    snapshot.StoryFlags=flags.ToArray();
-                }
                 if(active.Choice!=null)
                 {
                     var select=Last.Message.MessageSelectWindowManager.Instance;
