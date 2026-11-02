@@ -313,6 +313,15 @@ whatever build it launched with, so always say which build is live.
     battle flash was under 6 frames; story scenes last far longer.
     **Rule:** scene-trigger steps keep stableFrames >= 15.
 
+34. **Resume sat idle (live).** Two launcher bugs. (a) `launch --resume`
+    fired on the first Player frame after loading, before the save's story
+    flags were reported, so auto_step found no step and the launcher gave up
+    for good. It now waits for `storyFlags`, retries every second, and logs
+    the reason once. (b) auto_step treated flags above the idle scan (0..40,
+    e.g. Damcyan jail 95) as unset, which blocked every later step. Flags
+    above `IDLE_FLAG_SCAN` are now ignored there. Started live with `tas.py
+    start --from-step 0`.
+
 ## Stuck detection (all segments, always on)
 
 The user's standing requirement: every movement must be confirmed. It lives

@@ -132,19 +132,22 @@ def launch(route_path,smoke,resume=False):
     with (DATA/'game.log').open('w') as log:
         child=subprocess.Popen([str(PROTON),'run',str(GAME/'FINAL FANTASY IV.exe'),*args],cwd=GAME,env=env,stdout=log,stderr=log)
         try:
-            started=False;last=None;deadline=time.monotonic()+90
+            started=False;last=None;deadline=time.monotonic()+90;retry_at=time.monotonic()+1;last_error=None
             while child.poll() is None:
                 if smoke and time.monotonic()>deadline:raise RuntimeError('TAS startup smoke check timed out')
                 if (DATA/'status.json').exists():
                     s=state(require_fresh=False)
                     if route and not started and s['focused'] and (s['phase']=='Event' if not resume else s['phase']=='Player' and s.get('mapId')):
                         # resume: the player loaded a save; start from the step for this map.
-                        started=True
-                        if not resume:install_battle_db();request('start',route)
-                        else:
-                            time.sleep(1)
-                            try:start_route(route,auto_step(route))
-                            except (RuntimeError,ValueError) as e:print('TAS: route not started:',e,flush=True)
+                        if not resume:started=True;install_battle_db();request('start',route)
+                        # A loaded save reports its story flags a moment after the
+                        # first Player frame: wait for them, and keep retrying
+                        # (once per second) instead of giving up on one miss.
+                        elif s.get('storyFlags') and time.monotonic()>=retry_at:
+                            try:start_route(route,auto_step(route));started=True
+                            except (RuntimeError,ValueError) as e:
+                                if str(e)!=last_error:print('TAS: waiting to start:',e,flush=True);last_error=str(e)
+                                retry_at=time.monotonic()+1
                     display=(s['status'],s['step'],s['label'],s['reason'],s['error'])
                     if display!=last:print(display,flush=True);last=display
                 time.sleep(.1)
@@ -161,6 +164,8 @@ def launch(route_path,smoke,resume=False):
         elif route and not started:
             raise RuntimeError('FF4 closed before the route started. If this was unexpected, check Steam is signed in. Startup evidence is in unity.log, game.log and exit.json.')
 
+IDLE_FLAG_SCAN=40
+
 def auto_step(route):
     """1-based step to resume at, from the live map id, cell and story flags.
 
@@ -172,6 +177,9 @@ def auto_step(route):
     best=None;blocked=False
     for i,step in enumerate(route['steps'],1):
         flag=(step.get('until') or {}).get('storyFlag')
+        # Flags above the idle scan (0..40, Plugin StoryFlagScan) aren't
+        # reported, so they can't decide anything here (e.g. Damcyan's 95).
+        if flag is not None and flag>IDLE_FLAG_SCAN:flag=None
         if not blocked and step.get('mapId')==m and step.get('kind')=='navigate' and flag not in flags:
             target=(step.get('waypoints') or [step.get('goal')])[0]
             d=0 if x is None else abs(target['x']-x)+abs(target['y']-y)
