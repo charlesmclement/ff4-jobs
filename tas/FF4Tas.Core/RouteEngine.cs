@@ -115,6 +115,9 @@ public sealed class BattleRule
     // grows at 10000 HP and explodes two actions later: everyone Defends).
     public int? WhileMonsterHpAtMost {get;set;}
     public int? WhileMonsterHpAbove {get;set;}
+    // ...and only once the monster has (true) / hasn't yet (false) changed
+    // sprite: the Mom Bomb's grow action is ChangeSprite (function 45).
+    public bool? WhileMonsterGrown {get;set;}
     // Target the whole enemy side (one Thunder on all instead of three singles).
     public bool TargetAll {get;set;}
     // Pick Fire/Blizzard/Thunder by the living enemies' shared weakness

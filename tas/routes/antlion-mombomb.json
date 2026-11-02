@@ -771,7 +771,7 @@
       ]
     },
     {
-      "label": "Mount Hobs summit: Yang vs the bombs, then Mom Bomb (attack to 10000 HP, all Defend/Gird while it is big, then Darkness + Kick)",
+      "label": "Mount Hobs summit: Yang vs the bombs, then Mom Bomb (attack until it grows, all Defend/Gird while big, then Darkness, Fire/Thunder on all, Kick)",
       "kind": "mash",
       "keys": [
         "Confirm"
@@ -804,40 +804,74 @@
           "command": 27,
           "bossOnly": true,
           "whileMonster": 165,
-          "whileMonsterHpAtMost": 10000
+          "whileMonsterGrown": true
         },
         {
           "character": 1,
           "command": 2,
           "bossOnly": true,
           "whileMonster": 165,
-          "whileMonsterHpAtMost": 10000
+          "whileMonsterGrown": true
         },
         {
           "character": 4,
           "command": 2,
           "bossOnly": true,
           "whileMonster": 165,
-          "whileMonsterHpAtMost": 10000
+          "whileMonsterGrown": true
         },
         {
           "character": 7,
           "command": 2,
           "bossOnly": true,
           "whileMonster": 165,
-          "whileMonsterHpAtMost": 10000
+          "whileMonsterGrown": true
         },
         {
           "character": 8,
           "command": 1,
           "bossOnly": true,
           "whileMonster": 165,
-          "whileMonsterHpAbove": 10000
+          "whileMonsterGrown": false
         },
         {
           "character": 1,
           "command": 10,
           "minEnemies": 4,
+          "bossOnly": true
+        },
+        {
+          "character": 4,
+          "command": 8,
+          "ability": 33,
+          "targetAll": true,
+          "minEnemies": 2,
+          "bossOnly": true,
+          "oncePerBattle": true
+        },
+        {
+          "character": 4,
+          "command": 8,
+          "ability": 39,
+          "targetAll": true,
+          "minEnemies": 2,
+          "bossOnly": true,
+          "oncePerBattle": true
+        },
+        {
+          "character": 4,
+          "command": 8,
+          "ability": 33,
+          "targetAll": true,
+          "minEnemies": 2,
+          "bossOnly": true
+        },
+        {
+          "character": 4,
+          "command": 8,
+          "ability": 39,
+          "targetAll": true,
+          "minEnemies": 2,
           "bossOnly": true
         },
         {

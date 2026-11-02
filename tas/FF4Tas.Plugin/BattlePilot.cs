@@ -31,7 +31,7 @@ internal sealed class BattlePilot
         abilityLastIndex=-1;abilityLastKey=null;lastInfo=lastCursor=-1;lastActor=IntPtr.Zero;previousHp=-1;
         pendingRule=-1;abilityConfirms=abilityStuck=targetPresses=0;decision="";
         blockedRules.Clear();blockedCure.Clear();blockedItems.Clear();blockedStatusSpell.Clear();usedOnce.Clear();wasMist=false;
-        fleeFrames=0;sidePresses=0;bossSeen=false;turnActor=IntPtr.Zero;turnRule=-1;fightSeconds=0;fightFrame=-1;rowDone=false;
+        fleeFrames=0;sidePresses=0;bossSeen=false;turnActor=IntPtr.Zero;turnRule=-1;fightSeconds=0;fightFrame=-1;rowDone=false;firstSprite.Clear();grown=false;
     }
     internal void Read(Snapshot state,int frame,BattleRule[]? plan=null,int[]? fleeMonsters=null)
     {
@@ -118,6 +118,17 @@ internal sealed class BattlePilot
         // A boss fight stays one after the boss splits or leaves (Mom Bomb
         // explodes into plain Bombs): never flee it.
         if(bossSeen)boss=true;
+        // Mom Bomb "gets big": its grow action swaps the enemy sprite, so any
+        // enemy whose MonsterAssetId differs from the one it started with has
+        // grown. Latched for the fight; only read when the plan asks.
+        if(frame%12==0 && !grown && plan!=null && Array.Exists(plan,r=>r.WhileMonsterGrown!=null))
+            foreach(var view in UnityEngine.Object.FindObjectsOfType<BattleEnemyEntity>())
+            {
+                if(view==null)continue;
+                if(!firstSprite.TryGetValue(view.Pointer,out int sprite))firstSprite[view.Pointer]=view.MonsterAssetId;
+                else if(sprite!=view.MonsterAssetId)grown=true;
+            }
+        if(grown)enemyText.Append(" [grown]");
         enemyLine=enemyText.ToString();
         state.Battle=decision.Length>0?$"{enemyLine} | {decision}":enemyLine;
         bestElement=bestElementCount=0;
@@ -280,7 +291,7 @@ internal sealed class BattlePilot
     private static bool IsCecil(BattlePlayerData p)=>p.GetOwnedCharacterData()?.characterStatusId is 1 or 13;
     private bool rosaParty,rosaCanCure,bossSeen;
     private IntPtr turnActor;private int turnRule=-1;private bool itemOnEnemies;
-    private readonly HashSet<int> livingIds=new();private readonly Dictionary<int,int> livingHp=new();private BattlePlayerData? rosaTarget,rosaLow;
+    private readonly HashSet<int> livingIds=new();private readonly Dictionary<int,int> livingHp=new();private readonly Dictionary<IntPtr,int> firstSprite=new();private bool grown;private BattlePlayerData? rosaTarget,rosaLow;
     private const float RosaHealBelow=.75f;
     private const int Summon=9,ChocoboSummon=65,ChocoboMp=7,RydiaBossReserve=14,Edward=7;
     // Heal order with Rosa in the party: Rosa, Cecil and Yang (rank 0, the
@@ -398,6 +409,7 @@ internal sealed class BattlePilot
             if(rule.WhileMonster is int whileId && !livingIds.Contains(whileId))continue;
             if(rule.WhileMonster is int hpId && livingHp.TryGetValue(hpId,out int monsterHp) &&
                (monsterHp>rule.WhileMonsterHpAtMost || monsterHp<=rule.WhileMonsterHpAbove))continue;
+            if(rule.WhileMonsterGrown is bool wantGrown && wantGrown!=grown)continue;
             // Darkness is an HP-costing wave that can kill Cecil (user rule).
             // Only on large groups (4+), and only while Cecil is above half HP
             // (the Mom Bomb's split bombs: user wants it there).
