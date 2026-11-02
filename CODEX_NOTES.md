@@ -295,6 +295,15 @@ whatever build it launched with, so always say which build is live.
     that can't be reached for 45 still frames is skipped.
     **Rule:** split overworld legs at any step-on scene that moves the player.
 
+32. **Damcyan jail blocked by a soldier (live, user-diagnosed).** The blind
+    soldier at 42 (13,9) blocks the only path; talking to him
+    (`sc_e_0150`) sets ScenarioFlag1 95 and hides him. The switch at (13,8)
+    (`sc_s_20041_1`) sets ScenarioFlag2 27 and opens the jail doors. New
+    `Condition.Flag2` (reads kScenarioFlag2). Route: beside the soldier →
+    interact Left until flag 95 → stand at (13,9) → interact Up until Flag2
+    27 → stairs. Static collision can't see NPCs or scripted doors; check a
+    map's `sc_map_*` for SetEntities/Show/Hide gates when building routes.
+
 ## Stuck detection (all segments, always on)
 
 The user's standing requirement: every movement must be confirmed. It lives

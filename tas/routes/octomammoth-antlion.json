@@ -129,6 +129,108 @@
       "timeoutFrames": 36000
     },
     {
+      "label": "Damcyan jail: stand beside the blinded soldier",
+      "kind": "navigate",
+      "mapId": 42,
+      "goal": {
+        "x": 14,
+        "y": 9,
+        "layer": 0
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "atDestination": true
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 36000
+    },
+    {
+      "label": "Damcyan jail: talk to the soldier until he leaves",
+      "kind": "interact",
+      "mapId": 42,
+      "facing": "Left",
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Player",
+        "storyFlag": 95
+      },
+      "stableFrames": 30,
+      "timeoutFrames": 7200
+    },
+    {
+      "label": "Damcyan jail: step under the switch",
+      "kind": "navigate",
+      "mapId": 42,
+      "goal": {
+        "x": 13,
+        "y": 9,
+        "layer": 0
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "atDestination": true
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 36000
+    },
+    {
+      "label": "Damcyan jail: press the switch (opens the doors)",
+      "kind": "interact",
+      "mapId": 42,
+      "facing": "Up",
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Player",
+        "flag2": 27
+      },
+      "stableFrames": 30,
+      "timeoutFrames": 7200
+    },
+    {
       "label": "Damcyan jail: stairs down",
       "kind": "navigate",
       "mapId": 42,

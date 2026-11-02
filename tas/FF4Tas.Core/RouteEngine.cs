@@ -35,7 +35,7 @@ public sealed class Route
             if(s.Kind=="mash" && (s.Keys.Length==0 || s.PeriodFrames<2 || s.PressedFrames<1 || s.PressedFrames>=s.PeriodFrames))
                 throw new ArgumentException("Mash requires a release interval");
             if(s.Kind is "wait" or "mash" or "checkpoint" or "navigate" or "interact" or "battle")
-                if(s.Until==null || (s.Until.Phase==null && s.Until.MapId==null && s.Until.StoryFlag==null && s.Until.TreasureFlag==null && s.Until.Riding==null && !s.Until.AtDestination && string.IsNullOrWhiteSpace(s.Until.Visual)))throw new ArgumentException("Step needs a completion condition");
+                if(s.Until==null || (s.Until.Phase==null && s.Until.MapId==null && s.Until.StoryFlag==null && s.Until.TreasureFlag==null && s.Until.Flag2==null && s.Until.Riding==null && !s.Until.AtDestination && string.IsNullOrWhiteSpace(s.Until.Visual)))throw new ArgumentException("Step needs a completion condition");
             if(s.Until?.Phase!=null && !KnownPhases.Contains(s.Until.Phase))throw new ArgumentException("Unknown completion phase");
             if(s.Kind=="navigate" && (s.Goal==null || s.MapId==null || s.Goal.X is <0 or >1024 || s.Goal.Y is <0 or >1024 || s.Goal.Layer is <0 or >15))
                 throw new ArgumentException("Navigation needs a map and valid destination");
@@ -133,6 +133,8 @@ public sealed class Condition
     public int? StoryFlag {get;set;}
     // Treasure chest opened (DataStorage kTreasureFlag1, the map entity's flag_id).
     public int? TreasureFlag {get;set;}
+    // Second scenario flag bank (kScenarioFlag2), e.g. Damcyan jail switch 27.
+    public int? Flag2 {get;set;}
     public bool AtDestination {get;set;}
     // Riding a vehicle (hovercraft, ship...) or on foot.
     public bool? Riding {get;set;}
@@ -140,6 +142,7 @@ public sealed class Condition
         && (Visual==null || state.VisualMatches.Contains(Visual))
         && (StoryFlag==null || state.StoryFlags.Contains(StoryFlag.Value))
         && (TreasureFlag==null || state.TreasureFlags.Contains(TreasureFlag.Value))
+        && (Flag2==null || state.Flag2s.Contains(Flag2.Value))
         && (!AtDestination || state.AtDestination)
         && (Riding==null || state.Riding==Riding);
 }
@@ -151,6 +154,7 @@ public sealed class Snapshot
     public string[] VisualMatches { get; set; } = Array.Empty<string>();
     public int[] StoryFlags {get;set;}=Array.Empty<int>();
     public int[] TreasureFlags {get;set;}=Array.Empty<int>();
+    public int[] Flag2s {get;set;}=Array.Empty<int>();
     public float? X {get;set;}
     public float? Y {get;set;}
     public int? Layer {get;set;}
