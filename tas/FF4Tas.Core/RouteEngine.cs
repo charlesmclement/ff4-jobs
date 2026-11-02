@@ -8,9 +8,10 @@ public sealed class Route
     // Monster id -> elements it is weak to (1 fire, 2 ice, 3 lightning), from the
     // master monster/attribute_group tables (tas/weaknesses.py). Read by plans.
     public Dictionary<int,int[]> Weaknesses { get; set; } = new();
-    // Monster ids to always run from in non-boss fights (e.g. Tiny Mage 9,
-    // whose Mini wastes the fight). Escape = hold SwitchLeft + SwitchRight.
-    public int[] FleeFrom { get; set; } = Array.Empty<int>();
+    // Specific encounter groups to run from, each the set of distinct monster
+    // ids in the group (e.g. [22, 9] = 4 Sahagin + 2 Tiny Mage at the
+    // waterfall). Escape = hold SwitchLeft + SwitchRight. Never bosses.
+    public int[][] FleeParties { get; set; } = Array.Empty<int[]>();
     public void Validate()
     {
         if(Schema!=1 || string.IsNullOrWhiteSpace(Name) || Steps==null || Steps.Length is <1 or >10000)

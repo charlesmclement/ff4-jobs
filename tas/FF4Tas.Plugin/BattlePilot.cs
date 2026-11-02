@@ -66,7 +66,7 @@ internal sealed class BattlePilot
             // Story fights you can't win or lose normally (the Girl at Mist has
             // 60000 HP): never spend items or MP on them.
             if(e.MonsterMaster?.Id==207 || p.ConfirmedMaxHp()>=30000)scripted=true;
-            if(e.MonsterMaster!=null && FleeFrom.Contains(e.MonsterMaster.Id))fleeTarget=true;
+
             if(weakest==null || p.CurrentHP<weakest.BattleUnitDataInfo.Parameter.CurrentHP)weakest=e;
             if(e.MonsterMaster?.Species==UndeadSpecies)
             {
@@ -90,13 +90,17 @@ internal sealed class BattlePilot
         if(mist && !wasMist)usedOnce.Clear();
         wasMist=mist;
         if(!hasEnemy) {Pulse(state,frame,"Confirm","Waiting for battle result");return;}
-        // Run from listed monsters (never bosses or story fights): hold both
+        // The whole group (alive or not) decides whether this is a listed fight.
+        var group=new HashSet<int>();
+        for(int i=0;i<enemies.Length;i++)if(enemies[i]?.MonsterMaster!=null)group.Add(enemies[i].MonsterMaster.Id);
+        foreach(var flee in FleeParties)if(flee.SetEquals(group))fleeTarget=true;
+        // Run from listed encounter groups (never bosses or story fights): hold both
         // shoulder keys, which BattleMenuController.IsEscapeInput polls. If the
         // party hasn't escaped after ~10 s (fight can't be fled), fight on.
         if(fleeTarget && !boss && !scripted && fleeFrames<FleeGiveUp)
         {
             fleeFrames++;state.BattleInput="SwitchLeft+SwitchRight";
-            state.Detail="Running away";decision="Party: run away (listed enemy)";
+            state.Detail="Running away";decision="Party: run away (listed encounter)";
             state.Battle=$"{enemyLine} | {decision}";return;
         }
         if(menu==null || !menu)menu=UnityEngine.Object.FindObjectOfType<BattleMenuController>();
@@ -184,7 +188,7 @@ internal sealed class BattlePilot
     private const int EnemySingleState=3,EnemyAllState=4;
     private int undeadCount,livingEnemies;
     private bool targetAll,tough,boss,fleeTarget;
-    internal HashSet<int> FleeFrom=new();
+    internal List<HashSet<int>> FleeParties=new();
     private int fleeFrames;
     private const int FleeGiveUp=600;
     internal Dictionary<int,int[]> Weaknesses=new();

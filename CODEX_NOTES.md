@@ -192,8 +192,11 @@ whatever build it launched with, so always say which build is live.
 23. **Run away (user, live; I had only noted it).** Escape input is
     holding SwitchLeft + SwitchRight (`Last.UI.KeyInput.BattleMenuController.IsEscapeInput`).
     `Snapshot.BattleInput` takes "A+B" for several held keys. New
-    `Route.FleeFrom` monster ids: segment 2 = [9] Tiny Mage, which drains
-    Tellah's MP and casts Mini. The user warned about this. Never in boss or
+    `Route.FleeParties`: each entry is an encounter group's distinct monster
+    ids. Segment 2 = [[22, 9]]: party 20, 4 Sahagin + 2 Tiny Mage on the
+    waterfall floors, where the mages drain MP and cast Mini. The user warned
+    about this. Correction (user): only that fight, not every Tiny Mage group
+    (party 28, 4 Tiny Mage, is still fought). Never in boss or
     story fights; gives up after 600 frames and fights. Tellah's MP reserve
     (40) now applies on every random-fight step: the reserve keyed on route
     position broke when resuming from a save made after the camp.
