@@ -49,6 +49,8 @@ internal sealed class Navigation
         // Positions are compared in world x/y; layer mismatches are reported but
         // a goal cell reached on another layer still counts.
         state.AtDestination=Near(pos,destination,tolerance);
+        // Loop (grinding): at the goal, start over at the first waypoint.
+        if(state.AtDestination && active.Loop && active.Waypoints is {Length:>0}) {state.AtDestination=false;waypointStep=active;waypoint=0;resync=false;}
         if(state.AtDestination) {state.Detail="At route destination";return;}
         if(observed && Near(lastPosition,pos,tile*.01f))unchanged++;
         else {lastPosition=pos;unchanged=0;observed=true;}

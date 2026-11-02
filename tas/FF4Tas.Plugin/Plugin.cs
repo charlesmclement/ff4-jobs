@@ -46,6 +46,8 @@ public sealed class Controller : MonoBehaviour
     private static readonly Navigation navigation=new();
     private static readonly BattlePilot battle=new();
     private static readonly FieldMenu fieldMenu=new();
+    private static readonly ShopDriver shopDriver=new();
+    private static readonly EquipMenu equipMenu=new();
     private static Step? menuStep;
     // Between fights: after a battle on a walking step, revive and top up
     // through the field menu before walking on (user: run from the skeletons,
@@ -97,6 +99,7 @@ public sealed class Controller : MonoBehaviour
                 int? requested=active?.Until?.StoryFlag;
                 if(requested>StoryFlagScan && storage.Get(DataStorage.Category.kScenarioFlag1,requested.Value)!=0)flags.Add(requested.Value);
                 snapshot.StoryFlags=flags.ToArray();
+                snapshot.Gil=UserDataManager.Instance()?.OwendGil??0;
                 if(active?.Until?.TreasureFlag is int chest && storage.Get(DataStorage.Category.kTreasureFlag1,chest)!=0)
                     snapshot.TreasureFlags=new[]{chest};
                 if(active?.Until?.Flag2 is int f2 && storage.Get(DataStorage.Category.kScenarioFlag2,f2)!=0)
@@ -161,8 +164,19 @@ public sealed class Controller : MonoBehaviour
                 else if(snapshot.Phase=="Battle" && active.HandleBattles)battle.Read(snapshot,frame,active.BattlePlan,active.FleeMonsters);
                 if(active.Kind=="menu")
                 {
-                    if(!ReferenceEquals(active,menuStep)) {fieldMenu.Reset();menuStep=active;}
-                    if(snapshot.Focused && snapshot.Phase is "Player" or "Menu")fieldMenu.Read(snapshot,frame);
+                    if(!ReferenceEquals(active,menuStep))
+                    {
+                        menuStep=active;
+                        if(active.Shop!=null)shopDriver.Reset(active.Shop,active.Facing);
+                        else if(active.Equip!=null)equipMenu.Reset(active.Equip);
+                        else fieldMenu.Reset(useItem:active.MenuItem??0);
+                    }
+                    if(snapshot.Focused && snapshot.Phase is "Player" or "Menu" or "Shop" or "Message")
+                    {
+                        if(active.Shop!=null)shopDriver.Read(snapshot,frame);
+                        else if(active.Equip!=null)equipMenu.Read(snapshot,frame);
+                        else if(snapshot.Phase is "Player" or "Menu")fieldMenu.Read(snapshot,frame);
+                    }
                 }
             }
             if(Time.unscaledTime>=nextVision)

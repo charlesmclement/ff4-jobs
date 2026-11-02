@@ -257,7 +257,7 @@ internal sealed class BattlePilot
         return a.MonsterMaster?.Id==b.MonsterMaster?.Id && pa.CurrentHP==pb.CurrentHP;
     }
     private const float HealBelow=.5f;
-    private const int DarknessCommand=10;
+    private const int DarknessCommand=10,Aim=13;
     private const int EnemySingleState=3,EnemyAllState=4;
     private int undeadCount,livingEnemies;
     private bool targetAll,tough,boss,fleeTarget;
@@ -369,7 +369,14 @@ internal sealed class BattlePilot
         // Tellah joins in while he stays above the MP his route plan reserves.
         if(undead!=null && canCure && (!isTellah || stats!.CurrentMP>=CureMp+Reserve(plan,Tellah)))
         {pendingCommand=WhiteMagic;pendingAbility=CureAbility;castOnUndead=true;Log(actor,$"Cure{(undeadCount>1?" on all":"")} vs undead");return;}
-        if(me==Rosa && rosaParty) {pendingCommand=Defend;Log(actor,"Defend (nobody to heal)");return;}
+        // Nobody to heal: Rosa Aims with her bow (guide), unless a plan rule
+        // names her (all Defend while the Mom Bomb is big); Defend without a bow.
+        if(me==Rosa && rosaParty)
+        {
+            if(plan!=null && Array.Exists(plan,r=>r.Character==Rosa)) {ChoosePlan(info,actor,plan);if(pendingRule>=0)return;}
+            if(CommandEnabled(info,Aim)) {pendingCommand=Aim;Log(actor,"Aim (nobody to heal)");return;}
+            pendingCommand=Defend;Log(actor,"Defend (nobody to heal, no bow)");return;
+        }
         // Edward just attacks (user: "edward can just attack and die"),
         // unless a plan rule names him (all Defend while the Mom Bomb is big).
         if(me==Edward && (plan==null || !Array.Exists(plan,r=>r.Character==Edward))) {Log(actor,"Attack weakest enemy");return;}

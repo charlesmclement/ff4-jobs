@@ -18,6 +18,8 @@ internal sealed class FieldMenu
     // ItemWindowController.State and ItemUseController.State.
     private const int CommandSelect=1,UseSelect=2,TargetSelect=5,UseAll=2;
     private float topUpBelow=.7f;
+    // MenuItem mode: use this one item once (Tent on the party), no healing.
+    private int menuItem;
     private bool finished,oneColumn;
     private int uses,wait,lastIndex=-1,stuck,item,target;
     private string? lastKey;
@@ -26,9 +28,9 @@ internal sealed class FieldMenu
     private ItemWindowController? items;
     // topUp: Potion anyone under this share of max HP (.7 for the route's
     // menu steps; lower between fights so the run doesn't menu after each one).
-    internal void Reset(float topUp=.7f)
+    internal void Reset(float topUp=.7f,int useItem=0)
     {
-        topUpBelow=topUp;finished=oneColumn=false;uses=wait=stuck=item=target=0;lastIndex=-1;lastKey=null;main=null;items=null;
+        topUpBelow=topUp;menuItem=useItem;finished=oneColumn=false;uses=wait=stuck=item=target=0;lastIndex=-1;lastKey=null;main=null;items=null;
     }
     internal void Read(Snapshot s,int frame)
     {
@@ -86,7 +88,7 @@ internal sealed class FieldMenu
                     else if(at!=lastIndex)stuck=0;
                     lastKey=key;lastIndex=at;
                 }
-                Pulse(s,frame,key,item==PhoenixDown?"Phoenix Down":"Potion");return;
+                Pulse(s,frame,key,item==PhoenixDown?"Phoenix Down":item==Potion?"Potion":"item "+item);return;
             }
             case TargetSelect:
             {
@@ -94,6 +96,12 @@ internal sealed class FieldMenu
                 if(use?.targetList==null || use.selectCursor==null)return;
                 if(use.selectedItemData!=null && use.selectedItemData.contentId!=item) {Pulse(s,frame,"Back","Switch item");return;}
                 if(use.stateMachine!=null && (int)use.stateMachine.Current==UseAll)
+                {
+                    if(frame%12==0) {uses++;wait=AfterUse;}
+                    Pulse(s,frame,"Confirm","Use on the party");return;
+                }
+                // Party-wide item (Tent) shown with a single cursor: take it.
+                if(target==0)
                 {
                     if(frame%12==0) {uses++;wait=AfterUse;}
                     Pulse(s,frame,"Confirm","Use on the party");return;
@@ -115,6 +123,7 @@ internal sealed class FieldMenu
     private void Need()
     {
         item=target=0;
+        if(menuItem!=0) {party=$"{menuItem} x{Count(menuItem)}";if(uses==0 && Has(menuItem))item=menuItem;return;}
         var user=UserDataManager.Instance();
         var corps=user?.corpsList;var owned=user?.OwnedCharacterList;
         if(corps==null || owned==null)return;

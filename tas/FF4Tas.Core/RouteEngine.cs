@@ -38,7 +38,7 @@ public sealed class Route
             if(s.Kind=="mash" && (s.Keys.Length==0 || s.PeriodFrames<2 || s.PressedFrames<1 || s.PressedFrames>=s.PeriodFrames))
                 throw new ArgumentException("Mash requires a release interval");
             if(s.Kind is "wait" or "mash" or "checkpoint" or "navigate" or "interact" or "battle" or "menu")
-                if(s.Until==null || (s.Until.Phase==null && s.Until.MapId==null && s.Until.StoryFlag==null && s.Until.TreasureFlag==null && s.Until.Flag2==null && s.Until.Riding==null && !s.Until.AtDestination && !s.Until.MenuDone && string.IsNullOrWhiteSpace(s.Until.Visual)))throw new ArgumentException("Step needs a completion condition");
+                if(s.Until==null || (s.Until.Phase==null && s.Until.MapId==null && s.Until.StoryFlag==null && s.Until.TreasureFlag==null && s.Until.Flag2==null && s.Until.Riding==null && !s.Until.AtDestination && !s.Until.MenuDone && s.Until.GilAtLeast==null && string.IsNullOrWhiteSpace(s.Until.Visual)))throw new ArgumentException("Step needs a completion condition");
             if(s.Until?.Phase!=null && !KnownPhases.Contains(s.Until.Phase))throw new ArgumentException("Unknown completion phase");
             if(s.Kind=="navigate" && (s.Goal==null || s.MapId==null || s.Goal.X is <0 or >1024 || s.Goal.Y is <0 or >1024 || s.Goal.Layer is <0 or >15))
                 throw new ArgumentException("Navigation needs a map and valid destination");
@@ -47,6 +47,8 @@ public sealed class Route
             if(s.BattlePlan!=null && (!s.HandleBattles || s.BattlePlan.Length>32 || s.BattlePlan.Any(r=>r==null || r.Command is <1 or >64 || r.MinHpPercent is <0 or >100 || r.MinMp is <0 or >999 || r.ReserveMp is <0 or >999 || r.MinEnemies is <0 or >8 || r.Item is <1 or >5000 || r.Ability is <1 or >2000)))
                 throw new ArgumentException("Battle plans need handleBattles and valid rules");
             if(s.Choice is <0 or >15)throw new ArgumentException("Invalid choice index");
+            if((s.MenuItem!=null || s.Equip!=null || s.Shop!=null) && s.Kind!="menu")throw new ArgumentException("Item/equip/shop need a menu step");
+            if(s.Shop!=null && (s.Shop.Buy.Any(b=>b==null || b.Content<1 || b.Count is <1 or >99) || s.Shop.Sell.Any(c=>c<1)))throw new ArgumentException("Invalid shop order");
             if(s.Facing!=null && s.Facing is not ("Up" or "Down" or "Left" or "Right"))throw new ArgumentException("Invalid facing direction");
             if(s.Until?.StoryFlag is <0 or >255)throw new ArgumentException("Invalid story flag");
             if(s.Until?.TreasureFlag is <0 or >4095)throw new ArgumentException("Invalid treasure flag");
@@ -56,6 +58,17 @@ public sealed class Route
     }
     public static readonly string[] KnownKeys={"Confirm","Back","Menu","Shortcut","Up","Down","Left","Right","SwitchLeft","SwitchRight","PageUp","PageDown","Start","Select"};
     public static readonly string[] KnownPhases={"None","Init","ChangeMap","FieldReady","Player","Transport","Menu","GpsMenu","ExpandMinimap","Message","Shop","ChangeName","Gimmick","Event","Battle","GotoTitle","MiniGame","FieldHelp","MenuLibraryUi","MenuLibraryInfo"};
+}
+public sealed class ShopOrder
+{
+    public ShopBuy[] Buy {get;set;}=Array.Empty<ShopBuy>();
+    // Content ids to sell every unequipped copy of (old gear).
+    public int[] Sell {get;set;}=Array.Empty<int>();
+}
+public sealed class ShopBuy
+{
+    public int Content {get;set;}
+    public int Count {get;set;}=1;
 }
 public sealed class Destination
 {
@@ -80,6 +93,9 @@ public sealed class Step
     // Optional hand/offline-planned cells walked in order before Goal, for maps
     // where the native search cannot plan (the overworld has no collision layer).
     public Destination[]? Waypoints {get;set;}
+    // Walk the waypoints and goal over and over until the step's condition
+    // holds (grinding random fights for gil).
+    public bool Loop {get;set;}
     public string? Facing {get;set;}
     // 0-based option to pick whenever a native choice window opens during this
     // step (e.g. the Mist Cave warning defaults to "No"; 0 is "Yes").
@@ -87,6 +103,14 @@ public sealed class Step
     // Item to pick (content id, e.g. Sand Ruby 64) when an event opens the
     // native item list (SelectFieldContentManager), e.g. curing Rosa.
     public int? ItemChoice {get;set;}
+    // "menu" step modes (default: Phoenix Down / Potion heal through the
+    // field menu). MenuItem: use this item once on the party (Tent 21).
+    public int? MenuItem {get;set;}
+    // Equip: character_status ids to give the native "Strongest" equipment.
+    public int[]? Equip {get;set;}
+    // Shop: talk to the shopkeeper the step faces, then sell, then buy in
+    // order (each buy only while affordable and owned+equipped < Count).
+    public ShopOrder? Shop {get;set;}
     public bool HandleBattles {get;set;}
     // Ordered per-character battle rules; the first usable one is taken, and
     // anything unusable falls back to Attack. Recovery items still come first.
@@ -157,6 +181,8 @@ public sealed class Condition
     public bool? Riding {get;set;}
     // A "menu" step finished its field-menu work and the field is back.
     public bool MenuDone {get;set;}
+    // Party gil at least this much (grind before the Fabul shops).
+    public int? GilAtLeast {get;set;}
     public bool Matches(Snapshot state)=>(Phase==null || state.Phase==Phase) && (MapId==null || state.MapId==MapId)
         && (Visual==null || state.VisualMatches.Contains(Visual))
         && (StoryFlag==null || state.StoryFlags.Contains(StoryFlag.Value))
@@ -164,7 +190,8 @@ public sealed class Condition
         && (Flag2==null || state.Flag2s.Contains(Flag2.Value))
         && (!AtDestination || state.AtDestination)
         && (Riding==null || state.Riding==Riding)
-        && (!MenuDone || state.MenuDone);
+        && (!MenuDone || state.MenuDone)
+        && (GilAtLeast==null || state.Gil>=GilAtLeast);
 }
 public sealed class Snapshot
 {
@@ -186,6 +213,7 @@ public sealed class Snapshot
     // Field-menu driver ("menu" steps): key to press, and whether it is done.
     public string? MenuInput {get;set;}
     public bool MenuDone {get;set;}
+    public int Gil {get;set;}
     // The plugin is healing between fights through the field menu (after a
     // battle on a walking step): MenuInput keys go out instead of the step's.
     public bool FieldHeal {get;set;}
@@ -288,7 +316,7 @@ public sealed class RouteEngine
         }
         // Popups block field movement without changing the game phase: confirm
         // them away before any step-specific input. Choice windows are handled below.
-        if(step.Kind=="menu" && state.Phase is "Player" or "Menu")
+        if(step.Kind=="menu" && state.Phase is "Player" or "Menu" or "Shop" or "Message")
         {
             if(state.MenuInput!=null)current.Add(state.MenuInput);
             return;

@@ -828,6 +828,13 @@
           "whileMonsterGrown": true
         },
         {
+          "character": 3,
+          "command": 2,
+          "bossOnly": true,
+          "whileMonster": 165,
+          "whileMonsterGrown": true
+        },
+        {
           "character": 8,
           "command": 1,
           "bossOnly": true,

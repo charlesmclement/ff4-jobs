@@ -42,4 +42,14 @@ the beach, overworld flag 22 + autosave.
 
 ## Not handled
 
-* Equipping the Deathbringer (no equip driver yet).
+* Shop and equip drivers are new and untested (cursor layout guesses: sell list grid, horizontal equip commands).
+
+## Guide additions (route now 36 steps)
+
+* Grind random fights in front of Fabul until 4100 gil, back to (218,44), Tent.
+* Gear shop (east room, map 50, counter at (5,6)): sell Kain's Iron set; buy
+  Demon Armor, Demon Helm, Demon Gloves, Fire Claw; Strongest on Cecil and
+  Yang; sell the Hades set; buy what's missing; equip again (three passes).
+* Item shop (west room, map 49, counter at (26,8)): 5 Phoenix Downs, 10
+  Potions, 2 Tents with what's left.
+* Morning: Strongest on Cecil (Deathbringer).
