@@ -771,7 +771,7 @@
       ]
     },
     {
-      "label": "Mount Hobs summit: Yang vs the bombs, then Mom Bomb",
+      "label": "Mount Hobs summit: Yang vs the bombs, then Mom Bomb (attack to 10000 HP, all Defend/Gird while it is big, then Darkness + Kick)",
       "kind": "mash",
       "keys": [
         "Confirm"
@@ -800,54 +800,45 @@
       "timeoutFrames": 72000,
       "battlePlan": [
         {
-          "character": 1,
-          "item": 38,
-          "targetEnemies": true,
-          "minEnemies": 2,
+          "character": 8,
+          "command": 27,
           "bossOnly": true,
-          "oncePerBattle": true
+          "whileMonster": 165,
+          "whileMonsterHpAtMost": 10000
+        },
+        {
+          "character": 1,
+          "command": 2,
+          "bossOnly": true,
+          "whileMonster": 165,
+          "whileMonsterHpAtMost": 10000
         },
         {
           "character": 4,
-          "command": 8,
-          "ability": 36,
-          "targetAll": true,
-          "minEnemies": 2,
-          "bossOnly": true
-        },
-        {
-          "character": 8,
-          "command": 1,
-          "oncePerBattle": true,
-          "bossOnly": true,
-          "whileMonster": 165
-        },
-        {
-          "character": 8,
-          "command": 1,
-          "oncePerBattle": true,
-          "bossOnly": true,
-          "whileMonster": 165
-        },
-        {
-          "character": 8,
-          "command": 25,
-          "oncePerBattle": true,
-          "bossOnly": true,
-          "whileMonster": 165
-        },
-        {
-          "character": 8,
-          "command": 25,
-          "oncePerBattle": true,
-          "bossOnly": true,
-          "whileMonster": 165
-        },
-        {
-          "character": 8,
           "command": 2,
           "bossOnly": true,
-          "whileMonster": 165
+          "whileMonster": 165,
+          "whileMonsterHpAtMost": 10000
+        },
+        {
+          "character": 7,
+          "command": 2,
+          "bossOnly": true,
+          "whileMonster": 165,
+          "whileMonsterHpAtMost": 10000
+        },
+        {
+          "character": 8,
+          "command": 1,
+          "bossOnly": true,
+          "whileMonster": 165,
+          "whileMonsterHpAbove": 10000
+        },
+        {
+          "character": 1,
+          "command": 10,
+          "minEnemies": 4,
+          "bossOnly": true
         },
         {
           "character": 8,

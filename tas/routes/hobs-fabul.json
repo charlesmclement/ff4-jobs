@@ -1,875 +1,875 @@
 {
- "schema": 1,
- "name": "Mount Hobs → Fabul (segment 5) — UNTESTED",
- "weaknesses": {
-  "7": [
-   1
-  ],
-  "10": [
-   2
-  ],
-  "14": [
-   2
-  ],
-  "15": [
-   3
-  ],
-  "16": [
-   1
-  ],
-  "17": [
-   3
-  ],
-  "18": [
-   1
-  ],
-  "19": [
-   2
-  ],
-  "20": [
-   1
-  ],
-  "21": [
-   3
-  ],
-  "22": [
-   3
-  ],
-  "26": [
-   2
-  ],
-  "27": [
-   2
-  ],
-  "29": [
-   1
-  ],
-  "33": [
-   3
-  ],
-  "34": [
-   1
-  ],
-  "36": [
-   1
-  ],
-  "42": [
-   3
-  ],
-  "43": [
-   2
-  ],
-  "44": [
-   3
-  ],
-  "48": [
-   1
-  ],
-  "49": [
-   1
-  ],
-  "50": [
-   1
-  ],
-  "51": [
-   1
-  ],
-  "52": [
-   1
-  ],
-  "54": [
-   1
-  ],
-  "56": [
-   2
-  ],
-  "57": [
-   3
-  ],
-  "58": [
-   3
-  ],
-  "62": [
-   2
-  ],
-  "68": [
-   1
-  ],
-  "70": [
-   1
-  ],
-  "72": [
-   1
-  ],
-  "74": [
-   3
-  ],
-  "82": [
-   1
-  ],
-  "83": [
-   2
-  ],
-  "89": [
-   2
-  ],
-  "91": [
-   2
-  ],
-  "93": [
-   2
-  ],
-  "94": [
-   1
-  ],
-  "96": [
-   2
-  ],
-  "102": [
-   1
-  ],
-  "103": [
-   2
-  ],
-  "104": [
-   2
-  ],
-  "113": [
-   1
-  ],
-  "115": [
-   1
-  ],
-  "118": [
-   1
-  ],
-  "120": [
-   1
-  ],
-  "121": [
-   1
-  ],
-  "126": [
-   1
-  ],
-  "130": [
-   2
-  ],
-  "148": [
-   2
-  ],
-  "150": [
-   1
-  ],
-  "160": [
-   2
-  ],
-  "163": [
-   3
-  ],
-  "167": [
-   1
-  ],
-  "181": [
-   1
-  ],
-  "189": [
-   3
-  ],
-  "190": [
-   3
-  ],
-  "194": [
-   1
-  ],
-  "195": [
-   3
-  ],
-  "209": [
-   1
-  ],
-  "210": [
-   3
-  ],
-  "212": [
-   1
-  ],
-  "227": [
-   2
-  ],
-  "229": [
-   1
-  ],
-  "231": [
-   2
-  ],
-  "236": [
-   2
-  ],
-  "246": [
-   2
-  ],
-  "251": [
-   2
-  ],
-  "252": [
-   2
-  ],
-  "274": [
-   1
+  "schema": 1,
+  "name": "Mount Hobs → Fabul (segment 5) — UNTESTED",
+  "weaknesses": {
+    "7": [
+      1
+    ],
+    "10": [
+      2
+    ],
+    "14": [
+      2
+    ],
+    "15": [
+      3
+    ],
+    "16": [
+      1
+    ],
+    "17": [
+      3
+    ],
+    "18": [
+      1
+    ],
+    "19": [
+      2
+    ],
+    "20": [
+      1
+    ],
+    "21": [
+      3
+    ],
+    "22": [
+      3
+    ],
+    "26": [
+      2
+    ],
+    "27": [
+      2
+    ],
+    "29": [
+      1
+    ],
+    "33": [
+      3
+    ],
+    "34": [
+      1
+    ],
+    "36": [
+      1
+    ],
+    "42": [
+      3
+    ],
+    "43": [
+      2
+    ],
+    "44": [
+      3
+    ],
+    "48": [
+      1
+    ],
+    "49": [
+      1
+    ],
+    "50": [
+      1
+    ],
+    "51": [
+      1
+    ],
+    "52": [
+      1
+    ],
+    "54": [
+      1
+    ],
+    "56": [
+      2
+    ],
+    "57": [
+      3
+    ],
+    "58": [
+      3
+    ],
+    "62": [
+      2
+    ],
+    "68": [
+      1
+    ],
+    "70": [
+      1
+    ],
+    "72": [
+      1
+    ],
+    "74": [
+      3
+    ],
+    "82": [
+      1
+    ],
+    "83": [
+      2
+    ],
+    "89": [
+      2
+    ],
+    "91": [
+      2
+    ],
+    "93": [
+      2
+    ],
+    "94": [
+      1
+    ],
+    "96": [
+      2
+    ],
+    "102": [
+      1
+    ],
+    "103": [
+      2
+    ],
+    "104": [
+      2
+    ],
+    "113": [
+      1
+    ],
+    "115": [
+      1
+    ],
+    "118": [
+      1
+    ],
+    "120": [
+      1
+    ],
+    "121": [
+      1
+    ],
+    "126": [
+      1
+    ],
+    "130": [
+      2
+    ],
+    "148": [
+      2
+    ],
+    "150": [
+      1
+    ],
+    "160": [
+      2
+    ],
+    "163": [
+      3
+    ],
+    "167": [
+      1
+    ],
+    "181": [
+      1
+    ],
+    "189": [
+      3
+    ],
+    "190": [
+      3
+    ],
+    "194": [
+      1
+    ],
+    "195": [
+      3
+    ],
+    "209": [
+      1
+    ],
+    "210": [
+      3
+    ],
+    "212": [
+      1
+    ],
+    "227": [
+      2
+    ],
+    "229": [
+      1
+    ],
+    "231": [
+      2
+    ],
+    "236": [
+      2
+    ],
+    "246": [
+      2
+    ],
+    "251": [
+      2
+    ],
+    "252": [
+      2
+    ],
+    "274": [
+      1
+    ]
+  },
+  "fleeTough": true,
+  "steps": [
+    {
+      "label": "Overworld: heal before the walk to Fabul (Phoenix Down, Potions)",
+      "kind": "menu",
+      "mapId": 1,
+      "phases": [
+        "Player",
+        "Menu",
+        "FieldReady",
+        "ChangeMap"
+      ],
+      "until": {
+        "menuDone": true
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 7200
+    },
+    {
+      "label": "Overworld: east from Mount Hobs to Fabul (step right first: (165,36) is the Hobs door)",
+      "kind": "navigate",
+      "mapId": 1,
+      "goal": {
+        "x": 219,
+        "y": 44,
+        "layer": 0
+      },
+      "waypoints": [
+        {
+          "x": 166,
+          "y": 37,
+          "layer": 0
+        },
+        {
+          "x": 166,
+          "y": 36,
+          "layer": 0
+        },
+        {
+          "x": 176,
+          "y": 36,
+          "layer": 0
+        },
+        {
+          "x": 176,
+          "y": 25,
+          "layer": 0
+        },
+        {
+          "x": 190,
+          "y": 25,
+          "layer": 0
+        },
+        {
+          "x": 190,
+          "y": 33,
+          "layer": 0
+        },
+        {
+          "x": 206,
+          "y": 33,
+          "layer": 0
+        },
+        {
+          "x": 206,
+          "y": 35,
+          "layer": 0
+        },
+        {
+          "x": 212,
+          "y": 35,
+          "layer": 0
+        },
+        {
+          "x": 212,
+          "y": 45,
+          "layer": 0
+        },
+        {
+          "x": 218,
+          "y": 45,
+          "layer": 0
+        },
+        {
+          "x": 218,
+          "y": 44,
+          "layer": 0
+        }
+      ],
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Player",
+        "mapId": 44
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 54000,
+      "battlePlan": [
+        {
+          "character": 8,
+          "command": 26,
+          "minEnemies": 2
+        }
+      ]
+    },
+    {
+      "label": "Fabul courtyard: into the castle",
+      "kind": "navigate",
+      "mapId": 44,
+      "goal": {
+        "x": 15,
+        "y": 15,
+        "layer": 0
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Player",
+        "mapId": 45
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 54000,
+      "battlePlan": [
+        {
+          "character": 8,
+          "command": 26,
+          "minEnemies": 2
+        }
+      ]
+    },
+    {
+      "label": "Fabul hall: north door",
+      "kind": "navigate",
+      "mapId": 45,
+      "goal": {
+        "x": 12,
+        "y": 5,
+        "layer": 0
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Player",
+        "mapId": 46
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 54000,
+      "battlePlan": [
+        {
+          "character": 8,
+          "command": 26,
+          "minEnemies": 2
+        }
+      ]
+    },
+    {
+      "label": "Fabul corridor: north stairs to the king's hall",
+      "kind": "navigate",
+      "mapId": 46,
+      "goal": {
+        "x": 5,
+        "y": 2,
+        "layer": 0
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Player",
+        "mapId": 47
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 54000,
+      "battlePlan": [
+        {
+          "character": 8,
+          "command": 26,
+          "minEnemies": 2
+        }
+      ]
+    },
+    {
+      "label": "King's hall: step up to the king (audience starts)",
+      "kind": "navigate",
+      "mapId": 47,
+      "goal": {
+        "x": 16,
+        "y": 13,
+        "layer": 0
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Event"
+      },
+      "stableFrames": 15,
+      "timeoutFrames": 54000,
+      "battlePlan": [
+        {
+          "character": 8,
+          "command": 26,
+          "minEnemies": 2
+        }
+      ]
+    },
+    {
+      "label": "Fabul: audience (first choice = help), gate and castle defense fights, Kain, Golbez takes Rosa",
+      "kind": "mash",
+      "keys": [
+        "Confirm"
+      ],
+      "phases": [
+        "None",
+        "Init",
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Player",
+        "storyFlag": 20
+      },
+      "stableFrames": 30,
+      "periodFrames": 8,
+      "pressedFrames": 1,
+      "timeoutFrames": 108000,
+      "battlePlan": [
+        {
+          "character": 8,
+          "command": 26,
+          "minEnemies": 2
+        }
+      ]
+    },
+    {
+      "label": "Crystal room: leave by the south door",
+      "kind": "navigate",
+      "mapId": 48,
+      "goal": {
+        "x": 14,
+        "y": 26,
+        "layer": 0
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Player",
+        "mapId": 47
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 54000,
+      "battlePlan": [
+        {
+          "character": 8,
+          "command": 26,
+          "minEnemies": 2
+        }
+      ]
+    },
+    {
+      "label": "King's hall: south door",
+      "kind": "navigate",
+      "mapId": 47,
+      "goal": {
+        "x": 16,
+        "y": 15,
+        "layer": 0
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Player",
+        "mapId": 46
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 54000,
+      "battlePlan": [
+        {
+          "character": 8,
+          "command": 26,
+          "minEnemies": 2
+        }
+      ]
+    },
+    {
+      "label": "Fabul corridor: south door to the hall",
+      "kind": "navigate",
+      "mapId": 46,
+      "goal": {
+        "x": 5,
+        "y": 10,
+        "layer": 0
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Player",
+        "mapId": 45
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 54000,
+      "battlePlan": [
+        {
+          "character": 8,
+          "command": 26,
+          "minEnemies": 2
+        }
+      ]
+    },
+    {
+      "label": "Fabul hall: west door to the guest room",
+      "kind": "navigate",
+      "mapId": 45,
+      "goal": {
+        "x": 6,
+        "y": 8,
+        "layer": 0
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Player",
+        "mapId": 49
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 54000,
+      "battlePlan": [
+        {
+          "character": 8,
+          "command": 26,
+          "minEnemies": 2
+        }
+      ]
+    },
+    {
+      "label": "Guest room: walk up to the monk (rest scene starts)",
+      "kind": "navigate",
+      "mapId": 49,
+      "goal": {
+        "x": 23,
+        "y": 8,
+        "layer": 0
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Event"
+      },
+      "stableFrames": 15,
+      "timeoutFrames": 54000,
+      "battlePlan": [
+        {
+          "character": 8,
+          "command": 26,
+          "minEnemies": 2
+        }
+      ]
+    },
+    {
+      "label": "Fabul: rest for the night (first choice = yes); the king gives the Deathbringer and the ship",
+      "kind": "mash",
+      "keys": [
+        "Confirm"
+      ],
+      "phases": [
+        "None",
+        "Init",
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Player",
+        "storyFlag": 21
+      },
+      "stableFrames": 30,
+      "periodFrames": 8,
+      "pressedFrames": 1,
+      "timeoutFrames": 108000,
+      "battlePlan": [
+        {
+          "character": 8,
+          "command": 26,
+          "minEnemies": 2
+        }
+      ]
+    },
+    {
+      "label": "King's chamber: stairs down",
+      "kind": "navigate",
+      "mapId": 56,
+      "goal": {
+        "x": 5,
+        "y": 7,
+        "layer": 0
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Player",
+        "mapId": 55
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 54000,
+      "battlePlan": [
+        {
+          "character": 8,
+          "command": 26,
+          "minEnemies": 2
+        }
+      ]
+    },
+    {
+      "label": "East tower: stairs down",
+      "kind": "navigate",
+      "mapId": 55,
+      "goal": {
+        "x": 5,
+        "y": 7,
+        "layer": 0
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Player",
+        "mapId": 54
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 54000,
+      "battlePlan": [
+        {
+          "character": 8,
+          "command": 26,
+          "minEnemies": 2
+        }
+      ]
+    },
+    {
+      "label": "East tower base: out to the courtyard",
+      "kind": "navigate",
+      "mapId": 54,
+      "goal": {
+        "x": 6,
+        "y": 11,
+        "layer": 0
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Player",
+        "mapId": 44
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 54000,
+      "battlePlan": [
+        {
+          "character": 8,
+          "command": 26,
+          "minEnemies": 2
+        }
+      ]
+    },
+    {
+      "label": "Fabul courtyard: leave by the south gate",
+      "kind": "navigate",
+      "mapId": 44,
+      "goal": {
+        "x": 15,
+        "y": 32,
+        "layer": 0
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Player",
+        "mapId": 1
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 54000,
+      "battlePlan": [
+        {
+          "character": 8,
+          "command": 26,
+          "minEnemies": 2
+        }
+      ]
+    },
+    {
+      "label": "Segment 5 complete: Fabul defended, ship promised, outside Fabul",
+      "kind": "checkpoint",
+      "phases": [
+        "Player"
+      ],
+      "until": {
+        "phase": "Player",
+        "mapId": 1,
+        "storyFlag": 21
+      }
+    }
   ]
- },
- "fleeTough": true,
- "steps": [
-  {
-   "label": "Overworld: heal before the walk to Fabul (Phoenix Down, Potions)",
-   "kind": "menu",
-   "mapId": 1,
-   "phases": [
-    "Player",
-    "Menu",
-    "FieldReady",
-    "ChangeMap"
-   ],
-   "until": {
-    "menuDone": true
-   },
-   "stableFrames": 2,
-   "timeoutFrames": 7200
-  },
-  {
-   "label": "Overworld: east from Mount Hobs to Fabul (step right first: (165,36) is the Hobs door)",
-   "kind": "navigate",
-   "mapId": 1,
-   "goal": {
-    "x": 219,
-    "y": 44,
-    "layer": 0
-   },
-   "waypoints": [
-    {
-     "x": 166,
-     "y": 37,
-     "layer": 0
-    },
-    {
-     "x": 166,
-     "y": 36,
-     "layer": 0
-    },
-    {
-     "x": 176,
-     "y": 36,
-     "layer": 0
-    },
-    {
-     "x": 176,
-     "y": 25,
-     "layer": 0
-    },
-    {
-     "x": 190,
-     "y": 25,
-     "layer": 0
-    },
-    {
-     "x": 190,
-     "y": 33,
-     "layer": 0
-    },
-    {
-     "x": 206,
-     "y": 33,
-     "layer": 0
-    },
-    {
-     "x": 206,
-     "y": 35,
-     "layer": 0
-    },
-    {
-     "x": 212,
-     "y": 35,
-     "layer": 0
-    },
-    {
-     "x": 212,
-     "y": 45,
-     "layer": 0
-    },
-    {
-     "x": 218,
-     "y": 45,
-     "layer": 0
-    },
-    {
-     "x": 218,
-     "y": 44,
-     "layer": 0
-    }
-   ],
-   "phases": [
-    "Player",
-    "Event",
-    "Message",
-    "ChangeMap",
-    "FieldReady",
-    "Battle",
-    "FieldHelp",
-    "Gimmick",
-    "Transport"
-   ],
-   "handleBattles": true,
-   "until": {
-    "phase": "Player",
-    "mapId": 44
-   },
-   "stableFrames": 2,
-   "timeoutFrames": 54000,
-   "battlePlan": [
-    {
-     "character": 8,
-     "command": 26,
-     "minEnemies": 2
-    }
-   ]
-  },
-  {
-   "label": "Fabul courtyard: into the castle",
-   "kind": "navigate",
-   "mapId": 44,
-   "goal": {
-    "x": 15,
-    "y": 15,
-    "layer": 0
-   },
-   "phases": [
-    "Player",
-    "Event",
-    "Message",
-    "ChangeMap",
-    "FieldReady",
-    "Battle",
-    "FieldHelp",
-    "Gimmick",
-    "Transport"
-   ],
-   "handleBattles": true,
-   "until": {
-    "phase": "Player",
-    "mapId": 45
-   },
-   "stableFrames": 2,
-   "timeoutFrames": 54000,
-   "battlePlan": [
-    {
-     "character": 8,
-     "command": 26,
-     "minEnemies": 2
-    }
-   ]
-  },
-  {
-   "label": "Fabul hall: north door",
-   "kind": "navigate",
-   "mapId": 45,
-   "goal": {
-    "x": 12,
-    "y": 5,
-    "layer": 0
-   },
-   "phases": [
-    "Player",
-    "Event",
-    "Message",
-    "ChangeMap",
-    "FieldReady",
-    "Battle",
-    "FieldHelp",
-    "Gimmick",
-    "Transport"
-   ],
-   "handleBattles": true,
-   "until": {
-    "phase": "Player",
-    "mapId": 46
-   },
-   "stableFrames": 2,
-   "timeoutFrames": 54000,
-   "battlePlan": [
-    {
-     "character": 8,
-     "command": 26,
-     "minEnemies": 2
-    }
-   ]
-  },
-  {
-   "label": "Fabul corridor: north stairs to the king's hall",
-   "kind": "navigate",
-   "mapId": 46,
-   "goal": {
-    "x": 5,
-    "y": 2,
-    "layer": 0
-   },
-   "phases": [
-    "Player",
-    "Event",
-    "Message",
-    "ChangeMap",
-    "FieldReady",
-    "Battle",
-    "FieldHelp",
-    "Gimmick",
-    "Transport"
-   ],
-   "handleBattles": true,
-   "until": {
-    "phase": "Player",
-    "mapId": 47
-   },
-   "stableFrames": 2,
-   "timeoutFrames": 54000,
-   "battlePlan": [
-    {
-     "character": 8,
-     "command": 26,
-     "minEnemies": 2
-    }
-   ]
-  },
-  {
-   "label": "King's hall: step up to the king (audience starts)",
-   "kind": "navigate",
-   "mapId": 47,
-   "goal": {
-    "x": 16,
-    "y": 13,
-    "layer": 0
-   },
-   "phases": [
-    "Player",
-    "Event",
-    "Message",
-    "ChangeMap",
-    "FieldReady",
-    "Battle",
-    "FieldHelp",
-    "Gimmick",
-    "Transport"
-   ],
-   "handleBattles": true,
-   "until": {
-    "phase": "Event"
-   },
-   "stableFrames": 15,
-   "timeoutFrames": 54000,
-   "battlePlan": [
-    {
-     "character": 8,
-     "command": 26,
-     "minEnemies": 2
-    }
-   ]
-  },
-  {
-   "label": "Fabul: audience (first choice = help), gate and castle defense fights, Kain, Golbez takes Rosa",
-   "kind": "mash",
-   "keys": [
-    "Confirm"
-   ],
-   "phases": [
-    "None",
-    "Init",
-    "Player",
-    "Event",
-    "Message",
-    "ChangeMap",
-    "FieldReady",
-    "Battle",
-    "FieldHelp",
-    "Gimmick",
-    "Transport"
-   ],
-   "handleBattles": true,
-   "until": {
-    "phase": "Player",
-    "storyFlag": 20
-   },
-   "stableFrames": 30,
-   "periodFrames": 8,
-   "pressedFrames": 1,
-   "timeoutFrames": 108000,
-   "battlePlan": [
-    {
-     "character": 8,
-     "command": 26,
-     "minEnemies": 2
-    }
-   ]
-  },
-  {
-   "label": "Crystal room: leave by the south door",
-   "kind": "navigate",
-   "mapId": 48,
-   "goal": {
-    "x": 14,
-    "y": 26,
-    "layer": 0
-   },
-   "phases": [
-    "Player",
-    "Event",
-    "Message",
-    "ChangeMap",
-    "FieldReady",
-    "Battle",
-    "FieldHelp",
-    "Gimmick",
-    "Transport"
-   ],
-   "handleBattles": true,
-   "until": {
-    "phase": "Player",
-    "mapId": 47
-   },
-   "stableFrames": 2,
-   "timeoutFrames": 54000,
-   "battlePlan": [
-    {
-     "character": 8,
-     "command": 26,
-     "minEnemies": 2
-    }
-   ]
-  },
-  {
-   "label": "King's hall: south door",
-   "kind": "navigate",
-   "mapId": 47,
-   "goal": {
-    "x": 16,
-    "y": 15,
-    "layer": 0
-   },
-   "phases": [
-    "Player",
-    "Event",
-    "Message",
-    "ChangeMap",
-    "FieldReady",
-    "Battle",
-    "FieldHelp",
-    "Gimmick",
-    "Transport"
-   ],
-   "handleBattles": true,
-   "until": {
-    "phase": "Player",
-    "mapId": 46
-   },
-   "stableFrames": 2,
-   "timeoutFrames": 54000,
-   "battlePlan": [
-    {
-     "character": 8,
-     "command": 26,
-     "minEnemies": 2
-    }
-   ]
-  },
-  {
-   "label": "Fabul corridor: south door to the hall",
-   "kind": "navigate",
-   "mapId": 46,
-   "goal": {
-    "x": 5,
-    "y": 10,
-    "layer": 0
-   },
-   "phases": [
-    "Player",
-    "Event",
-    "Message",
-    "ChangeMap",
-    "FieldReady",
-    "Battle",
-    "FieldHelp",
-    "Gimmick",
-    "Transport"
-   ],
-   "handleBattles": true,
-   "until": {
-    "phase": "Player",
-    "mapId": 45
-   },
-   "stableFrames": 2,
-   "timeoutFrames": 54000,
-   "battlePlan": [
-    {
-     "character": 8,
-     "command": 26,
-     "minEnemies": 2
-    }
-   ]
-  },
-  {
-   "label": "Fabul hall: west door to the guest room",
-   "kind": "navigate",
-   "mapId": 45,
-   "goal": {
-    "x": 6,
-    "y": 8,
-    "layer": 0
-   },
-   "phases": [
-    "Player",
-    "Event",
-    "Message",
-    "ChangeMap",
-    "FieldReady",
-    "Battle",
-    "FieldHelp",
-    "Gimmick",
-    "Transport"
-   ],
-   "handleBattles": true,
-   "until": {
-    "phase": "Player",
-    "mapId": 49
-   },
-   "stableFrames": 2,
-   "timeoutFrames": 54000,
-   "battlePlan": [
-    {
-     "character": 8,
-     "command": 26,
-     "minEnemies": 2
-    }
-   ]
-  },
-  {
-   "label": "Guest room: walk up to the monk (rest scene starts)",
-   "kind": "navigate",
-   "mapId": 49,
-   "goal": {
-    "x": 23,
-    "y": 8,
-    "layer": 0
-   },
-   "phases": [
-    "Player",
-    "Event",
-    "Message",
-    "ChangeMap",
-    "FieldReady",
-    "Battle",
-    "FieldHelp",
-    "Gimmick",
-    "Transport"
-   ],
-   "handleBattles": true,
-   "until": {
-    "phase": "Event"
-   },
-   "stableFrames": 15,
-   "timeoutFrames": 54000,
-   "battlePlan": [
-    {
-     "character": 8,
-     "command": 26,
-     "minEnemies": 2
-    }
-   ]
-  },
-  {
-   "label": "Fabul: rest for the night (first choice = yes); the king gives the Deathbringer and the ship",
-   "kind": "mash",
-   "keys": [
-    "Confirm"
-   ],
-   "phases": [
-    "None",
-    "Init",
-    "Player",
-    "Event",
-    "Message",
-    "ChangeMap",
-    "FieldReady",
-    "Battle",
-    "FieldHelp",
-    "Gimmick",
-    "Transport"
-   ],
-   "handleBattles": true,
-   "until": {
-    "phase": "Player",
-    "storyFlag": 21
-   },
-   "stableFrames": 30,
-   "periodFrames": 8,
-   "pressedFrames": 1,
-   "timeoutFrames": 108000,
-   "battlePlan": [
-    {
-     "character": 8,
-     "command": 26,
-     "minEnemies": 2
-    }
-   ]
-  },
-  {
-   "label": "King's chamber: stairs down",
-   "kind": "navigate",
-   "mapId": 56,
-   "goal": {
-    "x": 5,
-    "y": 7,
-    "layer": 0
-   },
-   "phases": [
-    "Player",
-    "Event",
-    "Message",
-    "ChangeMap",
-    "FieldReady",
-    "Battle",
-    "FieldHelp",
-    "Gimmick",
-    "Transport"
-   ],
-   "handleBattles": true,
-   "until": {
-    "phase": "Player",
-    "mapId": 55
-   },
-   "stableFrames": 2,
-   "timeoutFrames": 54000,
-   "battlePlan": [
-    {
-     "character": 8,
-     "command": 26,
-     "minEnemies": 2
-    }
-   ]
-  },
-  {
-   "label": "East tower: stairs down",
-   "kind": "navigate",
-   "mapId": 55,
-   "goal": {
-    "x": 5,
-    "y": 7,
-    "layer": 0
-   },
-   "phases": [
-    "Player",
-    "Event",
-    "Message",
-    "ChangeMap",
-    "FieldReady",
-    "Battle",
-    "FieldHelp",
-    "Gimmick",
-    "Transport"
-   ],
-   "handleBattles": true,
-   "until": {
-    "phase": "Player",
-    "mapId": 54
-   },
-   "stableFrames": 2,
-   "timeoutFrames": 54000,
-   "battlePlan": [
-    {
-     "character": 8,
-     "command": 26,
-     "minEnemies": 2
-    }
-   ]
-  },
-  {
-   "label": "East tower base: out to the courtyard",
-   "kind": "navigate",
-   "mapId": 54,
-   "goal": {
-    "x": 6,
-    "y": 11,
-    "layer": 0
-   },
-   "phases": [
-    "Player",
-    "Event",
-    "Message",
-    "ChangeMap",
-    "FieldReady",
-    "Battle",
-    "FieldHelp",
-    "Gimmick",
-    "Transport"
-   ],
-   "handleBattles": true,
-   "until": {
-    "phase": "Player",
-    "mapId": 44
-   },
-   "stableFrames": 2,
-   "timeoutFrames": 54000,
-   "battlePlan": [
-    {
-     "character": 8,
-     "command": 26,
-     "minEnemies": 2
-    }
-   ]
-  },
-  {
-   "label": "Fabul courtyard: leave by the south gate",
-   "kind": "navigate",
-   "mapId": 44,
-   "goal": {
-    "x": 15,
-    "y": 32,
-    "layer": 0
-   },
-   "phases": [
-    "Player",
-    "Event",
-    "Message",
-    "ChangeMap",
-    "FieldReady",
-    "Battle",
-    "FieldHelp",
-    "Gimmick",
-    "Transport"
-   ],
-   "handleBattles": true,
-   "until": {
-    "phase": "Player",
-    "mapId": 1
-   },
-   "stableFrames": 2,
-   "timeoutFrames": 54000,
-   "battlePlan": [
-    {
-     "character": 8,
-     "command": 26,
-     "minEnemies": 2
-    }
-   ]
-  },
-  {
-   "label": "Segment 5 complete: Fabul defended, ship promised, outside Fabul",
-   "kind": "checkpoint",
-   "phases": [
-    "Player"
-   ],
-   "until": {
-    "phase": "Player",
-    "mapId": 1,
-    "storyFlag": 21
-   }
-  }
- ]
 }

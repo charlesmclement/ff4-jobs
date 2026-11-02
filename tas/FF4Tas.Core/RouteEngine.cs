@@ -111,6 +111,10 @@ public sealed class BattleRule
     public int MinEnemies {get;set;}
     // Only while this monster id is alive (Mom Bomb 165: before it explodes).
     public int? WhileMonster {get;set;}
+    // ...and only while that monster's HP is at most / above this (Mom Bomb
+    // grows at 10000 HP and explodes two actions later: everyone Defends).
+    public int? WhileMonsterHpAtMost {get;set;}
+    public int? WhileMonsterHpAbove {get;set;}
     // Target the whole enemy side (one Thunder on all instead of three singles).
     public bool TargetAll {get;set;}
     // Pick Fire/Blizzard/Thunder by the living enemies' shared weakness

@@ -81,13 +81,13 @@ internal sealed class BattlePilot
         // Scripted losses (Titan at Mist) wipe the party and the story goes on;
         // a real game over leaves the battle for GotoTitle, which no step allows.
         if(players.Length>0 && alive==0) {state.Detail="Party down; waiting for the game";return;}
-        var enemyText=new System.Text.StringBuilder();bool mist=false,hasEnemy=false;scripted=false;fleeTarget=false;undead=null;weakest=null;undeadCount=livingEnemies=0;tough=boss=false;Array.Clear(elementCounts);livingIds.Clear();
+        var enemyText=new System.Text.StringBuilder();bool mist=false,hasEnemy=false;scripted=false;fleeTarget=false;undead=null;weakest=null;undeadCount=livingEnemies=0;tough=boss=false;Array.Clear(elementCounts);livingIds.Clear();livingHp.Clear();
         for(int i=0;i<enemies.Length;i++)
         {
             var e=enemies[i];var p=e?.BattleUnitDataInfo?.Parameter;
             if(e==null || p==null || p.CurrentHP<=0 || e.IsRemove)continue;
             hasEnemy=true;livingEnemies++;
-            if(e.MonsterMaster!=null)livingIds.Add(e.MonsterMaster.Id);
+            if(e.MonsterMaster!=null) {livingIds.Add(e.MonsterMaster.Id);livingHp[e.MonsterMaster.Id]=p.CurrentHP;}
             var master=e.MonsterMaster;
             if(master!=null)
             {
@@ -280,7 +280,7 @@ internal sealed class BattlePilot
     private static bool IsCecil(BattlePlayerData p)=>p.GetOwnedCharacterData()?.characterStatusId is 1 or 13;
     private bool rosaParty,rosaCanCure,bossSeen;
     private IntPtr turnActor;private int turnRule=-1;private bool itemOnEnemies;
-    private readonly HashSet<int> livingIds=new();private BattlePlayerData? rosaTarget,rosaLow;
+    private readonly HashSet<int> livingIds=new();private readonly Dictionary<int,int> livingHp=new();private BattlePlayerData? rosaTarget,rosaLow;
     private const float RosaHealBelow=.75f;
     private const int Summon=9,ChocoboSummon=65,ChocoboMp=7,RydiaBossReserve=14,Edward=7;
     // Heal order with Rosa in the party: Rosa, Cecil and Yang (rank 0, the
@@ -352,8 +352,9 @@ internal sealed class BattlePilot
         if(undead!=null && canCure && (!isTellah || stats!.CurrentMP>=CureMp+Reserve(plan,Tellah)))
         {pendingCommand=WhiteMagic;pendingAbility=CureAbility;castOnUndead=true;Log(actor,$"Cure{(undeadCount>1?" on all":"")} vs undead");return;}
         if(me==Rosa && rosaParty) {pendingCommand=Defend;Log(actor,"Defend (nobody to heal)");return;}
-        // Edward just attacks (user: "edward can just attack and die").
-        if(me==Edward) {Log(actor,"Attack weakest enemy");return;}
+        // Edward just attacks (user: "edward can just attack and die"),
+        // unless a plan rule names him (all Defend while the Mom Bomb is big).
+        if(me==Edward && (plan==null || !Array.Exists(plan,r=>r.Character==Edward))) {Log(actor,"Attack weakest enemy");return;}
         ChoosePlan(info,actor,plan);
         if(pendingItem!=0)return;
         // Rydia with no plan rule: Chocobo summon. Ordinary fights keep 14 MP
@@ -395,9 +396,12 @@ internal sealed class BattlePilot
             if(stats!=null && rule.MinMp>0 && stats.CurrentMP<rule.MinMp)continue;
             if(rule.MinEnemies>0 && livingEnemies<rule.MinEnemies && !(rule.OrTough && tough))continue;
             if(rule.WhileMonster is int whileId && !livingIds.Contains(whileId))continue;
+            if(rule.WhileMonster is int hpId && livingHp.TryGetValue(hpId,out int monsterHp) &&
+               (monsterHp>rule.WhileMonsterHpAtMost || monsterHp<=rule.WhileMonsterHpAbove))continue;
             // Darkness is an HP-costing wave that can kill Cecil (user rule).
-            // Only on large groups (4+), and only while Cecil is healthy.
-            if(rule.Command==DarknessCommand && (livingEnemies<4 || (stats!=null && stats.CurrentHP*10<8*Math.Max(1,stats.ConfirmedMaxHp()))))continue;
+            // Only on large groups (4+), and only while Cecil is above half HP
+            // (the Mom Bomb's split bombs: user wants it there).
+            if(rule.Command==DarknessCommand && (livingEnemies<4 || (stats!=null && stats.CurrentHP*2<Math.Max(1,stats.ConfirmedMaxHp()))))continue;
             if(rule.Item is int item)
             {
                 if(!HasItem(item))continue;
