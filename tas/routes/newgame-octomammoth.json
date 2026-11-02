@@ -966,12 +966,6 @@
       "battlePlan": [
         {
           "character": 6,
-          "command": 8,
-          "ability": 39,
-          "minMp": 5
-        },
-        {
-          "character": 6,
           "command": 2
         }
       ]
@@ -1005,12 +999,6 @@
       "battlePlan": [
         {
           "character": 6,
-          "command": 8,
-          "ability": 39,
-          "minMp": 5
-        },
-        {
-          "character": 6,
           "command": 2
         }
       ]
@@ -1041,12 +1029,6 @@
       "stableFrames": 1,
       "timeoutFrames": 36000,
       "battlePlan": [
-        {
-          "character": 6,
-          "command": 8,
-          "ability": 39,
-          "minMp": 5
-        },
         {
           "character": 6,
           "command": 2
@@ -1083,12 +1065,6 @@
       "battlePlan": [
         {
           "character": 6,
-          "command": 8,
-          "ability": 39,
-          "minMp": 5
-        },
-        {
-          "character": 6,
           "command": 2
         }
       ]
@@ -1122,13 +1098,8 @@
       "battlePlan": [
         {
           "character": 6,
-          "command": 8,
-          "ability": 39,
-          "minMp": 45
-        },
-        {
-          "character": 6,
-          "command": 2
+          "command": 2,
+          "reserveMp": 40
         }
       ]
     },
@@ -1161,13 +1132,8 @@
       "battlePlan": [
         {
           "character": 6,
-          "command": 8,
-          "ability": 39,
-          "minMp": 45
-        },
-        {
-          "character": 6,
-          "command": 2
+          "command": 2,
+          "reserveMp": 40
         }
       ]
     },
@@ -1200,13 +1166,8 @@
       "battlePlan": [
         {
           "character": 6,
-          "command": 8,
-          "ability": 39,
-          "minMp": 45
-        },
-        {
-          "character": 6,
-          "command": 2
+          "command": 2,
+          "reserveMp": 40
         }
       ]
     },
@@ -1239,13 +1200,8 @@
       "battlePlan": [
         {
           "character": 6,
-          "command": 8,
-          "ability": 39,
-          "minMp": 45
-        },
-        {
-          "character": 6,
-          "command": 2
+          "command": 2,
+          "reserveMp": 40
         }
       ]
     },
@@ -1278,13 +1234,8 @@
       "battlePlan": [
         {
           "character": 6,
-          "command": 8,
-          "ability": 39,
-          "minMp": 45
-        },
-        {
-          "character": 6,
-          "command": 2
+          "command": 2,
+          "reserveMp": 40
         }
       ]
     },
@@ -1334,13 +1285,8 @@
       "battlePlan": [
         {
           "character": 6,
-          "command": 8,
-          "ability": 39,
-          "minMp": 45
-        },
-        {
-          "character": 6,
-          "command": 2
+          "command": 2,
+          "reserveMp": 40
         }
       ]
     },
@@ -1372,13 +1318,8 @@
       "battlePlan": [
         {
           "character": 6,
-          "command": 8,
-          "ability": 39,
-          "minMp": 45
-        },
-        {
-          "character": 6,
-          "command": 2
+          "command": 2,
+          "reserveMp": 40
         }
       ]
     },
@@ -1413,13 +1354,8 @@
       "battlePlan": [
         {
           "character": 6,
-          "command": 8,
-          "ability": 39,
-          "minMp": 45
-        },
-        {
-          "character": 6,
-          "command": 2
+          "command": 2,
+          "reserveMp": 40
         }
       ]
     },
@@ -1452,13 +1388,8 @@
       "battlePlan": [
         {
           "character": 6,
-          "command": 8,
-          "ability": 39,
-          "minMp": 45
-        },
-        {
-          "character": 6,
-          "command": 2
+          "command": 2,
+          "reserveMp": 40
         }
       ]
     },
@@ -1490,13 +1421,8 @@
       "battlePlan": [
         {
           "character": 6,
-          "command": 8,
-          "ability": 39,
-          "minMp": 45
-        },
-        {
-          "character": 6,
-          "command": 2
+          "command": 2,
+          "reserveMp": 40
         }
       ]
     },

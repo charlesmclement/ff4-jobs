@@ -31,7 +31,7 @@ public sealed class Route
                 throw new ArgumentException("Navigation needs a map and valid destination");
             if(s.Waypoints!=null && (s.Kind!="navigate" || s.Waypoints.Length>256 || s.Waypoints.Any(w=>w==null || w.X is <0 or >1024 || w.Y is <0 or >1024 || w.Layer is <0 or >15)))
                 throw new ArgumentException("Waypoints need a navigate step and valid cells");
-            if(s.BattlePlan!=null && (!s.HandleBattles || s.BattlePlan.Length>32 || s.BattlePlan.Any(r=>r==null || r.Command is <1 or >64 || r.MinHpPercent is <0 or >100 || r.MinMp is <0 or >999 || r.Ability is <1 or >2000)))
+            if(s.BattlePlan!=null && (!s.HandleBattles || s.BattlePlan.Length>32 || s.BattlePlan.Any(r=>r==null || r.Command is <1 or >64 || r.MinHpPercent is <0 or >100 || r.MinMp is <0 or >999 || r.ReserveMp is <0 or >999 || r.Ability is <1 or >2000)))
                 throw new ArgumentException("Battle plans need handleBattles and valid rules");
             if(s.Choice is <0 or >15)throw new ArgumentException("Invalid choice index");
             if(s.Facing!=null && s.Facing is not ("Up" or "Down" or "Left" or "Right"))throw new ArgumentException("Invalid facing direction");
@@ -87,6 +87,9 @@ public sealed class BattleRule
     public int MinHpPercent {get;set;}
     // Only while the actor has at least this much MP (e.g. Thunder costs 5).
     public int MinMp {get;set;}
+    // MP this character never spends outside the rule list (e.g. on Cure vs
+    // undead), so it is still there for the boss.
+    public int ReserveMp {get;set;}
 }
 public sealed class Condition
 {

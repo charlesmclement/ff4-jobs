@@ -49,7 +49,7 @@ internal sealed class BattlePilot
         // Scripted losses (Titan at Mist) wipe the party and the story goes on;
         // a real game over leaves the battle for GotoTitle, which no step allows.
         if(players.Length>0 && alive==0) {state.Detail="Party down; waiting for the game";return;}
-        bool mist=false,hasEnemy=false;scripted=false;undead=null;weakest=null;
+        bool mist=false,hasEnemy=false;scripted=false;undead=null;weakest=null;undeadCount=0;
         for(int i=0;i<enemies.Length;i++)
         {
             var e=enemies[i];var p=e?.BattleUnitDataInfo?.Parameter;
@@ -59,7 +59,11 @@ internal sealed class BattlePilot
             // 60000 HP): never spend items or MP on them.
             if(e.MonsterMaster?.Id==207 || p.ConfirmedMaxHp()>=30000)scripted=true;
             if(weakest==null || p.CurrentHP<weakest.BattleUnitDataInfo.Parameter.CurrentHP)weakest=e;
-            if(e.MonsterMaster?.Species==UndeadSpecies && (undead==null || p.CurrentHP<undead.BattleUnitDataInfo.Parameter.CurrentHP))undead=e;
+            if(e.MonsterMaster?.Species==UndeadSpecies)
+            {
+                undeadCount++;
+                if(undead==null || p.CurrentHP<undead.BattleUnitDataInfo.Parameter.CurrentHP)undead=e;
+            }
             if(e.MonsterMaster?.Id==162)
             {
                 var ep=p.TryCast<EnemyCharacterParameter>();
@@ -98,7 +102,7 @@ internal sealed class BattlePilot
                 SelectAbility(info,state,frame);break;
             case 5:
                 if(pendingTarget!=0)SelectHealingTarget(info,state,frame);
-                else SelectEnemy(info,state,frame,"Cast on selected enemy",castOnUndead?undead:weakest);
+                else SelectEnemy(info,state,frame,"Cast on selected enemy",castOnUndead?undead:weakest,castOnUndead && undeadCount>1);
                 break;
             case 2:
                 if(pendingItem==0) {Pulse(state,frame,"Back","Cancel unexpected item list");break;}
@@ -113,11 +117,20 @@ internal sealed class BattlePilot
         }
     }
     private int targetPresses;
-    private void SelectEnemy(BattleInfomationController info,Snapshot state,int frame,string action,BattleEnemyData? wanted)
+    private void SelectEnemy(BattleInfomationController info,Snapshot state,int frame,string action,BattleEnemyData? wanted,bool all=false)
     {
         var t=info.targetSelectController;
         if(t?.stateMachine==null)return;
-        if((int)t.stateMachine.Current!=3) {Pulse(state,frame,"Left","Select enemy side");return;}
+        int side=(int)t.stateMachine.Current;
+        // EnemyAll (4): PageDown/PageUp toggles it from single-enemy targeting
+        // (Last.UI.KeyInput.BattleTargetSelectController.EnemysUpdate).
+        if(all && side==EnemyAllState) {targetPresses=0;Pulse(state,frame,"Confirm","Cast on all enemies");return;}
+        if(all && side==EnemySingleState && targetPresses<6)
+        {
+            if(frame%12==0)targetPresses++;
+            Pulse(state,frame,targetPresses<=3?"PageDown":"PageUp","Target all enemies");return;
+        }
+        if(side!=EnemySingleState) {Pulse(state,frame,"Left","Select enemy side");return;}
         var selected=t.GetEnemyTarget();
         // Whole-side targeting (e.g. Darkness) selects every living enemy.
         bool living=selected!=null && selected.Count>0;
@@ -130,6 +143,8 @@ internal sealed class BattlePilot
         Pulse(state,frame,"Down",living?"Find weakest enemy":"Select living enemy");
     }
     private const float HealBelow=.5f;
+    private const int EnemySingleState=3,EnemyAllState=4;
+    private int undeadCount;
     private const int Defend=2,UndeadSpecies=4,WhiteMagic=7,CureAbility=6,CureMp=3,Tellah=6;
     private bool scripted,castOnUndead;
     private BattleEnemyData? undead,weakest;
@@ -153,10 +168,20 @@ internal sealed class BattlePilot
             if(canCure && (!isTellah || !HasItem(2))) {pendingCommand=WhiteMagic;pendingAbility=CureAbility;pendingTarget=target;return;}
             if(HasItem(2)) {pendingItem=2;pendingTarget=target;return;}
         }
-        if(undead!=null && canCure && !isTellah) {pendingCommand=WhiteMagic;pendingAbility=CureAbility;castOnUndead=true;return;}
+        // Cure hurts undead: cast it (on all of them when there are several).
+        // Tellah joins in while he stays above the MP his route plan reserves.
+        if(undead!=null && canCure && (!isTellah || stats!.CurrentMP>=CureMp+Reserve(plan,Tellah)))
+        {pendingCommand=WhiteMagic;pendingAbility=CureAbility;castOnUndead=true;return;}
         ChoosePlan(info,actor,plan);
     }
     private readonly HashSet<IntPtr> blockedCure=new();
+    // MP a character's plan keeps back for the boss (BattleRule.ReserveMp).
+    private static int Reserve(BattleRule[]? plan,int character)
+    {
+        int reserve=0;
+        if(plan!=null)foreach(var r in plan)if(r.Character==character)reserve=Math.Max(reserve,r.ReserveMp);
+        return reserve;
+    }
     // First plan rule for this actor whose command is visible and enabled and
     // whose HP condition holds. Ability availability is checked in the list.
     private void ChoosePlan(BattleInfomationController info,BattlePlayerData actor,BattleRule[]? plan)

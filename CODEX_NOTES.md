@@ -104,6 +104,13 @@ analysis. See also `CLAUDE_HANDOFF.txt` and `docs/TAS-SEGMENT-2.md`.
     with `tas.py start <route> --from-step 0` (auto step), which is safe
     because a run waits, paused, until the game has focus.
 
+15. **MP policy (user: "waste of mana").** Thunder is only for Octomammoth.
+    Random encounters: Tellah Defends. When undead are present, any caster
+    uses White Magic Cure on all enemies (PageDown/PageUp toggles EnemyAll,
+    target state 4, in `EnemysUpdate`), or on the single undead. New
+    `BattleRule.ReserveMp` is MP the character never spends outside its rules
+    (Tellah keeps 40 after the camp, 0 before it since the camp refills).
+
 ## Stuck detection (all segments, always on)
 
 The user's standing requirement: every movement must be confirmed. It lives
