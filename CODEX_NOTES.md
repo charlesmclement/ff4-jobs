@@ -348,6 +348,16 @@ whatever build it launched with, so always say which build is live.
     Cecil's ratio, so Rosa cured Cecil (under half) while she was in the red,
     and she died. Now the lowest HP% wins and Cecil gets only a 5% tie edge.
     Still open: Cure-all when 2+ are low; Rosa herself is a heal target.
+40. **Party roles once Rosa joins (user rules).** Heal order Rosa, Cecil,
+    Yang; Rydia and Edward are never healed or revived ("let rydia die",
+    "edward can just attack and die"). Rosa always heals: Cure her priority
+    allies under 75%, else Defend. Rydia: Summon (command 9) Chocobo (65),
+    keeping 14 MP outside boss fights. Edward: Attack only (no Sing).
+    **Darkness: ignore every Darkness reference in the community strat
+    text.** In PR it is an HP-costing wave that kills Cecil. Removed from all
+    plans; the pilot only allows a plan Darkness on 4+ living enemies with
+    Cecil above 80% HP. Without Rosa (segments 1-3) healing is unchanged:
+    lowest % first.
 
 ## Stuck detection (all segments, always on)
 

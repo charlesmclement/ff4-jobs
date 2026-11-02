@@ -42,15 +42,18 @@ internal sealed class BattlePilot
         if(plug.IsWinResult()) {Pulse(state,frame,"Confirm","Advance victory rewards");return;}
         var players=plug.GetPlayerUnits();var enemies=plug.GetEnemyUnits();
         if(players==null || enemies==null)return;
-        // Heal anyone under half HP, lowest percentage first (healers included:
-        // Rosa healed Cecil while she was in the red and died). Cecil wins only
-        // near-ties (within 5%).
+        // Heal anyone under half HP. Once Rosa is in the party the user's order
+        // is Rosa, Cecil, Yang; Rydia and Edward are never healed or revived.
+        // Without Rosa: lowest percentage first, Cecil wins near-ties.
         BattlePlayerData? injured=null,dead=null;int alive=0,totalHp=0;float injuredRatio=2;casterCanCure=false;injuredRatioNow=1;toad=mini=null;
+        rosaParty=false;rosaTarget=null;float rosaKey=99;
+        for(int i=0;i<players.Length;i++)if(players[i]?.GetOwnedCharacterData()?.characterStatusId==Rosa)rosaParty=true;
         for(int i=0;i<players.Length;i++)
         {
             var p=players[i];var stats=p?.BattleUnitDataInfo?.Parameter;if(stats==null)continue;
             int hp=stats.CurrentHP;totalHp+=hp;
-            if(hp<=0) {dead??=p;continue;}
+            int rank=HealRank(p!);
+            if(hp<=0) {if(rank>=0 && (dead==null || rank<HealRank(dead)))dead=p;continue;}
             alive++;
             float ratio=hp/(float)Math.Max(1,stats.ConfirmedMaxHp());
             int who=p!.GetOwnedCharacterData()?.characterStatusId??0;
@@ -63,9 +66,12 @@ internal sealed class BattlePilot
                 if(cid is MiniCondition or MiniCondition2 && mini==null)mini=p;
             }
             if(who is Rydia or Tellah or Rosa && stats.CurrentMP>=CureMp)casterCanCure=true;
+            if(rank<0)continue;
+            // Rosa tops up her priority allies earlier (under 75%).
+            if(rosaParty && ratio<RosaHealBelow && rank+ratio<rosaKey) {rosaTarget=p;rosaKey=rank+ratio;}
             if(ratio>=HealBelow)continue;
-            if(IsCecil(p!))ratio-=.05f;
-            if(ratio<injuredRatio) {injured=p;injuredRatio=ratio;injuredRatioNow=hp/(float)Math.Max(1,stats.ConfirmedMaxHp());}
+            float key=rosaParty?rank+ratio:ratio-(IsCecil(p!)?.05f:0);
+            if(key<injuredRatio) {injured=p;injuredRatio=key;injuredRatioNow=ratio;}
         }
         // Scripted losses (Titan at Mist) wipe the party and the story goes on;
         // a real game over leaves the battle for GotoTitle, which no step allows.
@@ -261,6 +267,17 @@ internal sealed class BattlePilot
     }
     private static readonly Dictionary<int,string> Names=new(){[1]="Cecil",[13]="Cecil",[2]="Kain",[4]="Rydia",[6]="Tellah",[3]="Rosa",[7]="Edward",[8]="Yang"};
     private static bool IsCecil(BattlePlayerData p)=>p.GetOwnedCharacterData()?.characterStatusId is 1 or 13;
+    private bool rosaParty;private BattlePlayerData? rosaTarget;
+    private const float RosaHealBelow=.75f;
+    private const int Summon=9,ChocoboSummon=65,ChocoboMp=7,RydiaBossReserve=14,Edward=7;
+    // Heal order with Rosa in the party: Rosa 0, Cecil 1, Yang 2, others 3;
+    // Rydia and Edward -1 (never healed). Without Rosa everyone is 0.
+    private int HealRank(BattlePlayerData p)
+    {
+        if(!rosaParty)return 0;
+        int who=p.GetOwnedCharacterData()?.characterStatusId??0;
+        return who switch{Rosa=>0,1 or 13=>1,8=>2,Rydia or Edward=>-1,_=>3};
+    }
     // One decision per turn. Order: scripted fights just attack; revive;
     // heal (Cure first for everyone, Potion only if nobody can cast); Cure on
     // undead; route plan; Attack the weakest enemy. Tellah keeps the MP
@@ -291,6 +308,9 @@ internal sealed class BattlePilot
             if(mini!=null && stats.CurrentMP>=Db.SpellMp(MiniSpell,6) && CommandEnabled(info,WhiteMagic))
             {pendingCommand=WhiteMagic;pendingAbility=MiniSpell;pendingTarget=mini.GetOwnedCharacterData().characterStatusId;Log(actor,"Mini on #"+pendingTarget+" (undo mini)");return;}
         }
+        // Rosa always heals: her priority allies under 75%, else she Defends.
+        if(me==Rosa && rosaTarget!=null && canCure)
+        {pendingCommand=WhiteMagic;pendingAbility=CureAbility;pendingTarget=rosaTarget.GetOwnedCharacterData().characterStatusId;Log(actor,"Cure #"+pendingTarget+" (Rosa heals)");return;}
         if(dead!=null && HasItem(9)) {pendingItem=9;pendingTarget=dead.GetOwnedCharacterData().characterStatusId;Log(actor,"Phoenix Down on #"+pendingTarget);return;}
         if(injured!=null)
         {
@@ -309,6 +329,12 @@ internal sealed class BattlePilot
         // Tellah joins in while he stays above the MP his route plan reserves.
         if(undead!=null && canCure && (!isTellah || stats!.CurrentMP>=CureMp+Reserve(plan,Tellah)))
         {pendingCommand=WhiteMagic;pendingAbility=CureAbility;castOnUndead=true;Log(actor,$"Cure{(undeadCount>1?" on all":"")} vs undead");return;}
+        // Rydia: Chocobo summon. Ordinary fights keep 14 MP for the boss.
+        if(me==Rydia && stats!=null && CommandEnabled(info,Summon) && stats.CurrentMP>=ChocoboMp+(boss?0:RydiaBossReserve))
+        {pendingCommand=Summon;pendingAbility=ChocoboSummon;Log(actor,"Summon Chocobo");return;}
+        if(me==Rosa && rosaParty) {pendingCommand=Defend;Log(actor,"Defend (nobody to heal)");return;}
+        // Edward just attacks (user: "edward can just attack and die").
+        if(me==Edward) {Log(actor,"Attack weakest enemy");return;}
         ChoosePlan(info,actor,plan);
         if(pendingItem!=0)return;
         // Rydia's attacks do ~1 damage: she Defends instead of wasting the turn.
@@ -342,8 +368,9 @@ internal sealed class BattlePilot
             if(stats!=null && rule.MinHpPercent>0 && stats.CurrentHP*100<rule.MinHpPercent*Math.Max(1,stats.ConfirmedMaxHp()))continue;
             if(stats!=null && rule.MinMp>0 && stats.CurrentMP<rule.MinMp)continue;
             if(rule.MinEnemies>0 && livingEnemies<rule.MinEnemies && !(rule.OrTough && tough))continue;
-            // Darkness is an HP-costing wave: never on a single enemy (user rule).
-            if(rule.Command==DarknessCommand && livingEnemies<2)continue;
+            // Darkness is an HP-costing wave that can kill Cecil (user rule).
+            // Only on large groups (4+), and only while Cecil is healthy.
+            if(rule.Command==DarknessCommand && (livingEnemies<4 || (stats!=null && stats.CurrentHP*10<8*Math.Max(1,stats.ConfirmedMaxHp()))))continue;
             if(rule.Item is int item)
             {
                 if(!HasItem(item))continue;

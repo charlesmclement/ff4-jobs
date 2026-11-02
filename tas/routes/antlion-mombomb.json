@@ -30,11 +30,6 @@
       "timeoutFrames": 3600,
       "battlePlan": [
         {
-          "character": 7,
-          "command": 22,
-          "minEnemies": 3
-        },
-        {
           "character": 8,
           "command": 26,
           "minEnemies": 2
@@ -168,11 +163,6 @@
       "timeoutFrames": 54000,
       "battlePlan": [
         {
-          "character": 7,
-          "command": 22,
-          "minEnemies": 3
-        },
-        {
           "character": 8,
           "command": 26,
           "minEnemies": 2
@@ -207,11 +197,6 @@
       "stableFrames": 2,
       "timeoutFrames": 54000,
       "battlePlan": [
-        {
-          "character": 7,
-          "command": 22,
-          "minEnemies": 3
-        },
         {
           "character": 8,
           "command": 26,
@@ -248,11 +233,6 @@
       "timeoutFrames": 54000,
       "battlePlan": [
         {
-          "character": 7,
-          "command": 22,
-          "minEnemies": 3
-        },
-        {
           "character": 8,
           "command": 26,
           "minEnemies": 2
@@ -286,11 +266,6 @@
       "stableFrames": 2,
       "timeoutFrames": 54000,
       "battlePlan": [
-        {
-          "character": 7,
-          "command": 22,
-          "minEnemies": 3
-        },
         {
           "character": 8,
           "command": 26,
@@ -351,11 +326,6 @@
       "timeoutFrames": 72000,
       "battlePlan": [
         {
-          "character": 7,
-          "command": 22,
-          "minEnemies": 3
-        },
-        {
           "character": 8,
           "command": 26,
           "minEnemies": 2
@@ -392,11 +362,6 @@
       "timeoutFrames": 54000,
       "battlePlan": [
         {
-          "character": 7,
-          "command": 22,
-          "minEnemies": 3
-        },
-        {
           "character": 8,
           "command": 26,
           "minEnemies": 2
@@ -432,11 +397,6 @@
       "timeoutFrames": 54000,
       "battlePlan": [
         {
-          "character": 7,
-          "command": 22,
-          "minEnemies": 3
-        },
-        {
           "character": 8,
           "command": 26,
           "minEnemies": 2
@@ -470,11 +430,6 @@
       "stableFrames": 2,
       "timeoutFrames": 3600,
       "battlePlan": [
-        {
-          "character": 7,
-          "command": 22,
-          "minEnemies": 3
-        },
         {
           "character": 8,
           "command": 26,
@@ -619,11 +574,6 @@
       "timeoutFrames": 54000,
       "battlePlan": [
         {
-          "character": 7,
-          "command": 22,
-          "minEnemies": 3
-        },
-        {
           "character": 8,
           "command": 26,
           "minEnemies": 2
@@ -659,11 +609,6 @@
       "timeoutFrames": 54000,
       "battlePlan": [
         {
-          "character": 7,
-          "command": 22,
-          "minEnemies": 3
-        },
-        {
           "character": 8,
           "command": 26,
           "minEnemies": 2
@@ -697,11 +642,6 @@
       "stableFrames": 15,
       "timeoutFrames": 54000,
       "battlePlan": [
-        {
-          "character": 7,
-          "command": 22,
-          "minEnemies": 3
-        },
         {
           "character": 8,
           "command": 26,
@@ -739,11 +679,6 @@
       "timeoutFrames": 72000,
       "battlePlan": [
         {
-          "character": 7,
-          "command": 22,
-          "minEnemies": 3
-        },
-        {
           "character": 8,
           "command": 26,
           "minEnemies": 2
@@ -779,11 +714,6 @@
       "timeoutFrames": 54000,
       "battlePlan": [
         {
-          "character": 7,
-          "command": 22,
-          "minEnemies": 3
-        },
-        {
           "character": 8,
           "command": 26,
           "minEnemies": 2
@@ -817,11 +747,6 @@
       "stableFrames": 15,
       "timeoutFrames": 54000,
       "battlePlan": [
-        {
-          "character": 7,
-          "command": 22,
-          "minEnemies": 3
-        },
         {
           "character": 8,
           "command": 26,
@@ -859,25 +784,9 @@
       "timeoutFrames": 72000,
       "battlePlan": [
         {
-          "character": 1,
-          "command": 10,
-          "minHpPercent": 70,
-          "minEnemies": 2,
-          "bossOnly": true
-        },
-        {
           "character": 8,
           "command": 26,
           "minEnemies": 2
-        },
-        {
-          "character": 7,
-          "command": 22,
-          "minEnemies": 3
-        },
-        {
-          "character": 7,
-          "command": 2
         }
       ]
     },
@@ -909,11 +818,6 @@
       "stableFrames": 2,
       "timeoutFrames": 54000,
       "battlePlan": [
-        {
-          "character": 7,
-          "command": 22,
-          "minEnemies": 3
-        },
         {
           "character": 8,
           "command": 26,
@@ -949,11 +853,6 @@
       "stableFrames": 2,
       "timeoutFrames": 54000,
       "battlePlan": [
-        {
-          "character": 7,
-          "command": 22,
-          "minEnemies": 3
-        },
         {
           "character": 8,
           "command": 26,

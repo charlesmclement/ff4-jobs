@@ -24,10 +24,10 @@ flag 19. Fabul is segment 5. Shortcut: **FF4 TAS: Segment 4**.
 
 ## Battle plan
 
-* Every step: Edward Sing on 3+ enemies; Yang Kick on 2+ enemies.
-* Mom Bomb: Cecil Darkness only after the split (2+ enemies) and above 70% HP (weak to dark; the wave also
-  hits the bombs it splits into), Yang Kick, Edward Sing or Defend. Rydia
-  Defends; Rosa/Rydia Cure as needed (Cecil leaves healing to casters).
+* Party roles: Rosa always heals (Rosa > Cecil > Yang; Rydia and Edward are
+  never healed or revived). Rydia summons Chocobo. Edward attacks. Yang Kicks
+  on 2+ enemies. Cecil attacks; **no Darkness** (it kills Cecil in PR;
+  ignore the strat text's Darkness).
 * Community notes also use Yang's Focus and target the split bombs; not
   modelled yet.
 
