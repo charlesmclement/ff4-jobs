@@ -14,15 +14,17 @@ namespace FF4Tas;
 internal sealed class FieldMagic
 {
     private const int MenuMagic=2,WhiteMagicCommand=7,Cure=6,Life=11,CureMp=3,LifeMp=8,MaxCasts=12,AfterCast=48;
-    // AbilityWindowController.State and AbilityUseContentListController.State.
-    private const int MagicList=1,UseList=2,UseTarget=3,CommandState=4,UseAll=2;
+    // AbilityWindowController.State (Command) and AbilityUseContentListController.State (All).
+    private const int CommandState=4,UseAll=2;
     private static readonly int[] Casters={3,4,6};
     private float topUpBelow=.7f;
     private bool finished,flip;
-    private int casts,wait,stuck,lastIndex=-1,caster,spell,target;
+    // Backs without a cast: give up on magic (items take over), never loop.
+    private int casts,wait,stuck,backs,lastIndex=-1,caster,spell,target;
+    private const int MaxBacks=10;
     private string? lastKey;
     private MainMenuController? main;
-    internal void Reset(float topUp) {topUpBelow=topUp;finished=flip=false;casts=wait=stuck=0;lastIndex=-1;lastKey=null;main=null;}
+    internal void Reset(float topUp) {topUpBelow=topUp;finished=flip=false;casts=wait=stuck=backs=0;lastIndex=-1;lastKey=null;main=null;}
     internal bool Wanted() {Need();return spell!=0;}
     internal void Read(Snapshot s,int frame)
     {
@@ -62,45 +64,43 @@ internal sealed class FieldMagic
         }
         // The window shows someone else: back to the party list.
         if(window!.commandController?.targetCharacter?.characterStatusId is int shown && shown!=caster) {Pulse(s,frame,"Back","Other caster");return;}
-        switch(state)
+        // The state numbers don't say which panel is up (after White Magic it
+        // reported UseList 2 while the spell list was open, and the step looped
+        // White Magic -> Back): use the command state, then whichever panel is
+        // actually open - the target panel, else the spell list.
+        if(state==CommandState)
         {
-            case CommandState:
-            {
-                var c=window.commandController;
-                if(c?.contentList==null || c.selectCursor==null)return;
-                int want=-1;
-                for(int i=0;i<c.contentList.Count;i++)if(c.contentList[i]?.Command?.Id==WhiteMagicCommand) {want=i;break;}
-                if(want<0) {finished=true;Pulse(s,frame,"Back","No White Magic");return;}
-                Move(s,frame,c.selectCursor.Index,want,true,"White Magic");return;
-            }
-            case MagicList:
-            {
-                var l=window.listController;
-                if(l?.abilityList==null || l.selectCursor==null)return;
-                int want=-1;
-                for(int i=0;i<l.abilityList.Count;i++)if(l.abilityList[i]?.Ability?.Id==spell) {want=i;break;}
-                if(want<0) {finished=true;Pulse(s,frame,"Back","Spell not learned");return;}
-                Move(s,frame,l.selectCursor.Index,want,true,spell==Life?"Life":"Cure");return;
-            }
-            case UseList:
-            case UseTarget:
-            {
-                var u=window.useController;
-                if(u?.targetSelectList==null || u.selectCursor==null)return;
-                if(u.targetAbility?.Ability?.Id is int chosen && chosen!=spell) {Pulse(s,frame,"Back","Switch spell");return;}
-                if(u.stateMachine!=null && (int)u.stateMachine.Current==UseAll) {Cast(s,frame);return;}
-                int want=-1;
-                for(int i=0;i<u.targetSelectList.Count;i++)if(u.targetSelectList[i]?.Id==target) {want=i;break;}
-                if(want<0) {Pulse(s,frame,"Back","Target not in the list");return;}
-                if(u.selectCursor.Index==want) {Cast(s,frame);return;}
-                Move(s,frame,u.selectCursor.Index,want,false,"Target #"+target);return;
-            }
-            default:Pulse(s,frame,"Back","Back to the spell list");return;
+            var c=window.commandController;
+            if(c?.contentList==null || c.selectCursor==null)return;
+            int want=-1;
+            for(int i=0;i<c.contentList.Count;i++)if(c.contentList[i]?.Command?.Id==WhiteMagicCommand) {want=i;break;}
+            if(want<0) {finished=true;Pulse(s,frame,"Back","No White Magic");return;}
+            Move(s,frame,c.selectCursor.Index,want,true,"White Magic");return;
         }
+        var u=window.useController;
+        if(u!=null && u.gameObject.activeInHierarchy && u.targetAbility!=null && u.targetSelectList!=null && u.targetSelectList.Count>0 && u.selectCursor!=null)
+        {
+            if(u.targetAbility?.Ability?.Id is int chosen && chosen!=spell) {if(frame%12==0 && ++backs>=MaxBacks)finished=true;Pulse(s,frame,"Back","Switch spell");return;}
+            if(u.stateMachine!=null && (int)u.stateMachine.Current==UseAll) {Cast(s,frame);return;}
+            int want=-1;
+            for(int i=0;i<u.targetSelectList.Count;i++)if(u.targetSelectList[i]?.Id==target) {want=i;break;}
+            if(want<0) {if(frame%12==0 && ++backs>=MaxBacks)finished=true;Pulse(s,frame,"Back","Target not in the list");return;}
+            if(u.selectCursor.Index==want) {Cast(s,frame);return;}
+            Move(s,frame,u.selectCursor.Index,want,false,"Target #"+target);return;
+        }
+        var l=window.listController;
+        if(l?.abilityList!=null && l.selectCursor!=null && l.abilityList.Count>0)
+        {
+            int want=-1;
+            for(int i=0;i<l.abilityList.Count;i++)if(l.abilityList[i]?.Ability?.Id==spell) {want=i;break;}
+            if(want<0) {finished=true;Pulse(s,frame,"Back","Spell not learned");return;}
+            Move(s,frame,l.selectCursor.Index,want,true,(spell==Life?"Life":"Cure")+$" (state {state}, cursor {l.selectCursor.Index} -> {want})");return;
+        }
+        s.Detail=$"Magic: waiting (window state {state})";
     }
     private void Cast(Snapshot s,int frame)
     {
-        if(frame%12==0) {casts++;wait=AfterCast;}
+        if(frame%12==0) {casts++;backs=0;wait=AfterCast;}
         Pulse(s,frame,"Confirm",(spell==Life?"Life":"Cure")+" on #"+target);
     }
     // Who casts what on whom right now (owned-character id as the target).
