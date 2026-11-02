@@ -99,6 +99,19 @@ public sealed class Controller : MonoBehaviour
                 // PopupManager's filter is up whenever a modal popup owns input
                 // (same test Jobs fast-forward uses); movement is frozen meanwhile.
                 snapshot.Modal=Last.UI.PopupManager.Instance?.Filter?.activeInHierarchy==true;
+                if(active.ItemChoice is int wantedItem)
+                {
+                    var list=Last.UI.SelectFieldContentManager.Instance?.controller?.TryCast<Last.UI.SelectFieldContentControllerBase>();
+                    if(list!=null && list.gameObject.activeInHierarchy && !list.IsSelectCompletet() && list.contentDataList!=null && list.selectCursor!=null)
+                    {
+                        snapshot.ItemListIndex=list.selectCursor.Index;
+                        for(int i=0;i<list.contentDataList.Count;i++)
+                        {
+                            var entry=list.contentDataList[i];
+                            if(entry!=null && (entry.UniqueId==wantedItem || entry.Value==wantedItem)) {snapshot.ItemListWanted=i;break;}
+                        }
+                    }
+                }
                 if(active.Choice!=null)
                 {
                     var select=Last.Message.MessageSelectWindowManager.Instance;

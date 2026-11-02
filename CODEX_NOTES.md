@@ -322,6 +322,14 @@ whatever build it launched with, so always say which build is live.
     above `IDLE_FLAG_SCAN` are now ignored there. Started live with `tas.py
     start --from-step 0`.
 
+35. **Segment 4 built (compile-only): Antlion → Mom Bomb.** Route
+    `tas/routes/antlion-mombomb.json`, shortcut "FF4 TAS: Segment 4", design
+    in `docs/TAS-SEGMENT-4.md`. New: `Step.itemChoice` for the event item list
+    (Sand Ruby 64 for Rosa). Edward Sing (command 22, all enemies) on 3+
+    enemies and Yang Kick (26) on 2+ in all segment 3/4 plans; Mom Bomb plan
+    = Cecil Darkness above 50% HP. The user wants segments to end on save
+    rooms or outside (they keep saves in slots).
+
 ## Stuck detection (all segments, always on)
 
 The user's standing requirement: every movement must be confirmed. It lives

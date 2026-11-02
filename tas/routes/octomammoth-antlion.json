@@ -34,7 +34,14 @@
         "phase": "Event"
       },
       "stableFrames": 15,
-      "timeoutFrames": 36000
+      "timeoutFrames": 36000,
+      "battlePlan": [
+        {
+          "character": 7,
+          "command": 22,
+          "minEnemies": 3
+        }
+      ]
     },
     {
       "label": "Overworld: Damcyan bombing scene",
@@ -63,7 +70,14 @@
       "stableFrames": 30,
       "periodFrames": 8,
       "pressedFrames": 1,
-      "timeoutFrames": 72000
+      "timeoutFrames": 72000,
+      "battlePlan": [
+        {
+          "character": 7,
+          "command": 22,
+          "minEnemies": 3
+        }
+      ]
     },
     {
       "label": "Overworld: north to Damcyan's gate",
@@ -98,7 +112,14 @@
         "mapId": 38
       },
       "stableFrames": 2,
-      "timeoutFrames": 36000
+      "timeoutFrames": 36000,
+      "battlePlan": [
+        {
+          "character": 7,
+          "command": 22,
+          "minEnemies": 3
+        }
+      ]
     },
     {
       "label": "Damcyan courtyard: east door to the jail",
@@ -126,7 +147,14 @@
         "mapId": 42
       },
       "stableFrames": 2,
-      "timeoutFrames": 36000
+      "timeoutFrames": 36000,
+      "battlePlan": [
+        {
+          "character": 7,
+          "command": 22,
+          "minEnemies": 3
+        }
+      ]
     },
     {
       "label": "Damcyan jail: stand beside the blinded soldier",
@@ -153,7 +181,14 @@
         "atDestination": true
       },
       "stableFrames": 2,
-      "timeoutFrames": 36000
+      "timeoutFrames": 36000,
+      "battlePlan": [
+        {
+          "character": 7,
+          "command": 22,
+          "minEnemies": 3
+        }
+      ]
     },
     {
       "label": "Damcyan jail: talk to the soldier until he leaves",
@@ -177,7 +212,14 @@
         "storyFlag": 95
       },
       "stableFrames": 30,
-      "timeoutFrames": 7200
+      "timeoutFrames": 7200,
+      "battlePlan": [
+        {
+          "character": 7,
+          "command": 22,
+          "minEnemies": 3
+        }
+      ]
     },
     {
       "label": "Damcyan jail: step under the switch",
@@ -204,7 +246,14 @@
         "atDestination": true
       },
       "stableFrames": 2,
-      "timeoutFrames": 36000
+      "timeoutFrames": 36000,
+      "battlePlan": [
+        {
+          "character": 7,
+          "command": 22,
+          "minEnemies": 3
+        }
+      ]
     },
     {
       "label": "Damcyan jail: press the switch (opens the doors)",
@@ -228,7 +277,14 @@
         "flag2": 27
       },
       "stableFrames": 30,
-      "timeoutFrames": 7200
+      "timeoutFrames": 7200,
+      "battlePlan": [
+        {
+          "character": 7,
+          "command": 22,
+          "minEnemies": 3
+        }
+      ]
     },
     {
       "label": "Damcyan jail: stairs down",
@@ -256,7 +312,14 @@
         "mapId": 43
       },
       "stableFrames": 2,
-      "timeoutFrames": 36000
+      "timeoutFrames": 36000,
+      "battlePlan": [
+        {
+          "character": 7,
+          "command": 22,
+          "minEnemies": 3
+        }
+      ]
     },
     {
       "label": "Jail B1: stand between the Elixir and the Ether",
@@ -283,7 +346,14 @@
         "atDestination": true
       },
       "stableFrames": 2,
-      "timeoutFrames": 36000
+      "timeoutFrames": 36000,
+      "battlePlan": [
+        {
+          "character": 7,
+          "command": 22,
+          "minEnemies": 3
+        }
+      ]
     },
     {
       "label": "Jail B1: take the hidden Elixir",
@@ -306,7 +376,14 @@
         "treasureFlag": 70
       },
       "stableFrames": 2,
-      "timeoutFrames": 3600
+      "timeoutFrames": 3600,
+      "battlePlan": [
+        {
+          "character": 7,
+          "command": 22,
+          "minEnemies": 3
+        }
+      ]
     },
     {
       "label": "Jail B1: open the Ether",
@@ -329,7 +406,14 @@
         "treasureFlag": 67
       },
       "stableFrames": 2,
-      "timeoutFrames": 3600
+      "timeoutFrames": 3600,
+      "battlePlan": [
+        {
+          "character": 7,
+          "command": 22,
+          "minEnemies": 3
+        }
+      ]
     },
     {
       "label": "Jail B1: step up beside the Potion",
@@ -356,7 +440,14 @@
         "atDestination": true
       },
       "stableFrames": 2,
-      "timeoutFrames": 36000
+      "timeoutFrames": 36000,
+      "battlePlan": [
+        {
+          "character": 7,
+          "command": 22,
+          "minEnemies": 3
+        }
+      ]
     },
     {
       "label": "Jail B1: open the Potion",
@@ -379,7 +470,14 @@
         "treasureFlag": 64
       },
       "stableFrames": 2,
-      "timeoutFrames": 3600
+      "timeoutFrames": 3600,
+      "battlePlan": [
+        {
+          "character": 7,
+          "command": 22,
+          "minEnemies": 3
+        }
+      ]
     },
     {
       "label": "Jail B1: stand below the Phoenix Down",
@@ -406,7 +504,14 @@
         "atDestination": true
       },
       "stableFrames": 2,
-      "timeoutFrames": 36000
+      "timeoutFrames": 36000,
+      "battlePlan": [
+        {
+          "character": 7,
+          "command": 22,
+          "minEnemies": 3
+        }
+      ]
     },
     {
       "label": "Jail B1: open the Phoenix Down",
@@ -429,7 +534,14 @@
         "treasureFlag": 68
       },
       "stableFrames": 2,
-      "timeoutFrames": 3600
+      "timeoutFrames": 3600,
+      "battlePlan": [
+        {
+          "character": 7,
+          "command": 22,
+          "minEnemies": 3
+        }
+      ]
     },
     {
       "label": "Jail B1: stairs up",
@@ -457,7 +569,14 @@
         "mapId": 42
       },
       "stableFrames": 2,
-      "timeoutFrames": 36000
+      "timeoutFrames": 36000,
+      "battlePlan": [
+        {
+          "character": 7,
+          "command": 22,
+          "minEnemies": 3
+        }
+      ]
     },
     {
       "label": "Damcyan jail: back to the courtyard",
@@ -485,7 +604,14 @@
         "mapId": 38
       },
       "stableFrames": 2,
-      "timeoutFrames": 36000
+      "timeoutFrames": 36000,
+      "battlePlan": [
+        {
+          "character": 7,
+          "command": 22,
+          "minEnemies": 3
+        }
+      ]
     },
     {
       "label": "Damcyan courtyard: into the keep",
@@ -513,7 +639,14 @@
         "mapId": 39
       },
       "stableFrames": 2,
-      "timeoutFrames": 36000
+      "timeoutFrames": 36000,
+      "battlePlan": [
+        {
+          "character": 7,
+          "command": 22,
+          "minEnemies": 3
+        }
+      ]
     },
     {
       "label": "Damcyan 1F: stairs up",
@@ -541,7 +674,14 @@
         "mapId": 40
       },
       "stableFrames": 2,
-      "timeoutFrames": 36000
+      "timeoutFrames": 36000,
+      "battlePlan": [
+        {
+          "character": 7,
+          "command": 22,
+          "minEnemies": 3
+        }
+      ]
     },
     {
       "label": "Damcyan 2F: to the throne room",
@@ -569,7 +709,14 @@
         "mapId": 41
       },
       "stableFrames": 2,
-      "timeoutFrames": 36000
+      "timeoutFrames": 36000,
+      "battlePlan": [
+        {
+          "character": 7,
+          "command": 22,
+          "minEnemies": 3
+        }
+      ]
     },
     {
       "label": "Damcyan throne room: walk to Anna (scene triggers)",
@@ -596,7 +743,14 @@
         "phase": "Event"
       },
       "stableFrames": 15,
-      "timeoutFrames": 36000
+      "timeoutFrames": 36000,
+      "battlePlan": [
+        {
+          "character": 7,
+          "command": 22,
+          "minEnemies": 3
+        }
+      ]
     },
     {
       "label": "Damcyan: Anna, Edward vs Tellah, hovercraft; Tellah leaves, Edward joins",
@@ -625,7 +779,14 @@
       "stableFrames": 30,
       "periodFrames": 8,
       "pressedFrames": 1,
-      "timeoutFrames": 72000
+      "timeoutFrames": 72000,
+      "battlePlan": [
+        {
+          "character": 7,
+          "command": 22,
+          "minEnemies": 3
+        }
+      ]
     },
     {
       "label": "Hovercraft: across the shoals to the Antlion's Den; get off beside it",
@@ -701,7 +862,14 @@
         "atDestination": true
       },
       "stableFrames": 2,
-      "timeoutFrames": 36000
+      "timeoutFrames": 36000,
+      "battlePlan": [
+        {
+          "character": 7,
+          "command": 22,
+          "minEnemies": 3
+        }
+      ]
     },
     {
       "label": "Overworld: walk into the Antlion's Den",
@@ -729,7 +897,14 @@
         "mapId": 173
       },
       "stableFrames": 2,
-      "timeoutFrames": 36000
+      "timeoutFrames": 36000,
+      "battlePlan": [
+        {
+          "character": 7,
+          "command": 22,
+          "minEnemies": 3
+        }
+      ]
     },
     {
       "label": "Antlion's Den 1: walk below the first Potion",
@@ -756,7 +931,14 @@
         "atDestination": true
       },
       "stableFrames": 2,
-      "timeoutFrames": 36000
+      "timeoutFrames": 36000,
+      "battlePlan": [
+        {
+          "character": 7,
+          "command": 22,
+          "minEnemies": 3
+        }
+      ]
     },
     {
       "label": "Antlion's Den 1: open the Potion",
@@ -779,7 +961,14 @@
         "treasureFlag": 74
       },
       "stableFrames": 2,
-      "timeoutFrames": 3600
+      "timeoutFrames": 3600,
+      "battlePlan": [
+        {
+          "character": 7,
+          "command": 22,
+          "minEnemies": 3
+        }
+      ]
     },
     {
       "label": "Antlion's Den 1: walk to the Spider's Silk",
@@ -806,7 +995,14 @@
         "atDestination": true
       },
       "stableFrames": 2,
-      "timeoutFrames": 36000
+      "timeoutFrames": 36000,
+      "battlePlan": [
+        {
+          "character": 7,
+          "command": 22,
+          "minEnemies": 3
+        }
+      ]
     },
     {
       "label": "Antlion's Den 1: open the Spider's Silk",
@@ -829,7 +1025,14 @@
         "treasureFlag": 73
       },
       "stableFrames": 2,
-      "timeoutFrames": 3600
+      "timeoutFrames": 3600,
+      "battlePlan": [
+        {
+          "character": 7,
+          "command": 22,
+          "minEnemies": 3
+        }
+      ]
     },
     {
       "label": "Antlion's Den 1: walk below the second Potion",
@@ -856,7 +1059,14 @@
         "atDestination": true
       },
       "stableFrames": 2,
-      "timeoutFrames": 36000
+      "timeoutFrames": 36000,
+      "battlePlan": [
+        {
+          "character": 7,
+          "command": 22,
+          "minEnemies": 3
+        }
+      ]
     },
     {
       "label": "Antlion's Den 1: open the second Potion",
@@ -879,7 +1089,14 @@
         "treasureFlag": 75
       },
       "stableFrames": 2,
-      "timeoutFrames": 3600
+      "timeoutFrames": 3600,
+      "battlePlan": [
+        {
+          "character": 7,
+          "command": 22,
+          "minEnemies": 3
+        }
+      ]
     },
     {
       "label": "Antlion's Den 1: east passage down",
@@ -907,7 +1124,14 @@
         "mapId": 175
       },
       "stableFrames": 2,
-      "timeoutFrames": 36000
+      "timeoutFrames": 36000,
+      "battlePlan": [
+        {
+          "character": 7,
+          "command": 22,
+          "minEnemies": 3
+        }
+      ]
     },
     {
       "label": "Antlion's Den 2: south passage to the nest",
@@ -935,7 +1159,14 @@
         "mapId": 177
       },
       "stableFrames": 2,
-      "timeoutFrames": 36000
+      "timeoutFrames": 36000,
+      "battlePlan": [
+        {
+          "character": 7,
+          "command": 22,
+          "minEnemies": 3
+        }
+      ]
     },
     {
       "label": "Antlion's nest: walk in (Antlion appears)",
@@ -962,7 +1193,14 @@
         "phase": "Event"
       },
       "stableFrames": 15,
-      "timeoutFrames": 36000
+      "timeoutFrames": 36000,
+      "battlePlan": [
+        {
+          "character": 7,
+          "command": 22,
+          "minEnemies": 3
+        }
+      ]
     },
     {
       "label": "Antlion: Cecil Hermes Shoes then Attack; Edward and Rydia Defend",
@@ -994,6 +1232,11 @@
       "pressedFrames": 1,
       "timeoutFrames": 72000,
       "battlePlan": [
+        {
+          "character": 7,
+          "command": 22,
+          "minEnemies": 3
+        },
         {
           "character": 1,
           "item": 55,
@@ -1032,7 +1275,14 @@
         "mapId": 175
       },
       "stableFrames": 2,
-      "timeoutFrames": 36000
+      "timeoutFrames": 36000,
+      "battlePlan": [
+        {
+          "character": 7,
+          "command": 22,
+          "minEnemies": 3
+        }
+      ]
     },
     {
       "label": "Antlion's Den 2: north passage up",
@@ -1060,7 +1310,14 @@
         "mapId": 173
       },
       "stableFrames": 2,
-      "timeoutFrames": 36000
+      "timeoutFrames": 36000,
+      "battlePlan": [
+        {
+          "character": 7,
+          "command": 22,
+          "minEnemies": 3
+        }
+      ]
     },
     {
       "label": "Antlion's Den 1: exit to the overworld",
@@ -1088,7 +1345,14 @@
         "mapId": 1
       },
       "stableFrames": 2,
-      "timeoutFrames": 36000
+      "timeoutFrames": 36000,
+      "battlePlan": [
+        {
+          "character": 7,
+          "command": 22,
+          "minEnemies": 3
+        }
+      ]
     },
     {
       "label": "Segment 3 complete: Antlion defeated, outside the Antlion's Den",

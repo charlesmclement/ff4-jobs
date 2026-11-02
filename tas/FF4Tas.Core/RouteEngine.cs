@@ -81,6 +81,9 @@ public sealed class Step
     // 0-based option to pick whenever a native choice window opens during this
     // step (e.g. the Mist Cave warning defaults to "No"; 0 is "Yes").
     public int? Choice {get;set;}
+    // Item to pick (content id, e.g. Sand Ruby 64) when an event opens the
+    // native item list (SelectFieldContentManager), e.g. curing Rosa.
+    public int? ItemChoice {get;set;}
     public bool HandleBattles {get;set;}
     // Ordered per-character battle rules; the first usable one is taken, and
     // anything unusable falls back to Attack. Recovery items still come first.
@@ -168,6 +171,9 @@ public sealed class Snapshot
     public bool Modal {get;set;}
     // Cursor index of an open native choice window, null when none is open.
     public int? ChoiceIndex {get;set;}
+    // Event item list: cursor index and the wanted entry's index (-1 = absent).
+    public int? ItemListIndex {get;set;}
+    public int ItemListWanted {get;set;}=-1;
     public string? Failure {get;set;}
     public string Detail {get;set;}="";
     // Battle log line: enemies on screen and the last decision with its reason.
@@ -254,9 +260,18 @@ public sealed class RouteEngine
         }
         // Popups block field movement without changing the game phase: confirm
         // them away before any step-specific input. Choice windows are handled below.
-        if(state.Modal && state.ChoiceIndex==null && state.Phase!="Battle")
+        if(state.Modal && state.ChoiceIndex==null && state.ItemListIndex==null && state.Phase!="Battle")
         {
             if(elapsed%8==0)current.Add("Confirm");
+            return;
+        }
+        // Event item list: walk the cursor to the wanted item (two columns:
+        // Left/Right within a row, Up/Down across rows), then confirm.
+        if(step.ItemChoice!=null && state.ItemListIndex is int at && state.ItemListWanted>=0)
+        {
+            int want=state.ItemListWanted;
+            string key=at==want?"Confirm":at/2!=want/2?(want<at?"Up":"Down"):(want<at?"Left":"Right");
+            if(elapsed%8==0)current.Add(key);
             return;
         }
         // Steer an open choice window to the requested option, then confirm it.

@@ -1,0 +1,1195 @@
+{
+  "schema": 1,
+  "name": "Antlion → Mom Bomb (segment 4) — UNTESTED",
+  "steps": [
+    {
+      "label": "Overworld: board the hovercraft by the Antlion's Den",
+      "kind": "navigate",
+      "mapId": 1,
+      "goal": {
+        "x": 141,
+        "y": 44,
+        "layer": 0
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "riding": true
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 3600,
+      "battlePlan": [
+        {
+          "character": 7,
+          "command": 22,
+          "minEnemies": 3
+        },
+        {
+          "character": 8,
+          "command": 26,
+          "minEnemies": 2
+        }
+      ]
+    },
+    {
+      "label": "Hovercraft: to Kaipo; get off at the town",
+      "kind": "navigate",
+      "mapId": 1,
+      "goal": {
+        "x": 130,
+        "y": 92,
+        "layer": 0
+      },
+      "waypoints": [
+        {
+          "x": 137,
+          "y": 44,
+          "layer": 0
+        },
+        {
+          "x": 137,
+          "y": 36,
+          "layer": 0
+        },
+        {
+          "x": 136,
+          "y": 36,
+          "layer": 0
+        },
+        {
+          "x": 136,
+          "y": 33,
+          "layer": 0
+        },
+        {
+          "x": 131,
+          "y": 33,
+          "layer": 0
+        },
+        {
+          "x": 131,
+          "y": 36,
+          "layer": 0
+        },
+        {
+          "x": 128,
+          "y": 36,
+          "layer": 0
+        },
+        {
+          "x": 128,
+          "y": 49,
+          "layer": 0
+        },
+        {
+          "x": 116,
+          "y": 49,
+          "layer": 0
+        },
+        {
+          "x": 116,
+          "y": 55,
+          "layer": 0
+        },
+        {
+          "x": 104,
+          "y": 55,
+          "layer": 0
+        },
+        {
+          "x": 104,
+          "y": 64,
+          "layer": 0
+        },
+        {
+          "x": 103,
+          "y": 64,
+          "layer": 0
+        },
+        {
+          "x": 103,
+          "y": 67,
+          "layer": 0
+        },
+        {
+          "x": 105,
+          "y": 67,
+          "layer": 0
+        },
+        {
+          "x": 105,
+          "y": 70,
+          "layer": 0
+        },
+        {
+          "x": 123,
+          "y": 70,
+          "layer": 0
+        },
+        {
+          "x": 123,
+          "y": 92,
+          "layer": 0
+        },
+        {
+          "x": 129,
+          "y": 92,
+          "layer": 0
+        }
+      ],
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "mapId": 1,
+        "riding": false,
+        "atDestination": true
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 54000,
+      "battlePlan": [
+        {
+          "character": 7,
+          "command": 22,
+          "minEnemies": 3
+        },
+        {
+          "character": 8,
+          "command": 26,
+          "minEnemies": 2
+        }
+      ]
+    },
+    {
+      "label": "Overworld: walk into Kaipo",
+      "kind": "navigate",
+      "mapId": 1,
+      "goal": {
+        "x": 130,
+        "y": 91,
+        "layer": 0
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Player",
+        "mapId": 32
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 54000,
+      "battlePlan": [
+        {
+          "character": 7,
+          "command": 22,
+          "minEnemies": 3
+        },
+        {
+          "character": 8,
+          "command": 26,
+          "minEnemies": 2
+        }
+      ]
+    },
+    {
+      "label": "Kaipo: to Rosa's house",
+      "kind": "navigate",
+      "mapId": 32,
+      "goal": {
+        "x": 29,
+        "y": 12,
+        "layer": 2
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Player",
+        "mapId": 37
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 54000,
+      "battlePlan": [
+        {
+          "character": 7,
+          "command": 22,
+          "minEnemies": 3
+        },
+        {
+          "character": 8,
+          "command": 26,
+          "minEnemies": 2
+        }
+      ]
+    },
+    {
+      "label": "Rosa's house: stand below Rosa",
+      "kind": "navigate",
+      "mapId": 37,
+      "goal": {
+        "x": 16,
+        "y": 7,
+        "layer": 0
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "atDestination": true
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 54000,
+      "battlePlan": [
+        {
+          "character": 7,
+          "command": 22,
+          "minEnemies": 3
+        },
+        {
+          "character": 8,
+          "command": 26,
+          "minEnemies": 2
+        }
+      ]
+    },
+    {
+      "label": "Rosa's house: talk to Rosa",
+      "kind": "interact",
+      "mapId": 37,
+      "facing": "Up",
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Event"
+      },
+      "stableFrames": 15,
+      "timeoutFrames": 7200
+    },
+    {
+      "label": "Kaipo: Sand Ruby cures Rosa; Edward's night scene and Sahagin fight",
+      "kind": "mash",
+      "keys": [
+        "Confirm"
+      ],
+      "phases": [
+        "None",
+        "Init",
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Player",
+        "storyFlag": 17
+      },
+      "stableFrames": 30,
+      "periodFrames": 8,
+      "pressedFrames": 1,
+      "timeoutFrames": 72000,
+      "battlePlan": [
+        {
+          "character": 7,
+          "command": 22,
+          "minEnemies": 3
+        },
+        {
+          "character": 8,
+          "command": 26,
+          "minEnemies": 2
+        }
+      ],
+      "itemChoice": 64
+    },
+    {
+      "label": "Rosa's house: leave",
+      "kind": "navigate",
+      "mapId": 37,
+      "goal": {
+        "x": 13,
+        "y": 21,
+        "layer": 0
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Player",
+        "mapId": 32
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 54000,
+      "battlePlan": [
+        {
+          "character": 7,
+          "command": 22,
+          "minEnemies": 3
+        },
+        {
+          "character": 8,
+          "command": 26,
+          "minEnemies": 2
+        }
+      ]
+    },
+    {
+      "label": "Kaipo: leave town",
+      "kind": "navigate",
+      "mapId": 32,
+      "goal": {
+        "x": 16,
+        "y": 30,
+        "layer": 2
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Player",
+        "mapId": 1
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 54000,
+      "battlePlan": [
+        {
+          "character": 7,
+          "command": 22,
+          "minEnemies": 3
+        },
+        {
+          "character": 8,
+          "command": 26,
+          "minEnemies": 2
+        }
+      ]
+    },
+    {
+      "label": "Overworld: board the hovercraft outside Kaipo",
+      "kind": "navigate",
+      "mapId": 1,
+      "goal": {
+        "x": 130,
+        "y": 92,
+        "layer": 0
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "riding": true
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 3600,
+      "battlePlan": [
+        {
+          "character": 7,
+          "command": 22,
+          "minEnemies": 3
+        },
+        {
+          "character": 8,
+          "command": 26,
+          "minEnemies": 2
+        }
+      ]
+    },
+    {
+      "label": "Hovercraft: north past Damcyan to Mount Hobs; get off below it",
+      "kind": "navigate",
+      "mapId": 1,
+      "goal": {
+        "x": 157,
+        "y": 37,
+        "layer": 0
+      },
+      "waypoints": [
+        {
+          "x": 112,
+          "y": 92,
+          "layer": 0
+        },
+        {
+          "x": 112,
+          "y": 69,
+          "layer": 0
+        },
+        {
+          "x": 104,
+          "y": 69,
+          "layer": 0
+        },
+        {
+          "x": 104,
+          "y": 66,
+          "layer": 0
+        },
+        {
+          "x": 103,
+          "y": 66,
+          "layer": 0
+        },
+        {
+          "x": 103,
+          "y": 63,
+          "layer": 0
+        },
+        {
+          "x": 104,
+          "y": 63,
+          "layer": 0
+        },
+        {
+          "x": 104,
+          "y": 55,
+          "layer": 0
+        },
+        {
+          "x": 120,
+          "y": 55,
+          "layer": 0
+        },
+        {
+          "x": 120,
+          "y": 39,
+          "layer": 0
+        },
+        {
+          "x": 129,
+          "y": 39,
+          "layer": 0
+        },
+        {
+          "x": 129,
+          "y": 35,
+          "layer": 0
+        },
+        {
+          "x": 132,
+          "y": 35,
+          "layer": 0
+        },
+        {
+          "x": 132,
+          "y": 33,
+          "layer": 0
+        },
+        {
+          "x": 136,
+          "y": 33,
+          "layer": 0
+        },
+        {
+          "x": 136,
+          "y": 36,
+          "layer": 0
+        },
+        {
+          "x": 148,
+          "y": 36,
+          "layer": 0
+        },
+        {
+          "x": 148,
+          "y": 35,
+          "layer": 0
+        },
+        {
+          "x": 155,
+          "y": 35,
+          "layer": 0
+        },
+        {
+          "x": 155,
+          "y": 37,
+          "layer": 0
+        },
+        {
+          "x": 156,
+          "y": 37,
+          "layer": 0
+        }
+      ],
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "mapId": 1,
+        "riding": false,
+        "atDestination": true
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 54000,
+      "battlePlan": [
+        {
+          "character": 7,
+          "command": 22,
+          "minEnemies": 3
+        },
+        {
+          "character": 8,
+          "command": 26,
+          "minEnemies": 2
+        }
+      ]
+    },
+    {
+      "label": "Overworld: walk into Mount Hobs",
+      "kind": "navigate",
+      "mapId": 1,
+      "goal": {
+        "x": 157,
+        "y": 36,
+        "layer": 0
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Player",
+        "mapId": 178
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 54000,
+      "battlePlan": [
+        {
+          "character": 7,
+          "command": 22,
+          "minEnemies": 3
+        },
+        {
+          "character": 8,
+          "command": 26,
+          "minEnemies": 2
+        }
+      ]
+    },
+    {
+      "label": "Mount Hobs: walk up to the ice (Rydia's Fire scene)",
+      "kind": "navigate",
+      "mapId": 178,
+      "goal": {
+        "x": 20,
+        "y": 25,
+        "layer": 0
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Event"
+      },
+      "stableFrames": 15,
+      "timeoutFrames": 54000,
+      "battlePlan": [
+        {
+          "character": 7,
+          "command": 22,
+          "minEnemies": 3
+        },
+        {
+          "character": 8,
+          "command": 26,
+          "minEnemies": 2
+        }
+      ]
+    },
+    {
+      "label": "Mount Hobs: Rydia learns Fire and melts the ice",
+      "kind": "mash",
+      "keys": [
+        "Confirm"
+      ],
+      "phases": [
+        "None",
+        "Init",
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Player",
+        "storyFlag": 18
+      },
+      "stableFrames": 30,
+      "periodFrames": 8,
+      "pressedFrames": 1,
+      "timeoutFrames": 72000,
+      "battlePlan": [
+        {
+          "character": 7,
+          "command": 22,
+          "minEnemies": 3
+        },
+        {
+          "character": 8,
+          "command": 26,
+          "minEnemies": 2
+        }
+      ]
+    },
+    {
+      "label": "Mount Hobs: east cave to the summit (skip the first cave)",
+      "kind": "navigate",
+      "mapId": 178,
+      "goal": {
+        "x": 27,
+        "y": 6,
+        "layer": 0
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Player",
+        "mapId": 180
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 54000,
+      "battlePlan": [
+        {
+          "character": 7,
+          "command": 22,
+          "minEnemies": 3
+        },
+        {
+          "character": 8,
+          "command": 26,
+          "minEnemies": 2
+        }
+      ]
+    },
+    {
+      "label": "Mount Hobs summit: walk up to Yang (scene triggers)",
+      "kind": "navigate",
+      "mapId": 180,
+      "goal": {
+        "x": 21,
+        "y": 18,
+        "layer": 1
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Event"
+      },
+      "stableFrames": 15,
+      "timeoutFrames": 54000,
+      "battlePlan": [
+        {
+          "character": 7,
+          "command": 22,
+          "minEnemies": 3
+        },
+        {
+          "character": 8,
+          "command": 26,
+          "minEnemies": 2
+        }
+      ]
+    },
+    {
+      "label": "Mount Hobs summit: Yang vs the bombs, then Mom Bomb",
+      "kind": "mash",
+      "keys": [
+        "Confirm"
+      ],
+      "phases": [
+        "None",
+        "Init",
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Player",
+        "storyFlag": 19
+      },
+      "stableFrames": 30,
+      "periodFrames": 8,
+      "pressedFrames": 1,
+      "timeoutFrames": 72000,
+      "battlePlan": [
+        {
+          "character": 1,
+          "command": 10,
+          "minHpPercent": 50,
+          "bossOnly": true
+        },
+        {
+          "character": 8,
+          "command": 26,
+          "minEnemies": 2
+        },
+        {
+          "character": 7,
+          "command": 22,
+          "minEnemies": 3
+        },
+        {
+          "character": 7,
+          "command": 2
+        }
+      ]
+    },
+    {
+      "label": "Mount Hobs summit: north path down the far side",
+      "kind": "navigate",
+      "mapId": 180,
+      "goal": {
+        "x": 20,
+        "y": 8,
+        "layer": 1
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Player",
+        "mapId": 181
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 54000,
+      "battlePlan": [
+        {
+          "character": 7,
+          "command": 22,
+          "minEnemies": 3
+        },
+        {
+          "character": 8,
+          "command": 26,
+          "minEnemies": 2
+        }
+      ]
+    },
+    {
+      "label": "Mount Hobs east slope: exit to the overworld",
+      "kind": "navigate",
+      "mapId": 181,
+      "goal": {
+        "x": 23,
+        "y": 30,
+        "layer": 1
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Player",
+        "mapId": 1
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 54000,
+      "battlePlan": [
+        {
+          "character": 7,
+          "command": 22,
+          "minEnemies": 3
+        },
+        {
+          "character": 8,
+          "command": 26,
+          "minEnemies": 2
+        }
+      ]
+    },
+    {
+      "label": "Segment 4 complete: Mom Bomb defeated, outside Mount Hobs (Fabul side)",
+      "kind": "checkpoint",
+      "phases": [
+        "Player"
+      ],
+      "until": {
+        "phase": "Player",
+        "mapId": 1,
+        "storyFlag": 19
+      }
+    }
+  ],
+  "weaknesses": {
+    "7": [
+      1
+    ],
+    "10": [
+      2
+    ],
+    "14": [
+      2
+    ],
+    "15": [
+      3
+    ],
+    "16": [
+      1
+    ],
+    "17": [
+      3
+    ],
+    "18": [
+      1
+    ],
+    "19": [
+      2
+    ],
+    "20": [
+      1
+    ],
+    "21": [
+      3
+    ],
+    "22": [
+      3
+    ],
+    "26": [
+      2
+    ],
+    "27": [
+      2
+    ],
+    "29": [
+      1
+    ],
+    "33": [
+      3
+    ],
+    "34": [
+      1
+    ],
+    "36": [
+      1
+    ],
+    "42": [
+      3
+    ],
+    "43": [
+      2
+    ],
+    "44": [
+      3
+    ],
+    "48": [
+      1
+    ],
+    "49": [
+      1
+    ],
+    "50": [
+      1
+    ],
+    "51": [
+      1
+    ],
+    "52": [
+      1
+    ],
+    "54": [
+      1
+    ],
+    "56": [
+      2
+    ],
+    "57": [
+      3
+    ],
+    "58": [
+      3
+    ],
+    "62": [
+      2
+    ],
+    "68": [
+      1
+    ],
+    "70": [
+      1
+    ],
+    "72": [
+      1
+    ],
+    "74": [
+      3
+    ],
+    "82": [
+      1
+    ],
+    "83": [
+      2
+    ],
+    "89": [
+      2
+    ],
+    "91": [
+      2
+    ],
+    "93": [
+      2
+    ],
+    "94": [
+      1
+    ],
+    "96": [
+      2
+    ],
+    "102": [
+      1
+    ],
+    "103": [
+      2
+    ],
+    "104": [
+      2
+    ],
+    "113": [
+      1
+    ],
+    "115": [
+      1
+    ],
+    "118": [
+      1
+    ],
+    "120": [
+      1
+    ],
+    "121": [
+      1
+    ],
+    "126": [
+      1
+    ],
+    "130": [
+      2
+    ],
+    "148": [
+      2
+    ],
+    "150": [
+      1
+    ],
+    "160": [
+      2
+    ],
+    "163": [
+      3
+    ],
+    "167": [
+      1
+    ],
+    "181": [
+      1
+    ],
+    "189": [
+      3
+    ],
+    "190": [
+      3
+    ],
+    "194": [
+      1
+    ],
+    "195": [
+      3
+    ],
+    "209": [
+      1
+    ],
+    "210": [
+      3
+    ],
+    "212": [
+      1
+    ],
+    "227": [
+      2
+    ],
+    "229": [
+      1
+    ],
+    "231": [
+      2
+    ],
+    "236": [
+      2
+    ],
+    "246": [
+      2
+    ],
+    "251": [
+      2
+    ],
+    "252": [
+      2
+    ],
+    "274": [
+      1
+    ]
+  },
+  "fleeTough": true
+}
