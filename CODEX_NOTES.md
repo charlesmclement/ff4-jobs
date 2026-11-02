@@ -65,6 +65,12 @@ analysis. See also `CLAUDE_HANDOFF.txt` and `docs/TAS-SEGMENT-2.md`.
    **Rule for new routes:** set `layer` from the map's collision file (that
    index mapping), never assume 0.
 
+9. **Titan wipe stopped the run (fixed, compile-only).** At Mist the
+   scripted Titan quake kills the whole party, and the event then continues
+   (map 319). `BattlePilot` failed on "all party HP 0". It now waits instead;
+   a real game over changes the phase to GotoTitle, which no step allows, so
+   the engine still stops on genuine defeats.
+
 ## Stuck detection (all segments, always on)
 
 The user's standing requirement: every movement must be confirmed. It lives

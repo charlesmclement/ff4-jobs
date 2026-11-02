@@ -41,7 +41,9 @@ internal sealed class BattlePilot
             alive++;
             if(hp<Math.Max(60,stats.ConfirmedMaxHp()*45/100) && (injured==null || hp<injured.BattleUnitDataInfo.Parameter.CurrentHP))injured=p;
         }
-        if(players.Length>0 && alive==0) {state.Failure="Party defeated; run stopped";return;}
+        // Scripted losses (Titan at Mist) wipe the party and the story goes on;
+        // a real game over leaves the battle for GotoTitle, which no step allows.
+        if(players.Length>0 && alive==0) {state.Detail="Party down; waiting for the game";return;}
         bool mist=false,hasEnemy=false;
         for(int i=0;i<enemies.Length;i++)
         {
