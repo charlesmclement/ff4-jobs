@@ -53,7 +53,10 @@ internal sealed class BattlePilot
             var p=players[i];var stats=p?.BattleUnitDataInfo?.Parameter;if(stats==null)continue;
             int hp=stats.CurrentHP;totalHp+=hp;
             int rank=HealRank(p!);
-            if(hp<=0) {if(rank>=0 && (dead==null || rank<HealRank(dead)))dead=p;continue;}
+            // A dead Rydia in a boss fight stays down: the rest keep killing
+            // (user: "if she dies just kill the things").
+            bool skipRevive=bossSeen && p!.GetOwnedCharacterData()?.characterStatusId==Rydia;
+            if(hp<=0) {if(rank>=0 && !skipRevive && (dead==null || rank<HealRank(dead)))dead=p;continue;}
             alive++;
             float ratio=hp/(float)Math.Max(1,stats.ConfirmedMaxHp());
             int who=p!.GetOwnedCharacterData()?.characterStatusId??0;
