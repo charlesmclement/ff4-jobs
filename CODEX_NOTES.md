@@ -333,6 +333,12 @@ whatever build it launched with, so always say which build is live.
     wandered beside the bed. The house 37 collision shows (16,7) is blocked;
     the free tile next to her is (15,6). Talk facing Right. Check
     `collision.json` before choosing a stand tile for a check event.
+37. **Sing never confirmed; flee blocked.** Edward's Sing opens targeting
+    on EnemyAll, and SelectEnemy pressed Left forever trying to get a single
+    enemy (vs Cockatrice). Now: EnemyAll + a non-Attack command (or 3 Left
+    presses without effect) means Confirm. Also, L+R escape only works from
+    the command list, so fleeing first presses Back out of any open
+    item/spell/target list.
 
 ## Stuck detection (all segments, always on)
 

@@ -31,7 +31,7 @@ internal sealed class BattlePilot
         abilityLastIndex=-1;abilityLastKey=null;lastInfo=lastCursor=-1;lastActor=IntPtr.Zero;previousHp=-1;
         pendingRule=-1;abilityConfirms=abilityStuck=targetPresses=0;decision="";
         blockedRules.Clear();blockedCure.Clear();blockedItems.Clear();blockedStatusSpell.Clear();usedOnce.Clear();wasMist=false;
-        fleeFrames=0;fightSeconds=0;fightFrame=-1;rowDone=false;
+        fleeFrames=0;sidePresses=0;fightSeconds=0;fightFrame=-1;rowDone=false;
     }
     internal void Read(Snapshot state,int frame,BattleRule[]? plan=null,int[]? fleeMonsters=null)
     {
@@ -124,6 +124,12 @@ internal sealed class BattlePilot
         bool slow=fightSeconds>SlowFightSeconds,toughFight=FleeTough && tough,status=toad!=null || mini!=null;
         if((fleeTarget || slow || toughFight || status) && !boss && !scripted && fleeFrames<FleeGiveUp)
         {
+            // L+R escape works only from the command list: back out of any
+            // open item, spell or target list first.
+            if(menu==null || !menu)menu=UnityEngine.Object.FindObjectOfType<BattleMenuController>();
+            var open=menu!=null && menu.IsShow?menu.infomationController?.stateMachine:null;
+            if(open!=null && (int)open.Current>1)
+            {Pulse(state,frame,"Back","Close menu to run");state.Battle=$"{enemyLine} | Party: run away (closing menu)";return;}
             fleeFrames++;state.BattleInput="SwitchLeft+SwitchRight";
             state.Detail="Running away";
             decision=fleeTarget?"Party: run away (listed encounter)":status?"Party: run away (toad/mini; cure after)":toughFight?"Party: run away (tough enemy; save MP for the boss)":$"Party: run away (fight past {SlowFightSeconds:0} s)";
@@ -171,7 +177,7 @@ internal sealed class BattlePilot
             default:Pulse(state,frame,"Back","Return to supported battle commands");break;
         }
     }
-    private int targetPresses;
+    private int targetPresses,sidePresses;
     private void SelectEnemy(BattleInfomationController info,Snapshot state,int frame,string action,BattleEnemyData? wanted,bool all=false)
     {
         var t=info.targetSelectController;
@@ -186,7 +192,12 @@ internal sealed class BattlePilot
             targetPresses++;
             Pulse(state,frame,targetPresses<=3?"PageDown":"PageUp","Target all enemies");return;
         }
-        if(side!=EnemySingleState) {Pulse(state,frame,"Left","Select enemy side");return;}
+        // Commands that always hit every enemy (Sing, Kick) open on EnemyAll and
+        // can't be narrowed: confirm. Otherwise Left a few times, then confirm.
+        if(side==EnemyAllState && (pendingCommand!=1 || sidePresses>=3))
+        {if(frame%12==0)sidePresses=0;Pulse(state,frame,"Confirm",action+" (all enemies)");return;}
+        if(side!=EnemySingleState) {if(frame%12==0)sidePresses++;Pulse(state,frame,"Left","Select enemy side");return;}
+        sidePresses=0;
         var selected=t.GetEnemyTarget();
         // Whole-side targeting (e.g. Darkness) selects every living enemy.
         bool living=selected!=null && selected.Count>0;
