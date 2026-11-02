@@ -1357,7 +1357,7 @@
       ]
     },
     {
-      "label": "Octomammoth: Cecil Darkness then Attack; Tellah Thunder, then Recall",
+      "label": "Octomammoth: Cecil Darkness then Attack; Tellah Thunder, Osmose when dry",
       "kind": "interact",
       "mapId": 172,
       "facing": "Up",
@@ -1394,19 +1394,51 @@
         },
         {
           "character": 6,
-          "command": 28
+          "command": 8,
+          "ability": 47
+        },
+        {
+          "character": 6,
+          "command": 2
         }
       ]
     },
     {
-      "label": "Segment 2 complete: Octomammoth defeated",
+      "label": "Waterfall B1: leave by the north exit",
+      "kind": "navigate",
+      "mapId": 172,
+      "goal": {
+        "x": 20,
+        "y": 6,
+        "layer": 0
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Player",
+        "mapId": 1
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 36000
+    },
+    {
+      "label": "Segment 2 complete: Octomammoth defeated, outside the waterfall cave",
       "kind": "checkpoint",
       "phases": [
         "Player"
       ],
       "until": {
         "phase": "Player",
-        "mapId": 172,
+        "mapId": 1,
         "storyFlag": 13
       }
     }

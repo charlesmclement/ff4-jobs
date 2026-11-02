@@ -171,6 +171,14 @@ whatever build it launched with, so always say which build is live.
     frames. **Rule:** any per-press counter must update only when
     `frame % 12 == 0`.
 
+21. **Octomammoth: Tellah stuck on Recall at low MP (live).** In PR, Recall
+    costs MP (the master data says 0). The plan is now Darkness once (Cecil,
+    boss only), Tellah Thunder while MP >= 5, else Osmose (ability 47, 0 MP;
+    Octomammoth has 293 MP), else Defend. Segment 2 now ends outside the
+    waterfall cave: the B1 north door (20,6) leads to the overworld, then a
+    checkpoint (map 1, flag 13). The user saved there, so segment 3 starts
+    there.
+
 ## Stuck detection (all segments, always on)
 
 The user's standing requirement: every movement must be confirmed. It lives
