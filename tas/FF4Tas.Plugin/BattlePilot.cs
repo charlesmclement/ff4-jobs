@@ -44,7 +44,7 @@ internal sealed class BattlePilot
         if(players==null || enemies==null)return;
         // Heal anyone under half HP. Cecil comes first (he carries every fight),
         // then whoever is lowest by percentage.
-        BattlePlayerData? injured=null,dead=null;int alive=0,totalHp=0;float injuredRatio=2;casterCanCure=false;injuredRatioNow=1;
+        BattlePlayerData? injured=null,dead=null;int alive=0,totalHp=0;float injuredRatio=2;casterCanCure=false;injuredRatioNow=1;toad=mini=null;
         for(int i=0;i<players.Length;i++)
         {
             var p=players[i];var stats=p?.BattleUnitDataInfo?.Parameter;if(stats==null)continue;
@@ -53,6 +53,14 @@ internal sealed class BattlePilot
             alive++;
             float ratio=hp/(float)Math.Max(1,stats.ConfirmedMaxHp());
             int who=p!.GetOwnedCharacterData()?.characterStatusId??0;
+            // Toad/Mini stop casting and last after the fight: cure them first.
+            var conditions=stats.CurrentConditionList;
+            for(int c=0;conditions!=null && c<conditions.Count;c++)
+            {
+                int cid=conditions[c]?.Id??0;
+                if(cid is ToadCondition or ToadCondition2 && toad==null)toad=p;
+                if(cid is MiniCondition or MiniCondition2 && mini==null)mini=p;
+            }
             if(who is Rydia or Tellah or Rosa && stats.CurrentMP>=CureMp)casterCanCure=true;
             if(ratio>=HealBelow)continue;
             if(IsCecil(p!))ratio-=1;
@@ -212,6 +220,9 @@ internal sealed class BattlePilot
     // Back attack flips the rows: one non-Cecil actor uses Row once to fix it.
     private bool rowDone;
     private const int Row=5,Rydia=4,Rosa=3;
+    // Master condition ids (both entries named Toad/Mini) and their cure items.
+    private const int ToadCondition=14,ToadCondition2=58,MiniCondition=13,MiniCondition2=57,MaidensKiss=11,Mallet=12;
+    private BattlePlayerData? toad,mini;
     internal Dictionary<int,int[]> Weaknesses=new();
     internal BattleDb Db=new();
     private string decision="",enemyLine="";
@@ -250,6 +261,9 @@ internal sealed class BattlePilot
         // the party's rows back with Row, once per fight.
         if(info.isBackAttack && !rowDone && !IsCecil(actor) && livingEnemies>0)
         {rowDone=true;pendingCommand=Row;Log(actor,"Row (back attack)");return;}
+        // Status cures before healing: Maiden's Kiss for Toad, Mallet for Mini.
+        if(toad!=null && HasItem(MaidensKiss)) {pendingItem=MaidensKiss;pendingTarget=toad.GetOwnedCharacterData().characterStatusId;Log(actor,"Maiden's Kiss on #"+pendingTarget+" (toad)");return;}
+        if(mini!=null && HasItem(Mallet)) {pendingItem=Mallet;pendingTarget=mini.GetOwnedCharacterData().characterStatusId;Log(actor,"Mallet on #"+pendingTarget+" (mini)");return;}
         if(dead!=null && HasItem(9)) {pendingItem=9;pendingTarget=dead.GetOwnedCharacterData().characterStatusId;Log(actor,"Phoenix Down on #"+pendingTarget);return;}
         if(injured!=null)
         {

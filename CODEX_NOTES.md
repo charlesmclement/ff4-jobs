@@ -238,6 +238,15 @@ whatever build it launched with, so always say which build is live.
     considered (`GetAtbGaugeByUnitData`, `GetATBGaugeByPlayer`) and set aside
     for this simpler rule.
 
+27. **Tellah turned into a toad (live).** Toad/Mini stop spellcasting and
+    persist after the fight; with no field-menu driver the cure has to happen
+    in battle. The party scan reads `CharacterParameterBase.CurrentConditionList`
+    (master condition ids: Toad 14/58, Mini 13/57). Before revive/heal, any
+    actor uses Maiden's Kiss (content 11) on a toad or Mallet (12) on a mini,
+    if owned. Segment 2 now picks up the Maiden's Kiss chest on Watery Pass 1
+    (163 (34,14), flag 39, opened facing Up from (34,15)) before Tellah. Kaipo
+    sells more once the shop driver exists.
+
 ## Stuck detection (all segments, always on)
 
 The user's standing requirement: every movement must be confirmed. It lives

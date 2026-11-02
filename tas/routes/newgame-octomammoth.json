@@ -889,6 +889,54 @@
       "timeoutFrames": 36000
     },
     {
+      "label": "Watery Pass 1: walk to the Maiden's Kiss chest",
+      "kind": "navigate",
+      "mapId": 163,
+      "goal": {
+        "x": 34,
+        "y": 15,
+        "layer": 1
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick"
+      ],
+      "handleBattles": true,
+      "until": {
+        "atDestination": true
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 36000
+    },
+    {
+      "label": "Watery Pass 1: open the Maiden's Kiss (Toad cure)",
+      "kind": "interact",
+      "mapId": 163,
+      "facing": "Up",
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick"
+      ],
+      "handleBattles": true,
+      "until": {
+        "treasureFlag": 39
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 3600
+    },
+    {
       "label": "Watery Pass: walk below Tellah",
       "kind": "navigate",
       "mapId": 163,
