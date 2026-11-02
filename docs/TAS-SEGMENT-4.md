@@ -32,7 +32,8 @@ flag 19. Fabul is segment 5. Shortcut: **FF4 TAS: Segment 4**.
   under 70%).
 * Mom Bomb (community strat, minus Darkness): Cecil Attack. Yang Attack x2,
   Focus x2, Defend until it explodes (it is timed), then Kick all bombs.
-  Rydia Blizzard on all after the split. Only Rosa heals while she can.
+  Cecil throws the Antarctic Wind (from Watery Pass 5) once after the
+  split, if carried. Rydia Blizzard on all after the split. Only Rosa heals while she can.
 
 ## New engine support
 

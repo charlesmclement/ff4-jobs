@@ -127,6 +127,8 @@ public sealed class BattleRule
     // on TargetCharacter (character_status id) or, when null, on the actor.
     public int? Item {get;set;}
     public int? TargetCharacter {get;set;}
+    // Throw the item at the enemies instead (Antarctic Wind 38, Bomb Fragment).
+    public bool TargetEnemies {get;set;}
     // Only in boss battles (monster master boss = 1), e.g. HP-costing Darkness.
     public bool BossOnly {get;set;}
 }

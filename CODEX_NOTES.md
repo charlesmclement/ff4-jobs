@@ -427,6 +427,14 @@ whatever build it launched with, so always say which build is live.
     Run (Vanilla)" runs the New Game -> Octomammoth route. Mod TAS saves
     were backed up first to `research/protected-campaign-saves/
     tas-jobs-mod-before-vanilla-20261102T172211Z` (8 files, sha256 manifest).
+49. **Antarctic Wind pickup + throw (untested).** Watery Pass 5 (map 169):
+    chest at (8,10), treasure flag 53, content 38. The chest pocket is only
+    reached through the Upper layer (ToLayer (13,13)/(13,14) up, (9,17)/(9,16)
+    back down), so the step targets ground (8,11) layer 1 and opens facing
+    Up; added to mist-octomammoth (steps 29-30) and newgame-octomammoth
+    (45-46) before the Shadowblade. New `BattleRule.targetEnemies` throws
+    an item at the enemy side (item target stage 3 uses SelectEnemy, all).
+    Mom Bomb plan rule 1: Cecil throws it once after the split.
 
 ## Stuck detection (all segments, always on)
 

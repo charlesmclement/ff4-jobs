@@ -939,6 +939,82 @@
       ]
     },
     {
+      "label": "Watery Pass 5: walk below the Antarctic Wind chest",
+      "kind": "navigate",
+      "mapId": 169,
+      "goal": {
+        "x": 8,
+        "y": 11,
+        "layer": 1
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick"
+      ],
+      "handleBattles": true,
+      "until": {
+        "atDestination": true
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 36000,
+      "battlePlan": [
+        {
+          "character": 6,
+          "command": 8,
+          "byWeakness": true,
+          "minEnemies": 2,
+          "minMp": 45
+        },
+        {
+          "character": 6,
+          "command": 2,
+          "reserveMp": 40
+        }
+      ]
+    },
+    {
+      "label": "Watery Pass 5: open the Antarctic Wind (for the Mom Bomb split)",
+      "kind": "interact",
+      "mapId": 169,
+      "facing": "Up",
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick"
+      ],
+      "handleBattles": true,
+      "until": {
+        "treasureFlag": 53
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 3600,
+      "battlePlan": [
+        {
+          "character": 6,
+          "command": 8,
+          "byWeakness": true,
+          "minEnemies": 2,
+          "minMp": 45
+        },
+        {
+          "character": 6,
+          "command": 2,
+          "reserveMp": 40
+        }
+      ]
+    },
+    {
       "label": "Watery Pass 5: walk to the Shadowblade chest",
       "kind": "navigate",
       "mapId": 169,

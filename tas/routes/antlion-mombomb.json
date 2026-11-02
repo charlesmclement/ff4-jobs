@@ -800,6 +800,14 @@
       "timeoutFrames": 72000,
       "battlePlan": [
         {
+          "character": 1,
+          "item": 38,
+          "targetEnemies": true,
+          "minEnemies": 2,
+          "bossOnly": true,
+          "oncePerBattle": true
+        },
+        {
           "character": 4,
           "command": 8,
           "ability": 36,

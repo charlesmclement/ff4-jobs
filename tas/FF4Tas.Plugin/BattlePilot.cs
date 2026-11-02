@@ -185,7 +185,9 @@ internal sealed class BattlePilot
                 if(pendingItem==0) {Pulse(state,frame,"Back","Cancel unexpected item list");break;}
                 SelectItem(info,pendingItem,state,frame);break;
             case 3:
-                SelectHealingTarget(info,state,frame);break;
+                if(itemOnEnemies)SelectEnemy(info,state,frame,"Throw item at the enemies",weakest,true);
+                else SelectHealingTarget(info,state,frame);
+                break;
             case 6:
                 if(mist) {Pulse(state,frame,"Back","Cancel attack: dragon became mist");break;}
                 SelectEnemy(info,state,frame,"Attack weakest enemy",weakest);break;
@@ -277,7 +279,7 @@ internal sealed class BattlePilot
     private static readonly Dictionary<int,string> Names=new(){[1]="Cecil",[13]="Cecil",[2]="Kain",[4]="Rydia",[6]="Tellah",[3]="Rosa",[7]="Edward",[8]="Yang"};
     private static bool IsCecil(BattlePlayerData p)=>p.GetOwnedCharacterData()?.characterStatusId is 1 or 13;
     private bool rosaParty,rosaCanCure,bossSeen;
-    private IntPtr turnActor;private int turnRule=-1;
+    private IntPtr turnActor;private int turnRule=-1;private bool itemOnEnemies;
     private readonly HashSet<int> livingIds=new();private BattlePlayerData? rosaTarget,rosaLow;
     private const float RosaHealBelow=.75f;
     private const int Summon=9,ChocoboSummon=65,ChocoboMp=7,RydiaBossReserve=14,Edward=7;
@@ -296,7 +298,7 @@ internal sealed class BattlePilot
     // reserve his route plan sets.
     private void Decide(BattleInfomationController info,BattlePlayerData actor,BattlePlayerData? dead,BattlePlayerData? injured,bool mist,BattleRule[]? plan)
     {
-        pendingItem=0;pendingTarget=0;pendingCommand=1;pendingAbility=0;pendingRule=-1;castOnUndead=false;targetAll=false;
+        pendingItem=0;pendingTarget=0;pendingCommand=1;pendingAbility=0;pendingRule=-1;castOnUndead=false;targetAll=false;itemOnEnemies=false;
         abilityConfirms=abilityStuck=abilityStride=0;abilityLastIndex=-1;abilityLastKey=null;
         if(mist) {Log(actor,"Defend: Mist Dragon in mist");return;}
         if(scripted) {Log(actor,"Attack: scripted fight, no items or MP");return;}
@@ -399,7 +401,7 @@ internal sealed class BattlePilot
             if(rule.Item is int item)
             {
                 if(!HasItem(item))continue;
-                pendingItem=item;pendingTarget=rule.TargetCharacter??id;pendingRule=r;
+                pendingItem=item;pendingTarget=rule.TargetEnemies?0:rule.TargetCharacter??id;pendingRule=r;itemOnEnemies=rule.TargetEnemies;
                 if(rule.OncePerBattle) {usedOnce.Add((r,actor.Pointer));turnActor=actor.Pointer;turnRule=r;}
                 Log(actor,$"item {item} on #{pendingTarget} (plan rule {r+1})");
                 return;
