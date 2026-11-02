@@ -48,6 +48,21 @@ UPDATE — NOV 1 EVENING (SUPERSEDES "CURRENT PRIORITY" BELOW)
   tas/plan_path.py (reusable offline planner; see its docstring).
   Mist Cave (map 162 = Map_30011_1) does have collision, so native search
   should work there.
+- Full live run reached Mist Cave (34,5): overworld waypoints, cave path and
+  focus pause all WORKED. It looped on the warning "YOU CHOOSE TO IGNORE MY
+  WARNINGS?" (event sc_e_0007: Select default index 1 = No; Confirm mash chose
+  No and the event walked Cecil back).
+- NEW (compiled, NOT yet run): step "choice" (0-based). Plugin reads
+  Last.Message.MessageSelectWindowManager.Instance.IsOpen() and
+  controller.selectCursor.Index into Snapshot.ChoiceIndex; engine pulses
+  Down/Up toward the option, then Confirm. Mist Cave step has choice 0.
+- NEW: TAS speed boost, F8 toggles (FF4JOBS_TAS_SPEED, default 3x), owns only
+  the timeScale it set (Jobs LT/F6 fast-forward unaffected). Run timer: "TAS"
+  time = sum of scaled deltaTime (game time, runs 3x faster when boosted, so
+  boosting cannot shorten the time); wall clock shown for reference; both in
+  status.json (gameSeconds, elapsedSeconds). OnGUI overlay top-left (IL2CPP
+  OnGUI not yet observed live). Navigation arrival tolerance widens with the
+  observed per-frame stride for boosted movement.
 - Key bindings are irrelevant to the TAS (logical native Key injection); the
   user asked about resetting controls — not needed.
 - Next: user retests; if FieldHelp closes, watch step 2 (first real navigation,

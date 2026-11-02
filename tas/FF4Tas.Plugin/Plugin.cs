@@ -48,7 +48,6 @@ public sealed class Controller : MonoBehaviour
     private static string lastPhase="";
     private string lastRecord="";
     private float nextRecord;
-    private float runStarted=-1,runElapsed;
     private static float nextFieldFind;
     private static float nextVision;
     private static Vision? vision;
@@ -89,6 +88,11 @@ public sealed class Controller : MonoBehaviour
                     int? requested=active.Until?.StoryFlag;
                     if(requested>6 && storage.Get(DataStorage.Category.kScenarioFlag1,requested.Value)!=0)flags.Add(requested.Value);
                     snapshot.StoryFlags=flags.ToArray();
+                }
+                if(active.Choice!=null)
+                {
+                    var select=Last.Message.MessageSelectWindowManager.Instance;
+                    if(select!=null && select.IsOpen())snapshot.ChoiceIndex=select.controller?.selectCursor?.Index;
                 }
                 if(snapshot.Phase!=lastPhase)
                 {
@@ -145,12 +149,13 @@ public sealed class Controller : MonoBehaviour
                     {
                         if(Engine?.Running==true)throw new InvalidOperationException("Stop the current route first");
                         var route=command.Route??throw new InvalidOperationException("Missing route");
-                        var next=new RouteEngine(route);navigation.Reset();battle.Reset();lastPhase="";Engine=next;routeName=route.Name;error="";runStarted=Time.realtimeSinceStartup;runElapsed=0;
+                        var next=new RouteEngine(route);navigation.Reset();battle.Reset();lastPhase="";Engine=next;routeName=route.Name;error="";RunClock.Reset();
                         // First synthetic input begins next frame, never partway through this one.
                     }
                     else throw new InvalidOperationException("Unknown command");
                 }
             }
+            RunClock.Update(Engine?.Running==true && !Engine.Paused);
             if(Time.unscaledTime>=nextReport) {nextReport=Time.unscaledTime+.1f;Report();}
         }
         catch(Exception e) { error=e.Message;Engine?.Stop(error);Report(); }
@@ -189,11 +194,10 @@ public sealed class Controller : MonoBehaviour
     }
     private void Report()
     {
-        if(Engine?.Running==true && runStarted>=0)runElapsed=Time.realtimeSinceStartup-runStarted;
         string target=Path.Combine(Plugin.DirectoryPath,"status.json");
         File.WriteAllText(target+".tmp",JsonSerializer.Serialize(new{
             session=Session,utc=DateTime.UtcNow,frame,route=routeName,status=Engine?.Paused==true?"paused":Engine?.Status??"idle",
-            step=Engine?.Index,label=Engine?.Label,reason=Engine?.Reason,error,elapsedSeconds=Math.Round(runElapsed,1),
+            step=Engine?.Index,label=Engine?.Label,reason=Engine?.Reason,error,elapsedSeconds=Math.Round(RunClock.RealSeconds,2),gameSeconds=Math.Round(RunClock.GameSeconds,2),speedBoost=RunClock.Boost,speedMultiplier=RunClock.Multiplier,
             phase=snapshot.Phase,mapId=snapshot.MapId,focused=snapshot.Focused,
             x=snapshot.X,y=snapshot.Y,layer=snapshot.Layer,storyFlags=snapshot.StoryFlags,detail=snapshot.Detail,
             scope="Untested scripted Baron/Mist Dragon route; observed Unity frames, no deterministic savestates"
@@ -206,8 +210,26 @@ public sealed class Controller : MonoBehaviour
             lastRecord=record;nextRecord=Time.unscaledTime+1;
         }
     }
-    private void OnDisable()=>Engine?.Stop("Runner disabled");
-    private void OnDestroy()=>Engine?.Stop("Runner destroyed");
+    private void OnDisable() {Engine?.Stop("Runner disabled");RunClock.Restore();}
+    private void OnDestroy() {Engine?.Stop("Runner destroyed");RunClock.Restore();}
+    private static GUIStyle? overlayStyle,shadowStyle;
+    // Run timer overlay. The TAS time is game time: it speeds up with the boost,
+    // so a boosted run is timed exactly as if it ran at normal speed. Real
+    // wall-clock time is shown for reference only.
+    private void OnGUI()
+    {
+        if(Engine==null && !RunClock.Boost)return;
+        if(overlayStyle==null)
+        {
+            overlayStyle=new GUIStyle();overlayStyle.fontSize=18;overlayStyle.normal.textColor=Color.white;
+            shadowStyle=new GUIStyle();shadowStyle.fontSize=18;shadowStyle.normal.textColor=Color.black;
+        }
+        string state=Engine==null?"idle":Engine.Paused?"paused":Engine.Status;
+        string speed=RunClock.Boost?$"  {RunClock.Multiplier:0.#}x ON (F8)":"  1x (F8 for speed)";
+        string text=$"TAS {RunClock.Format(RunClock.GameSeconds)}  (wall clock {RunClock.Format(RunClock.RealSeconds)}){speed}\n{state}: {Engine?.Label}";
+        GUI.Label(new Rect(11,9,900,60),text,shadowStyle);
+        GUI.Label(new Rect(10,8,900,60),text,overlayStyle);
+    }
     private sealed class Request
     {
         public string Session {get;set;}="";

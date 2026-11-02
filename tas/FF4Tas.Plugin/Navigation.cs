@@ -12,12 +12,13 @@ internal sealed class Navigation
     private IntPtr owner;
     private readonly List<Vector3> path=new();
     private int cursor,unchanged,retryAt,greedyTurn;
-    private Vector3 lastPosition,target;
+    private Vector3 lastPosition,target,previousFrame;
+    private bool havePrevious;
     private bool observed,greedy;
     // Waypoint progress survives Reset (battles, events) and restarts per step.
     private Step? waypointStep;
     private int waypoint;
-    internal void Reset() {step=null;owner=IntPtr.Zero;path.Clear();cursor=unchanged=retryAt=greedyTurn=0;observed=greedy=false;}
+    internal void Reset() {step=null;owner=IntPtr.Zero;path.Clear();cursor=unchanged=retryAt=greedyTurn=0;observed=greedy=havePrevious=false;}
     internal void Read(FieldMap field,Step active,Snapshot state,int frame)
     {
         var controller=field.fieldController;
@@ -34,6 +35,10 @@ internal sealed class Navigation
         var destination=controller.ConvertCellPositionToWorldPosition(new Vector3(goal.X,goal.Y,goal.Layer));
         var neighbor=controller.ConvertCellPositionToWorldPosition(new Vector3(goal.X+1,goal.Y,goal.Layer));
         float tile=Math.Max(.01f,Math.Abs(neighbor.x-destination.x)),tolerance=tile*.16f;
+        // Speed boost (or a low frame rate) moves farther per frame; widen the
+        // arrival window to the observed stride so points are never stepped over.
+        if(havePrevious)tolerance=Math.Min(tile*.45f,Math.Max(tolerance,Distance(pos,previousFrame)*.6f));
+        previousFrame=pos;havePrevious=true;
         state.AtDestination=Near(pos,destination,tolerance) && (int)cell.z==goal.Layer;
         if(state.AtDestination) {state.Detail="At route destination";return;}
         if(observed && Near(lastPosition,pos,tile*.01f))unchanged++;

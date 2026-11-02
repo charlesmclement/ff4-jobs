@@ -31,6 +31,7 @@ public sealed class Route
                 throw new ArgumentException("Navigation needs a map and valid destination");
             if(s.Waypoints!=null && (s.Kind!="navigate" || s.Waypoints.Length>256 || s.Waypoints.Any(w=>w==null || w.X is <0 or >1024 || w.Y is <0 or >1024 || w.Layer is <0 or >15)))
                 throw new ArgumentException("Waypoints need a navigate step and valid cells");
+            if(s.Choice is <0 or >15)throw new ArgumentException("Invalid choice index");
             if(s.Facing!=null && s.Facing is not ("Up" or "Down" or "Left" or "Right"))throw new ArgumentException("Invalid facing direction");
             if(s.Until?.StoryFlag is <0 or >255)throw new ArgumentException("Invalid story flag");
             if(s.Until?.AtDestination==true && s.Kind!="navigate")throw new ArgumentException("Destination condition requires navigation");
@@ -64,6 +65,9 @@ public sealed class Step
     // where the native search cannot plan (the overworld has no collision layer).
     public Destination[]? Waypoints {get;set;}
     public string? Facing {get;set;}
+    // 0-based option to pick whenever a native choice window opens during this
+    // step (e.g. the Mist Cave warning defaults to "No"; 0 is "Yes").
+    public int? Choice {get;set;}
     public bool HandleBattles {get;set;}
 }
 public sealed class Condition
@@ -91,6 +95,8 @@ public sealed class Snapshot
     public bool AtDestination {get;set;}
     public string? NavigationInput {get;set;}
     public string? BattleInput {get;set;}
+    // Cursor index of an open native choice window, null when none is open.
+    public int? ChoiceIndex {get;set;}
     public string? Failure {get;set;}
     public string Detail {get;set;}="";
 }
@@ -170,6 +176,13 @@ public sealed class RouteEngine
         {
             if(elapsed%16==0)current.Add("Start");
             else if(elapsed%16==8)current.Add("Back");
+            return;
+        }
+        // Steer an open choice window to the requested option, then confirm it.
+        // Without a requested option, dialogue keeps its default (Confirm).
+        if(step.Choice!=null && state.ChoiceIndex!=null && state.Phase is "Event" or "Message")
+        {
+            if(elapsed%8==0)current.Add(state.ChoiceIndex<step.Choice?"Down":state.ChoiceIndex>step.Choice?"Up":"Confirm");
             return;
         }
         if(step.Kind is "navigate" or "interact" or "battle")
