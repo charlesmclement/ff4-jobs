@@ -163,7 +163,9 @@ public sealed class Controller : MonoBehaviour
                     else throw new InvalidOperationException("Unknown command");
                 }
             }
-            RunClock.Update(Engine?.Running==true && !Engine.Paused);
+            // Walking under route control is capped (RunClock.FieldCap) so path
+            // following can still land on cells; battles/events get full speed.
+            RunClock.Update(Engine?.Running==true && !Engine.Paused,Engine?.Running==true && snapshot.Phase=="Player");
             if(Time.unscaledTime>=nextReport) {nextReport=Time.unscaledTime+.1f;Report();}
         }
         catch(Exception e) { error=e.Message;Engine?.Stop(error);Report(); }
@@ -205,7 +207,7 @@ public sealed class Controller : MonoBehaviour
         string target=Path.Combine(Plugin.DirectoryPath,"status.json");
         File.WriteAllText(target+".tmp",JsonSerializer.Serialize(new{
             session=Session,utc=DateTime.UtcNow,frame,route=routeName,status=Engine?.Paused==true?"paused":Engine?.Status??"idle",
-            step=Engine?.Index,label=Engine?.Label,reason=Engine?.Reason,error,elapsedSeconds=Math.Round(RunClock.RealSeconds,2),gameSeconds=Math.Round(RunClock.GameSeconds,2),speedBoost=RunClock.Boost,speedMultiplier=RunClock.Multiplier,
+            step=Engine?.Index,label=Engine?.Label,reason=Engine?.Reason,error,elapsedSeconds=Math.Round(RunClock.RealSeconds,2),gameSeconds=Math.Round(RunClock.GameSeconds,2),speedBoost=RunClock.Boost,speedMultiplier=RunClock.Speed,speedApplied=RunClock.Applied,
             phase=snapshot.Phase,mapId=snapshot.MapId,focused=snapshot.Focused,
             x=snapshot.X,y=snapshot.Y,layer=snapshot.Layer,storyFlags=snapshot.StoryFlags,detail=snapshot.Detail,battle=snapshot.Battle,
             scope="Untested scripted Baron/Mist Dragon route; observed Unity frames, no deterministic savestates"
@@ -233,7 +235,7 @@ public sealed class Controller : MonoBehaviour
             shadowStyle=new GUIStyle();shadowStyle.fontSize=18;shadowStyle.normal.textColor=Color.black;
         }
         string state=Engine==null?"idle":Engine.Paused?"paused":Engine.Status;
-        string speed=RunClock.Boost?$"  {RunClock.Multiplier:0.#}x ON (F8)":"  1x (F8 for speed)";
+        string speed=$"  {RunClock.Speed}x{(RunClock.Applied!=RunClock.Speed?$" ({RunClock.Applied}x walking)":"")}  F7 -  F8 +";
         string text=$"TAS {RunClock.Format(RunClock.GameSeconds)}  (wall clock {RunClock.Format(RunClock.RealSeconds)}){speed}\n{state}: {Engine?.Label}";
         // In battle, a third line shows the enemies and the latest decision.
         if(snapshot.Phase=="Battle" && snapshot.Battle.Length>0)text+="\n"+snapshot.Battle;

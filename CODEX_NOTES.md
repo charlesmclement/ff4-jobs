@@ -270,6 +270,14 @@ whatever build it launched with, so always say which build is live.
     (walk to Mist). The combined New Game route drops segment 2's own
     cave-exit step.
 
+29. **Speed control (user): F8 +1x, F7 -1x, 1x..30x, default 6x.** Ignores
+    F7 while F6 is held (the Jobs F6+F7 skip chord). While the route walks
+    (Player phase) the applied speed is capped at 8x
+    (`RunClock.FieldCap`); above that, movement steps past path cells
+    faster than the arrival window. Battles and events use the full setting.
+    The overlay and status.json show the setting and the applied speed. The
+    TAS timer is still game time, so speed never changes the recorded time.
+
 ## Stuck detection (all segments, always on)
 
 The user's standing requirement: every movement must be confirmed. It lives
