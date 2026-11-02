@@ -28,7 +28,7 @@ public sealed class Route
             if(s.Kind=="mash" && (s.Keys.Length==0 || s.PeriodFrames<2 || s.PressedFrames<1 || s.PressedFrames>=s.PeriodFrames))
                 throw new ArgumentException("Mash requires a release interval");
             if(s.Kind is "wait" or "mash" or "checkpoint" or "navigate" or "interact" or "battle")
-                if(s.Until==null || (s.Until.Phase==null && s.Until.MapId==null && s.Until.StoryFlag==null && !s.Until.AtDestination && string.IsNullOrWhiteSpace(s.Until.Visual)))throw new ArgumentException("Step needs a completion condition");
+                if(s.Until==null || (s.Until.Phase==null && s.Until.MapId==null && s.Until.StoryFlag==null && s.Until.TreasureFlag==null && !s.Until.AtDestination && string.IsNullOrWhiteSpace(s.Until.Visual)))throw new ArgumentException("Step needs a completion condition");
             if(s.Until?.Phase!=null && !KnownPhases.Contains(s.Until.Phase))throw new ArgumentException("Unknown completion phase");
             if(s.Kind=="navigate" && (s.Goal==null || s.MapId==null || s.Goal.X is <0 or >1024 || s.Goal.Y is <0 or >1024 || s.Goal.Layer is <0 or >15))
                 throw new ArgumentException("Navigation needs a map and valid destination");
@@ -39,6 +39,7 @@ public sealed class Route
             if(s.Choice is <0 or >15)throw new ArgumentException("Invalid choice index");
             if(s.Facing!=null && s.Facing is not ("Up" or "Down" or "Left" or "Right"))throw new ArgumentException("Invalid facing direction");
             if(s.Until?.StoryFlag is <0 or >255)throw new ArgumentException("Invalid story flag");
+            if(s.Until?.TreasureFlag is <0 or >4095)throw new ArgumentException("Invalid treasure flag");
             if(s.Until?.AtDestination==true && s.Kind!="navigate")throw new ArgumentException("Destination condition requires navigation");
             if(s.Kind is "wait" or "checkpoint" && s.Keys.Length!=0)throw new ArgumentException("Wait/checkpoint cannot press keys");
         }
@@ -110,10 +111,13 @@ public sealed class Condition
     public int? MapId { get; set; }
     public string? Visual { get; set; }
     public int? StoryFlag {get;set;}
+    // Treasure chest opened (DataStorage kTreasureFlag1, the map entity's flag_id).
+    public int? TreasureFlag {get;set;}
     public bool AtDestination {get;set;}
     public bool Matches(Snapshot state)=>(Phase==null || state.Phase==Phase) && (MapId==null || state.MapId==MapId)
         && (Visual==null || state.VisualMatches.Contains(Visual))
         && (StoryFlag==null || state.StoryFlags.Contains(StoryFlag.Value))
+        && (TreasureFlag==null || state.TreasureFlags.Contains(TreasureFlag.Value))
         && (!AtDestination || state.AtDestination);
 }
 public sealed class Snapshot
@@ -123,6 +127,7 @@ public sealed class Snapshot
     public bool Focused { get; set; } = true;
     public string[] VisualMatches { get; set; } = Array.Empty<string>();
     public int[] StoryFlags {get;set;}=Array.Empty<int>();
+    public int[] TreasureFlags {get;set;}=Array.Empty<int>();
     public float? X {get;set;}
     public float? Y {get;set;}
     public int? Layer {get;set;}

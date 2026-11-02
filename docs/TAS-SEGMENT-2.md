@@ -129,3 +129,27 @@ once someone pastes the relevant section.
 Desktop shortcut "FF4 TAS: Segment 2" runs `tas.py launch --resume`: it opens
 the TAS game, you load a save, and once you have control the route starts at
 the step that matches the map and story flags. 3x speed is on; F8 toggles it.
+
+## Community route check (Better Any% notes by Desch, BlueHarvey, AdamProject)
+
+The user pasted these notes; this is a paraphrased comparison, not a copy.
+Their category starts from a modded save after Baron, so it has no Baron
+pickups. That confirms segment 1 skipped nothing the route needs.
+
+Adopted now (route only):
+* Watery Pass pickups: the Ether on the floor after Tellah (165, flag 47),
+  the Shadowblade (169, flag 55), and both chests in the last room before
+  the boss: Hades Armor (flag 58) and Hermes Sandals (flag 59, used later for
+  Antlion). Each is a navigate to the adjacent tile plus an interact facing
+  the chest, done when the chest's treasure flag (kTreasureFlag1) is set.
+
+Not yet possible (needs a menu/shop driver), noted for later:
+* Kaipo: sell gear except the Iron Shield (keep the Alarm Clock); buy 2
+  Emergency Exit, 2 Potions, 1 Phoenix Down. Use Red Fang in the soldier
+  fight.
+* Before Octomammoth: equipment changes (Rydia's rod to Tellah, etc.).
+* Octomammoth: their strat is a clock-based RNG manipulation, so Tellah's
+  Recall casts Thundaga three times. We use Thunder (its weakness) plus Cecil
+  Darkness instead.
+* Their route doesn't mention the camp. We take it for the free full restore;
+  measure later whether skipping it is faster.

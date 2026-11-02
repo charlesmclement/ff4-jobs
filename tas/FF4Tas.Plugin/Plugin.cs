@@ -89,6 +89,8 @@ public sealed class Controller : MonoBehaviour
                 int? requested=active?.Until?.StoryFlag;
                 if(requested>StoryFlagScan && storage.Get(DataStorage.Category.kScenarioFlag1,requested.Value)!=0)flags.Add(requested.Value);
                 snapshot.StoryFlags=flags.ToArray();
+                if(active?.Until?.TreasureFlag is int chest && storage.Get(DataStorage.Category.kTreasureFlag1,chest)!=0)
+                    snapshot.TreasureFlags=new[]{chest};
             }
             if(active!=null)
             {

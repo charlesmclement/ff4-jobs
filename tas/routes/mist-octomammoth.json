@@ -528,6 +528,82 @@
       ]
     },
     {
+      "label": "Watery Pass 2: walk to the Ether chest",
+      "kind": "navigate",
+      "mapId": 165,
+      "goal": {
+        "x": 15,
+        "y": 18,
+        "layer": 1
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick"
+      ],
+      "handleBattles": true,
+      "until": {
+        "atDestination": true
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 36000,
+      "battlePlan": [
+        {
+          "character": 6,
+          "command": 8,
+          "byWeakness": true,
+          "minEnemies": 3,
+          "orTough": true,
+          "minMp": 5
+        },
+        {
+          "character": 6,
+          "command": 2
+        }
+      ]
+    },
+    {
+      "label": "Watery Pass 2: open the Ether",
+      "kind": "interact",
+      "mapId": 165,
+      "facing": "Left",
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick"
+      ],
+      "handleBattles": true,
+      "until": {
+        "treasureFlag": 47
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 3600,
+      "battlePlan": [
+        {
+          "character": 6,
+          "command": 8,
+          "byWeakness": true,
+          "minEnemies": 3,
+          "orTough": true,
+          "minMp": 5
+        },
+        {
+          "character": 6,
+          "command": 2
+        }
+      ]
+    },
+    {
       "label": "Watery Pass 2: west stairs to the camp room",
       "kind": "navigate",
       "mapId": 165,
@@ -819,6 +895,84 @@
       ]
     },
     {
+      "label": "Watery Pass 5: walk to the Shadowblade chest",
+      "kind": "navigate",
+      "mapId": 169,
+      "goal": {
+        "x": 21,
+        "y": 17,
+        "layer": 2
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick"
+      ],
+      "handleBattles": true,
+      "until": {
+        "atDestination": true
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 36000,
+      "battlePlan": [
+        {
+          "character": 6,
+          "command": 8,
+          "byWeakness": true,
+          "minEnemies": 3,
+          "orTough": true,
+          "minMp": 45
+        },
+        {
+          "character": 6,
+          "command": 2,
+          "reserveMp": 40
+        }
+      ]
+    },
+    {
+      "label": "Watery Pass 5: open the Shadowblade",
+      "kind": "interact",
+      "mapId": 169,
+      "facing": "Left",
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick"
+      ],
+      "handleBattles": true,
+      "until": {
+        "treasureFlag": 55
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 3600,
+      "battlePlan": [
+        {
+          "character": 6,
+          "command": 8,
+          "byWeakness": true,
+          "minEnemies": 3,
+          "orTough": true,
+          "minMp": 45
+        },
+        {
+          "character": 6,
+          "command": 2,
+          "reserveMp": 40
+        }
+      ]
+    },
+    {
       "label": "Watery Pass 5: exit to the overworld",
       "kind": "navigate",
       "mapId": 169,
@@ -1030,6 +1184,121 @@
       },
       "stableFrames": 2,
       "timeoutFrames": 36000,
+      "battlePlan": [
+        {
+          "character": 6,
+          "command": 8,
+          "byWeakness": true,
+          "minEnemies": 3,
+          "orTough": true,
+          "minMp": 45
+        },
+        {
+          "character": 6,
+          "command": 2,
+          "reserveMp": 40
+        }
+      ]
+    },
+    {
+      "label": "Waterfall B1: walk between the last two chests",
+      "kind": "navigate",
+      "mapId": 172,
+      "goal": {
+        "x": 28,
+        "y": 18,
+        "layer": 1
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick"
+      ],
+      "handleBattles": true,
+      "until": {
+        "atDestination": true
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 36000,
+      "battlePlan": [
+        {
+          "character": 6,
+          "command": 8,
+          "byWeakness": true,
+          "minEnemies": 3,
+          "orTough": true,
+          "minMp": 45
+        },
+        {
+          "character": 6,
+          "command": 2,
+          "reserveMp": 40
+        }
+      ]
+    },
+    {
+      "label": "Waterfall B1: open the Hades Armor",
+      "kind": "interact",
+      "mapId": 172,
+      "facing": "Right",
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick"
+      ],
+      "handleBattles": true,
+      "until": {
+        "treasureFlag": 58
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 3600,
+      "battlePlan": [
+        {
+          "character": 6,
+          "command": 8,
+          "byWeakness": true,
+          "minEnemies": 3,
+          "orTough": true,
+          "minMp": 45
+        },
+        {
+          "character": 6,
+          "command": 2,
+          "reserveMp": 40
+        }
+      ]
+    },
+    {
+      "label": "Waterfall B1: open the Hermes Sandals",
+      "kind": "interact",
+      "mapId": 172,
+      "facing": "Down",
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick"
+      ],
+      "handleBattles": true,
+      "until": {
+        "treasureFlag": 59
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 3600,
       "battlePlan": [
         {
           "character": 6,

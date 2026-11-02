@@ -124,6 +124,13 @@ analysis. See also `CLAUDE_HANDOFF.txt` and `docs/TAS-SEGMENT-2.md`.
     **Process lesson:** each live complaint came from the user watching an
     older build. Batch fixes, rebuild once, and state which build is live.
 
+17. **Chest pickups from the community route.** New `Condition.TreasureFlag`.
+    The plugin reads `DataStorage.Category.kTreasureFlag1` for the step's
+    flag. The segment 2 route now opens the Ether (165), Shadowblade (169),
+    Hades Armor and Hermes Sandals (172): navigate beside the chest, then
+    interact facing it. A summary of the community notes, plus everything
+    that still needs a menu/shop driver, is in docs/TAS-SEGMENT-2.md.
+
 ## Stuck detection (all segments, always on)
 
 The user's standing requirement: every movement must be confirmed. It lives
