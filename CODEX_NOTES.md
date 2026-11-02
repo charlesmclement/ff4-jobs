@@ -245,7 +245,9 @@ whatever build it launched with, so always say which build is live.
     actor uses Maiden's Kiss (content 11) on a toad or Mallet (12) on a mini,
     if owned. Segment 2 now picks up the Maiden's Kiss chest on Watery Pass 1
     (163 (34,14), flag 39, opened facing Up from (34,15)) before Tellah. Kaipo
-    sells more once the shop driver exists.
+    sells more once the shop driver exists. User's call: a toad/mini in an
+    ordinary fight is a reason to run; the Kiss/Mallet is used in the next
+    fight actually fought (including Octomammoth's first turns).
 
 ## Stuck detection (all segments, always on)
 

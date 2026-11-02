@@ -118,12 +118,14 @@ internal sealed class BattlePilot
         // shoulder keys, which BattleMenuController.IsEscapeInput polls. If the
         // party hasn't escaped after ~10 s (fight can't be fled), fight on.
         // ...and run from any ordinary fight that is taking too long.
-        bool slow=fightSeconds>SlowFightSeconds,toughFight=FleeTough && tough;
-        if((fleeTarget || slow || toughFight) && !boss && !scripted && fleeFrames<FleeGiveUp)
+        // A toad/mini in an ordinary fight: run first, cure with the item in the
+        // next fight that is actually fought (user's call).
+        bool slow=fightSeconds>SlowFightSeconds,toughFight=FleeTough && tough,status=toad!=null || mini!=null;
+        if((fleeTarget || slow || toughFight || status) && !boss && !scripted && fleeFrames<FleeGiveUp)
         {
             fleeFrames++;state.BattleInput="SwitchLeft+SwitchRight";
             state.Detail="Running away";
-            decision=fleeTarget?"Party: run away (listed encounter)":toughFight?"Party: run away (tough enemy; save MP for the boss)":$"Party: run away (fight past {SlowFightSeconds:0} s)";
+            decision=fleeTarget?"Party: run away (listed encounter)":status?"Party: run away (toad/mini; cure after)":toughFight?"Party: run away (tough enemy; save MP for the boss)":$"Party: run away (fight past {SlowFightSeconds:0} s)";
             state.Battle=$"{enemyLine} | {decision}";return;
         }
         if(menu==null || !menu)menu=UnityEngine.Object.FindObjectOfType<BattleMenuController>();
