@@ -3,7 +3,70 @@
   "name": "Octomammoth → Antlion (segment 3) — UNTESTED",
   "steps": [
     {
-      "label": "Overworld: west to Damcyan (bombing scene on the way)",
+      "label": "Overworld: walk onto Damcyan's lookout (bombing scene)",
+      "kind": "navigate",
+      "mapId": 1,
+      "goal": {
+        "x": 125,
+        "y": 55,
+        "layer": 0
+      },
+      "waypoints": [
+        {
+          "x": 130,
+          "y": 55,
+          "layer": 0
+        }
+      ],
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Event"
+      },
+      "stableFrames": 1,
+      "timeoutFrames": 36000
+    },
+    {
+      "label": "Overworld: Damcyan bombing scene",
+      "kind": "mash",
+      "keys": [
+        "Confirm"
+      ],
+      "phases": [
+        "None",
+        "Init",
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Player",
+        "storyFlag": 14
+      },
+      "stableFrames": 30,
+      "periodFrames": 8,
+      "pressedFrames": 1,
+      "timeoutFrames": 72000
+    },
+    {
+      "label": "Overworld: north to Damcyan's gate",
       "kind": "navigate",
       "mapId": 1,
       "goal": {
@@ -12,26 +75,6 @@
         "layer": 0
       },
       "waypoints": [
-        {
-          "x": 130,
-          "y": 55,
-          "layer": 0
-        },
-        {
-          "x": 125,
-          "y": 55,
-          "layer": 0
-        },
-        {
-          "x": 125,
-          "y": 51,
-          "layer": 0
-        },
-        {
-          "x": 124,
-          "y": 51,
-          "layer": 0
-        },
         {
           "x": 124,
           "y": 46,

@@ -286,6 +286,15 @@ whatever build it launched with, so always say which build is live.
     and the walking speed cap covers it; battle-plan `item` rules (Hermes
     Shoes 55 on self, once, boss only). Ends outside the den (saveable).
 
+31. **Segment 3 stalled after the Damcyan bombing scene (live).** The scene
+    walks Cecil to (124,54) (`sc_e_0015` MoveTo), past waypoint 2; the
+    follower kept pushing toward the old waypoint and hit a wall. Route: step
+    1 is now walk-to-trigger (125,55) → scene (flag 14) → north from (124,54)
+    via (124,46). Engine, all segments: after any Reset (scene/battle) the
+    waypoint index resyncs to the nearest remaining waypoint, and a waypoint
+    that can't be reached for 45 still frames is skipped.
+    **Rule:** split overworld legs at any step-on scene that moves the player.
+
 ## Stuck detection (all segments, always on)
 
 The user's standing requirement: every movement must be confirmed. It lives

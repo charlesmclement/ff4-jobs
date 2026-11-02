@@ -18,7 +18,10 @@ internal sealed class Navigation
     // Waypoint progress survives Reset (battles, events) and restarts per step.
     private Step? waypointStep;
     private int waypoint;
-    internal void Reset() {step=null;owner=IntPtr.Zero;path.Clear();cursor=unchanged=retryAt=greedyTurn=0;observed=greedy=havePrevious=false;}
+    // After any scene/battle (Reset) the player may have been moved: resync to
+    // the nearest remaining waypoint before pushing toward the old one.
+    private bool resync;
+    internal void Reset() {resync=true;step=null;owner=IntPtr.Zero;path.Clear();cursor=unchanged=retryAt=greedyTurn=0;observed=greedy=havePrevious=false;}
     internal void Read(FieldMap field,Step active,Snapshot state,int frame)
     {
         var controller=field.fieldController;
@@ -54,6 +57,19 @@ internal sealed class Navigation
         var goalCell=new Vector3(goal.X,goal.Y,goal.Layer);
         if(!ReferenceEquals(waypointStep,active)) {waypointStep=active;waypoint=0;}
         var waypoints=active.Waypoints;
+        if(resync && waypoints!=null && waypoint<waypoints.Length)
+        {
+            int best=waypoint;float bestDistance=float.MaxValue;
+            for(int i=waypoint;i<waypoints.Length;i++)
+            {
+                var c=controller.ConvertCellPositionToWorldPosition(new Vector3(waypoints[i].X,waypoints[i].Y,waypoints[i].Layer));
+                float d=Distance(pos,c);if(d<bestDistance) {bestDistance=d;best=i;}
+            }
+            waypoint=best;
+        }
+        resync=false;
+        // A waypoint the player can't move toward (stalled ~0.75 s) is skipped.
+        if(waypoints!=null && waypoint<waypoints.Length && unchanged==45)waypoint++;
         while(waypoints!=null && waypoint<waypoints.Length)
         {
             var w=waypoints[waypoint];
