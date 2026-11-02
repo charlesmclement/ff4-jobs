@@ -17,7 +17,8 @@
         "ChangeMap",
         "FieldReady",
         "Battle",
-        "FieldHelp"
+        "FieldHelp",
+        "Gimmick"
       ],
       "until": {
         "phase": "Player",
@@ -45,7 +46,8 @@
         "ChangeMap",
         "FieldReady",
         "Battle",
-        "FieldHelp"
+        "FieldHelp",
+        "Gimmick"
       ],
       "handleBattles": true,
       "until": {
@@ -71,7 +73,8 @@
         "ChangeMap",
         "FieldReady",
         "Battle",
-        "FieldHelp"
+        "FieldHelp",
+        "Gimmick"
       ],
       "handleBattles": true,
       "until": {
@@ -97,7 +100,8 @@
         "ChangeMap",
         "FieldReady",
         "Battle",
-        "FieldHelp"
+        "FieldHelp",
+        "Gimmick"
       ],
       "handleBattles": true,
       "until": {
@@ -123,7 +127,8 @@
         "ChangeMap",
         "FieldReady",
         "Battle",
-        "FieldHelp"
+        "FieldHelp",
+        "Gimmick"
       ],
       "handleBattles": true,
       "until": {
@@ -150,7 +155,8 @@
         "ChangeMap",
         "FieldReady",
         "Battle",
-        "FieldHelp"
+        "FieldHelp",
+        "Gimmick"
       ],
       "handleBattles": true,
       "until": {
@@ -170,7 +176,8 @@
         "ChangeMap",
         "FieldReady",
         "Battle",
-        "FieldHelp"
+        "FieldHelp",
+        "Gimmick"
       ],
       "until": {
         "phase": "Player",
@@ -196,7 +203,8 @@
         "ChangeMap",
         "FieldReady",
         "Battle",
-        "FieldHelp"
+        "FieldHelp",
+        "Gimmick"
       ],
       "handleBattles": true,
       "until": {
@@ -222,7 +230,8 @@
         "ChangeMap",
         "FieldReady",
         "Battle",
-        "FieldHelp"
+        "FieldHelp",
+        "Gimmick"
       ],
       "handleBattles": true,
       "until": {
@@ -248,7 +257,8 @@
         "ChangeMap",
         "FieldReady",
         "Battle",
-        "FieldHelp"
+        "FieldHelp",
+        "Gimmick"
       ],
       "handleBattles": true,
       "until": {
@@ -268,7 +278,8 @@
         "ChangeMap",
         "FieldReady",
         "Battle",
-        "FieldHelp"
+        "FieldHelp",
+        "Gimmick"
       ],
       "until": {
         "phase": "Player",
@@ -295,7 +306,8 @@
         "ChangeMap",
         "FieldReady",
         "Battle",
-        "FieldHelp"
+        "FieldHelp",
+        "Gimmick"
       ],
       "handleBattles": true,
       "until": {
@@ -314,7 +326,8 @@
         "ChangeMap",
         "FieldReady",
         "Battle",
-        "FieldHelp"
+        "FieldHelp",
+        "Gimmick"
       ],
       "until": {
         "phase": "Player",
@@ -341,7 +354,8 @@
         "ChangeMap",
         "FieldReady",
         "Battle",
-        "FieldHelp"
+        "FieldHelp",
+        "Gimmick"
       ],
       "handleBattles": true,
       "until": {
@@ -367,7 +381,8 @@
         "ChangeMap",
         "FieldReady",
         "Battle",
-        "FieldHelp"
+        "FieldHelp",
+        "Gimmick"
       ],
       "handleBattles": true,
       "until": {

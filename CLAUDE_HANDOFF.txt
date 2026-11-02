@@ -24,6 +24,12 @@ UPDATE — NOV 1 EVENING (SUPERSEDES "CURRENT PRIORITY" BELOW)
 - FIX 2 (compiled, NOT yet run): in FieldHelp, RouteEngine pulses Start at
   elapsed%16==0 and Back at elapsed%16==8. The user's keyboard Start is probably
   Backspace; the TAS injects the logical Key, so the binding doesn't matter.
+- FIX 2 WORKED live (session a3b8289051764ec59fe8faa00958aaa1): help closed,
+  steps 2-4 walked maps 6->5->4->9, Rosa event set flag 1. Step 5 then failed
+  "Unexpected state ... Gimmick, map 9": the south door opening is SubScene
+  state Gimmick (11), missing from every step's phases. Route JSON now allows
+  Gimmick on all steps (no input is sent during it; navigation replans on the
+  phase change). Route-only change, NOT yet run.
 - Key bindings are irrelevant to the TAS (logical native Key injection); the
   user asked about resetting controls — not needed.
 - Next: user retests; if FieldHelp closes, watch step 2 (first real navigation,
