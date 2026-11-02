@@ -97,6 +97,13 @@ analysis. See also `CLAUDE_HANDOFF.txt` and `docs/TAS-SEGMENT-2.md`.
     the battle after 3 moves that don't move the cursor (falls back to the
     next rule, e.g. Defend).
 
+14. **Launcher died silently waiting for a resume (fixed live).** The runner
+    replaces `status.json` every 0.1 s, so `tas.py` could read it mid-replace
+    (`FileNotFoundError`). That aborted `launch --resume`, which then sat at
+    "Press Enter". `state()` now retries for up to 1 s. The route was started
+    with `tas.py start <route> --from-step 0` (auto step), which is safe
+    because a run waits, paused, until the game has focus.
+
 ## Stuck detection (all segments, always on)
 
 The user's standing requirement: every movement must be confirmed. It lives
