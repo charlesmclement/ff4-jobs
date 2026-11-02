@@ -141,6 +141,15 @@ public sealed class RouteEngine
             if(state.BattleInput!=null)current.Add(state.BattleInput);
             return;
         }
+        // FieldHelp is the native controls window shown when the player first
+        // gains control (after the opening audience). FieldHelpManager.Open takes
+        // an onCancelAction: it is dismissed with Back and ignores Confirm.
+        // Mash/navigate/interact steps pulse Back here instead of their keys.
+        if(state.Phase=="FieldHelp" && step.Kind is "mash" or "navigate" or "interact" or "battle")
+        {
+            if(elapsed%8==0)current.Add("Back");
+            return;
+        }
         if(step.Kind is "navigate" or "interact" or "battle")
         {
             if(state.Phase=="Player")
@@ -158,7 +167,7 @@ public sealed class RouteEngine
                     else if(elapsed%12==0)current.Add("Confirm");
                 }
             }
-            else if(state.Phase is "Event" or "Message" or "FieldHelp")
+            else if(state.Phase is "Event" or "Message")
             { if(elapsed%8==0)current.Add("Confirm"); }
             return;
         }

@@ -1,6 +1,24 @@
 FF4 JOBS+ / LOCAL SCRIPTED RUN — HANDOFF FOR CLAUDE
 Prepared November 1, 2026 (America/Los_Angeles)
 
+UPDATE — NOV 1 EVENING (SUPERSEDES "CURRENT PRIORITY" BELOW)
+- Pre-title exit is RESOLVED in practice: with Steam running, session
+  564e480899fb4783a8913ad24a07ad64 reached the title, started the route, and
+  step 1 ran through airship, both scripted battles, Baigan/King/Kain audience;
+  ScenarioFlag1[0] was set, map 6.
+- It then stalled in phase FieldHelp (native controls help window) for ~65 s
+  while step 1 pulsed Confirm, until the user alt-tabbed (stop: focus lost).
+  dump.cs: FieldHelpManager/FieldHelpClient.Open(Action onCancelAction) — the
+  window closes on Back/cancel and ignores Confirm.
+- FIX (written, user rebuilt with --build-only, NOT yet run): RouteEngine.Tick
+  pulses "Back" every 8 frames whenever phase==FieldHelp for mash/navigate/
+  interact/battle steps; FieldHelp removed from the Confirm branch. Built
+  18:40 PST; source committed with [skip ci] (see git log).
+- Key bindings are irrelevant to the TAS (logical native Key injection); the
+  user asked about resetting controls — not needed.
+- Next: user retests; if FieldHelp closes, watch step 2 (first real navigation,
+  map 6 -> 5).
+
 READ THIS FIRST
 The user is about to test the scripted run. Their explicit instruction is:
 "do not test i will do all testing"
