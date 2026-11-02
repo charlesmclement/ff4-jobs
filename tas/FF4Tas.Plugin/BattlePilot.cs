@@ -49,12 +49,18 @@ internal sealed class BattlePilot
         // Scripted losses (Titan at Mist) wipe the party and the story goes on;
         // a real game over leaves the battle for GotoTitle, which no step allows.
         if(players.Length>0 && alive==0) {state.Detail="Party down; waiting for the game";return;}
-        bool mist=false,hasEnemy=false;scripted=false;undead=null;weakest=null;undeadCount=0;
+        bool mist=false,hasEnemy=false;scripted=false;undead=null;weakest=null;undeadCount=livingEnemies=0;tough=false;Array.Clear(elementCounts);
         for(int i=0;i<enemies.Length;i++)
         {
             var e=enemies[i];var p=e?.BattleUnitDataInfo?.Parameter;
             if(e==null || p==null || p.CurrentHP<=0 || e.IsRemove)continue;
-            hasEnemy=true;
+            hasEnemy=true;livingEnemies++;
+            var master=e.MonsterMaster;
+            if(master!=null)
+            {
+                if(master.Defense>=ToughDefense)tough=true;
+                if(Weaknesses.TryGetValue(master.Id,out var weak))foreach(var el in weak)if(el is >=1 and <=3)elementCounts[el]++;
+            }
             // Story fights you can't win or lose normally (the Girl at Mist has
             // 60000 HP): never spend items or MP on them.
             if(e.MonsterMaster?.Id==207 || p.ConfirmedMaxHp()>=30000)scripted=true;
@@ -73,6 +79,8 @@ internal sealed class BattlePilot
                 state.Detail=$"Mist Dragon HP {p.CurrentHP}; mode {ep.CurrentMode}";
             }
         }
+        bestElement=bestElementCount=0;
+        for(int el=1;el<=3;el++)if(elementCounts[el]>bestElementCount) {bestElement=el;bestElementCount=elementCounts[el];}
         if(!hasEnemy) {Pulse(state,frame,"Confirm","Waiting for battle result");return;}
         if(menu==null || !menu)menu=UnityEngine.Object.FindObjectOfType<BattleMenuController>();
         if(menu==null || !menu.IsShow)return;
@@ -102,7 +110,7 @@ internal sealed class BattlePilot
                 SelectAbility(info,state,frame);break;
             case 5:
                 if(pendingTarget!=0)SelectHealingTarget(info,state,frame);
-                else SelectEnemy(info,state,frame,"Cast on selected enemy",castOnUndead?undead:weakest,castOnUndead && undeadCount>1);
+                else SelectEnemy(info,state,frame,"Cast on selected enemy",castOnUndead?undead:weakest,targetAll || (castOnUndead && undeadCount>1));
                 break;
             case 2:
                 if(pendingItem==0) {Pulse(state,frame,"Back","Cancel unexpected item list");break;}
@@ -144,7 +152,14 @@ internal sealed class BattlePilot
     }
     private const float HealBelow=.5f;
     private const int EnemySingleState=3,EnemyAllState=4;
-    private int undeadCount;
+    private int undeadCount,livingEnemies;
+    private bool targetAll,tough;
+    internal Dictionary<int,int[]> Weaknesses=new();
+    private readonly int[] elementCounts=new int[4];
+    private int bestElement,bestElementCount;
+    private const int ToughDefense=200;
+    // Element -> native black magic ability: Fire 33, Blizzard 36, Thunder 39.
+    private static readonly int[] ElementSpell={0,33,36,39};
     private const int Defend=2,UndeadSpecies=4,WhiteMagic=7,CureAbility=6,CureMp=3,Tellah=6;
     private bool scripted,castOnUndead;
     private BattleEnemyData? undead,weakest;
@@ -155,7 +170,7 @@ internal sealed class BattlePilot
     // else can heal.
     private void Decide(BattleInfomationController info,BattlePlayerData actor,BattlePlayerData? dead,BattlePlayerData? injured,bool mist,BattleRule[]? plan)
     {
-        pendingItem=0;pendingTarget=0;pendingCommand=1;pendingAbility=0;pendingRule=-1;castOnUndead=false;
+        pendingItem=0;pendingTarget=0;pendingCommand=1;pendingAbility=0;pendingRule=-1;castOnUndead=false;targetAll=false;
         abilityConfirms=abilityStuck=abilityStride=0;abilityLastIndex=-1;abilityLastKey=null;
         if(mist || scripted)return;
         var stats=actor.BattleUnitDataInfo?.Parameter;
@@ -196,9 +211,18 @@ internal sealed class BattlePilot
             if(rule.Character!=null && rule.Character!=id)continue;
             if(stats!=null && rule.MinHpPercent>0 && stats.CurrentHP*100<rule.MinHpPercent*Math.Max(1,stats.ConfirmedMaxHp()))continue;
             if(stats!=null && rule.MinMp>0 && stats.CurrentMP<rule.MinMp)continue;
+            if(rule.MinEnemies>0 && livingEnemies<rule.MinEnemies && !(rule.OrTough && tough))continue;
+            int ability=rule.Ability??0;bool all=rule.TargetAll;
+            if(rule.ByWeakness)
+            {
+                if(bestElement==0)continue;
+                ability=ElementSpell[bestElement];
+                // One spell on all when several enemies share the weakness.
+                all=bestElementCount>1;
+            }
             // Defend sits in the side command group; SelectCommand switches to it.
             if(rule.Command!=Defend && !CommandEnabled(info,rule.Command))continue;
-            pendingCommand=rule.Command;pendingAbility=rule.Ability??0;pendingRule=r;abilityConfirms=abilityStuck=0;abilityStride=0;abilityLastIndex=-1;abilityLastKey=null;
+            pendingCommand=rule.Command;pendingAbility=ability;pendingRule=r;targetAll=all;abilityConfirms=abilityStuck=0;abilityStride=0;abilityLastIndex=-1;abilityLastKey=null;
             return;
         }
     }

@@ -966,6 +966,14 @@
       "battlePlan": [
         {
           "character": 6,
+          "command": 8,
+          "byWeakness": true,
+          "minEnemies": 3,
+          "orTough": true,
+          "minMp": 5
+        },
+        {
+          "character": 6,
           "command": 2
         }
       ]
@@ -999,6 +1007,14 @@
       "battlePlan": [
         {
           "character": 6,
+          "command": 8,
+          "byWeakness": true,
+          "minEnemies": 3,
+          "orTough": true,
+          "minMp": 5
+        },
+        {
+          "character": 6,
           "command": 2
         }
       ]
@@ -1029,6 +1045,14 @@
       "stableFrames": 1,
       "timeoutFrames": 36000,
       "battlePlan": [
+        {
+          "character": 6,
+          "command": 8,
+          "byWeakness": true,
+          "minEnemies": 3,
+          "orTough": true,
+          "minMp": 5
+        },
         {
           "character": 6,
           "command": 2
@@ -1065,6 +1089,14 @@
       "battlePlan": [
         {
           "character": 6,
+          "command": 8,
+          "byWeakness": true,
+          "minEnemies": 3,
+          "orTough": true,
+          "minMp": 5
+        },
+        {
+          "character": 6,
           "command": 2
         }
       ]
@@ -1096,6 +1128,14 @@
       "stableFrames": 2,
       "timeoutFrames": 36000,
       "battlePlan": [
+        {
+          "character": 6,
+          "command": 8,
+          "byWeakness": true,
+          "minEnemies": 3,
+          "orTough": true,
+          "minMp": 45
+        },
         {
           "character": 6,
           "command": 2,
@@ -1132,6 +1172,14 @@
       "battlePlan": [
         {
           "character": 6,
+          "command": 8,
+          "byWeakness": true,
+          "minEnemies": 3,
+          "orTough": true,
+          "minMp": 45
+        },
+        {
+          "character": 6,
           "command": 2,
           "reserveMp": 40
         }
@@ -1164,6 +1212,14 @@
       "stableFrames": 2,
       "timeoutFrames": 36000,
       "battlePlan": [
+        {
+          "character": 6,
+          "command": 8,
+          "byWeakness": true,
+          "minEnemies": 3,
+          "orTough": true,
+          "minMp": 45
+        },
         {
           "character": 6,
           "command": 2,
@@ -1200,6 +1256,14 @@
       "battlePlan": [
         {
           "character": 6,
+          "command": 8,
+          "byWeakness": true,
+          "minEnemies": 3,
+          "orTough": true,
+          "minMp": 45
+        },
+        {
+          "character": 6,
           "command": 2,
           "reserveMp": 40
         }
@@ -1232,6 +1296,14 @@
       "stableFrames": 2,
       "timeoutFrames": 36000,
       "battlePlan": [
+        {
+          "character": 6,
+          "command": 8,
+          "byWeakness": true,
+          "minEnemies": 3,
+          "orTough": true,
+          "minMp": 45
+        },
         {
           "character": 6,
           "command": 2,
@@ -1285,6 +1357,14 @@
       "battlePlan": [
         {
           "character": 6,
+          "command": 8,
+          "byWeakness": true,
+          "minEnemies": 3,
+          "orTough": true,
+          "minMp": 45
+        },
+        {
+          "character": 6,
           "command": 2,
           "reserveMp": 40
         }
@@ -1316,6 +1396,14 @@
       "stableFrames": 1,
       "timeoutFrames": 36000,
       "battlePlan": [
+        {
+          "character": 6,
+          "command": 8,
+          "byWeakness": true,
+          "minEnemies": 3,
+          "orTough": true,
+          "minMp": 45
+        },
         {
           "character": 6,
           "command": 2,
@@ -1354,6 +1442,14 @@
       "battlePlan": [
         {
           "character": 6,
+          "command": 8,
+          "byWeakness": true,
+          "minEnemies": 3,
+          "orTough": true,
+          "minMp": 45
+        },
+        {
+          "character": 6,
           "command": 2,
           "reserveMp": 40
         }
@@ -1388,6 +1484,14 @@
       "battlePlan": [
         {
           "character": 6,
+          "command": 8,
+          "byWeakness": true,
+          "minEnemies": 3,
+          "orTough": true,
+          "minMp": 45
+        },
+        {
+          "character": 6,
           "command": 2,
           "reserveMp": 40
         }
@@ -1419,6 +1523,14 @@
       "stableFrames": 2,
       "timeoutFrames": 36000,
       "battlePlan": [
+        {
+          "character": 6,
+          "command": 8,
+          "byWeakness": true,
+          "minEnemies": 3,
+          "orTough": true,
+          "minMp": 45
+        },
         {
           "character": 6,
           "command": 2,
@@ -1479,5 +1591,223 @@
         "storyFlag": 13
       }
     }
-  ]
+  ],
+  "weaknesses": {
+    "7": [
+      1
+    ],
+    "10": [
+      2
+    ],
+    "14": [
+      2
+    ],
+    "15": [
+      3
+    ],
+    "16": [
+      1
+    ],
+    "17": [
+      3
+    ],
+    "18": [
+      1
+    ],
+    "19": [
+      2
+    ],
+    "20": [
+      1
+    ],
+    "21": [
+      3
+    ],
+    "22": [
+      3
+    ],
+    "26": [
+      2
+    ],
+    "27": [
+      2
+    ],
+    "29": [
+      1
+    ],
+    "33": [
+      3
+    ],
+    "34": [
+      1
+    ],
+    "36": [
+      1
+    ],
+    "42": [
+      3
+    ],
+    "43": [
+      2
+    ],
+    "44": [
+      3
+    ],
+    "48": [
+      1
+    ],
+    "49": [
+      1
+    ],
+    "50": [
+      1
+    ],
+    "51": [
+      1
+    ],
+    "52": [
+      1
+    ],
+    "54": [
+      1
+    ],
+    "56": [
+      2
+    ],
+    "57": [
+      3
+    ],
+    "58": [
+      3
+    ],
+    "62": [
+      2
+    ],
+    "68": [
+      1
+    ],
+    "70": [
+      1
+    ],
+    "72": [
+      1
+    ],
+    "74": [
+      3
+    ],
+    "82": [
+      1
+    ],
+    "83": [
+      2
+    ],
+    "89": [
+      2
+    ],
+    "91": [
+      2
+    ],
+    "93": [
+      2
+    ],
+    "94": [
+      1
+    ],
+    "96": [
+      2
+    ],
+    "102": [
+      1
+    ],
+    "103": [
+      2
+    ],
+    "104": [
+      2
+    ],
+    "113": [
+      1
+    ],
+    "115": [
+      1
+    ],
+    "118": [
+      1
+    ],
+    "120": [
+      1
+    ],
+    "121": [
+      1
+    ],
+    "126": [
+      1
+    ],
+    "130": [
+      2
+    ],
+    "148": [
+      2
+    ],
+    "150": [
+      1
+    ],
+    "160": [
+      2
+    ],
+    "163": [
+      3
+    ],
+    "167": [
+      1
+    ],
+    "181": [
+      1
+    ],
+    "189": [
+      3
+    ],
+    "190": [
+      3
+    ],
+    "194": [
+      1
+    ],
+    "195": [
+      3
+    ],
+    "209": [
+      1
+    ],
+    "210": [
+      3
+    ],
+    "212": [
+      1
+    ],
+    "227": [
+      2
+    ],
+    "229": [
+      1
+    ],
+    "231": [
+      2
+    ],
+    "236": [
+      2
+    ],
+    "246": [
+      2
+    ],
+    "251": [
+      2
+    ],
+    "252": [
+      2
+    ],
+    "274": [
+      1
+    ]
+  }
 }

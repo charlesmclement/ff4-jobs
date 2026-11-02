@@ -5,6 +5,9 @@ public sealed class Route
     public int Schema { get; set; } = 1;
     public string Name { get; set; } = "";
     public Step[] Steps { get; set; } = Array.Empty<Step>();
+    // Monster id -> elements it is weak to (1 fire, 2 ice, 3 lightning), from the
+    // master monster/attribute_group tables (tas/weaknesses.py). Read by plans.
+    public Dictionary<int,int[]> Weaknesses { get; set; } = new();
     public void Validate()
     {
         if(Schema!=1 || string.IsNullOrWhiteSpace(Name) || Steps==null || Steps.Length is <1 or >10000)
@@ -31,7 +34,7 @@ public sealed class Route
                 throw new ArgumentException("Navigation needs a map and valid destination");
             if(s.Waypoints!=null && (s.Kind!="navigate" || s.Waypoints.Length>256 || s.Waypoints.Any(w=>w==null || w.X is <0 or >1024 || w.Y is <0 or >1024 || w.Layer is <0 or >15)))
                 throw new ArgumentException("Waypoints need a navigate step and valid cells");
-            if(s.BattlePlan!=null && (!s.HandleBattles || s.BattlePlan.Length>32 || s.BattlePlan.Any(r=>r==null || r.Command is <1 or >64 || r.MinHpPercent is <0 or >100 || r.MinMp is <0 or >999 || r.ReserveMp is <0 or >999 || r.Ability is <1 or >2000)))
+            if(s.BattlePlan!=null && (!s.HandleBattles || s.BattlePlan.Length>32 || s.BattlePlan.Any(r=>r==null || r.Command is <1 or >64 || r.MinHpPercent is <0 or >100 || r.MinMp is <0 or >999 || r.ReserveMp is <0 or >999 || r.MinEnemies is <0 or >8 || r.Ability is <1 or >2000)))
                 throw new ArgumentException("Battle plans need handleBattles and valid rules");
             if(s.Choice is <0 or >15)throw new ArgumentException("Invalid choice index");
             if(s.Facing!=null && s.Facing is not ("Up" or "Down" or "Left" or "Right"))throw new ArgumentException("Invalid facing direction");
@@ -90,6 +93,16 @@ public sealed class BattleRule
     // MP this character never spends outside the rule list (e.g. on Cure vs
     // undead), so it is still there for the boss.
     public int ReserveMp {get;set;}
+    // Only when at least this many enemies are alive (group spells).
+    public int MinEnemies {get;set;}
+    // Target the whole enemy side (one Thunder on all instead of three singles).
+    public bool TargetAll {get;set;}
+    // Pick Fire/Blizzard/Thunder by the living enemies' shared weakness
+    // (Route.Weaknesses); skipped when nothing on screen is weak to one.
+    public bool ByWeakness {get;set;}
+    // Also allowed below MinEnemies when an enemy shrugs off physical hits
+    // (defense >= 200, e.g. Red Mousse / Yellow Jelly at 254).
+    public bool OrTough {get;set;}
 }
 public sealed class Condition
 {

@@ -155,7 +155,7 @@ public sealed class Controller : MonoBehaviour
                     {
                         if(Engine?.Running==true)throw new InvalidOperationException("Stop the current route first");
                         var route=command.Route??throw new InvalidOperationException("Missing route");
-                        var next=new RouteEngine(route);navigation.Reset();battle.Reset();lastPhase="";Engine=next;routeName=route.Name;error="";RunClock.Reset();
+                        var next=new RouteEngine(route);navigation.Reset();battle.Reset();battle.Weaknesses=route.Weaknesses;lastPhase="";Engine=next;routeName=route.Name;error="";RunClock.Reset();
                         // First synthetic input begins next frame, never partway through this one.
                     }
                     else throw new InvalidOperationException("Unknown command");
