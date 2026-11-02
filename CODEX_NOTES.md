@@ -71,6 +71,24 @@ analysis. See also `CLAUDE_HANDOFF.txt` and `docs/TAS-SEGMENT-2.md`.
    a real game over changes the phase to GotoTitle, which no step allows, so
    the engine still stops on genuine defeats.
 
+10. **Battle choices reworked (compile-only), from live feedback.** Kain used
+    the last Potion in the scripted Titan fight, Cecil wasn't being healed,
+    zombies were attacked, and Tellah wasted turns on Attack. `BattlePilot.Decide`
+    now runs once per turn, in this order: scripted fights (enemy 207, or any
+    enemy with max HP ≥ 30000) just Attack; Phoenix Down on the dead; heal
+    under 50% HP, Cecil first (White Magic Cure, ability 6, 3 MP; Potion if
+    there's no MP; Tellah prefers Potions); Cure on undead (species 4) for
+    non-Tellah casters; the route's battle plan; Attack the weakest enemy
+    (target cycling, one lap at most). Defend (2) is allowed in plans.
+11. **Watery Pass camp is taken, not skipped.** `sc_e_0012_2` restores HP and
+    MP (RecoveryHP/RecoveryMP) for free, with no Tent. Before the camp Tellah
+    plan = Thunder while MP ≥ 5, else Defend. After it = Thunder only while
+    MP ≥ 45, else Defend. Octomammoth = Thunder, then Recall; Cecil Darkness
+    above 50% HP.
+12. **Speed boost default is 6x** (still F8 toggle, `FF4JOBS_TAS_SPEED`). It
+    is `Time.timeScale`, so battles should speed up as well. That's
+    unconfirmed: if FF4 PR's ATB ignores timeScale, battles won't speed up.
+
 ## Stuck detection (all segments, always on)
 
 The user's standing requirement: every movement must be confirmed. It lives

@@ -32,24 +32,34 @@ internal sealed class BattlePilot
         if(plug.IsWinResult()) {Pulse(state,frame,"Confirm","Advance victory rewards");return;}
         var players=plug.GetPlayerUnits();var enemies=plug.GetEnemyUnits();
         if(players==null || enemies==null)return;
-        BattlePlayerData? injured=null,dead=null;int alive=0,totalHp=0;
+        // Heal anyone under half HP. Cecil comes first (he carries every fight),
+        // then whoever is lowest by percentage.
+        BattlePlayerData? injured=null,dead=null;int alive=0,totalHp=0;float injuredRatio=2;
         for(int i=0;i<players.Length;i++)
         {
             var p=players[i];var stats=p?.BattleUnitDataInfo?.Parameter;if(stats==null)continue;
             int hp=stats.CurrentHP;totalHp+=hp;
             if(hp<=0) {dead??=p;continue;}
             alive++;
-            if(hp<Math.Max(60,stats.ConfirmedMaxHp()*45/100) && (injured==null || hp<injured.BattleUnitDataInfo.Parameter.CurrentHP))injured=p;
+            float ratio=hp/(float)Math.Max(1,stats.ConfirmedMaxHp());
+            if(ratio>=HealBelow)continue;
+            if(IsCecil(p))ratio-=1;
+            if(ratio<injuredRatio) {injured=p;injuredRatio=ratio;}
         }
         // Scripted losses (Titan at Mist) wipe the party and the story goes on;
         // a real game over leaves the battle for GotoTitle, which no step allows.
         if(players.Length>0 && alive==0) {state.Detail="Party down; waiting for the game";return;}
-        bool mist=false,hasEnemy=false;
+        bool mist=false,hasEnemy=false;scripted=false;undead=null;weakest=null;
         for(int i=0;i<enemies.Length;i++)
         {
             var e=enemies[i];var p=e?.BattleUnitDataInfo?.Parameter;
             if(e==null || p==null || p.CurrentHP<=0 || e.IsRemove)continue;
             hasEnemy=true;
+            // Story fights you can't win or lose normally (the Girl at Mist has
+            // 60000 HP): never spend items or MP on them.
+            if(e.MonsterMaster?.Id==207 || p.ConfirmedMaxHp()>=30000)scripted=true;
+            if(weakest==null || p.CurrentHP<weakest.BattleUnitDataInfo.Parameter.CurrentHP)weakest=e;
+            if(e.MonsterMaster?.Species==UndeadSpecies && (undead==null || p.CurrentHP<undead.BattleUnitDataInfo.Parameter.CurrentHP))undead=e;
             if(e.MonsterMaster?.Id==162)
             {
                 var ep=p.TryCast<EnemyCharacterParameter>();
@@ -80,20 +90,16 @@ internal sealed class BattlePilot
         switch(stage)
         {
             case 1:
-                pendingItem=0;pendingTarget=0;
-                // Native content IDs: Phoenix Down = 9, Potion = 2.
-                var victim=dead!=null && HasItem(9)?dead:injured!=null && HasItem(2)?injured:null;
-                if(victim!=null)
-                {pendingItem=victim==dead?9:2;pendingTarget=victim.GetOwnedCharacterData().characterStatusId;}
-                pendingCommand=1;pendingAbility=0;
-                if(pendingItem==0 && !mist)ChoosePlan(info,actor,plan);
+                Decide(info,actor,dead,injured,mist,plan);
                 SelectCommand(info,pendingItem!=0?3:mist?2:pendingCommand,state,frame);
                 break;
             case 4:
                 if(pendingAbility==0) {Block();Pulse(state,frame,"Back","Cancel unexpected ability list");break;}
                 SelectAbility(info,state,frame);break;
             case 5:
-                SelectEnemy(info,state,frame,"Cast on selected enemy");break;
+                if(pendingTarget!=0)SelectHealingTarget(info,state,frame);
+                else SelectEnemy(info,state,frame,"Cast on selected enemy",castOnUndead?undead:weakest);
+                break;
             case 2:
                 if(pendingItem==0) {Pulse(state,frame,"Back","Cancel unexpected item list");break;}
                 SelectItem(info,pendingItem,state,frame);break;
@@ -101,12 +107,13 @@ internal sealed class BattlePilot
                 SelectHealingTarget(info,state,frame);break;
             case 6:
                 if(mist) {Pulse(state,frame,"Back","Cancel attack: dragon became mist");break;}
-                SelectEnemy(info,state,frame,"Attack selected enemy");break;
+                SelectEnemy(info,state,frame,"Attack weakest enemy",weakest);break;
             case 0:break;
             default:Pulse(state,frame,"Back","Return to supported battle commands");break;
         }
     }
-    private static void SelectEnemy(BattleInfomationController info,Snapshot state,int frame,string action)
+    private int targetPresses;
+    private void SelectEnemy(BattleInfomationController info,Snapshot state,int frame,string action,BattleEnemyData? wanted)
     {
         var t=info.targetSelectController;
         if(t?.stateMachine==null)return;
@@ -115,9 +122,40 @@ internal sealed class BattlePilot
         // Whole-side targeting (e.g. Darkness) selects every living enemy.
         bool living=selected!=null && selected.Count>0;
         for(int i=0;living && i<selected!.Count;i++)living=selected[i].BattleUnitDataInfo.Parameter.CurrentHP>0;
-        if(living)Pulse(state,frame,"Confirm",action);
-        else Pulse(state,frame,"Down","Select living enemy");
+        bool onWanted=wanted==null || (selected!=null && selected.Count>1);
+        for(int i=0;!onWanted && selected!=null && i<selected.Count;i++)onWanted=selected[i].Pointer==wanted.Pointer;
+        // Cycle toward the wanted (weakest/undead) enemy; give up after a lap.
+        if(living && (onWanted || targetPresses>=8)) {targetPresses=0;Pulse(state,frame,"Confirm",action);return;}
+        if(frame%12==0)targetPresses++;
+        Pulse(state,frame,"Down",living?"Find weakest enemy":"Select living enemy");
     }
+    private const float HealBelow=.5f;
+    private const int Defend=2,UndeadSpecies=4,WhiteMagic=7,CureAbility=6,CureMp=3,Tellah=6;
+    private bool scripted,castOnUndead;
+    private BattleEnemyData? undead,weakest;
+    private static bool IsCecil(BattlePlayerData p)=>p.GetOwnedCharacterData()?.characterStatusId is 1 or 13;
+    // One decision per turn. Order: scripted fights just attack; revive;
+    // heal (Cure first, Potion if no MP); Cure on undead; route plan; Attack
+    // the weakest enemy. Tellah keeps his MP for Octomammoth unless nothing
+    // else can heal.
+    private void Decide(BattleInfomationController info,BattlePlayerData actor,BattlePlayerData? dead,BattlePlayerData? injured,bool mist,BattleRule[]? plan)
+    {
+        pendingItem=0;pendingTarget=0;pendingCommand=1;pendingAbility=0;pendingRule=-1;castOnUndead=false;
+        if(mist || scripted)return;
+        var stats=actor.BattleUnitDataInfo?.Parameter;
+        bool isTellah=actor.GetOwnedCharacterData()?.characterStatusId==Tellah;
+        bool canCure=stats!=null && stats.CurrentMP>=CureMp && CommandEnabled(info,WhiteMagic) && !blockedCure.Contains(actor.Pointer);
+        if(dead!=null && HasItem(9)) {pendingItem=9;pendingTarget=dead.GetOwnedCharacterData().characterStatusId;return;}
+        if(injured!=null)
+        {
+            int target=injured.GetOwnedCharacterData().characterStatusId;
+            if(canCure && (!isTellah || !HasItem(2))) {pendingCommand=WhiteMagic;pendingAbility=CureAbility;pendingTarget=target;return;}
+            if(HasItem(2)) {pendingItem=2;pendingTarget=target;return;}
+        }
+        if(undead!=null && canCure && !isTellah) {pendingCommand=WhiteMagic;pendingAbility=CureAbility;castOnUndead=true;return;}
+        ChoosePlan(info,actor,plan);
+    }
+    private readonly HashSet<IntPtr> blockedCure=new();
     // First plan rule for this actor whose command is visible and enabled and
     // whose HP condition holds. Ability availability is checked in the list.
     private void ChoosePlan(BattleInfomationController info,BattlePlayerData actor,BattleRule[]? plan)
@@ -132,12 +170,18 @@ internal sealed class BattlePilot
             if(rule.Character!=null && rule.Character!=id)continue;
             if(stats!=null && rule.MinHpPercent>0 && stats.CurrentHP*100<rule.MinHpPercent*Math.Max(1,stats.ConfirmedMaxHp()))continue;
             if(stats!=null && rule.MinMp>0 && stats.CurrentMP<rule.MinMp)continue;
-            if(!CommandEnabled(info,rule.Command))continue;
+            // Defend sits in the side command group; SelectCommand switches to it.
+            if(rule.Command!=Defend && !CommandEnabled(info,rule.Command))continue;
             pendingCommand=rule.Command;pendingAbility=rule.Ability??0;pendingRule=r;abilityConfirms=0;abilityStride=0;abilityLastIndex=-1;abilityLastKey=null;
             return;
         }
     }
-    private void Block() {if(pendingRule>=0)blockedRules.Add(pendingRule);pendingRule=-1;pendingAbility=0;}
+    private void Block()
+    {
+        if(pendingRule>=0)blockedRules.Add(pendingRule);
+        else if(pendingAbility==CureAbility && lastActor!=IntPtr.Zero)blockedCure.Add(lastActor);
+        pendingRule=-1;pendingAbility=0;pendingTarget=0;castOnUndead=false;
+    }
     private static bool CommandEnabled(BattleInfomationController info,int id)
     {
         var list=info.commandSelectController?.contentList;
@@ -201,7 +245,7 @@ internal sealed class BattlePilot
     private void SelectHealingTarget(BattleInfomationController info,Snapshot state,int frame)
     {
         var c=info.targetSelectController;if(c?.stateMachine==null)return;
-        if(pendingItem==0 || pendingTarget==0) {Pulse(state,frame,"Back","Cancel unknown healing target");return;}
+        if(pendingTarget==0) {Pulse(state,frame,"Back","Cancel unknown healing target");return;}
         if((int)c.stateMachine.Current!=1) {Pulse(state,frame,"Right","Select party side");return;}
         var targets=c.GetPlayerTarget();
         if(targets!=null && targets.Count==1 && targets[0].GetOwnedCharacterData()?.characterStatusId==pendingTarget)

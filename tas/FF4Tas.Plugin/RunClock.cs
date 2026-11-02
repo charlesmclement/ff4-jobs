@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace FF4Tas;
 
-// TAS-owned speed boost (on at launch; F8 toggles; 3x via FF4JOBS_TAS_SPEED) and the
+// TAS-owned speed boost (on at launch; F8 toggles; 6x, or FF4JOBS_TAS_SPEED) and the
 // route timer. Like Jobs fast-forward, it owns only the timeScale it applied:
 // game pauses (0) and speed changes by the game or Jobs are left alone.
 internal static class RunClock
@@ -19,7 +19,7 @@ internal static class RunClock
     {
         var text=Environment.GetEnvironmentVariable("FF4JOBS_TAS_SPEED");
         return float.TryParse(text,System.Globalization.NumberStyles.Float,System.Globalization.CultureInfo.InvariantCulture,out var v)
-            ? Math.Clamp(v,1,8) : 3;
+            ? Math.Clamp(v,1,8) : 6;
     }
     internal static void Reset() {RealSeconds=GameSeconds=0;}
     // Called once per Unity frame after the route engine ticked.

@@ -962,10 +962,178 @@
         "mapId": 165
       },
       "stableFrames": 2,
-      "timeoutFrames": 36000
+      "timeoutFrames": 36000,
+      "battlePlan": [
+        {
+          "character": 6,
+          "command": 8,
+          "ability": 39,
+          "minMp": 5
+        },
+        {
+          "character": 6,
+          "command": 2
+        }
+      ]
     },
     {
-      "label": "Watery Pass 2: north door, skipping the camp room",
+      "label": "Watery Pass 2: west stairs to the camp room",
+      "kind": "navigate",
+      "mapId": 165,
+      "goal": {
+        "x": 7,
+        "y": 17,
+        "layer": 1
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Player",
+        "mapId": 166
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 36000,
+      "battlePlan": [
+        {
+          "character": 6,
+          "command": 8,
+          "ability": 39,
+          "minMp": 5
+        },
+        {
+          "character": 6,
+          "command": 2
+        }
+      ]
+    },
+    {
+      "label": "Camp room: step in (first camp scene)",
+      "kind": "navigate",
+      "mapId": 166,
+      "goal": {
+        "x": 4,
+        "y": 10,
+        "layer": 0
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Event"
+      },
+      "stableFrames": 1,
+      "timeoutFrames": 36000,
+      "battlePlan": [
+        {
+          "character": 6,
+          "command": 8,
+          "ability": 39,
+          "minMp": 5
+        },
+        {
+          "character": 6,
+          "command": 2
+        }
+      ]
+    },
+    {
+      "label": "Watery Pass camp: rest with Tellah (full HP/MP)",
+      "kind": "mash",
+      "keys": [
+        "Confirm"
+      ],
+      "phases": [
+        "None",
+        "Init",
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Player",
+        "storyFlag": 11
+      },
+      "stableFrames": 30,
+      "periodFrames": 8,
+      "pressedFrames": 1,
+      "timeoutFrames": 72000,
+      "battlePlan": [
+        {
+          "character": 6,
+          "command": 8,
+          "ability": 39,
+          "minMp": 5
+        },
+        {
+          "character": 6,
+          "command": 2
+        }
+      ]
+    },
+    {
+      "label": "Camp room: north stairs",
+      "kind": "navigate",
+      "mapId": 166,
+      "goal": {
+        "x": 4,
+        "y": 1,
+        "layer": 0
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Player",
+        "mapId": 165
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 36000,
+      "battlePlan": [
+        {
+          "character": 6,
+          "command": 8,
+          "ability": 39,
+          "minMp": 45
+        },
+        {
+          "character": 6,
+          "command": 2
+        }
+      ]
+    },
+    {
+      "label": "Watery Pass 2: north door",
       "kind": "navigate",
       "mapId": 165,
       "goal": {
@@ -989,7 +1157,19 @@
         "mapId": 167
       },
       "stableFrames": 2,
-      "timeoutFrames": 36000
+      "timeoutFrames": 36000,
+      "battlePlan": [
+        {
+          "character": 6,
+          "command": 8,
+          "ability": 39,
+          "minMp": 45
+        },
+        {
+          "character": 6,
+          "command": 2
+        }
+      ]
     },
     {
       "label": "Watery Pass 3: west door",
@@ -1016,7 +1196,19 @@
         "mapId": 168
       },
       "stableFrames": 2,
-      "timeoutFrames": 36000
+      "timeoutFrames": 36000,
+      "battlePlan": [
+        {
+          "character": 6,
+          "command": 8,
+          "ability": 39,
+          "minMp": 45
+        },
+        {
+          "character": 6,
+          "command": 2
+        }
+      ]
     },
     {
       "label": "Watery Pass 4: north door",
@@ -1043,7 +1235,19 @@
         "mapId": 169
       },
       "stableFrames": 2,
-      "timeoutFrames": 36000
+      "timeoutFrames": 36000,
+      "battlePlan": [
+        {
+          "character": 6,
+          "command": 8,
+          "ability": 39,
+          "minMp": 45
+        },
+        {
+          "character": 6,
+          "command": 2
+        }
+      ]
     },
     {
       "label": "Watery Pass 5: exit to the overworld",
@@ -1070,7 +1274,19 @@
         "mapId": 1
       },
       "stableFrames": 2,
-      "timeoutFrames": 36000
+      "timeoutFrames": 36000,
+      "battlePlan": [
+        {
+          "character": 6,
+          "command": 8,
+          "ability": 39,
+          "minMp": 45
+        },
+        {
+          "character": 6,
+          "command": 2
+        }
+      ]
     },
     {
       "label": "Overworld: to the waterfall",
@@ -1114,7 +1330,19 @@
         "mapId": 170
       },
       "stableFrames": 2,
-      "timeoutFrames": 36000
+      "timeoutFrames": 36000,
+      "battlePlan": [
+        {
+          "character": 6,
+          "command": 8,
+          "ability": 39,
+          "minMp": 45
+        },
+        {
+          "character": 6,
+          "command": 2
+        }
+      ]
     },
     {
       "label": "Waterfall: walk to the falls (Tellah spots Octomammoth)",
@@ -1140,7 +1368,19 @@
         "phase": "Event"
       },
       "stableFrames": 1,
-      "timeoutFrames": 36000
+      "timeoutFrames": 36000,
+      "battlePlan": [
+        {
+          "character": 6,
+          "command": 8,
+          "ability": 39,
+          "minMp": 45
+        },
+        {
+          "character": 6,
+          "command": 2
+        }
+      ]
     },
     {
       "label": "Waterfall: jump down",
@@ -1169,7 +1409,19 @@
       "stableFrames": 30,
       "periodFrames": 8,
       "pressedFrames": 1,
-      "timeoutFrames": 72000
+      "timeoutFrames": 72000,
+      "battlePlan": [
+        {
+          "character": 6,
+          "command": 8,
+          "ability": 39,
+          "minMp": 45
+        },
+        {
+          "character": 6,
+          "command": 2
+        }
+      ]
     },
     {
       "label": "Waterfall B2: north door",
@@ -1196,7 +1448,19 @@
         "mapId": 172
       },
       "stableFrames": 2,
-      "timeoutFrames": 36000
+      "timeoutFrames": 36000,
+      "battlePlan": [
+        {
+          "character": 6,
+          "command": 8,
+          "ability": 39,
+          "minMp": 45
+        },
+        {
+          "character": 6,
+          "command": 2
+        }
+      ]
     },
     {
       "label": "Waterfall B1: walk up to Octomammoth",
@@ -1222,7 +1486,19 @@
         "atDestination": true
       },
       "stableFrames": 2,
-      "timeoutFrames": 36000
+      "timeoutFrames": 36000,
+      "battlePlan": [
+        {
+          "character": 6,
+          "command": 8,
+          "ability": 39,
+          "minMp": 45
+        },
+        {
+          "character": 6,
+          "command": 2
+        }
+      ]
     },
     {
       "label": "Octomammoth: Thunder and Darkness",
