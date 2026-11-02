@@ -367,11 +367,11 @@ whatever build it launched with, so always say which build is live.
 42. **Mom Bomb split: Rydia Blizzard on all.** Plan rule (character 4,
     Black Magic 8, Blizzard 36, targetAll, minEnemies 2, bossOnly) fires once
     the Mom Bomb splits; Chocobo before that. Rydia's plan rules now run
-    before her Chocobo fallback. In a boss fight Rydia joins the first heal
-    group so she stays up. The Antarctic Wind (Watery Pass 169 (8,10), flag
+    before her Chocobo fallback. The Antarctic Wind (Watery Pass 169 (8,10), flag
     53) was walked past in segment 2; the user says it isn't needed.
-    If Rydia dies in a boss fight nobody spends a turn reviving her; the
-    rest keep attacking (and never flee a boss, see 41).
+    Rydia and Edward leave after Mount Hobs (user: "they can die"): they
+    are healed only after Rosa/Cecil/Yang and never revived; the rest keep
+    attacking (and never flee a boss, see 41).
 
 ## Stuck detection (all segments, always on)
 

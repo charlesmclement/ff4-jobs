@@ -53,9 +53,9 @@ internal sealed class BattlePilot
             var p=players[i];var stats=p?.BattleUnitDataInfo?.Parameter;if(stats==null)continue;
             int hp=stats.CurrentHP;totalHp+=hp;
             int rank=HealRank(p!);
-            // A dead Rydia in a boss fight stays down: the rest keep killing
-            // (user: "if she dies just kill the things").
-            bool skipRevive=bossSeen && p!.GetOwnedCharacterData()?.characterStatusId==Rydia;
+            // Rydia and Edward leave the party after Mount Hobs: once dead they
+            // stay down and the rest keep killing (user: "they can die").
+            bool skipRevive=rosaParty && p!.GetOwnedCharacterData()?.characterStatusId is Rydia or Edward;
             if(hp<=0) {if(rank>=0 && !skipRevive && (dead==null || rank<HealRank(dead)))dead=p;continue;}
             alive++;
             float ratio=hp/(float)Math.Max(1,stats.ConfirmedMaxHp());
@@ -283,9 +283,7 @@ internal sealed class BattlePilot
     {
         if(!rosaParty)return 0;
         int who=p.GetOwnedCharacterData()?.characterStatusId??0;
-        // In boss fights Rydia joins the first group (Blizzard on the split Mom
-        // Bomb needs her alive).
-        return who is Rosa or 1 or 13 or 8 || (who==Rydia && bossSeen)?0:1;
+        return who is Rosa or 1 or 13 or 8?0:1;
     }
     // One decision per turn. Order: scripted fights just attack; revive;
     // heal (Cure first for everyone, Potion only if nobody can cast); Cure on
