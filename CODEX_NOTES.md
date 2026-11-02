@@ -339,6 +339,11 @@ whatever build it launched with, so always say which build is live.
     presses without effect) means Confirm. Also, L+R escape only works from
     the command list, so fleeing first presses Back out of any open
     item/spell/target list.
+38. **No Darkness on a single enemy (user rule).** The pilot skips any
+    Darkness (command 10) rule while fewer than 2 enemies are alive. The Mom
+    Bomb plan uses it only in the boss fight, with 2+ enemies alive and
+    Cecil above 70% HP (user: "you're killing cecil"), so it fires once the
+    Mom Bomb splits into bombs, not on the Mom Bomb alone.
 
 ## Stuck detection (all segments, always on)
 

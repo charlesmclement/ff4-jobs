@@ -222,6 +222,7 @@ internal sealed class BattlePilot
         return a.MonsterMaster?.Id==b.MonsterMaster?.Id && pa.CurrentHP==pb.CurrentHP;
     }
     private const float HealBelow=.5f;
+    private const int DarknessCommand=10;
     private const int EnemySingleState=3,EnemyAllState=4;
     private int undeadCount,livingEnemies;
     private bool targetAll,tough,boss,fleeTarget;
@@ -340,6 +341,8 @@ internal sealed class BattlePilot
             if(stats!=null && rule.MinHpPercent>0 && stats.CurrentHP*100<rule.MinHpPercent*Math.Max(1,stats.ConfirmedMaxHp()))continue;
             if(stats!=null && rule.MinMp>0 && stats.CurrentMP<rule.MinMp)continue;
             if(rule.MinEnemies>0 && livingEnemies<rule.MinEnemies && !(rule.OrTough && tough))continue;
+            // Darkness is an HP-costing wave: never on a single enemy (user rule).
+            if(rule.Command==DarknessCommand && livingEnemies<2)continue;
             if(rule.Item is int item)
             {
                 if(!HasItem(item))continue;

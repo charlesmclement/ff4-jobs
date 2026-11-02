@@ -861,7 +861,8 @@
         {
           "character": 1,
           "command": 10,
-          "minHpPercent": 50,
+          "minHpPercent": 70,
+          "minEnemies": 2,
           "bossOnly": true
         },
         {
