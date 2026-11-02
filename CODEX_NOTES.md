@@ -519,3 +519,6 @@ Keep this behaviour in any navigation rewrite.
   since these changes. `FF4Tas.Tests/Program.cs` now expects focus loss to
   pause, not stop.
 * `CLAUDE_HANDOFF.txt` "CURRENT PRIORITY: PRE-TITLE EXIT" is stale (resolved).
+
+### 50. Vanilla run ends after Octomammoth (not a stall)
+The "FF4 Scripted Run (Vanilla)" shortcut runs newgame-octomammoth.json = segments 1+2 only; it finishes at step 60 on the overworld outside the waterfall cave (confirmed live 2026-11-02, Antarctic Wind chest opened on the way). Added desktop shortcuts "FF4 TAS Segment 3 (Vanilla)" and "FF4 TAS Segment 4 (Vanilla)" (`launch --vanilla --resume`) to continue from vanilla saves in research/tas-session/documents-vanilla.
