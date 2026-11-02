@@ -31,7 +31,7 @@ internal sealed class BattlePilot
         abilityLastIndex=-1;abilityLastKey=null;lastInfo=lastCursor=-1;lastActor=IntPtr.Zero;previousHp=-1;
         pendingRule=-1;abilityConfirms=abilityStuck=targetPresses=0;decision="";
         blockedRules.Clear();blockedCure.Clear();blockedItems.Clear();blockedStatusSpell.Clear();usedOnce.Clear();wasMist=false;
-        fleeFrames=0;sidePresses=0;fightSeconds=0;fightFrame=-1;rowDone=false;
+        fleeFrames=0;sidePresses=0;bossSeen=false;fightSeconds=0;fightFrame=-1;rowDone=false;
     }
     internal void Read(Snapshot state,int frame,BattleRule[]? plan=null,int[]? fleeMonsters=null)
     {
@@ -42,8 +42,8 @@ internal sealed class BattlePilot
         if(plug.IsWinResult()) {Pulse(state,frame,"Confirm","Advance victory rewards");return;}
         var players=plug.GetPlayerUnits();var enemies=plug.GetEnemyUnits();
         if(players==null || enemies==null)return;
-        // Heal anyone under half HP. Once Rosa is in the party the user's order
-        // is Rosa, Cecil, Yang; Rydia and Edward are never healed or revived.
+        // Heal anyone under half HP. Once Rosa is in the party, Rosa, Cecil and
+        // Yang come first (lowest of them), then Rydia and Edward.
         // Without Rosa: lowest percentage first, Cecil wins near-ties.
         BattlePlayerData? injured=null,dead=null;int alive=0,totalHp=0;float injuredRatio=2;casterCanCure=false;injuredRatioNow=1;toad=mini=null;
         rosaParty=false;rosaTarget=null;float rosaKey=99;
@@ -68,7 +68,7 @@ internal sealed class BattlePilot
             if(who is Rydia or Tellah or Rosa && stats.CurrentMP>=CureMp)casterCanCure=true;
             if(rank<0)continue;
             // Rosa tops up her priority allies earlier (under 75%).
-            if(rosaParty && ratio<RosaHealBelow && rank+ratio<rosaKey) {rosaTarget=p;rosaKey=rank+ratio;}
+            if(rosaParty && ratio<(rank==0?RosaHealBelow:HealBelow) && rank+ratio<rosaKey) {rosaTarget=p;rosaKey=rank+ratio;}
             if(ratio>=HealBelow)continue;
             float key=rosaParty?rank+ratio:ratio-(IsCecil(p!)?.05f:0);
             if(key<injuredRatio) {injured=p;injuredRatio=key;injuredRatioNow=ratio;}
@@ -86,7 +86,7 @@ internal sealed class BattlePilot
             if(master!=null)
             {
                 if(master.Defense>=ToughDefense)tough=true;
-                if(master.Boss!=0)boss=true;
+                if(master.Boss!=0)boss=bossSeen=true;
                 foreach(var el in WeakTo(master))if(el is >=1 and <=3)elementCounts[el]++;
                 enemyText.Append(enemyText.Length>0?", ":"").Append(Db.MonsterName(master.Id)).Append(' ').Append(p.CurrentHP).Append("hp");
             }
@@ -109,6 +109,9 @@ internal sealed class BattlePilot
                 state.Detail=$"Mist Dragon HP {p.CurrentHP}; mode {ep.CurrentMode}";
             }
         }
+        // A boss fight stays one after the boss splits or leaves (Mom Bomb
+        // explodes into plain Bombs): never flee it.
+        if(bossSeen)boss=true;
         enemyLine=enemyText.ToString();
         state.Battle=decision.Length>0?$"{enemyLine} | {decision}":enemyLine;
         bestElement=bestElementCount=0;
@@ -267,16 +270,17 @@ internal sealed class BattlePilot
     }
     private static readonly Dictionary<int,string> Names=new(){[1]="Cecil",[13]="Cecil",[2]="Kain",[4]="Rydia",[6]="Tellah",[3]="Rosa",[7]="Edward",[8]="Yang"};
     private static bool IsCecil(BattlePlayerData p)=>p.GetOwnedCharacterData()?.characterStatusId is 1 or 13;
-    private bool rosaParty;private BattlePlayerData? rosaTarget;
+    private bool rosaParty,bossSeen;private BattlePlayerData? rosaTarget;
     private const float RosaHealBelow=.75f;
     private const int Summon=9,ChocoboSummon=65,ChocoboMp=7,RydiaBossReserve=14,Edward=7;
-    // Heal order with Rosa in the party: Rosa 0, Cecil 1, Yang 2, others 3;
-    // Rydia and Edward -1 (never healed). Without Rosa everyone is 0.
+    // Heal order with Rosa in the party: Rosa, Cecil and Yang (rank 0, the
+    // lowest HP% of them first), then everyone else (rank 1). Without Rosa
+    // everyone is rank 0.
     private int HealRank(BattlePlayerData p)
     {
         if(!rosaParty)return 0;
         int who=p.GetOwnedCharacterData()?.characterStatusId??0;
-        return who switch{Rosa=>0,1 or 13=>1,8=>2,Rydia or Edward=>-1,_=>3};
+        return who is Rosa or 1 or 13 or 8?0:1;
     }
     // One decision per turn. Order: scripted fights just attack; revive;
     // heal (Cure first for everyone, Potion only if nobody can cast); Cure on
@@ -308,7 +312,8 @@ internal sealed class BattlePilot
             if(mini!=null && stats.CurrentMP>=Db.SpellMp(MiniSpell,6) && CommandEnabled(info,WhiteMagic))
             {pendingCommand=WhiteMagic;pendingAbility=MiniSpell;pendingTarget=mini.GetOwnedCharacterData().characterStatusId;Log(actor,"Mini on #"+pendingTarget+" (undo mini)");return;}
         }
-        // Rosa always heals: her priority allies under 75%, else she Defends.
+        // Rosa always heals: Rosa/Cecil/Yang under 75% (lowest first), then
+        // Rydia/Edward under 50%; else she Defends.
         if(me==Rosa && rosaTarget!=null && canCure)
         {pendingCommand=WhiteMagic;pendingAbility=CureAbility;pendingTarget=rosaTarget.GetOwnedCharacterData().characterStatusId;Log(actor,"Cure #"+pendingTarget+" (Rosa heals)");return;}
         if(dead!=null && HasItem(9)) {pendingItem=9;pendingTarget=dead.GetOwnedCharacterData().characterStatusId;Log(actor,"Phoenix Down on #"+pendingTarget);return;}

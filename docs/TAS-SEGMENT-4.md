@@ -24,8 +24,8 @@ flag 19. Fabul is segment 5. Shortcut: **FF4 TAS: Segment 4**.
 
 ## Battle plan
 
-* Party roles: Rosa always heals (Rosa > Cecil > Yang; Rydia and Edward are
-  never healed or revived). Rydia summons Chocobo. Edward attacks. Yang Kicks
+* Party roles: Rosa always heals (Rosa, Cecil, Yang first, lowest of them;
+  then Rydia and Edward). Rydia summons Chocobo. Edward attacks. Yang Kicks
   on 2+ enemies. Cecil attacks; **no Darkness** (it kills Cecil in PR;
   ignore the strat text's Darkness).
 * Community notes also use Yang's Focus and target the split bombs; not
