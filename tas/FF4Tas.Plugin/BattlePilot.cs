@@ -194,9 +194,9 @@ internal sealed class BattlePilot
     private static readonly Dictionary<int,string> Names=new(){[1]="Cecil",[13]="Cecil",[2]="Kain",[4]="Rydia",[6]="Tellah",[3]="Rosa",[7]="Edward",[8]="Yang"};
     private static bool IsCecil(BattlePlayerData p)=>p.GetOwnedCharacterData()?.characterStatusId is 1 or 13;
     // One decision per turn. Order: scripted fights just attack; revive;
-    // heal (Cure first, Potion if no MP); Cure on undead; route plan; Attack
-    // the weakest enemy. Tellah keeps his MP for Octomammoth unless nothing
-    // else can heal.
+    // heal (Cure first for everyone, Potion only if nobody can cast); Cure on
+    // undead; route plan; Attack the weakest enemy. Tellah keeps the MP
+    // reserve his route plan sets.
     private void Decide(BattleInfomationController info,BattlePlayerData actor,BattlePlayerData? dead,BattlePlayerData? injured,bool mist,BattleRule[]? plan)
     {
         pendingItem=0;pendingTarget=0;pendingCommand=1;pendingAbility=0;pendingRule=-1;castOnUndead=false;targetAll=false;
@@ -210,7 +210,10 @@ internal sealed class BattlePilot
         if(injured!=null)
         {
             int target=injured.GetOwnedCharacterData().characterStatusId;
-            if(canCure && (!isTellah || !HasItem(2))) {pendingCommand=WhiteMagic;pendingAbility=CureAbility;pendingTarget=target;Log(actor,"Cure ally #"+target+" (under half HP)");return;}
+            // White Magic first for everyone; Tellah only above his plan's MP
+            // reserve. Potions are the fallback when nobody can cast.
+            bool tellahCanSpare=!isTellah || stats!.CurrentMP>=CureMp+Reserve(plan,Tellah);
+            if(canCure && tellahCanSpare) {pendingCommand=WhiteMagic;pendingAbility=CureAbility;pendingTarget=target;Log(actor,"Cure ally #"+target+" (under half HP)");return;}
             if(HasItem(2)) {pendingItem=2;pendingTarget=target;Log(actor,"Potion on ally #"+target+" (under half HP)");return;}
         }
         // Cure hurts undead: cast it (on all of them when there are several).
@@ -310,8 +313,12 @@ internal sealed class BattlePilot
         abilityLastKey=key;
         Pulse(state,frame,key,key=="Confirm"?"Choose planned ability":"Find planned ability");
     }
-    private static bool HasItem(int contentId)
+    // Items the battle list didn't offer this fight (inventory and battle list
+    // can disagree); never pick them again until the next battle.
+    private readonly HashSet<int> blockedItems=new();
+    private bool HasItem(int contentId)
     {
+        if(blockedItems.Contains(contentId))return false;
         var items=UserDataManager.Instance()?.normalOwnedItems;
         return items!=null && items.TryGetValue(contentId,out var item) && item!=null && item.Count>0;
     }
@@ -331,13 +338,13 @@ internal sealed class BattlePilot
         if(wantedIndex<0) {state.Failure=$"Required native command {wanted} not visible; stop instead of guessing";return;}
         Pulse(state,frame,wantedIndex<index?"Up":"Down","Select battle command");
     }
-    private static void SelectItem(BattleInfomationController info,int wanted,Snapshot state,int frame)
+    private void SelectItem(BattleInfomationController info,int wanted,Snapshot state,int frame)
     {
         var c=info.itemSelectController;if(c?.selectCursor==null || c.displayDataList==null)return;
         int index=c.selectCursor.Index,desired=-1;
         for(int i=0;i<c.displayDataList.Count;i++)
             if(c.displayDataList[i]?.contentId==wanted && c.displayDataList[i].Count>0) {desired=i;break;}
-        if(desired<0) {Pulse(state,frame,"Back","Recovery item unavailable");return;}
+        if(desired<0) {blockedItems.Add(wanted);Pulse(state,frame,"Back","Recovery item unavailable");return;}
         if(index==desired) {Pulse(state,frame,"Confirm","Choose recovery item");return;}
         // Native normal item grid has two columns (NormalItemSkipCount = 2).
         Pulse(state,frame,index%2!=desired%2?(desired%2==0?"Left":"Right"):(desired<index?"Up":"Down"),"Find recovery item");

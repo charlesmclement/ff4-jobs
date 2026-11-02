@@ -180,6 +180,15 @@ whatever build it launched with, so always say which build is live.
     there. Later (user): no Darkness on Octomammoth. It counts as one target,
     so the AoE wave only costs Cecil HP; Cecil just Attacks.
 
+22. **Potion loop (live) + healing policy.** Tellah picked a Potion that the
+    battle item list didn't offer (inventory and battle list disagreed), backed
+    out, and picked it again forever. Items missing from the battle list are
+    now blocked for the rest of the fight. Policy change (user): White Magic
+    Cure first for every caster, Tellah included, while above his
+    `ReserveMp`; Potions only when nobody can cast.
+    Also to check: the fight log named 2 of "4 Sahagins" as Tiny Mage (69 HP).
+    The battle_db monster names/ids may be off for some entries.
+
 ## Stuck detection (all segments, always on)
 
 The user's standing requirement: every movement must be confirmed. It lives
