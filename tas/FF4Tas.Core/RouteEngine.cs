@@ -12,6 +12,9 @@ public sealed class Route
     // ids in the group (e.g. [22, 9] = 4 Sahagin + 2 Tiny Mage at the
     // waterfall). Escape = hold SwitchLeft + SwitchRight. Never bosses.
     public int[][] FleeParties { get; set; } = Array.Empty<int[]>();
+    // Run at once when a fight has at least this many of one monster:
+    // [monster id, count], e.g. [36, 4] = 4 Skeletons on Mount Hobs.
+    public int[][] FleeCounts { get; set; } = Array.Empty<int[]>();
     // Run at once from tough ordinary fights (an enemy with defense >= 200,
     // which attacks barely scratch) instead of spending MP on them.
     public bool FleeTough { get; set; }
@@ -183,6 +186,9 @@ public sealed class Snapshot
     // Field-menu driver ("menu" steps): key to press, and whether it is done.
     public string? MenuInput {get;set;}
     public bool MenuDone {get;set;}
+    // The plugin is healing between fights through the field menu (after a
+    // battle on a walking step): MenuInput keys go out instead of the step's.
+    public bool FieldHeal {get;set;}
     // A one-button modal popup (native or a mod's, e.g. "Job unlocked!") is
     // open over the field; it blocks movement until confirmed.
     public bool Modal {get;set;}
@@ -254,6 +260,11 @@ public sealed class RouteEngine
             return;
         }
         stable=0;
+        if(state.FieldHeal && state.Phase is "Player" or "Menu")
+        {
+            if(state.MenuInput!=null)current.Add(state.MenuInput);
+            return;
+        }
         if(!step.Phases.Contains(state.Phase) || (step.MapId.HasValue && step.MapId!=state.MapId && (step.Kind!="navigate" || state.Phase is "Player" or "Transport")))
         { Fail($"Unexpected state at {step.Label}: {state.Phase}, map {state.MapId}");return; }
         if(++elapsed>step.TimeoutFrames) { Fail("Timed out at "+step.Label);return; }

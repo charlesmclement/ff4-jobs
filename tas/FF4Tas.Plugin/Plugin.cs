@@ -47,6 +47,12 @@ public sealed class Controller : MonoBehaviour
     private static readonly BattlePilot battle=new();
     private static readonly FieldMenu fieldMenu=new();
     private static Step? menuStep;
+    // Between fights: after a battle on a walking step, revive and top up
+    // through the field menu before walking on (user: run from the skeletons,
+    // then Phoenix Down Rosa and heal out of combat).
+    private static readonly FieldMenu fightHeal=new();
+    private static bool healArmed,healing;private static int healFrames;
+    private const float FightHealBelow=.5f;private const int FightHealTimeout=3600;
     private static string lastPhase="";
     private string lastRecord="";
     private float nextRecord;
@@ -127,7 +133,21 @@ public sealed class Controller : MonoBehaviour
                 }
                 // While paused for focus, skip movement/battle reads so stall
                 // detection does not count frames the route is not driving.
+                if(active.HandleBattles && active.Kind=="navigate" && snapshot.Focused && !snapshot.Modal)
+                {
+                    if(snapshot.Phase=="Battle")healArmed=true;
+                    if(!healing && healArmed && snapshot.Phase=="Player" && fightHeal.Wanted()) {fightHeal.Reset(FightHealBelow);healing=true;healFrames=0;}
+                    if(!healing && healArmed && snapshot.Phase=="Player")healArmed=false;
+                    if(healing && snapshot.Phase is "Player" or "Menu")
+                    {
+                        fightHeal.Read(snapshot,frame);snapshot.FieldHeal=true;
+                        // Done (back on the field) or stuck: walk on; one try per fight.
+                        if(snapshot.MenuDone || (++healFrames>FightHealTimeout && snapshot.Phase=="Player")) {healing=healArmed=false;snapshot.FieldHeal=false;snapshot.MenuDone=false;navigation.Reset();}
+                    }
+                }
+                else healing=false;
                 if(!snapshot.Focused || snapshot.Modal)navigation.Reset();
+                else if(snapshot.FieldHeal) {}
                 else if(snapshot.Phase is "Player" or "Transport")
                 {
                     if((field==null || !field) && Time.unscaledTime>=nextFieldFind)
@@ -179,7 +199,7 @@ public sealed class Controller : MonoBehaviour
                     {
                         if(Engine?.Running==true)throw new InvalidOperationException("Stop the current route first");
                         var route=command.Route??throw new InvalidOperationException("Missing route");
-                        var next=new RouteEngine(route);navigation.Reset();battle.Reset();battle.Weaknesses=route.Weaknesses;battle.FleeParties=route.FleeParties.Select(g=>new HashSet<int>(g)).ToList();battle.FleeTough=route.FleeTough;battle.Db=BattleDb.Load(Path.Combine(Plugin.DirectoryPath,"battle.json"));lastPhase="";Engine=next;routeName=route.Name;error="";RunClock.Reset();
+                        var next=new RouteEngine(route);navigation.Reset();battle.Reset();battle.Weaknesses=route.Weaknesses;battle.FleeParties=route.FleeParties.Select(g=>new HashSet<int>(g)).ToList();battle.FleeTough=route.FleeTough;battle.FleeCounts=route.FleeCounts;battle.Db=BattleDb.Load(Path.Combine(Plugin.DirectoryPath,"battle.json"));lastPhase="";Engine=next;routeName=route.Name;error="";RunClock.Reset();
                         // First synthetic input begins next frame, never partway through this one.
                     }
                     else throw new InvalidOperationException("Unknown command");

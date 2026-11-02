@@ -13,20 +13,22 @@ namespace FF4Tas;
 // cursors (Last.UI.KeyInput.MainMenuController / ItemWindowController).
 internal sealed class FieldMenu
 {
-    private const int Potion=2,PhoenixDown=9,MaxUses=12,AfterUse=48;
+    private const int Potion=2,PhoenixDown=9,MaxUses=12,AfterUse=48,Rosa=3;
     private const int MenuItem=1,ItemUse=1;
     // ItemWindowController.State and ItemUseController.State.
     private const int CommandSelect=1,UseSelect=2,TargetSelect=5,UseAll=2;
-    private const float TopUpBelow=.7f;
+    private float topUpBelow=.7f;
     private bool finished,oneColumn;
     private int uses,wait,lastIndex=-1,stuck,item,target;
     private string? lastKey;
     private string party="";
     private MainMenuController? main;
     private ItemWindowController? items;
-    internal void Reset()
+    // topUp: Potion anyone under this share of max HP (.7 for the route's
+    // menu steps; lower between fights so the run doesn't menu after each one).
+    internal void Reset(float topUp=.7f)
     {
-        finished=oneColumn=false;uses=wait=stuck=item=target=0;lastIndex=-1;lastKey=null;main=null;items=null;
+        topUpBelow=topUp;finished=oneColumn=false;uses=wait=stuck=item=target=0;lastIndex=-1;lastKey=null;main=null;items=null;
     }
     internal void Read(Snapshot s,int frame)
     {
@@ -106,6 +108,8 @@ internal sealed class FieldMenu
             default:Pulse(s,frame,"Back","Back to the item commands");return;
         }
     }
+    // Something to use right now (checked before opening the menu).
+    internal bool Wanted() {Need();return item!=0;}
     // Phoenix Down on the first fallen member, else a Potion on the lowest
     // member under 70%. Party order comes from the corps list.
     private void Need()
@@ -114,7 +118,7 @@ internal sealed class FieldMenu
         var user=UserDataManager.Instance();
         var corps=user?.corpsList;var owned=user?.OwnedCharacterList;
         if(corps==null || owned==null)return;
-        float lowest=TopUpBelow;int dead=0,hurt=0;
+        float lowest=topUpBelow;int dead=0,hurt=0;
         var seen=new System.Text.StringBuilder();
         for(int c=0;c<corps.Count;c++)
         {
@@ -124,7 +128,8 @@ internal sealed class FieldMenu
                 var member=owned[o];var p=member?.Parameter;
                 if(member==null || p==null || member.Id!=id)continue;
                 seen.Append(seen.Length>0?", ":"").Append(member.Name).Append(' ').Append(p.CurrentHP).Append('/').Append(p.ConfirmedMaxHp());
-                if(p.CurrentHP<=0) {if(dead==0)dead=id;break;}
+                // Rosa (the healer) is revived first, then the party order.
+                if(p.CurrentHP<=0) {if(dead==0 || id==Rosa)dead=id;break;}
                 float ratio=p.CurrentHP/(float)Math.Max(1,p.ConfirmedMaxHp());
                 if(ratio<lowest) {lowest=ratio;hurt=id;}
                 break;

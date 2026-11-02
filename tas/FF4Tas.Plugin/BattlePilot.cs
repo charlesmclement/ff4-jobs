@@ -142,6 +142,12 @@ internal sealed class BattlePilot
         for(int i=0;i<enemies.Length;i++)if(enemies[i]?.MonsterMaster!=null)group.Add(enemies[i].MonsterMaster.Id);
         foreach(var flee in FleeParties)if(flee.SetEquals(group))fleeTarget=true;
         if(fleeMonsters!=null)foreach(var id in fleeMonsters)if(group.Contains(id))fleeTarget=true;
+        foreach(var rule in FleeCounts)
+        {
+            int count=0;
+            for(int i=0;i<enemies.Length;i++)if(rule.Length==2 && enemies[i]?.MonsterMaster?.Id==rule[0])count++;
+            if(rule.Length==2 && count>=rule[1])fleeTarget=true;
+        }
         // Run from listed encounter groups (never bosses or story fights): hold both
         // shoulder keys, which BattleMenuController.IsEscapeInput polls. If the
         // party hasn't escaped after ~10 s (fight can't be fled), fight on.
@@ -256,6 +262,7 @@ internal sealed class BattlePilot
     private int undeadCount,livingEnemies;
     private bool targetAll,tough,boss,fleeTarget;
     internal List<HashSet<int>> FleeParties=new();
+    internal int[][] FleeCounts=Array.Empty<int[]>();
     internal bool FleeTough;
     private int fleeFrames;
     private const int FleeGiveUp=600;
