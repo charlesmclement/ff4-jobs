@@ -442,19 +442,7 @@
       "timeoutFrames": 72000
     },
     {
-      "label": "Mist Dragon defeated: segment complete, control returned to you",
-      "kind": "checkpoint",
-      "phases": [
-        "Player"
-      ],
-      "until": {
-        "phase": "Player",
-        "mapId": 162,
-        "storyFlag": 6
-      }
-    },
-    {
-      "label": "Mist Cave: walk out the north exit",
+      "label": "Mist Cave: walk out the north exit (save square outside)",
       "kind": "navigate",
       "mapId": 162,
       "goal": {
@@ -479,6 +467,18 @@
       },
       "stableFrames": 2,
       "timeoutFrames": 36000
+    },
+    {
+      "label": "Segment 1 complete: Mist Dragon defeated, outside Mist Cave",
+      "kind": "checkpoint",
+      "phases": [
+        "Player"
+      ],
+      "until": {
+        "phase": "Player",
+        "mapId": 1,
+        "storyFlag": 6
+      }
     },
     {
       "label": "Overworld: Mist Cave to the village of Mist",

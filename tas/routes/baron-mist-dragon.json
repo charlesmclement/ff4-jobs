@@ -442,14 +442,41 @@
       "timeoutFrames": 72000
     },
     {
-      "label": "Mist Dragon defeated: segment complete, control returned to you",
+      "label": "Mist Cave: walk out the north exit (save square outside)",
+      "kind": "navigate",
+      "mapId": 162,
+      "goal": {
+        "x": 34,
+        "y": 2,
+        "layer": 0
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Player",
+        "mapId": 1
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 36000
+    },
+    {
+      "label": "Segment 1 complete: Mist Dragon defeated, outside Mist Cave",
       "kind": "checkpoint",
       "phases": [
         "Player"
       ],
       "until": {
         "phase": "Player",
-        "mapId": 162,
+        "mapId": 1,
         "storyFlag": 6
       }
     }

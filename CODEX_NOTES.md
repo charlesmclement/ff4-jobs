@@ -258,6 +258,13 @@ whatever build it launched with, so always say which build is live.
     targeted through the ally path (stage 5 with `pendingTarget`). A spell
     missing from the list blocks that actor for the fight.
 
+28. **Segments meet on a save square (user).** The Mist Cave can't be saved
+    in, so segment 1 now ends by walking out the cave's north exit (162 door
+    (34,2)) onto the overworld (89,107), then a checkpoint (map 1, flag 6).
+    The user saves there. Segment 2 resumed from that save auto-picks step 2
+    (walk to Mist). The combined New Game route drops segment 2's own
+    cave-exit step.
+
 ## Stuck detection (all segments, always on)
 
 The user's standing requirement: every movement must be confirmed. It lives
