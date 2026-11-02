@@ -42,8 +42,9 @@ internal sealed class BattlePilot
         if(plug.IsWinResult()) {Pulse(state,frame,"Confirm","Advance victory rewards");return;}
         var players=plug.GetPlayerUnits();var enemies=plug.GetEnemyUnits();
         if(players==null || enemies==null)return;
-        // Heal anyone under half HP. Cecil comes first (he carries every fight),
-        // then whoever is lowest by percentage.
+        // Heal anyone under half HP, lowest percentage first (healers included:
+        // Rosa healed Cecil while she was in the red and died). Cecil wins only
+        // near-ties (within 5%).
         BattlePlayerData? injured=null,dead=null;int alive=0,totalHp=0;float injuredRatio=2;casterCanCure=false;injuredRatioNow=1;toad=mini=null;
         for(int i=0;i<players.Length;i++)
         {
@@ -63,7 +64,7 @@ internal sealed class BattlePilot
             }
             if(who is Rydia or Tellah or Rosa && stats.CurrentMP>=CureMp)casterCanCure=true;
             if(ratio>=HealBelow)continue;
-            if(IsCecil(p!))ratio-=1;
+            if(IsCecil(p!))ratio-=.05f;
             if(ratio<injuredRatio) {injured=p;injuredRatio=ratio;injuredRatioNow=hp/(float)Math.Max(1,stats.ConfirmedMaxHp());}
         }
         // Scripted losses (Titan at Mist) wipe the party and the story goes on;

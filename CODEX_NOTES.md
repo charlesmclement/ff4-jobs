@@ -344,6 +344,10 @@ whatever build it launched with, so always say which build is live.
     Bomb plan uses it only in the boss fight, with 2+ enemies alive and
     Cecil above 70% HP (user: "you're killing cecil"), so it fires once the
     Mom Bomb splits into bombs, not on the Mom Bomb alone.
+39. **Heal the lowest, not Cecil first.** The injured pick subtracted 1 from
+    Cecil's ratio, so Rosa cured Cecil (under half) while she was in the red,
+    and she died. Now the lowest HP% wins and Cecil gets only a 5% tie edge.
+    Still open: Cure-all when 2+ are low; Rosa herself is a heal target.
 
 ## Stuck detection (all segments, always on)
 
