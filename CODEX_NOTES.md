@@ -554,3 +554,6 @@ Run after note 56: growth detection worked (sprite 32x32 MN_FF4_044_C00 → 72x6
 
 ### 58. Field magic looped White Magic -> Back (fix untested)
 Trace: formation before the Mom Bomb worked (3,4,1,7,0 → 3,1,4,0,7, rows 12121 → 21212). The post-fight Life/Cure step chose Rosa and White Magic, then AbilityWindowController reported state 2 (UseList) while the spell list was open, so the driver looked for a target, pressed Back, and repeated. Now the panel is chosen by what is open: Command state 4 → White Magic; the target panel (useController active with a chosen targetAbility) → target; else the spell list (listController.abilityList). Ten Backs without a cast end the magic part (items take over), so it can't loop.
+
+### 59. Cecil/Yang spent the Mom Bomb split on Phoenix Downs (fix untested)
+Trace after the explosion: "Cecil: Phoenix Down on #4" and "Yang: Phoenix Down on #7"; revive runs before the plan, so Cecil never reached his Darkness rule. Now Cecil and Yang only Phoenix Down Rosa, Cecil or Yang; Rydia and Edward are revived by Rosa (Life/Phoenix Down), Edward, or the field heal after the fight. Darkness HP guard lowered from 25% to 20% (the blast leaves Cecil low).

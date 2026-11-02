@@ -366,7 +366,12 @@ internal sealed class BattlePilot
         // else a Phoenix Down.
         if(dead!=null && stats!=null && stats.CurrentMP>=LifeMp && CommandEnabled(info,WhiteMagic) && !blockedLife.Contains(actor.Pointer) && Knows(actor,LifeAbility))
         {pendingCommand=WhiteMagic;pendingAbility=LifeAbility;pendingTarget=dead.GetOwnedCharacterData().characterStatusId;Queue(actor,pendingTarget);Log(actor,"Life on #"+pendingTarget);return;}
-        if(dead!=null && HasItem(9)) {pendingItem=9;pendingTarget=dead.GetOwnedCharacterData().characterStatusId;Queue(actor,pendingTarget);Log(actor,"Phoenix Down on #"+pendingTarget);return;}
+        // Cecil and Yang fight: they only raise Rosa, Cecil or Yang. Rydia and
+        // Edward are Rosa's (Life/Phoenix Down), Edward's, or the field heal's
+        // after the fight (user: both spent the Mom Bomb split on Phoenix
+        // Downs for Rydia and Edward).
+        bool fighter=me is 1 or 13 or 8;
+        if(dead!=null && HasItem(9) && (!fighter || HealRank(dead)==0)) {pendingItem=9;pendingTarget=dead.GetOwnedCharacterData().characterStatusId;Queue(actor,pendingTarget);Log(actor,"Phoenix Down on #"+pendingTarget);return;}
         // With Rosa alive and able to Cure, nobody else heals: Rydia Cured and
         // Yang/Cecil used Potions through the Mom Bomb split instead of
         // fighting, and the party lost.
@@ -459,10 +464,10 @@ internal sealed class BattlePilot
                (monsterHp>rule.WhileMonsterHpAtMost || monsterHp<=rule.WhileMonsterHpAbove))continue;
             if(rule.WhileMonsterGrown is bool wantGrown && wantGrown!=grown)continue;
             // Darkness is an HP-costing wave that can kill Cecil (user rule).
-            // Only on large groups (4+), and only while Cecil is above a quarter
-            // of his HP (it costs ~8-9% a use; at half he skipped it right after
-            // the Mom Bomb's explosion, and the user wants it on the split bombs).
-            if(rule.Command==DarknessCommand && (livingEnemies<4 || (stats!=null && stats.CurrentHP*4<Math.Max(1,stats.ConfirmedMaxHp()))))continue;
+            // Only on large groups (4+), and only while Cecil is above a fifth
+            // of his HP (it costs ~8-9% a use; the explosion leaves him low and
+            // the user wants it on the split bombs).
+            if(rule.Command==DarknessCommand && (livingEnemies<4 || (stats!=null && stats.CurrentHP*5<Math.Max(1,stats.ConfirmedMaxHp()))))continue;
             if(rule.Item is int item)
             {
                 if(!HasItem(item))continue;
