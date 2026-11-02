@@ -139,10 +139,11 @@ internal sealed class BattlePilot
         int side=(int)t.stateMachine.Current;
         // EnemyAll (4): PageDown/PageUp toggles it from single-enemy targeting
         // (Last.UI.KeyInput.BattleTargetSelectController.EnemysUpdate).
-        if(all && side==EnemyAllState) {targetPresses=0;Pulse(state,frame,"Confirm","Cast on all enemies");return;}
+        if(all && side==EnemyAllState) {if(frame%12==0)targetPresses=0;Pulse(state,frame,"Confirm","Cast on all enemies");return;}
         if(all && side==EnemySingleState && targetPresses<6)
         {
-            if(frame%12==0)targetPresses++;
+            if(frame%12!=0)return;
+            targetPresses++;
             Pulse(state,frame,targetPresses<=3?"PageDown":"PageUp","Target all enemies");return;
         }
         if(side!=EnemySingleState) {Pulse(state,frame,"Left","Select enemy side");return;}
@@ -151,11 +152,23 @@ internal sealed class BattlePilot
         bool living=selected!=null && selected.Count>0;
         for(int i=0;living && i<selected!.Count;i++)living=selected[i].BattleUnitDataInfo.Parameter.CurrentHP>0;
         bool onWanted=wanted==null || (selected!=null && selected.Count>1);
-        for(int i=0;!onWanted && selected!=null && i<selected.Count;i++)onWanted=selected[i].Pointer==wanted!.Pointer;
-        // Cycle toward the wanted (weakest/undead) enemy; give up after a lap.
-        if(living && (onWanted || targetPresses>=8)) {targetPresses=0;Pulse(state,frame,"Confirm",action);return;}
-        if(frame%12==0)targetPresses++;
+        for(int i=0;!onWanted && selected!=null && i<selected.Count;i++)onWanted=SameEnemy(selected[i],wanted!);
+        // Cycle toward the wanted (weakest/undead) enemy; after one lap take
+        // whatever living enemy is selected. Counters change only on frames
+        // where a key is actually sent (every 12th), never before the press.
+        if(frame%12!=0) {state.Detail=living && onWanted?action:"Find weakest enemy";return;}
+        if(living && (onWanted || targetPresses>=livingEnemies+1)) {targetPresses=0;Pulse(state,frame,"Confirm",action);return;}
+        targetPresses++;
         Pulse(state,frame,"Down",living?"Find weakest enemy":"Select living enemy");
+    }
+    // Target lists hand back different wrapper objects for the same enemy, so
+    // match the native parameter object, else monster id plus current HP.
+    private static bool SameEnemy(BattleEnemyData a,BattleEnemyData b)
+    {
+        var pa=a.BattleUnitDataInfo?.Parameter;var pb=b.BattleUnitDataInfo?.Parameter;
+        if(pa==null || pb==null)return false;
+        if(pa.Pointer==pb.Pointer)return true;
+        return a.MonsterMaster?.Id==b.MonsterMaster?.Id && pa.CurrentHP==pb.CurrentHP;
     }
     private const float HealBelow=.5f;
     private const int EnemySingleState=3,EnemyAllState=4;
@@ -312,7 +325,7 @@ internal sealed class BattlePilot
         if(c.contentList==null || index<0 || index>=c.contentList.Count)return;
         var selected=c.contentList[index];
         if(selected?.TargetCommand?.Id==wanted && selected.IsEnable)
-        {Pulse(state,frame,"Confirm",wanted==2?"Defend during mist":wanted==3?"Use recovery item":"Choose Attack");return;}
+        {Pulse(state,frame,"Confirm",wanted==2?"Choose Defend":wanted==3?"Use recovery item":"Choose Attack");return;}
         int wantedIndex=-1;
         for(int i=0;i<c.contentList.Count;i++)if(c.contentList[i]?.TargetCommand?.Id==wanted) {wantedIndex=i;break;}
         if(wantedIndex<0) {state.Failure=$"Required native command {wanted} not visible; stop instead of guessing";return;}

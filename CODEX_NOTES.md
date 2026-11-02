@@ -150,6 +150,16 @@ analysis. See also `CLAUDE_HANDOFF.txt` and `docs/TAS-SEGMENT-2.md`.
     "enemies with HP | who: decision (reason)" goes into status.json and the
     trace. `tas/battle_log.py [trace]` prints fights for review and coaching.
 
+20. **Cecil cycled the enemy cursor forever (fixed, compile-only, live
+    bug).** `SelectEnemy` compared `BattleEnemyData.Pointer`, but
+    `GetEnemyTarget()` returns different wrapper objects for the same enemy,
+    so "on the weakest" was never true. Its lap counter was also reset on
+    frames where no key was sent (inputs go out every 12th frame), so the
+    fallback Confirm never fired. It now matches the native Parameter
+    pointer, else monster id + current HP, and changes counters only on send
+    frames. **Rule:** any per-press counter must update only when
+    `frame % 12 == 0`.
+
 ## Stuck detection (all segments, always on)
 
 The user's standing requirement: every movement must be confirmed. It lives
