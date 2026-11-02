@@ -89,6 +89,14 @@ analysis. See also `CLAUDE_HANDOFF.txt` and `docs/TAS-SEGMENT-2.md`.
     is `Time.timeScale`, so battles should speed up as well. That's
     unconfirmed: if FF4 PR's ATB ignores timeScale, battles won't speed up.
 
+13. **Tellah stuck on Osmose (fixed, compile-only).** In the battle ability
+    list `selectCursorIndex` never changes, so the stride logic kept pressing
+    Right and the cursor ran to the last spell. `SelectAbility` now reads the
+    index from `selectCursorList[0].Index` (`Last.UI.Cursor`), prefers the
+    on-screen rows' `contentList[i].Data.Ability.Id`, and blocks the rule for
+    the battle after 3 moves that don't move the cursor (falls back to the
+    next rule, e.g. Defend).
+
 ## Stuck detection (all segments, always on)
 
 The user's standing requirement: every movement must be confirmed. It lives

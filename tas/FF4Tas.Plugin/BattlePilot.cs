@@ -20,7 +20,7 @@ internal sealed class BattlePilot
     // Plan rules that failed this battle (spell missing or not castable, e.g.
     // out of MP) are skipped until the next battle so the menu never loops.
     private readonly HashSet<int> blockedRules=new();
-    private int pendingRule=-1,abilityConfirms;
+    private int pendingRule=-1,abilityConfirms,abilityStuck;
     private int stalled,lastCursor=-1;
     private IntPtr lastActor;
     private int previousHp=-1;
@@ -141,6 +141,7 @@ internal sealed class BattlePilot
     private void Decide(BattleInfomationController info,BattlePlayerData actor,BattlePlayerData? dead,BattlePlayerData? injured,bool mist,BattleRule[]? plan)
     {
         pendingItem=0;pendingTarget=0;pendingCommand=1;pendingAbility=0;pendingRule=-1;castOnUndead=false;
+        abilityConfirms=abilityStuck=abilityStride=0;abilityLastIndex=-1;abilityLastKey=null;
         if(mist || scripted)return;
         var stats=actor.BattleUnitDataInfo?.Parameter;
         bool isTellah=actor.GetOwnedCharacterData()?.characterStatusId==Tellah;
@@ -172,7 +173,7 @@ internal sealed class BattlePilot
             if(stats!=null && rule.MinMp>0 && stats.CurrentMP<rule.MinMp)continue;
             // Defend sits in the side command group; SelectCommand switches to it.
             if(rule.Command!=Defend && !CommandEnabled(info,rule.Command))continue;
-            pendingCommand=rule.Command;pendingAbility=rule.Ability??0;pendingRule=r;abilityConfirms=0;abilityStride=0;abilityLastIndex=-1;abilityLastKey=null;
+            pendingCommand=rule.Command;pendingAbility=rule.Ability??0;pendingRule=r;abilityConfirms=abilityStuck=0;abilityStride=0;abilityLastIndex=-1;abilityLastKey=null;
             return;
         }
     }
@@ -192,13 +193,25 @@ internal sealed class BattlePilot
     private void SelectAbility(BattleInfomationController info,Snapshot state,int frame)
     {
         var baseController=info.abilityController;
-        var list=baseController?.TryCast<Serial.FF0.UI.KeyInput.BattleQuantityAbilityInfomationController>()?.dataList;
+        var quantity=baseController?.TryCast<Serial.FF0.UI.KeyInput.BattleQuantityAbilityInfomationController>();
+        var list=quantity?.dataList;
         if(baseController==null || list==null)return;
-        int index=baseController.selectCursorIndex,desired=-1;
+        // The live cursor object tracks the highlighted row; selectCursorIndex
+        // is not updated by this list (it stayed 0 and the cursor ran to the end).
+        var cursors=baseController.selectCursorList;
+        int index=cursors!=null && cursors.Count>0 && cursors[0]!=null?cursors[0].Index:baseController.selectCursorIndex,desired=-1;
         for(int i=0;i<list.Count;i++)if(list[i]?.Ability?.Id==pendingAbility) {desired=i;break;}
+        // Rows shown on screen are the authority when they carry data.
+        var rows=quantity!.contentList;
+        if(rows!=null && rows.Count==list.Count)
+            for(int i=0;i<rows.Count;i++)if(rows[i]?.Data?.Ability?.Id==pendingAbility) {desired=i;break;}
         // Not learned (or no list): back out; the next command pass falls through to Attack.
-        if(desired<0 || abilityConfirms>3) {Block();Pulse(state,frame,"Back","Planned ability not available");return;}
+        if(desired<0 || abilityConfirms>3 || abilityStuck>=3) {Block();Pulse(state,frame,"Back","Planned ability not available");return;}
         if(frame%12!=0) {state.Detail="Find planned ability";return;}
+        // Every move must move the cursor; if it doesn't, the list can't be read
+        // reliably, so give up on this spell for the battle instead of looping.
+        if(abilityLastKey is "Up" or "Down" or "Left" or "Right" && abilityLastIndex>=0)
+            abilityStuck=index==abilityLastIndex?abilityStuck+1:0;
         if(abilityLastKey is "Down" or "Up" && abilityStride==0 && abilityLastIndex>=0)
             abilityStride=index!=abilityLastIndex?Math.Abs(index-abilityLastIndex):int.MaxValue;
         abilityLastIndex=index;
