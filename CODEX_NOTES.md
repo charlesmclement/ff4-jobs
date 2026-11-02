@@ -522,3 +522,6 @@ Keep this behaviour in any navigation rewrite.
 
 ### 50. Vanilla run ends after Octomammoth (not a stall)
 The "FF4 Scripted Run (Vanilla)" shortcut runs newgame-octomammoth.json = segments 1+2 only; it finishes at step 60 on the overworld outside the waterfall cave (confirmed live 2026-11-02, Antarctic Wind chest opened on the way). Added desktop shortcuts "FF4 TAS Segment 3 (Vanilla)" and "FF4 TAS Segment 4 (Vanilla)" (`launch --vanilla --resume`) to continue from vanilla saves in research/tas-session/documents-vanilla.
+
+### 51. Segment 5 route: Mount Hobs → Fabul (untested)
+`tas/routes/hobs-fabul.json`, 18 steps, flag 19 → 21, ends outside Fabul on the overworld (saveable). Details in docs/TAS-SEGMENT-5.md. Overworld path starts by stepping right because (165,36) is the Mount Hobs door. Audience and rest choices rely on the first option being "yes" (Branch MessageSelection == 0). The ff4-events copy of `sc_e_0022_1` is empty; the extracted map copy sets flag 21. Shortcuts: "FF4 TAS: Segment 5 (Mount Hobs → Fabul)" and "FF4 TAS Segment 5 (Vanilla)". Gap: Deathbringer is not equipped.
