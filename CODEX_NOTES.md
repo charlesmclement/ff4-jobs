@@ -417,6 +417,16 @@ whatever build it launched with, so always say which build is live.
     every other actor (Edward and Yang included) heals her before their own
     action: Cure if they can cast, else a Potion even though Rosa counts as
     a caster.
+48. **Vanilla TAS runs (`tas.py launch --vanilla`).** The user suspects the
+    Jobs+ mod affects the fights. For that launch only, the FF4Jobs and
+    FF4Iso plugin folders move to `BepInEx/plugins-parked-by-tas/` and go
+    back in a `finally` once the game exits (SIGHUP/SIGTERM too; every
+    launch also restores leftovers). Saves use `research/tas-session/
+    documents-vanilla` instead of `documents` (the prefix's Documents
+    symlink is switched between the two). Desktop shortcut "FF4 Scripted
+    Run (Vanilla)" runs the New Game -> Octomammoth route. Mod TAS saves
+    were backed up first to `research/protected-campaign-saves/
+    tas-jobs-mod-before-vanilla-20261102T172211Z` (8 files, sha256 manifest).
 
 ## Stuck detection (all segments, always on)
 

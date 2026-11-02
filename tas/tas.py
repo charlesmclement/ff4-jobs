@@ -87,7 +87,35 @@ def environment(smoke):
                FF4JOBS_TAS_DIR='Z:'+str(DATA).replace('/','\\'),FF4JOBS_TAS_SMOKE='1' if smoke else '0')
     return env
 
-def launch(route_path,smoke,resume=False):
+# --vanilla: the Jobs+ and FF4Iso plugins are parked outside BepInEx/plugins
+# for that launch only and put back as soon as the game exits (every launch
+# also puts back plugins a crash left parked). Vanilla saves live in their
+# own folder, so modded saves are never loaded or overwritten.
+MOD_PLUGINS=('FF4Jobs','FF4Iso')
+PARKED=GAME/'BepInEx/plugins-parked-by-tas'
+
+def restore_mods():
+    for name in MOD_PLUGINS:
+        if (PARKED/name).exists():
+            if (GAME/'BepInEx/plugins'/name).exists():raise RuntimeError(f'Both plugins/{name} and {PARKED/name} exist; fix by hand')
+            (PARKED/name).rename(GAME/'BepInEx/plugins'/name);print('TAS: restored mod plugin',name,flush=True)
+    if PARKED.is_dir() and not any(PARKED.iterdir()):PARKED.rmdir()
+
+def launch(route_path,smoke,resume=False,vanilla=False):
+    restore_mods()
+    if not vanilla:return launch_game(route_path,smoke,resume,'documents')
+    if game_running():raise RuntimeError('Close FF4 normally first; this launcher will not interrupt your game')
+    # Closing the terminal still puts the plugins back.
+    import signal
+    for sig in (signal.SIGHUP,signal.SIGTERM):signal.signal(sig,lambda *_:sys.exit(1))
+    PARKED.mkdir(exist_ok=True)
+    try:
+        for name in MOD_PLUGINS:
+            if (GAME/'BepInEx/plugins'/name).exists():(GAME/'BepInEx/plugins'/name).rename(PARKED/name);print('TAS: vanilla run, parked',name,flush=True)
+        return launch_game(route_path,smoke,resume,'documents-vanilla')
+    finally:restore_mods()
+
+def launch_game(route_path,smoke,resume,documents):
     if game_running():raise RuntimeError('Close FF4 normally first; this launcher will not interrupt your game')
     expected=json.loads((ROOT/'verified-game.json').read_text())['exe_sha256']
     if hashlib.sha256((GAME/'GameAssembly.dll').read_bytes()).hexdigest()!=expected:raise RuntimeError('Unverified game executable')
@@ -111,9 +139,12 @@ def launch(route_path,smoke,resume=False):
         subprocess.run([str(PROTON),'run','cmd','/c','exit','0'],env=env,stdout=log,stderr=log,check=True)
         docs=PREFIX/'pfx/drive_c/users/steamuser/Documents'
         docs.mkdir(parents=True,exist_ok=True)
-        persistent=DATA/'documents';persistent.mkdir(exist_ok=True)
+        persistent=DATA/documents;persistent.mkdir(exist_ok=True)
         if docs.is_symlink():
-            if docs.resolve()!=persistent.resolve():raise RuntimeError('Unexpected TAS Documents symlink')
+            if docs.resolve()!=persistent.resolve():
+                # Switch between the modded and vanilla save folders (both ours).
+                if docs.resolve() not in ((DATA/'documents').resolve(),(DATA/'documents-vanilla').resolve()):raise RuntimeError('Unexpected TAS Documents symlink')
+                docs.unlink();docs.symlink_to(persistent,target_is_directory=True)
         else:
             if not docs.resolve().is_relative_to(PREFIX.resolve()):raise RuntimeError('Unexpected TAS Documents path')
             shutil.copytree(docs,persistent,dirs_exist_ok=True)
@@ -217,12 +248,12 @@ def start(path,from_step,delay):
     start_route(route,from_step or auto_step(route),delay)
 
 p=argparse.ArgumentParser(description=__doc__);sub=p.add_subparsers(dest='command',required=True)
-a=sub.add_parser('launch');a.add_argument('--route');a.add_argument('--smoke',action='store_true');a.add_argument('--resume',action='store_true',help='after a save loads, start the route at the step for the current map')
+a=sub.add_parser('launch');a.add_argument('--route');a.add_argument('--smoke',action='store_true');a.add_argument('--resume',action='store_true',help='after a save loads, start the route at the step for the current map');a.add_argument('--vanilla',action='store_true',help='run without the Jobs+/FF4Iso plugins and with separate saves')
 a=sub.add_parser('start');a.add_argument('route');a.add_argument('--from-step',type=int,default=1,help='resume at this numbered route step (1-based); 0 = pick from the current map');a.add_argument('--delay',type=float,default=5,help='seconds to refocus FF4')
 sub.add_parser('stop');sub.add_parser('status')
 a=p.parse_args()
 try:
-    if a.command=='launch':launch(a.route,a.smoke,a.resume)
+    if a.command=='launch':launch(a.route,a.smoke,a.resume,a.vanilla)
     elif a.command=='start':start(a.route,a.from_step,a.delay)
     elif a.command=='stop':request('stop')
     else:print(json.dumps(state(),indent=2))
