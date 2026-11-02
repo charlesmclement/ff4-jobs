@@ -31,7 +31,7 @@ internal sealed class BattlePilot
         abilityLastIndex=-1;abilityLastKey=null;lastInfo=lastCursor=-1;lastActor=IntPtr.Zero;previousHp=-1;
         pendingRule=-1;abilityConfirms=abilityStuck=targetPresses=0;decision="";
         blockedRules.Clear();blockedCure.Clear();blockedItems.Clear();blockedStatusSpell.Clear();usedOnce.Clear();wasMist=false;
-        fleeFrames=0;sidePresses=0;bossSeen=false;fightSeconds=0;fightFrame=-1;rowDone=false;
+        fleeFrames=0;sidePresses=0;bossSeen=false;turnActor=IntPtr.Zero;turnRule=-1;fightSeconds=0;fightFrame=-1;rowDone=false;
     }
     internal void Read(Snapshot state,int frame,BattleRule[]? plan=null,int[]? fleeMonsters=null)
     {
@@ -156,7 +156,7 @@ internal sealed class BattlePilot
         if(menu.IsAuto) {state.Failure="Auto-battle is enabled; disable it before restarting the route";return;}
         if(menu.IsPause) {state.Failure="Battle paused; run stopped";return;}
         var info=menu.infomationController;
-        if(info?.stateMachine==null || menu.stateMachine==null || (int)menu.stateMachine.Current!=2)return;
+        if(info?.stateMachine==null || menu.stateMachine==null || (int)menu.stateMachine.Current!=2) {turnActor=IntPtr.Zero;return;}
         int stage=(int)info.stateMachine.Current;
         var actor=menu.SelectedTarget;
         if(actor==null)return;
@@ -276,6 +276,7 @@ internal sealed class BattlePilot
     private static readonly Dictionary<int,string> Names=new(){[1]="Cecil",[13]="Cecil",[2]="Kain",[4]="Rydia",[6]="Tellah",[3]="Rosa",[7]="Edward",[8]="Yang"};
     private static bool IsCecil(BattlePlayerData p)=>p.GetOwnedCharacterData()?.characterStatusId is 1 or 13;
     private bool rosaParty,rosaCanCure,bossSeen;
+    private IntPtr turnActor;private int turnRule=-1;
     private readonly HashSet<int> livingIds=new();private BattlePlayerData? rosaTarget;
     private const float RosaHealBelow=.75f;
     private const int Summon=9,ChocoboSummon=65,ChocoboMp=7,RydiaBossReserve=14,Edward=7;
@@ -378,7 +379,10 @@ internal sealed class BattlePilot
         {
             var rule=plan[r];
             if(blockedRules.Contains(r))continue;
-            if(rule.OncePerBattle && usedOnce.Contains((r,actor.Pointer)))continue;
+            // Decide re-runs every frame of a turn: the rule this turn already
+            // took stays allowed, so a once-per-battle rule isn't skipped
+            // before it is ever input (Yang skipped Attack x2 + Focus).
+            if(rule.OncePerBattle && usedOnce.Contains((r,actor.Pointer)) && !(actor.Pointer==turnActor && r==turnRule))continue;
             if(rule.BossOnly && !boss)continue;
             if(rule.Character!=null && rule.Character!=id)continue;
             if(stats!=null && rule.MinHpPercent>0 && stats.CurrentHP*100<rule.MinHpPercent*Math.Max(1,stats.ConfirmedMaxHp()))continue;
@@ -392,7 +396,7 @@ internal sealed class BattlePilot
             {
                 if(!HasItem(item))continue;
                 pendingItem=item;pendingTarget=rule.TargetCharacter??id;pendingRule=r;
-                if(rule.OncePerBattle)usedOnce.Add((r,actor.Pointer));
+                if(rule.OncePerBattle) {usedOnce.Add((r,actor.Pointer));turnActor=actor.Pointer;turnRule=r;}
                 Log(actor,$"item {item} on #{pendingTarget} (plan rule {r+1})");
                 return;
             }
@@ -408,7 +412,7 @@ internal sealed class BattlePilot
             // Defend sits in the side command group; SelectCommand switches to it.
             if(rule.Command!=Defend && !CommandEnabled(info,rule.Command))continue;
             pendingCommand=rule.Command;pendingAbility=ability;pendingRule=r;targetAll=all;
-            if(rule.OncePerBattle)usedOnce.Add((r,actor.Pointer));
+            if(rule.OncePerBattle) {usedOnce.Add((r,actor.Pointer));turnActor=actor.Pointer;turnRule=r;}
             Log(actor,$"{(ability>0?Db.SpellName(ability):"command "+rule.Command)}{(all?" on all":"")} (plan rule {r+1})");abilityConfirms=abilityStuck=0;abilityStride=0;abilityLastIndex=-1;abilityLastKey=null;
             return;
         }

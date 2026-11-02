@@ -404,6 +404,15 @@ whatever build it launched with, so always say which build is live.
     ran only on frames %12, so item was still 0 on the first frame. It now
     runs every frame, and "nobody to heal" logs each member's HP and the
     Potion/Phoenix Down counts.
+    Second run: the heal worked (Phoenix Down on Edward, Potions, menu
+    closed).
+46. **Once-per-battle rules were burned inside one turn.** Decide runs every
+    frame while a command menu is open, and ChoosePlan marked a
+    oncePerBattle rule used when picked, so the next frame skipped to the
+    next rule: Yang went straight past Attack x2 and the first Focus to
+    Defend, his Kick after the Mom Bomb split was uncharged, and the bombs
+    wiped the party. Now the rule picked this turn (turnActor/turnRule,
+    cleared whenever the menu leaves input) stays allowed for that turn.
 
 ## Stuck detection (all segments, always on)
 
