@@ -372,6 +372,11 @@ whatever build it launched with, so always say which build is live.
     Rydia and Edward leave after Mount Hobs (user: "they can die"): they
     are healed only after Rosa/Cecil/Yang and never revived; the rest keep
     attacking (and never flee a boss, see 41).
+43. **Route planning fact (user): everyone but Cecil leaves before Mount
+    Ordeals, and Cecil restarts as a Paladin (level reset).** EXP and party
+    survival before Ordeals only matter for winning the fights at hand.
+    Candidate: flee more random fights in segments 4-5. Not implemented;
+    asked the user.
 
 ## Stuck detection (all segments, always on)
 
