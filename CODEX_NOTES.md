@@ -364,6 +364,12 @@ whatever build it launched with, so always say which build is live.
     boss fight to the end. Healing (user): Rosa, Cecil, Yang first (lowest of
     them, Rosa under 75%), then Rydia and Edward under 50%. Nobody is left to
     die; Phoenix Down picks a priority ally first.
+42. **Mom Bomb split: Rydia Blizzard on all.** Plan rule (character 4,
+    Black Magic 8, Blizzard 36, targetAll, minEnemies 2, bossOnly) fires once
+    the Mom Bomb splits; Chocobo before that. Rydia's plan rules now run
+    before her Chocobo fallback. In a boss fight Rydia joins the first heal
+    group so she stays up. The Antarctic Wind (Watery Pass 169 (8,10), flag
+    53) was walked past in segment 2; the user says it isn't needed.
 
 ## Stuck detection (all segments, always on)
 

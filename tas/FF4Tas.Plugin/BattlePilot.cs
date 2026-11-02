@@ -280,7 +280,9 @@ internal sealed class BattlePilot
     {
         if(!rosaParty)return 0;
         int who=p.GetOwnedCharacterData()?.characterStatusId??0;
-        return who is Rosa or 1 or 13 or 8?0:1;
+        // In boss fights Rydia joins the first group (Blizzard on the split Mom
+        // Bomb needs her alive).
+        return who is Rosa or 1 or 13 or 8 || (who==Rydia && bossSeen)?0:1;
     }
     // One decision per turn. Order: scripted fights just attack; revive;
     // heal (Cure first for everyone, Potion only if nobody can cast); Cure on
@@ -334,14 +336,15 @@ internal sealed class BattlePilot
         // Tellah joins in while he stays above the MP his route plan reserves.
         if(undead!=null && canCure && (!isTellah || stats!.CurrentMP>=CureMp+Reserve(plan,Tellah)))
         {pendingCommand=WhiteMagic;pendingAbility=CureAbility;castOnUndead=true;Log(actor,$"Cure{(undeadCount>1?" on all":"")} vs undead");return;}
-        // Rydia: Chocobo summon. Ordinary fights keep 14 MP for the boss.
-        if(me==Rydia && stats!=null && CommandEnabled(info,Summon) && stats.CurrentMP>=ChocoboMp+(boss?0:RydiaBossReserve))
-        {pendingCommand=Summon;pendingAbility=ChocoboSummon;Log(actor,"Summon Chocobo");return;}
         if(me==Rosa && rosaParty) {pendingCommand=Defend;Log(actor,"Defend (nobody to heal)");return;}
         // Edward just attacks (user: "edward can just attack and die").
         if(me==Edward) {Log(actor,"Attack weakest enemy");return;}
         ChoosePlan(info,actor,plan);
         if(pendingItem!=0)return;
+        // Rydia with no plan rule: Chocobo summon. Ordinary fights keep 14 MP
+        // for the boss.
+        if(pendingCommand==1 && me==Rydia && stats!=null && CommandEnabled(info,Summon) && stats.CurrentMP>=ChocoboMp+(boss?0:RydiaBossReserve))
+        {pendingCommand=Summon;pendingAbility=ChocoboSummon;Log(actor,"Summon Chocobo");return;}
         // Rydia's attacks do ~1 damage: she Defends instead of wasting the turn.
         if(pendingCommand==1 && me==Rydia) {pendingCommand=Defend;Log(actor,"Defend (her Attack does nothing)");return;}
         if(pendingCommand==1)Log(actor,"Attack weakest enemy");
