@@ -400,6 +400,10 @@ whatever build it launched with, so always say which build is live.
     summit before Yang. `tas.py` resume starts at a menu step that sits
     right before the picked navigate step on the same map. Not yet: Cure by
     magic (Rosa), Tents at save points; both use the same menu.
+    First live run: the step ended at once with "nobody to heal": Need()
+    ran only on frames %12, so item was still 0 on the first frame. It now
+    runs every frame, and "nobody to heal" logs each member's HP and the
+    Potion/Phoenix Down counts.
 
 ## Stuck detection (all segments, always on)
 

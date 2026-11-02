@@ -21,6 +21,7 @@ internal sealed class FieldMenu
     private bool finished,oneColumn;
     private int uses,wait,lastIndex=-1,stuck,item,target;
     private string? lastKey;
+    private string party="";
     private MainMenuController? main;
     private ItemWindowController? items;
     internal void Reset()
@@ -29,12 +30,14 @@ internal sealed class FieldMenu
     }
     internal void Read(Snapshot s,int frame)
     {
-        if(frame%12==0)Need();
+        // Every frame: deciding "nobody to heal" before the first check ended
+        // the step on its first frame without looking at the party.
+        Need();
         if(finished && s.Phase=="Player") {s.MenuDone=true;s.Detail="Menu: party healed";return;}
         if(wait>0) {wait--;s.Detail="Menu: item in use";return;}
         if(s.Phase=="Player")
         {
-            if(item==0) {finished=true;s.MenuDone=true;s.Detail="Menu: nobody to heal";return;}
+            if(item==0) {finished=true;s.MenuDone=true;s.Detail="Menu: nobody to heal ("+party+")";return;}
             Pulse(s,frame,"Menu","Open the menu to heal");return;
         }
         if(s.Phase!="Menu")return;
@@ -112,6 +115,7 @@ internal sealed class FieldMenu
         var corps=user?.corpsList;var owned=user?.OwnedCharacterList;
         if(corps==null || owned==null)return;
         float lowest=TopUpBelow;int dead=0,hurt=0;
+        var seen=new System.Text.StringBuilder();
         for(int c=0;c<corps.Count;c++)
         {
             int id=corps[c]?.CharacterId??0;if(id==0)continue;
@@ -119,19 +123,22 @@ internal sealed class FieldMenu
             {
                 var member=owned[o];var p=member?.Parameter;
                 if(member==null || p==null || member.Id!=id)continue;
+                seen.Append(seen.Length>0?", ":"").Append(member.Name).Append(' ').Append(p.CurrentHP).Append('/').Append(p.ConfirmedMaxHp());
                 if(p.CurrentHP<=0) {if(dead==0)dead=id;break;}
                 float ratio=p.CurrentHP/(float)Math.Max(1,p.ConfirmedMaxHp());
                 if(ratio<lowest) {lowest=ratio;hurt=id;}
                 break;
             }
         }
+        party=$"{seen}; Potions {Count(Potion)}, Phoenix Downs {Count(PhoenixDown)}";
         if(dead!=0 && Has(PhoenixDown)) {item=PhoenixDown;target=dead;}
         else if(hurt!=0 && Has(Potion)) {item=Potion;target=hurt;}
     }
-    private static bool Has(int contentId)
+    private static bool Has(int contentId)=>Count(contentId)>0;
+    private static int Count(int contentId)
     {
         var owned=UserDataManager.Instance()?.normalOwnedItems;
-        return owned!=null && owned.TryGetValue(contentId,out var entry) && entry!=null && entry.Count>0;
+        return owned!=null && owned.TryGetValue(contentId,out var entry) && entry!=null?entry.Count:0;
     }
     private static int IndexOf(Il2CppSystem.Collections.Generic.IEnumerable<Last.UI.ItemListContentData> data,int contentId)
     {
