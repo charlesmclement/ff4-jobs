@@ -110,11 +110,12 @@ internal sealed class BattlePilot
         // shoulder keys, which BattleMenuController.IsEscapeInput polls. If the
         // party hasn't escaped after ~10 s (fight can't be fled), fight on.
         // ...and run from any ordinary fight that is taking too long.
-        bool slow=fightSeconds>SlowFightSeconds;
-        if((fleeTarget || slow) && !boss && !scripted && fleeFrames<FleeGiveUp)
+        bool slow=fightSeconds>SlowFightSeconds,toughFight=FleeTough && tough;
+        if((fleeTarget || slow || toughFight) && !boss && !scripted && fleeFrames<FleeGiveUp)
         {
             fleeFrames++;state.BattleInput="SwitchLeft+SwitchRight";
-            state.Detail="Running away";decision=fleeTarget?"Party: run away (listed encounter)":$"Party: run away (fight past {SlowFightSeconds:0} s)";
+            state.Detail="Running away";
+            decision=fleeTarget?"Party: run away (listed encounter)":toughFight?"Party: run away (tough enemy; save MP for the boss)":$"Party: run away (fight past {SlowFightSeconds:0} s)";
             state.Battle=$"{enemyLine} | {decision}";return;
         }
         if(menu==null || !menu)menu=UnityEngine.Object.FindObjectOfType<BattleMenuController>();
@@ -203,6 +204,7 @@ internal sealed class BattlePilot
     private int undeadCount,livingEnemies;
     private bool targetAll,tough,boss,fleeTarget;
     internal List<HashSet<int>> FleeParties=new();
+    internal bool FleeTough;
     private int fleeFrames;
     private const int FleeGiveUp=600;
     private const float SlowFightSeconds=15;

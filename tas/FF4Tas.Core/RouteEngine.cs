@@ -12,6 +12,9 @@ public sealed class Route
     // ids in the group (e.g. [22, 9] = 4 Sahagin + 2 Tiny Mage at the
     // waterfall). Escape = hold SwitchLeft + SwitchRight. Never bosses.
     public int[][] FleeParties { get; set; } = Array.Empty<int[]>();
+    // Run at once from tough ordinary fights (an enemy with defense >= 200,
+    // which attacks barely scratch) instead of spending MP on them.
+    public bool FleeTough { get; set; }
     public void Validate()
     {
         if(Schema!=1 || string.IsNullOrWhiteSpace(Name) || Steps==null || Steps.Length is <1 or >10000)

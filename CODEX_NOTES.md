@@ -226,6 +226,13 @@ whatever build it launched with, so always say which build is live.
       a high-defense enemy, at MP >= 5, else Defend. His Cure reserve is 10
       (Osmose refills him at Octomammoth).
 
+25. **User's policy before Octomammoth: reserve MP, flee tough fights.**
+    New `Route.FleeTough`: run at once from non-boss fights with an enemy at
+    defense >= 200 (Red Mousse/Yellow Jelly). Segment 2 sets it. Tellah's
+    random-fight plan is back to keeping 40 MP: weakness spell on 2+
+    enemies only at MP >= 45, else Defend; Cure reserve 40. Flee triggers
+    now: listed group, tough enemy, or fight past 15 s.
+
 ## Stuck detection (all segments, always on)
 
 The user's standing requirement: every movement must be confirmed. It lives
