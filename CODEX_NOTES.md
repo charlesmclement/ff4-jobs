@@ -885,3 +885,4 @@ User: "upgrade all weapons and armor to optimal for everyone at this point", and
 * New BattleRule `heldItem`: Items (command 3), Up from the bag list into BattleItemInfomationController state UseEquipSelect 2 (`equipContnetList`, Data.contentId), Left/Right to the hand, Confirm, then a single enemy (the kill-order target).
 * `Holds()` checks OwnedCharacterData.EquipmentData. A held item that isn't found is blocked for the fight.
 * Cagnazzo out of the shell: Tellah Thundaga → Thundara → Thunder Rod. Palom Thundara → Thunder Rod.
+Yang (user: not Cecil 1-on-1): Palom, Porom and Tellah Attack while the Monk lives (rules also block Twincast); Monk 205 is a route realFight, so the heal logic runs (scripted 30000+ HP fights are attack-only). No MP spent: the fight ends by script, and Baigan needs the MP.

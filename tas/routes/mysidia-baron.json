@@ -7,6 +7,9 @@
     168,
     169
   ],
+  "realFights": [
+    205
+  ],
   "steps": [
     {
       "label": "Outside Mysidia: heal before Baron",
@@ -577,17 +580,17 @@
       "battlePlan": [
         {
           "character": 9,
-          "command": 2,
+          "command": 1,
           "whileMonster": 205
         },
         {
           "character": 10,
-          "command": 2,
+          "command": 1,
           "whileMonster": 205
         },
         {
           "character": 6,
-          "command": 2,
+          "command": 1,
           "whileMonster": 205
         },
         {
@@ -669,17 +672,17 @@
       "battlePlan": [
         {
           "character": 9,
-          "command": 2,
+          "command": 1,
           "whileMonster": 205
         },
         {
           "character": 10,
-          "command": 2,
+          "command": 1,
           "whileMonster": 205
         },
         {
           "character": 6,
-          "command": 2,
+          "command": 1,
           "whileMonster": 205
         },
         {
@@ -751,17 +754,17 @@
       "battlePlan": [
         {
           "character": 9,
-          "command": 2,
+          "command": 1,
           "whileMonster": 205
         },
         {
           "character": 10,
-          "command": 2,
+          "command": 1,
           "whileMonster": 205
         },
         {
           "character": 6,
-          "command": 2,
+          "command": 1,
           "whileMonster": 205
         },
         {
@@ -843,17 +846,17 @@
       "battlePlan": [
         {
           "character": 9,
-          "command": 2,
+          "command": 1,
           "whileMonster": 205
         },
         {
           "character": 10,
-          "command": 2,
+          "command": 1,
           "whileMonster": 205
         },
         {
           "character": 6,
-          "command": 2,
+          "command": 1,
           "whileMonster": 205
         },
         {
@@ -925,17 +928,17 @@
       "battlePlan": [
         {
           "character": 9,
-          "command": 2,
+          "command": 1,
           "whileMonster": 205
         },
         {
           "character": 10,
-          "command": 2,
+          "command": 1,
           "whileMonster": 205
         },
         {
           "character": 6,
-          "command": 2,
+          "command": 1,
           "whileMonster": 205
         },
         {
@@ -1009,17 +1012,17 @@
       "battlePlan": [
         {
           "character": 9,
-          "command": 2,
+          "command": 1,
           "whileMonster": 205
         },
         {
           "character": 10,
-          "command": 2,
+          "command": 1,
           "whileMonster": 205
         },
         {
           "character": 6,
-          "command": 2,
+          "command": 1,
           "whileMonster": 205
         },
         {
