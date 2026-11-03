@@ -1,6 +1,196 @@
 FF4 JOBS+ / LOCAL SCRIPTED RUN — HANDOFF FOR CLAUDE
 Prepared November 1, 2026 (America/Los_Angeles)
 
+UPDATE — NOV 3 (SUPERSEDES EVERYTHING BELOW WHERE THEY DISAGREE)
+Full per-fix detail is in CODEX_NOTES.md (notes 83-126). This section is the
+summary a new session needs.
+
+WHERE THE RUN IS
+- Segments 1-5 are hand-built and passed live. Segments 6-17 are written by
+  generators tas/build_segmentN.py -> tas/routes/*.json, built on tas/route_kit.py.
+  Always edit the generator, never the JSON, then rerun
+  `python3 tas/build_segmentN.py` from tas/.
+- Segment 6 (Fabul -> Mysidia -> Mt. Ordeals -> Paladin) COMPLETED live.
+- Segment 7 (Mysidia -> Baron -> Cagnazzo) has been run piecewise live:
+  - Shop, inn rest, Yang, the waterway, the castle side-corridor route and
+    Baigan all worked.
+  - Its end (landing two tiles below the castle) finished live.
+  - The last few changes (gear shopping, rods, the Yang plan, default spells)
+    have NOT been run yet.
+  - Cagnazzo has NOT been seen through to the end.
+- Segments 8-17: not run live.
+- After testing, the user wants an optimization/cleanup pass that moves the
+  test-driven patches somewhere sensible (see memory). Propose a plan first.
+
+HOW TESTING WORKS NOW
+- By default the user tests. When the user hands testing over ("take over
+  testing", "you run it"), I drive the game myself:
+  - The desktop is X11.
+  - `wmctrl -l` finds the window titled exactly "FINAL FANTASY IV" (ignore the
+    BepInEx console window); `wmctrl -i -a <id>` focuses it.
+  - Keys: `xdotool key Return/Up/Down/Left/BackSpace` go to the focused window.
+  - Screenshots: python3 PIL `ImageGrab.grab()`.
+  - Title screen: press Enter (press any button) -> Load Game. The list starts
+    on Quick Save; the Autosave is one Up. Files 1-5 follow. The dialog's
+    default is No, so press Left then Enter.
+- Plugin (C#) changes need a game restart. Route (JSON) changes can be swapped
+  into a running game: `tas.py stop`, then
+  `tas.py start <route> --from-step 0` (it picks the step from the map and
+  story flags; menu steps just before it on the same map run too).
+- The runner pauses when the game loses focus. F9 = pause/resume (new),
+  F10 = stop, F7/F8 = speed.
+- Watcher: a small script polls research/tas-session/status.json for step
+  changes, failures and stalls (Monitor tool). The trace is
+  research/tas-session/trace-*.jsonl.
+- Saves worth knowing:
+  - File 5 = the end of segment 6 (outside Mysidia).
+  - Autosave 10:46 = Castle Baron 1F, just before Baigan.
+
+USER RULES FROM THIS SESSION (all segments)
+- Fix things generally, for every segment, not just one spot.
+- No logic may depend on which party slot a character is in. Find characters
+  by character_status id.
+  - PartyList reads the menu party list rows (contentList[i].CharacterData).
+  - The equipment window match uses GetTargetCharacterData(targetIndex).
+- Every segment ends on saveable ground (overworld or a save point).
+- Healing outside battle: Paladin Cecil first, Rosa, Rydia, Porom, FuSoYa,
+  Tellah LAST (his MP is for bosses).
+- Status cures:
+  - Esuna (ability 10, 20 MP) clears all of them. Failing that, the matching
+    item; a Remedy only if one is owned.
+  - Never buy Remedies ("spendy").
+  - In battle, statuses are cured worst first: Petrify, gradual Petrify,
+    Confuse, Sleep, Paralyze, Toad, Pig, Silence, Mini before healing; then
+    Darkness, Poison, Curse.
+- Story fights (fights during a mash step) never flee.
+- Back attacks: Row (confirm its party-side target). Target-side keys swap.
+- Yang never Kicks.
+- Twincast:
+  - It is the twins' default when both have >= 20 MP.
+  - Not when a boss rule names that twin while its monster lives, and not
+    while the target has Reflect.
+  - Twincast DOES reflect (the guide is wrong).
+- Black magic default (Palom, Tellah, FuSoYa): the strongest spell of the
+  target's weakness, Fire when there is none, on all enemies at 3+. A
+  fight-specific rule overrides it.
+- Gear:
+  - Buy the best each shop offers for everyone.
+  - Yang: claws in pairs, 2 Fire, 2 Ice, 2 Thunder. NEVER sell claws (they're
+    for weaknesses).
+  - Strongest ignores claws (attack 0), so claws are equipped explicitly
+    after it.
+  - Swap weapons by boss weakness (Ice Brand / Flame sword later).
+  - Boss weaknesses are NOT in the master data (resistance group 0); take them
+    from the guide's monster table or the user.
+- Rods give free spells: Items -> Up (held items) -> the rod's hand -> enemy.
+  - Flame Rod casts Fire (33), Ice Rod Blizzard (36), Thunder Rod Thunder (39).
+  - Casters fall back to the rod when out of MP.
+- Rest at inns before bosses when possible. A Tent's rest scene must finish
+  before the next menu step.
+- The user is hard of seeing: overlay text stays at 22 px.
+
+BOSS PLANS (user-directed, segments 6-7)
+- Milon and Milon Z: Porom Twincasts while nobody needs healing.
+- Mirror trial: Cecil Defends.
+- Yang at the Baron inn (62000 HP, ends by itself):
+  - A route realFight, so heals run.
+  - The twins Twincast, Tellah casts Firaga or Fira, Cecil attacks, Porom
+    heals first.
+  - MP is free here: inn before, waterway Tent after.
+- Baigan:
+  - The arms regrow only after BOTH die.
+  - killFirst: the arm nearest the party (master 170), the body, the other arm
+    (169).
+  - Cecil attacks (rule `first`, no healing).
+  - Palom backs Porom up with Potions on the injured (`targetInjured`).
+  - Tellah casts Firaga on the body whenever its Reflect (condition 28) is down:
+    the first once at 30+ MP, later ones only at 60+ so 30 stays for Cagnazzo.
+  - No Twincast, no AOE.
+- Cagnazzo, from his AI script sc_ai_171 (extracted to research/tas-battle/ai):
+  - At HP <= 700 a hit triggers "Turtle defense!", which is mode 4, the shell:
+    he Restores, then comes out. In the shell everyone Defends.
+  - Mode 2 is "Torrents of water" (Tsunami charging); lightning MAGIC breaks it.
+  - Out of the shell:
+    - Tellah: Thundaga -> Thundara -> Thunder Rod.
+    - Palom: Thundara -> Thunder Rod.
+    - Cecil attacks.
+  - The battle line shows `[mode 171:n]`.
+
+NEW ENGINE / PLUGIN PIECES (C#)
+- Navigation:
+  - Beside the goal with no path, it keeps pushing and presses Confirm (NPC
+    talk) instead of replanning away.
+  - Candidate cells are also tried on the player's layer: towns walk on Ground
+    (1) while routes are written on 0.
+  - The native search still fails across layers on some maps. Fixed per map
+    with BFS waypoints from tas/door_graph.py (now takes several assets, a cell
+    is open on ANY layer, and it prints walk corners).
+  - A generator that writes waypoints for every walk is the obvious next step.
+- route_kit.trigger:
+  - Up to two "scene on the way" detours (a smaller Event before the real one).
+  - write() widens each detour's end with the trigger's own end condition.
+- route_kit additions:
+  - inn(): rest at an innkeeper.
+  - claws() / any_claws(): Yang's claw pairs.
+  - tent(): waits out the rest scene.
+- Equip steps:
+  - equipItems: [{character, slot 0 right hand / 1 left / 2 head / 3 body /
+    4 arms, content}] after Strongest.
+  - Unowned items are skipped. Once a hand is filled, its other choices drop.
+  - Slot rows are matched by EquipSlotType.
+- BattleRule new fields:
+  - first: beats heals and cures.
+  - onTarget: only while that monster is the target.
+  - ignoreReflect.
+  - whileModeIn / whileModeNot: the enemy's AI CurrentMode.
+  - whileMonsterChanged: live sprite change.
+  - targetInjured: item on the most hurt member.
+  - heldItem: use the item in hand.
+- Kill order only moves forward within a fight (a regrown arm isn't chased).
+- Reflect on the target is read live; the battle line shows [reflect].
+- Item choice (the "アイテム選択肢表示" SysCall) steers a two-column grid.
+- F9 pause.
+- Diagnostics: status.log (party condition ids after each fight, to check the
+  field status cure), fights.log.
+- The AI bundle was read with a throwaway pure-Python UnityFS + LZ4 reader (no
+  UnityPy or lz4 installed). Monster scripts are JSON inside
+  StreamingAssets/aa/StandaloneWindows64/monster_ai_assets_all_*.bundle.
+
+USEFUL DATA FACTS
+- Conditions:
+  - Silence 6, Sleep 7, Paralyze 8, Darkness 9, Poison 10, Petrify 11/17,
+    Confuse 12, Mini 13/57, Toad 14/58, Pig 15/59, Curse 18, Reflect 28.
+- Cure items:
+  - Echo Herbs 14, Eye Drops 15, Antidote 16, Gold Needle 10.
+  - Maiden's Kiss 11, Mallet 12, Diet Food 13, Remedy 18.
+  - Mallets are first sold in later towns.
+- Spells:
+  - Fire 33 / Fira 34 / Firaga 35, Blizzard 36-38, Thunder 39-41.
+  - Bio 48, Esuna 10, Cure 6, Life 11. Twincast is command 18.
+- Baron town (map 24):
+  - Weapon shop: map 31, door (15,17). Weaponsmith (11,6), product group 1:
+    rods, Healing Staff, claws. Armorer (16,6), group 2: Headband, Kenpo Gi,
+    Silver Armlet.
+  - The weapon shop door is locked before Yang ("can't enter"). After Yang it
+    opens with the Baron Key: item 68, one Right of the default, ScenarioFlag2 15.
+  - Waterway door: Baron Key, flag2 16. Item shop: map 26. Inn: map 25,
+    counter relay (21,15).
+- The weapon shop opens after Yang (flag 31), not after Cagnazzo.
+- Enterprise:
+  - Transportation 3 lands on attributes 3/4/6/10/15/17/18/23.
+  - Segment 7 lands it at (107,146), two tiles below the castle. Segment 8
+    boards there.
+
+OPEN / UNVERIFIED
+- Whether the field status cure sees statuses (status.log has shown no
+  statuses yet).
+- The armorer's counter cell (16,8) is a guess.
+- The held-item (rod) menu flow, and the Cagnazzo shell by mode, are untested
+  live.
+- Default spells: new, untested.
+- Segments 8-17 are untested. Expect more cross-layer pathing stalls; fix with
+  BFS waypoints.
+
 UPDATE — NOV 1 EVENING (SUPERSEDES "CURRENT PRIORITY" BELOW)
 - Pre-title exit is RESOLVED in practice: with Steam running, session
   564e480899fb4783a8913ad24a07ad64 reached the title, started the route, and
@@ -73,7 +263,8 @@ UPDATE — NOV 1 EVENING (SUPERSEDES "CURRENT PRIORITY" BELOW)
 - Next: user retests; if FieldHelp closes, watch step 2 (first real navigation,
   map 6 -> 5).
 
-READ THIS FIRST
+READ THIS FIRST (NOV 1; see the NOV 3 update above: when the user hands
+testing over, the assistant may drive the game)
 The user is about to test the scripted run. Their explicit instruction is:
 "do not test i will do all testing"
 Do not launch FF4, run automated tests, smoke tests, or play the game yourself.
