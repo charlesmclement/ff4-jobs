@@ -88,10 +88,14 @@ internal sealed class BattlePilot
             if(who==Rydia && Knows(p!,CureAbility))rydiaMp=stats.CurrentMP;
             if(who==Rosa && ratio<HealBelow && !taken)rosaLow=p;
             if(rank<0 || taken || away)continue;
-            // Rosa tops up her priority allies earlier (under 75%).
-            if(rosaParty && ratio<(rank==0?RosaHealBelow:HealBelow) && rank+ratio<rosaKey) {rosaTarget=p;rosaKey=rank+ratio;}
+            // Rosa tops up Rosa/Cecil/Yang under 75%, Rydia/Edward under 65%;
+            // lowest share first (HealKey: a small edge for the first three,
+            // anyone critical before all; she once topped up a 200 HP Yang
+            // while Edward sat at 17).
+            float heal=HealKey(rank,ratio);
+            if(rosaParty && ratio<(rank==0?RosaHealBelow:OthersHealBelow) && heal<rosaKey) {rosaTarget=p;rosaKey=heal;}
             if(ratio>=HealBelow)continue;
-            float key=rosaParty?rank+ratio:ratio-(IsCecil(p!)?.05f:0);
+            float key=rosaParty?heal:ratio-(IsCecil(p!)?.05f:0);
             if(key<injuredRatio) {injured=p;injuredRatio=key;injuredRatioNow=ratio;}
         }
         // Scripted losses (Titan at Mist) wipe the party and the story goes on;
@@ -359,7 +363,12 @@ internal sealed class BattlePilot
     private IntPtr decidingActor;
     private IntPtr turnActor;private int turnRule=-1;private bool itemOnEnemies;
     private readonly HashSet<int> livingIds=new();private readonly Dictionary<int,int> livingHp=new();private readonly Dictionary<IntPtr,string> firstSprite=new();private bool grown;private string spriteLine="";private const string GrowWarning="E0020_01_180_b_01";private const int MomBomb=165;private BattlePlayerData? rosaTarget,rosaLow;
-    private const float RosaHealBelow=.75f;
+    private const float RosaHealBelow=.75f,CriticalHp=.35f;
+    // Lowest HP share first; Rosa, Cecil and Yang only get a small edge
+    // (user: "loosen that up", "I would have healed Ed there"), and anyone
+    // under CriticalHp comes before everyone else.
+    private const float PriorityEdge=.1f,OthersHealBelow=.65f;
+    private static float HealKey(int rank,float ratio)=>ratio<CriticalHp?ratio-1:ratio-(rank==0?PriorityEdge:0);
     private const int Summon=9,ChocoboSummon=65,ChocoboMp=7,RydiaBossReserve=14,Edward=7;
     // Heal order with Rosa in the party: Rosa, Cecil and Yang (rank 0, the
     // lowest HP% of them first), then everyone else (rank 1). Without Rosa
@@ -415,7 +424,9 @@ internal sealed class BattlePilot
         // wait, and anyone under half HP is Rydia's
         // to Cure. Rosa still heals that when Rydia can't, and revives first.
         bool urgent=injured!=null || rosaLow!=null;
-        if(me==Rosa && toughestFlyer!=null && CommandEnabled(info,Aim) && (dead==null || !Knows(actor,LifeAbility)) && (!urgent || RydiaCovers))
+        // Someone near death: Rosa heals now instead of leaving it to Rydia.
+        bool critical=injured!=null && injuredRatioNow<CriticalHp;
+        if(me==Rosa && toughestFlyer!=null && CommandEnabled(info,Aim) && (dead==null || !Knows(actor,LifeAbility)) && (!urgent || RydiaCovers && !critical))
         {pendingCommand=Aim;aimFlyer=true;if(newTurn)flyerAims++;Log(actor,$"Aim at {Db.MonsterName(toughestFlyer.MonsterMaster.Id)} (weak to arrows){(urgent?"; Rydia heals":"")}");return;}
         // Rosa always heals: Rosa/Cecil/Yang under 75% (lowest first), then
         // Rydia/Edward under 50%; else she Defends.
