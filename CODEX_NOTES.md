@@ -560,3 +560,6 @@ Trace after the explosion: "Cecil: Phoenix Down on #4" and "Yang: Phoenix Down o
 
 ### 60. Field Life never reached: the spell list is a grid (fix untested)
 Trace after the Mom Bomb: "Magic: Life (state 2, cursor 0 -> 5)", then "cursor 3 -> 5", repeating. Down jumps a whole row (0 -> 3, then wraps to 0), so pressing only Down never reached Life at 5, and the stuck check never fired because the cursor kept moving. FieldMagic.Move now reads the row width from a Down that moves more than one slot, then uses Up/Down for the row and Left/Right for the column. Unrelated to the formation code.
+
+### 61. Resume on the Hobs summit after the Mom Bomb found no step (fixed); field Life works
+The launcher sat idle: auto_step reset its pick at the segment's closing checkpoint, which repeats the last story flag (19), so "No route step starts on map 180". Checkpoints no longer reset the pick. The grid walk from note 60 is confirmed live: Life cursor 0 -> 3 -> 4 -> 5, Life cast, then Cures, and the step finished.

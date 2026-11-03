@@ -216,8 +216,10 @@ def auto_step(route):
             d=0 if x is None else abs(target['x']-x)+abs(target['y']-y)
             if best is None or d<best[0]:best=(d,i)
         if flag is not None and flag not in flags:blocked=True
-        # A satisfied story flag means every step up to here is done.
-        elif flag is not None and not blocked:best=None
+        # A satisfied story flag means every step up to here is done; not the
+        # segment's closing checkpoint, which repeats the last flag (resuming
+        # on the summit after the Mom Bomb found no step).
+        elif flag is not None and not blocked and step.get('kind')!='checkpoint':best=None
     if best is None:raise RuntimeError(f'No route step starts on map {m} with story flags {sorted(flags)}; stand where the segment begins')
     # Field-menu steps (heal, formation) right before it on the same map run first.
     start=best[1]
