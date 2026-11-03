@@ -31,12 +31,11 @@ Rubicant appears only after the parents' scene, so the walk chases the NPC named
 ## Code added
 
 * Condition `moveState`: the player's FieldPlayerConstants.MoveState (0 walk, 1 dash, 2 airship, 3 ship/hovercraft, 4 low flying, 5 chocobo). Snapshot.MoveState.
-* Navigate `goalVehicle`: the goal is the vehicle's saved position, from `UserDataManager.GetOwnedTransportationsClone()` (Id, MapId, Position). The position is taken as a cell, or as world units when y < 0. **That guess is not verified.**
+* Navigate `goalVehicle`: the goal is the vehicle's saved position, from `UserDataManager.GetOwnedTransportationsClone()` (Id, MapId, Position). Positions are cells: a decoded local save has the hovercraft (id 2) at (157,37), map 1. (World units are still handled when y < 0.)
 
 ## Not verified
 
 * Both segments.
 * The hook (one Confirm over the hovercraft).
 * Where the hovercraft lands when the Enterprise lands.
-* The saved vehicle position's units.
 * That Rubicant's NPC name matches.

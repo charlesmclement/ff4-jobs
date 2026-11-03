@@ -179,9 +179,9 @@ internal sealed class Navigation
         }
         return best;
     }
-    // A parked vehicle's cell from the owned-transportation records. Saved
-    // positions may be cells or world units (not verified); a negative y is
-    // taken as world units (Unity's y runs up, map rows run down).
+    // A parked vehicle's cell from the owned-transportation records. They
+    // are cells (a decoded save: the hovercraft at (157,37), map 1, where the
+    // run left it); a negative y would be world units, converted just in case.
     private static Destination? FindVehicle(FieldController controller,int mapId,int id)
     {
         var list=Last.Management.UserDataManager.Instance()?.GetOwnedTransportationsClone();

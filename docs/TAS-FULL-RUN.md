@@ -28,7 +28,7 @@ Built overnight on 3 Nov. Segments 1–5 are verified live, and the run to Fabul
   * Black Chocobo boarding: chasing a wandering NPC by name (seg 8). Landing on forest (seg 8–9).
   * The hook: one Confirm over the hovercraft (seg 12). Where the hovercraft lands (seg 13).
   * The Lunar Whale: does boarding or landing put the party inside the ship or in the air (seg 15)? Both are guarded.
-  * `goalVehicle` reads the saved vehicle positions. Cell vs world units is a guess (y<0 means world units).
+  * `goalVehicle` reads the saved vehicle positions. **Checked in a local save:** they are cells. The hovercraft (id 2) is at (157,37) on map 1, exactly where segment 4 left it.
 * **Map gimmicks:** the Sealed Cave rope bridges (seg 14); the Babil outer wall (seg 13).
 * **Talking:** walking into an NPC goal now also presses Confirm. Not verified for the mirror, the Elder, the engineers, the King and Rubicant.
 * **New battle logic:**
