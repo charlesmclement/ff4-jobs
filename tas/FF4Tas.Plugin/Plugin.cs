@@ -172,6 +172,7 @@ public sealed class Controller : MonoBehaviour
                 if(snapshot.Phase=="Battle")healArmed=true;
                 if(active.HandleBattles && active.Kind=="navigate" && snapshot.Focused && !snapshot.Modal)
                 {
+                    if(!healing && !burning && healArmed && snapshot.Phase=="Player")FieldCare.LogParty(Plugin.DirectoryPath,frame);
                     if(!healing && !burning && healArmed && snapshot.Phase=="Player" && fightHeal.Wanted()) {fightHeal.Reset(FightHealBelow);healing=true;healFrames=0;}
                     if(!healing && healArmed && snapshot.Phase=="Player")healArmed=false;
                     // RNG steering (Route.Rng): the battle still coming on this

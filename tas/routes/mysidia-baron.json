@@ -1742,7 +1742,162 @@
       ]
     },
     {
-      "label": "Baron Castle: round the walls to the inner hall",
+      "label": "Baron Castle: west and down the outer wall to the side corridor",
+      "kind": "navigate",
+      "mapId": 4,
+      "goal": {
+        "x": 12,
+        "y": 19,
+        "layer": 0
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Player",
+        "mapId": 9
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 54000,
+      "waypoints": [
+        {
+          "x": 4,
+          "y": 3,
+          "layer": 0
+        },
+        {
+          "x": 4,
+          "y": 32,
+          "layer": 0
+        },
+        {
+          "x": 7,
+          "y": 32,
+          "layer": 0
+        },
+        {
+          "x": 7,
+          "y": 24,
+          "layer": 0
+        },
+        {
+          "x": 12,
+          "y": 24,
+          "layer": 0
+        }
+      ],
+      "battlePlan": [
+        {
+          "character": 9,
+          "command": 8,
+          "ability": 34,
+          "targetAll": true,
+          "minEnemies": 3,
+          "minMp": 15
+        },
+        {
+          "character": 9,
+          "command": 8,
+          "byWeakness": true,
+          "minMp": 5
+        },
+        {
+          "character": 9,
+          "command": 2
+        },
+        {
+          "character": 6,
+          "command": 8,
+          "byWeakness": true,
+          "minEnemies": 3,
+          "minMp": 65
+        },
+        {
+          "character": 6,
+          "command": 2,
+          "reserveMp": 60
+        },
+        {
+          "character": 10,
+          "command": 2
+        }
+      ]
+    },
+    {
+      "label": "Side corridor: up and back out beside the hall",
+      "kind": "navigate",
+      "mapId": 9,
+      "goal": {
+        "x": 3,
+        "y": 3,
+        "layer": 0
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Player",
+        "mapId": 4
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 54000,
+      "battlePlan": [
+        {
+          "character": 9,
+          "command": 8,
+          "ability": 34,
+          "targetAll": true,
+          "minEnemies": 3,
+          "minMp": 15
+        },
+        {
+          "character": 9,
+          "command": 8,
+          "byWeakness": true,
+          "minMp": 5
+        },
+        {
+          "character": 9,
+          "command": 2
+        },
+        {
+          "character": 6,
+          "command": 8,
+          "byWeakness": true,
+          "minEnemies": 3,
+          "minMp": 65
+        },
+        {
+          "character": 6,
+          "command": 2,
+          "reserveMp": 60
+        },
+        {
+          "character": 10,
+          "command": 2
+        }
+      ]
+    },
+    {
+      "label": "Baron Castle: into the inner hall",
       "kind": "navigate",
       "mapId": 4,
       "goal": {
@@ -1768,6 +1923,13 @@
       },
       "stableFrames": 2,
       "timeoutFrames": 54000,
+      "waypoints": [
+        {
+          "x": 12,
+          "y": 15,
+          "layer": 0
+        }
+      ],
       "battlePlan": [
         {
           "character": 9,

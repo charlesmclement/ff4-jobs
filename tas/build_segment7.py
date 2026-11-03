@@ -13,6 +13,7 @@ MYSIDIA,DEVILS_ROAD=57,66
 BARON_TOWN,INN,BARON_ROAD_HOUSE,ITEM_SHOP=24,25,29,26
 WATERWAY_IN,WW1,WW2,WW3,WW4,WW_SAVE=318,186,187,188,189,190
 CASTLE_OUT,CASTLE_HALL,CASTLE_2F,WALL_ROOM,THRONE=4,5,6,7,8
+CASTLE_CORRIDOR=9
 PALADIN,TELLAH,YANG,PALOM,POROM=13,6,8,9,10
 TENT=21
 POTION,PHOENIX,GOLD_NEEDLE,MAIDENS_KISS,EYE_DROPS,ANTIDOTE=2,9,10,11,15,16
@@ -101,7 +102,13 @@ s.append(tent('Save room: Tent before the castle',WW_SAVE))
 s.append(heal('Save room: heal anyone the Tent missed',WW_SAVE))
 s.append(door('Save room: back out',WW_SAVE,(9,13),WW4))
 s.append(door('Old Waterway 4: up into Baron Castle',WW4,(19,2),CASTLE_OUT,battlePlan=field))
-s.append(door('Baron Castle: round the walls to the inner hall',CASTLE_OUT,(16,15),CASTLE_HALL,battlePlan=field))
+# The hall door (16,15) is reached only through the side corridor (map 9):
+# heading straight for it, the walk stepped into the barracks door (14,11)
+# (map 12). Route from tas/door_graph.py 20010,20011 --start 4:14 --goal 5.
+s.append(door('Baron Castle: west and down the outer wall to the side corridor',CASTLE_OUT,(12,19),CASTLE_CORRIDOR,
+              [(4,3),(4,32),(7,32),(7,24),(12,24)],battlePlan=field))
+s.append(door('Side corridor: up and back out beside the hall',CASTLE_CORRIDOR,(3,3),CASTLE_OUT,battlePlan=field))
+s.append(door('Baron Castle: into the inner hall',CASTLE_OUT,(16,15),CASTLE_HALL,[(12,15)],battlePlan=field))
 s.extend(trigger('Castle hall: Baigan "joins", the twins smell a monster - Baigan and his arms (flag 32)',CASTLE_HALL,(11,11),32,battlePlan=baigan))
 s.append(heal('Castle hall: heal after Baigan (guide: "This fight will leave you wounded")',CASTLE_HALL))
 s.append(door('Castle hall: north stairs',CASTLE_HALL,(13,2),CASTLE_2F,battlePlan=field))

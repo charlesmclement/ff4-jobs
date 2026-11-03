@@ -739,3 +739,9 @@ Driving the game (user asked me to take over testing while they rest): the sessi
 * PIL `ImageGrab.grab()` takes a screenshot.
 * `tas.py stop` and `tas.py start <route> --from-step 0` swap routes in a running game.
 Waterway 2 (live): with the waypoints only down to (9,7), the floor search still failed (short partial legs, bouncing between (29,8) and (30,9)). The step now carries the whole floor path, as corners of a BFS over BottomCollision; live, it walked straight to the stairs (35,2).
+
+### 107. Baron Castle route, Twincast default, field status log
+* **Castle (live):** from the waterway exit (map 4 point 14), heading straight for the hall door (16,15) stepped into the barracks door (14,11) (map 12) and failed. The hall door is reached only through the side corridor (map 9). Steps: (12,19) → map 9 → (3,3) → back out at (12,15) → (16,15).
+* **door_graph.py** now takes several assets (`20010,20011`), treats a cell as open on any collision layer, and prints each leg's walk as corners.
+* **Twincast default (user):** Porom Twincasts in every fight once healing and status cures are covered, when she and Palom both have 20 MP and the command is enabled. This comes before plan rules and the undead Cure.
+* **Field status cures missed Mini after a fight (live: two members Mini'd, no field Esuna).** `PlayerCharacterParameter` has only `CurrentConditionList`. To find out what the field actually sees, every member's condition ids now go to `<data>/status.log` after each fight.

@@ -49,7 +49,7 @@ internal sealed class BattlePilot
         // Heal anyone under half HP. Once Rosa is in the party, Rosa, Cecil and
         // Yang come first (lowest of them), then Rydia and Edward.
         // Without Rosa: lowest percentage first, Cecil wins near-ties.
-        BattlePlayerData? injured=null,dead=null;int alive=0,totalHp=0;float injuredRatio=2;casterCanCure=false;injuredRatioNow=1;toad=mini=null;afflicted=null;afflictedRank=int.MaxValue;afflictedStatus=0;
+        BattlePlayerData? injured=null,dead=null;int alive=0,totalHp=0;float injuredRatio=2;casterCanCure=false;injuredRatioNow=1;palomMp=0;toad=mini=null;afflicted=null;afflictedRank=int.MaxValue;afflictedStatus=0;
         rosaParty=rosaCanCure=edwardCanItem=false;rydiaMp=-1;rosaTarget=rosaLow=null;float rosaKey=99;
         for(int i=0;i<players.Length;i++)if(players[i]?.GetOwnedCharacterData()?.characterStatusId==Rosa)rosaParty=true;
         // A heal or revive someone else already queued on a member makes that
@@ -85,6 +85,7 @@ internal sealed class BattlePilot
                 int rankNow=Array.IndexOf(StatusOrder,cid);
                 if(rankNow>=0 && (afflicted==null || rankNow<afflictedRank)) {afflicted=p;afflictedRank=rankNow;afflictedStatus=cid;}
             }
+            if(who==PalomId)palomMp=stats.CurrentMP;
             if(who==EdwardId && !away)edwardCanItem=true;
             if(who is Rydia or Tellah or Rosa && stats.CurrentMP>=CureMp)casterCanCure=true;
             if(who==Rosa && stats.CurrentMP>=CureMp)rosaCanCure=true;
@@ -352,6 +353,7 @@ internal sealed class BattlePilot
     // Curse 18, after healing.
     private static readonly int[] StatusOrder={11,17,12,7,8,14,58,15,59,6,13,57,9,10,18};
     private const int MinorStatusRank=12,RemedyItem=18;
+    private const int PalomId=9,PoromId=10,TwincastCommand=18,TwincastMp=20;private int palomMp;
     // The item that clears each status in battle (master function groups);
     // Sleep, Paralyze and Confuse have none (Esuna or a Remedy).
     private static int StatusItem(int status)=>status switch
@@ -532,6 +534,13 @@ internal sealed class BattlePilot
         }
         // Darkness, Poison, Curse: once nobody needs healing.
         if(CureStatus(info,actor,true))return;
+        // Porom's default with nobody to heal: Twincast with Palom, in every
+        // fight (user: "they aren't twincasting anymore... just on
+        // scarmiglione"). It can't be reflected and beats her Cure on undead.
+        // Both need the MP (Comet costs 20 each); greyed out (Palom down,
+        // silenced) she does what she did before.
+        if(me==PoromId && stats!=null && stats.CurrentMP>=TwincastMp && palomMp>=TwincastMp && CommandEnabled(info,TwincastCommand))
+        {pendingCommand=TwincastCommand;Log(actor,"Twincast (default)");return;}
         // A boss rule naming this member (whileMonster) beats the automatic
         // Cure on undead: Porom Twincasts on Milon Z when nobody needs healing
         // (user: "the cure seems underwhelming"). Twincast greyed out (Palom

@@ -174,6 +174,14 @@ internal sealed class FieldMagic
         for(int i=0;list!=null && i<list.Count;i++)if(list[i]?.Id is int id && Array.IndexOf(Lasting,id)>=0)return id;
         return 0;
     }
+    // Every condition id on a member from both lists, for the log.
+    internal static string Describe(Last.Data.User.OwnedCharacterData m)
+    {
+        var sb=new System.Text.StringBuilder(m.Name).Append(" [");
+        var list=m.Parameter?.CurrentConditionList;
+        for(int i=0;list!=null && i<list.Count;i++)sb.Append(list[i]?.Id).Append(',');
+        return sb.Append(']').ToString();
+    }
     // Silence, Toad and Pig stop spells; Mini still casts.
     private static bool Muted(Last.Data.User.OwnedCharacterData m)=>Status(m) is 6 or 14 or 15 or 58 or 59;
     private static bool Knows(Last.Data.User.OwnedCharacterData m,int ability)
