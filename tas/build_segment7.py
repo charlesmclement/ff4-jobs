@@ -89,7 +89,11 @@ s.append(door('Old Waterway 1: east to the next stairs',WW1,(32,6),WW2,battlePla
 # the floor (Bottom) are at x=9. The native search doesn't route across
 # layers, so the walk bounced between (9,2) and (9,3): walk round and down
 # the stairs first, then the floor route to the far stairs is found.
-s.append(door('Old Waterway 2: north-east stairs',WW2,(35,2),WW3,[(6,2),(9,2),(9,7)],battlePlan=field))
+# On the floor the native search also failed (it found only short partial
+# legs and bounced between (29,8) and (30,9)): the whole floor path, corners
+# from a BFS over the map's BottomCollision layer.
+s.append(door('Old Waterway 2: north-east stairs',WW2,(35,2),WW3,
+              [(6,2),(9,2),(9,7),(18,7),(18,6),(19,6),(19,5),(21,5),(21,9),(30,9),(30,11),(31,11),(31,12),(35,12),(35,3)],battlePlan=field))
 s.append(door('Old Waterway 3: north stairs',WW3,(13,2),WW4,battlePlan=field))
 s.append(door('Old Waterway 4: the save room (guide: "immediately head for the door and in there you will find a save room")',WW4,(7,9),WW_SAVE,battlePlan=field))
 s.append(nav('Save room: onto the save point',WW_SAVE,(9,7),{'atDestination':True}))

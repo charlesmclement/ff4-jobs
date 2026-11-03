@@ -738,3 +738,4 @@ Driving the game (user asked me to take over testing while they rest): the sessi
 * `xdotool key --window <id> Return` presses keys: Enter confirms. After a defeat, the game offers "Start from recent save data?" (the autosave).
 * PIL `ImageGrab.grab()` takes a screenshot.
 * `tas.py stop` and `tas.py start <route> --from-step 0` swap routes in a running game.
+Waterway 2 (live): with the waypoints only down to (9,7), the floor search still failed (short partial legs, bouncing between (29,8) and (30,9)). The step now carries the whole floor path, as corners of a BFS over BottomCollision; live, it walked straight to the stairs (35,2).
