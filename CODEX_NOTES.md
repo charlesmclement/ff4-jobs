@@ -775,3 +775,6 @@ User: "2 fire 2 ice 2 lightning", swapped by weakness. `Step.EquipItems` = [{cha
 * `route_kit.claws(label, map, element)` puts the claw pair for FIRE/ICE/LIGHTNING on Yang.
 * The master data has no boss weaknesses (resistance group 0 on Cagnazzo and Baigan), so elements come from the guide's monster table. Bolt: Cagnazzo and Barbariccia (Valvalis). Everyone else Yang fights is N/A, and the Dark Dragon is Holy.
 * Uses: segment 7 Thunder pair at the inn after Yang joins and again before Cagnazzo; segment 9 Thunder pair after Zot 7F's Strongest, before Barbariccia.
+
+### 111. Baron weapon shop is locked until after Cagnazzo
+Live: the run pushed at the weapon shop door (15,17) over and over; it only shows a message. Baron's map script swaps that door's layer (ev_e_0033) on ScenarioFlag1 33, which is set after Cagnazzo (sc_e_0034). Segment 7 no longer visits the shop. Its Thunder-pair equips stay in and are skipped when the claws aren't in the bag. Segment 8 now starts by walking from the Enterprise into Baron town, east of the castle gate tiles (106–107, 143–144). There it buys 2 Thunder, 2 Fire and 2 Ice Claws, gives Yang Strongest plus the Thunder pair, leaves by the south gate (arrival (107,145)), and goes round the gate tiles back onto the Enterprise. User: "we could just add the claws back further in the run".

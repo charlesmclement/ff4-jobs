@@ -20,6 +20,8 @@ TENT,POTION,PHOENIX=21,2,9
 ANTIDOTE,EYE_DROPS,ECHO_HERBS,MAIDENS_KISS,MALLET,DIET_FOOD,GOLD_NEEDLE=16,15,14,11,12,13,10
 DARK_ELF,DARK_ELF_REAL=172,173
 ENTERPRISE,BLACK_CHOCOBO=3,7
+BARON_TOWN,WEAPON_SHOP=24,31
+FIRE_CLAW,ICE_CLAW,THUNDER_CLAW=162,163,164
 
 # Tellah is the only healer now (the pilot's Cure); he keeps MP for it and
 # only casts the weakness spell on big groups. Cecil, Cid and Yang attack.
@@ -36,7 +38,21 @@ real_elf=[{'character':TELLAH,'command':2,'whileMonster':DARK_ELF_REAL}]+field
 
 s=[]
 s.append(heal('Outside Baron: heal before the flight',OVERWORLD))
-s.append(nav('Baron: step off and back onto the Enterprise',OVERWORLD,(107,142),{'riding':True},[(108,142)],timeout=3600))
+# Yang's claws (user: "2 fire 2 ice 2 lightning"): Baron's weapon shop
+# opens only after Cagnazzo (the town script swaps its door layer on flag
+# 33; before that it's locked and the run pushed at it over and over). The
+# castle gate tiles (106-107, 143-144) sit between the Enterprise and the
+# town doors (105/108, 144-145): go round them on the east side.
+s.append(door('Overworld: into Baron town (east of the castle gate)',OVERWORLD,(108,144),BARON_TOWN,[(108,142),(108,143)]))
+s.append(door('Baron: into the weapon shop',BARON_TOWN,(15,17),WEAPON_SHOP))
+s.append(nav('Weapon shop: up to the weaponsmith',WEAPON_SHOP,(11,8),{'atDestination':True}))
+s.append(shop("Weapon shop: claw pairs for Yang - 2 Thunder, 2 Fire, 2 Ice",WEAPON_SHOP,
+              [{'content':THUNDER_CLAW,'count':2},{'content':FIRE_CLAW,'count':2},{'content':ICE_CLAW,'count':2}]))
+s.append(equip('Weapon shop: Yang - Strongest, then Thunder Claws in both hands',WEAPON_SHOP,[YANG],
+               equipItems=[{'character':YANG,'slot':0,'content':THUNDER_CLAW},{'character':YANG,'slot':1,'content':THUNDER_CLAW}]))
+s.append(door('Weapon shop: out',WEAPON_SHOP,(13,13),BARON_TOWN))
+s.append(door('Baron: out the south gate',BARON_TOWN,(17,32),OVERWORLD))
+s.append(nav('Baron: round the castle gate and back onto the Enterprise',OVERWORLD,(107,142),{'riding':True},[(107,146),(109,146),(109,142),(108,142)],timeout=3600))
 s.append(nav('Enterprise: north-west to Toroia; land beside the town',OVERWORLD,(41,70),{'mapId':OVERWORLD,'riding':False,'atDestination':True},
              world_path((107,142),(41,70),transport=ENTERPRISE,avoid=())))
 s.append(door('Overworld: into Toroia Castle',OVERWORLD,(40,69),TOROIA_GROUNDS,[(41,69)]))

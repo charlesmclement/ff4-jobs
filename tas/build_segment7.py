@@ -67,19 +67,8 @@ s.append(door("Baron: out of the Devil's Road house",BARON_ROAD_HOUSE,(6,15),BAR
 # status item"; the guards Mini people). Baron stocks Potions, Phoenix Downs,
 # Gold Needles, Maiden's Kisses, Eye Drops, Antidotes, Tents (product group 3);
 # no Mallets, Echo Herbs or Diet Food here. Never Remedies (user: "spendy").
-# Yang rejoins bare-handed (user): claws first, while there's gil. The
-# weapon shop (map 31; door (15,17); weaponsmith (11,6), product group 1)
-# sells Fire, Ice and Thunder Claws; the order counts claws already owned.
-s.append(door('Baron: into the weapon shop',BARON_TOWN,(15,17),WEAPON_SHOP))
-s.append(nav('Weapon shop: up to the weaponsmith',WEAPON_SHOP,(11,8),{'atDestination':True}))
-# Two Thunder Claws (user: "He should have 2 thunder claws for KAINAZZO";
-# Cagnazzo is weak to lightning).
-# Never sell claws (user: "we need them for elemental weaknesses").
-# A pair of each element (user: "we ideally want 2 fire 2 ice 2 lightning"),
-# Thunder first (Cagnazzo is weak to lightning); claws already owned count.
-s.append(shop("Weapon shop: claw pairs for Yang - 2 Thunder, 2 Fire, 2 Ice",WEAPON_SHOP,
-              [{'content':THUNDER_CLAW,'count':2},{'content':FIRE_CLAW,'count':2},{'content':ICE_CLAW,'count':2}]))
-s.append(door('Weapon shop: out',WEAPON_SHOP,(13,13),BARON_TOWN))
+# No weapon shop here: Baron's is locked until after Cagnazzo (flag 33);
+# segment 8 buys the claw pairs on the way out.
 s.append(door('Baron: into the item shop',BARON_TOWN,(13,27),ITEM_SHOP))
 s.append(nav('Item shop: up to the counter',ITEM_SHOP,(6,6),{'atDestination':True}))
 s.append(shop('Item shop: status cures - Antidotes, Eye Drops, Maiden\'s Kisses, Gold Needles - and Potions, Phoenix Downs',ITEM_SHOP,
