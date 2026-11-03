@@ -24,8 +24,8 @@ internal sealed class FieldMenu
     // straight from the item list (no target screen counts the use), so the
     // step ends when the count drops (it used all three Tents once).
     private int startCount=-1;
-    private bool finished,oneColumn;
-    private int uses,wait,lastIndex=-1,stuck,item,target;
+    private bool finished,oneColumn,countTargets;
+    private int uses,wait,lastIndex=-1,stuck,item,target,targetPresses;
     private string? lastKey;
     private string party="";
     private MainMenuController? main;
@@ -34,7 +34,7 @@ internal sealed class FieldMenu
     // menu steps; lower between fights so the run doesn't menu after each one).
     internal void Reset(float topUp=.7f,int useItem=0)
     {
-        topUpBelow=topUp;menuItem=useItem;startCount=-1;finished=oneColumn=false;uses=wait=stuck=item=target=0;lastIndex=-1;lastKey=null;main=null;items=null;
+        topUpBelow=topUp;menuItem=useItem;startCount=-1;finished=oneColumn=countTargets=false;uses=wait=stuck=item=target=targetPresses=0;lastIndex=-1;lastKey=null;main=null;items=null;
     }
     internal void Read(Snapshot s,int frame)
     {
@@ -110,12 +110,22 @@ internal sealed class FieldMenu
                     if(frame%12==0) {uses++;wait=AfterUse;}
                     Pulse(s,frame,"Confirm","Use on the party");return;
                 }
+                // The cursor walks the screen slots (contentList), which keep a
+                // gap where a member left (Tellah); targetList skips it. Counting
+                // in targetList put Edward one short and it pressed Up/Down past
+                // him for 30 minutes. Slots first; after 15 presses that don't
+                // land, try the other count; after 40, give up and close.
                 int want=-1;
-                for(int i=0;i<use.targetList.Count;i++)if(use.targetList[i]?.Id==target) {want=i;break;}
+                var slots=use.contentList;
+                if(!countTargets && slots!=null)
+                    for(int i=0;i<slots.Count;i++)if(slots[i]?.CurrentData?.Id==target) {want=i;break;}
+                if(want<0)for(int i=0;i<use.targetList.Count;i++)if(use.targetList[i]?.Id==target) {want=i;break;}
                 if(want<0) {Pulse(s,frame,"Back","Target not in the list");return;}
                 int at=use.selectCursor.Index;
-                if(at==want && frame%12==0) {uses++;wait=AfterUse;}
-                Step(s,frame,at,want,"Up","Down","Use on #"+target);return;
+                if(at==want && frame%12==0) {uses++;wait=AfterUse;targetPresses=0;}
+                else if(frame%12==0 && ++targetPresses%15==0)countTargets=!countTargets;
+                if(targetPresses>=40) {finished=true;Pulse(s,frame,"Back","Can't reach #"+target+"; closing");return;}
+                Step(s,frame,at,want,"Up","Down","Use on #"+target+" (slot "+want+", at "+at+")");return;
             }
             default:Pulse(s,frame,"Back","Back to the item commands");return;
         }
