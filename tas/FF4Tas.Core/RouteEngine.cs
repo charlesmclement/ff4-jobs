@@ -406,6 +406,9 @@ public sealed class RouteEngine
                 if(step.Kind=="navigate")
                 {
                     if(state.NavigationInput!=null)current.Add(state.NavigationInput);
+                    // At the goal with Facing set: keep walking that way (into a
+                    // cave mouth whose exit cell lies past the last walkable one).
+                    else if(state.AtDestination && step.Facing!=null)current.Add(step.Facing);
                     else if(state.AtDestination && elapsed%12==0)current.Add("Confirm");
                 }
                 else if(step.Kind=="interact")

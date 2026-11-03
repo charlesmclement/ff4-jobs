@@ -1039,6 +1039,24 @@
       ]
     },
     {
+      "label": "King's hall: revive and heal before the audience (the defense refills HP but revives nobody; Cecil went in KO'd)",
+      "kind": "menu",
+      "mapId": 47,
+      "phases": [
+        "Player",
+        "Menu",
+        "Shop",
+        "Message",
+        "FieldReady",
+        "ChangeMap"
+      ],
+      "until": {
+        "menuDone": true
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 7200
+    },
+    {
       "label": "King's hall: step up to the king (audience starts)",
       "kind": "navigate",
       "mapId": 47,
@@ -1073,7 +1091,7 @@
       ]
     },
     {
-      "label": "Fabul: audience (first choice = help), gate and castle defense fights, Kain, Golbez takes Rosa",
+      "label": "Fabul: audience (choice 0 = help; the cursor starts on No, which sends the party back out), gate and castle defense fights, Kain, Golbez takes Rosa",
       "kind": "mash",
       "keys": [
         "Confirm"
@@ -1106,7 +1124,8 @@
           "command": 26,
           "minEnemies": 2
         }
-      ]
+      ],
+      "choice": 0
     },
     {
       "label": "Crystal room: leave by the south door",

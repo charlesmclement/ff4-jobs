@@ -916,7 +916,8 @@
           "command": 26,
           "minEnemies": 2
         }
-      ]
+      ],
+      "facing": "Down"
     },
     {
       "label": "Outside Mount Hobs: use a Tent (full HP/MP) (1)",
@@ -1080,7 +1081,8 @@
           "minEnemies": 2
         }
       ],
-      "group": "rest2"
+      "group": "rest2",
+      "facing": "Down"
     },
     {
       "label": "Outside Mount Hobs: use a Tent (full HP/MP) (2)",
@@ -1246,7 +1248,8 @@
           "minEnemies": 2
         }
       ],
-      "group": "rest3"
+      "group": "rest3",
+      "facing": "Down"
     },
     {
       "label": "Outside Mount Hobs: use a Tent (full HP/MP) (3)",
@@ -1412,7 +1415,8 @@
           "minEnemies": 2
         }
       ],
-      "group": "rest4"
+      "group": "rest4",
+      "facing": "Down"
     },
     {
       "label": "Outside Mount Hobs: use a Tent (full HP/MP) (4)",

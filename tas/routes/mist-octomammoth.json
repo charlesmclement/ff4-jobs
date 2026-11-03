@@ -558,7 +558,8 @@
         "mapId": 1
       },
       "stableFrames": 2,
-      "timeoutFrames": 5400
+      "timeoutFrames": 5400,
+      "facing": "Down"
     },
     {
       "label": "Outside the Watery Pass: use a Tent (full HP/MP) (1)",
@@ -684,7 +685,8 @@
       },
       "stableFrames": 2,
       "timeoutFrames": 5400,
-      "group": "waterrest2"
+      "group": "waterrest2",
+      "facing": "Down"
     },
     {
       "label": "Outside the Watery Pass: use a Tent (full HP/MP) (2)",
@@ -812,7 +814,8 @@
       },
       "stableFrames": 2,
       "timeoutFrames": 5400,
-      "group": "waterrest3"
+      "group": "waterrest3",
+      "facing": "Down"
     },
     {
       "label": "Outside the Watery Pass: use a Tent (full HP/MP) (3)",
