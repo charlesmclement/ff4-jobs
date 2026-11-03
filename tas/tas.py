@@ -101,9 +101,9 @@ def restore_mods():
             (PARKED/name).rename(GAME/'BepInEx/plugins'/name);print('TAS: restored mod plugin',name,flush=True)
     if PARKED.is_dir() and not any(PARKED.iterdir()):PARKED.rmdir()
 
-def launch(route_path,smoke,resume=False,vanilla=False):
+def launch(route_path,smoke,resume=False,vanilla=False,chain=None):
     restore_mods()
-    if not vanilla:return launch_game(route_path,smoke,resume,'documents')
+    if not vanilla:return launch_game(route_path,smoke,resume,'documents',chain)
     if game_running():raise RuntimeError('Close FF4 normally first; this launcher will not interrupt your game')
     # Closing the terminal still puts the plugins back.
     import signal
@@ -112,10 +112,10 @@ def launch(route_path,smoke,resume=False,vanilla=False):
     try:
         for name in MOD_PLUGINS:
             if (GAME/'BepInEx/plugins'/name).exists():(GAME/'BepInEx/plugins'/name).rename(PARKED/name);print('TAS: vanilla run, parked',name,flush=True)
-        return launch_game(route_path,smoke,resume,'documents-vanilla')
+        return launch_game(route_path,smoke,resume,'documents-vanilla',chain)
     finally:restore_mods()
 
-def launch_game(route_path,smoke,resume,documents):
+def launch_game(route_path,smoke,resume,documents,chain=None):
     if game_running():raise RuntimeError('Close FF4 normally first; this launcher will not interrupt your game')
     expected=json.loads((ROOT/'verified-game.json').read_text())['exe_sha256']
     if hashlib.sha256((GAME/'GameAssembly.dll').read_bytes()).hexdigest()!=expected:raise RuntimeError('Unverified game executable')
@@ -123,6 +123,13 @@ def launch_game(route_path,smoke,resume,documents):
     for name in ('FF4Tas.dll','FF4Tas.Core.dll'):
         if not (build/name).is_file():raise RuntimeError('Build first with tas/build.sh --build-only')
     route=json.loads(Path(route_path).read_text()) if route_path else None
+    # Run all: the segment routes in order. New Game starts the first; a
+    # loaded save starts the first segment with steps left for its story
+    # flags; each segment that completes starts the next at step 1, so every
+    # segment keeps its own flee/RNG/kill-first settings.
+    chain=[json.loads(Path(c).read_text()) for c in chain] if chain else None
+    current=0
+    if chain:route=chain[0]
     DATA.mkdir(parents=True,exist_ok=True)
     archive_previous_logs()
     for name in ('unity.log','exit.json','launcher-error.txt','BepInEx-last.log'):
@@ -158,7 +165,8 @@ def launch_game(route_path,smoke,resume,documents):
     args=['-batchmode','-nographics'] if smoke else ['-screen-fullscreen','0','-screen-width','1280','-screen-height','720']
     args+=['-logFile','Z:'+str(DATA/'unity.log').replace('/','\\')]
     print('TAS save directory:',docs/'My Games/FINAL FANTASY IV PR',flush=True)
-    if route and resume:print('Load your save. The route starts from where you stand once you have control. F10 stops it.',flush=True)
+    if chain:print(f'Run all ({len(chain)} segments): select New Game to start from the beginning, or load a save to pick up where it is. F10 stops it.',flush=True)
+    elif route and resume:print('Load your save. The route starts from where you stand once you have control. F10 stops it.',flush=True)
     elif route:print('Select New Game. The scripted route starts when the game enters Event. F10 stops it.',flush=True)
     with (DATA/'game.log').open('w') as log:
         child=subprocess.Popen([str(PROTON),'run',str(GAME/'FINAL FANTASY IV.exe'),*args],cwd=GAME,env=env,stdout=log,stderr=log)
@@ -168,7 +176,17 @@ def launch_game(route_path,smoke,resume,documents):
                 if smoke and time.monotonic()>deadline:raise RuntimeError('TAS startup smoke check timed out')
                 if (DATA/'status.json').exists():
                     s=state(require_fresh=False)
-                    if route and not started and s['focused'] and (s['phase']=='Event' if not resume else s['phase']=='Player' and s.get('mapId')):
+                    if chain and not started and s['focused'] and s['phase']=='Event' and not s.get('storyFlags'):
+                        started=True;install_battle_db();request('start',chain[0]);print('Run all: New Game, segment 1:',chain[0]['name'],flush=True)
+                    elif chain and not started and s['focused'] and s['phase']=='Player' and s.get('mapId') and s.get('storyFlags') and time.monotonic()>=retry_at:
+                        for i,r in enumerate(chain):
+                            try:step=auto_step(r)
+                            except RuntimeError:continue
+                            current=i;print(f'Run all: resuming segment {i+1} of {len(chain)}:',r['name'],flush=True);start_route(r,step);started=True;break
+                        else:retry_at=time.monotonic()+1
+                    elif chain and started and s['status']=='complete' and s['phase']=='Player' and current+1<len(chain) and (s.get('route') or '').startswith(chain[current]['name']):
+                        current+=1;print(f'Run all: segment {current+1} of {len(chain)}:',chain[current]['name'],flush=True);start_route(chain[current],1)
+                    elif route and not chain and not started and s['focused'] and (s['phase']=='Event' if not resume else s['phase']=='Player' and s.get('mapId')):
                         # resume: the player loaded a save; start from the step for this map.
                         if not resume:started=True;install_battle_db();request('start',route)
                         # A loaded save reports its story flags a moment after the
@@ -252,12 +270,12 @@ def start(path,from_step,delay):
     start_route(route,from_step or auto_step(route),delay)
 
 p=argparse.ArgumentParser(description=__doc__);sub=p.add_subparsers(dest='command',required=True)
-a=sub.add_parser('launch');a.add_argument('--route');a.add_argument('--smoke',action='store_true');a.add_argument('--resume',action='store_true',help='after a save loads, start the route at the step for the current map');a.add_argument('--vanilla',action='store_true',help='run without the Jobs+/FF4Iso plugins and with separate saves')
+a=sub.add_parser('launch');a.add_argument('--route');a.add_argument('--chain',nargs='+',help='run all: these routes in order (New Game or a loaded save picks the start)');a.add_argument('--smoke',action='store_true');a.add_argument('--resume',action='store_true',help='after a save loads, start the route at the step for the current map');a.add_argument('--vanilla',action='store_true',help='run without the Jobs+/FF4Iso plugins and with separate saves')
 a=sub.add_parser('start');a.add_argument('route');a.add_argument('--from-step',type=int,default=1,help='resume at this numbered route step (1-based); 0 = pick from the current map');a.add_argument('--delay',type=float,default=5,help='seconds to refocus FF4')
 sub.add_parser('stop');sub.add_parser('status')
 a=p.parse_args()
 try:
-    if a.command=='launch':launch(a.route,a.smoke,a.resume,a.vanilla)
+    if a.command=='launch':launch(a.route,a.smoke,a.resume,a.vanilla,a.chain)
     elif a.command=='start':start(a.route,a.from_step,a.delay)
     elif a.command=='stop':request('stop')
     else:print(json.dumps(state(),indent=2))

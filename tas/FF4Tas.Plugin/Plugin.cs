@@ -330,7 +330,7 @@ public sealed class Controller : MonoBehaviour
     private void OnDisable() {Engine?.Stop("Runner disabled");RunClock.Restore();}
     private void OnDestroy() {Engine?.Stop("Runner destroyed");RunClock.Restore();}
     private static GUIStyle? overlayStyle,shadowStyle;
-    private const int OverlayFont=54,Outline=3;
+    private const int OverlayFont=36,Outline=2;
     // Run timer overlay. The TAS time is game time: it speeds up with the boost,
     // so a boosted run is timed exactly as if it ran at normal speed. Real
     // wall-clock time is shown for reference only.
@@ -339,7 +339,7 @@ public sealed class Controller : MonoBehaviour
         if(Engine==null && !RunClock.Boost)return;
         if(overlayStyle==null)
         {
-            // User is hard of seeing: 3x the old 18 px, bold, wrapped to the
+            // User is hard of seeing: 2x the old 18 px (3x was too big), bold, wrapped to the
             // screen, with a black outline (drawn at eight offsets) behind it.
             overlayStyle=new GUIStyle();overlayStyle.fontSize=OverlayFont;overlayStyle.fontStyle=FontStyle.Bold;overlayStyle.wordWrap=true;overlayStyle.normal.textColor=Color.white;
             shadowStyle=new GUIStyle();shadowStyle.fontSize=OverlayFont;shadowStyle.fontStyle=FontStyle.Bold;shadowStyle.wordWrap=true;shadowStyle.normal.textColor=Color.black;
