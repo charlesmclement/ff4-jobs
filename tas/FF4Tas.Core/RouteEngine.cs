@@ -238,6 +238,8 @@ public sealed class Snapshot
     public string Detail {get;set;}="";
     // Battle log line: enemies on screen and the last decision with its reason.
     public string Battle {get;set;}="";
+    // Read-only encounter forecast (EncounterWatch).
+    public string Encounter {get;set;}="";
 }
 
 // Frames are observed Unity updates, not emulated/savestated simulation frames.

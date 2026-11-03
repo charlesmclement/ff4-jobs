@@ -30,7 +30,7 @@ public sealed class Plugin : BasePlugin
         // Never replay a stale request from an earlier process.
         File.Delete(Path.Combine(DirectoryPath,"request.json"));
         var harmony=new Harmony("ff4jobs.scriptedrun");
-        try { harmony.PatchAll();AddComponent<Controller>(); }
+        try { harmony.PatchAll();EncounterWatch.Install(harmony,Log);AddComponent<Controller>(); }
         catch { harmony.UnpatchSelf();throw; }
         Log.LogInfo("Scripted-run prototype armed; waiting for a route. F10 stops. No route starts automatically.");
     }
@@ -41,6 +41,7 @@ public sealed class Controller : MonoBehaviour
     internal static RouteEngine? Engine;
     internal static readonly string Session=Guid.NewGuid().ToString("N");
     private static Snapshot snapshot=new();
+    internal static Snapshot Current=>snapshot;
     private static int frame=-1;
     private static FieldMap? field;
     private static readonly Navigation navigation=new();
@@ -102,6 +103,7 @@ public sealed class Controller : MonoBehaviour
                 if(requested>StoryFlagScan && storage.Get(DataStorage.Category.kScenarioFlag1,requested.Value)!=0)flags.Add(requested.Value);
                 snapshot.StoryFlags=flags.ToArray();
                 snapshot.Gil=UserDataManager.Instance()?.OwendGil??0;
+                snapshot.Encounter=EncounterWatch.Status();
                 if(active?.Until?.TreasureFlag is int chest && storage.Get(DataStorage.Category.kTreasureFlag1,chest)!=0)
                     snapshot.TreasureFlags=new[]{chest};
                 if(active?.Until?.Flag2 is int f2 && storage.Get(DataStorage.Category.kScenarioFlag2,f2)!=0)
@@ -303,6 +305,8 @@ public sealed class Controller : MonoBehaviour
         string text=$"TAS {RunClock.Format(RunClock.GameSeconds)}  (wall clock {RunClock.Format(RunClock.RealSeconds)}){speed}\n{state}: {Engine?.Label}";
         // In battle, a third line shows the enemies and the latest decision.
         if(snapshot.Phase=="Battle" && snapshot.Battle.Length>0)text+="\n"+snapshot.Battle;
+        // On the field: the encounter observer's step forecast (read-only).
+        else if(snapshot.Encounter.Length>0)text+="\n"+snapshot.Encounter;
         GUI.Label(new Rect(11,9,1400,90),text,shadowStyle);
         GUI.Label(new Rect(10,8,1400,90),text,overlayStyle);
     }
