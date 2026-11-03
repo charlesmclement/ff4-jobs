@@ -160,6 +160,9 @@ public sealed class Step
     // rows), e.g. a pair of claws for a boss's weakness. A member here must
     // also be in Equip. Items not in the bag are skipped.
     public EquipItem[]? EquipItems {get;set;}
+    // Skip Strongest: only the exact EquipItems go on (user: "optimal is not
+    // reliable. Don't use that" - it skipped claws).
+    public bool EquipExactOnly {get;set;}
     // Shop: talk to the shopkeeper the step faces, then sell, then buy in
     // order (each buy only while affordable and owned+equipped < Count).
     public ShopOrder? Shop {get;set;}

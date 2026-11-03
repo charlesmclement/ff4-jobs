@@ -166,11 +166,15 @@ s.append(shop("Weaponsmith: Thunder, Fire, Ice Claw pairs; 2 Thunder Rods",WEAPO
 s.append(nav('Weapon shop: over to the armorer',WEAPON_SHOP,(16,8),{'atDestination':True}))
 s.append(shop("Armorer: Headband, Silver Armlets (4 with the twins'), Kenpo Gi",WEAPON_SHOP,
               [{'content':HEADBAND,'count':1},{'content':SILVER_ARMLET,'count':4},{'content':KENPO_GI,'count':1}]))
-# Only the members who got something new: Palom and Tellah (rods, Tellah's
-# armlet), Yang (everything off, Strongest for the armor, then the Thunder
-# pair - Strongest skips claws).
-s.append(equip('Weapon shop: Strongest on Palom, Tellah, Yang; Thunder Claws in both of Yang\'s hands',WEAPON_SHOP,[PALOM,TELLAH,YANG],reset=[YANG],
-               equipItems=[{'character':YANG,'slot':slot,'content':c} for slot in (0,1) for c in (THUNDER_CLAW,FIRE_CLAW,ICE_CLAW)]))
+# One equipment pass at the end, every item put on by id into its slot - no
+# Strongest (user: "do the thunder claws manually, not with optimal.
+# optimal is not reliable"). Slots: 0 right hand, 1 left, 2 head, 3 body,
+# 4 arms. An item not in the bag (already worn there) is skipped.
+GEAR=[(PALOM,0,THUNDER_ROD),
+      (TELLAH,0,THUNDER_ROD),(TELLAH,4,SILVER_ARMLET),
+      (YANG,0,THUNDER_CLAW),(YANG,1,THUNDER_CLAW),(YANG,2,HEADBAND),(YANG,3,KENPO_GI),(YANG,4,SILVER_ARMLET)]
+s.append(equip('Weapon shop: put on the new gear - rods, Yang\'s Thunder Claws and armor, Tellah\'s armlet',WEAPON_SHOP,[PALOM,TELLAH,YANG],
+               equipItems=[{'character':c,'slot':slot,'content':item} for c,slot,item in GEAR],equipExactOnly=True))
 s.append(door('Weapon shop: out',WEAPON_SHOP,(13,13),BARON_TOWN))
 s.append(nav('Baron: west to the locked waterway door - walk in',BARON_TOWN,(4,20),{'phase':'Event'},stableFrames=15))
 s.append(mash('Baron: open it with the Baron Key (item choice)',None,itemChoice=BARON_KEY,until={'phase':'Player','flag2':16}))

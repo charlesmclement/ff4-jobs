@@ -900,3 +900,7 @@ User (live): "you didnt get the second thunder claw and you are wasting so much 
 * Now: one weaponsmith visit (Thunder/Fire/Ice Claw pairs and 2 Thunder Rods), one armorer visit, and one equipment visit. That visit does Strongest for Palom, Tellah and Yang (reset), then Yang's Thunder pair, with Fire/Ice as per-hand fallbacks. The inn claw step and the claw step before Baigan are gone.
 * Second Thunder Claw: ShopDriver counted owned + worn. Yang's worn Thunder Claw was apparently also counted in the bag total, so the pair looked complete. Worn items are now counted once each (by pointer), and not at all when the worn entry is the bag's own entry for that item.
 * "Nothing more to buy" now logs, per item, the bag count + worn count / target and the gil, so a skip can be read from the trace. Not yet confirmed live which case it was.
+Equip pass without Strongest (user: "do the thunder claws manually, not with optimal. optimal is not reliable"): new step field `equipExactOnly` makes EquipMenu skip Strongest and only put on the listed equipItems. Baron's single equipment pass:
+* Palom: Thunder Rod (right hand).
+* Tellah: Thunder Rod (right hand), Silver Armlet (arms).
+* Yang: Thunder Claw in each hand, Headband (head), Kenpo Gi (body), Silver Armlet (arms).

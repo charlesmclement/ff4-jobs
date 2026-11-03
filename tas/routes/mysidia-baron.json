@@ -1360,7 +1360,7 @@
       }
     },
     {
-      "label": "Weapon shop: Strongest on Palom, Tellah, Yang; Thunder Claws in both of Yang's hands",
+      "label": "Weapon shop: put on the new gear - rods, Yang's Thunder Claws and armor, Tellah's armlet",
       "kind": "menu",
       "mapId": 31,
       "phases": [
@@ -1383,39 +1383,47 @@
       ],
       "equipItems": [
         {
+          "character": 9,
+          "slot": 0,
+          "content": 184
+        },
+        {
+          "character": 6,
+          "slot": 0,
+          "content": 184
+        },
+        {
+          "character": 6,
+          "slot": 4,
+          "content": 298
+        },
+        {
           "character": 8,
           "slot": 0,
           "content": 164
         },
         {
           "character": 8,
-          "slot": 0,
-          "content": 162
-        },
-        {
-          "character": 8,
-          "slot": 0,
-          "content": 163
-        },
-        {
-          "character": 8,
           "slot": 1,
           "content": 164
         },
         {
           "character": 8,
-          "slot": 1,
-          "content": 162
+          "slot": 2,
+          "content": 242
         },
         {
           "character": 8,
-          "slot": 1,
-          "content": 163
+          "slot": 3,
+          "content": 270
+        },
+        {
+          "character": 8,
+          "slot": 4,
+          "content": 298
         }
       ],
-      "equipReset": [
-        8
-      ]
+      "equipExactOnly": true
     },
     {
       "label": "Weapon shop: out",

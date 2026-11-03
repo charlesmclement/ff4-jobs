@@ -24,9 +24,10 @@ internal sealed class EquipMenu
     private string? lastKey;
     private MainMenuController? main;
     private EquipmentWindowController? window;
-    internal void Reset(int[] characters,int[]? removeFirst=null,EquipItem[]? exact=null)
+    private bool exactOnly;
+    internal void Reset(int[] characters,int[]? removeFirst=null,EquipItem[]? exact=null,bool exactOnlyItems=false)
     {
-        items=exact??Array.Empty<EquipItem>();itemsDone.Clear();strong.Clear();
+        items=exact??Array.Empty<EquipItem>();itemsDone.Clear();strong.Clear();exactOnly=exactOnlyItems;
         wanted=characters;seen.Clear();stepping=false;stepFrom=stepTries=0;reset=removeFirst??Array.Empty<int>();removed.Clear();done.Clear();finished=sideways=false;wait=switches=stuck=0;lastIndex=-1;lastKey=null;main=null;window=null;
     }
     internal void Read(Snapshot s,int frame)
@@ -90,6 +91,9 @@ internal sealed class EquipMenu
                 Pulse(s,frame,"SwitchRight",$"Next member (#{next}: window shows #{showing})");return;
             }
         }
+        // Exact-only steps never press Strongest: straight to the items.
+        if(!everyone && exactOnly && !strong.Contains(next) && Array.IndexOf(reset,next)<0)strong.Add(next);
+        if(!everyone && exactOnly && !strong.Contains(next) && removed.Contains(next))strong.Add(next);
         // Strongest done for this member: the exact items, one at a time
         // (Equip -> slot row -> item), then the member is finished.
         if(!everyone && strong.Contains(next))

@@ -223,7 +223,7 @@ public sealed class Controller : MonoBehaviour
                     {
                         menuStep=active;
                         if(active.Shop!=null)shopDriver.Reset(active.Shop,active.Facing);
-                        else if(active.Equip!=null)equipMenu.Reset(active.Equip,active.EquipReset,active.EquipItems);
+                        else if(active.Equip!=null)equipMenu.Reset(active.Equip,active.EquipReset,active.EquipItems,active.EquipExactOnly);
                         else if(active.Formation!=null)formationMenu.Reset(active.Formation);
                         else if(active.MenuItem!=null)fieldMenu.Reset(useItem:active.MenuItem.Value);
                         else fieldCare.Reset();
