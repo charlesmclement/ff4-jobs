@@ -108,6 +108,12 @@ internal sealed class Navigation
             state.Detail=$"Walk to ({goal.X},{goal.Y},{goal.Layer}); waypoint {waypoint+1}/{waypoints.Length} ({w.X},{w.Y})";
             return;
         }
+        // Beside the goal with no path left: keep stepping into it. Replanning
+        // here finds no route (the goal is a trigger tile or an NPC) and the
+        // greedy steering then walks him away from an Elder he was about to
+        // talk to. After ~5 s of pushing he gives up and replans.
+        bool adjacent=Math.Abs(cell.x-goal.X)+Math.Abs(cell.y-goal.Y)==1;
+        if(path.Count==0 && adjacent && unchanged<300) {greedy=false;StepInto(state,cell,goalCell,goal);return;}
         if(path.Count==0 && frame>=retryAt)
         {
             retryAt=frame+30;greedy=false;
@@ -139,16 +145,7 @@ internal sealed class Navigation
             // A partial leg ended. Next to the goal (doors, cave mouths and other
             // trigger tiles the search treats as blocked), step into it; otherwise
             // plan the next leg immediately.
-            if(Math.Abs(cell.x-goal.X)+Math.Abs(cell.y-goal.Y)==1)
-            {
-                state.NavigationInput=Toward(cell,goalCell,0);
-                state.Detail=$"Step into ({goal.X},{goal.Y},{goal.Layer})";
-                // Pushing doesn't move him: the goal is an NPC or object to
-                // talk to (Mysidia's Elder, the Ordeals mirror). He is facing
-                // it now, so Confirm between pushes starts the talk.
-                if(unchanged>20 && unchanged%12<3) {state.NavigationInput="Confirm";state.Detail=$"Talk to ({goal.X},{goal.Y},{goal.Layer})";}
-                return;
-            }
+            if(adjacent) {StepInto(state,cell,goalCell,goal);return;}
             retryAt=frame;state.Detail="Planning next leg";return;
         }
         // Every push must move him. The native search ignores wandering NPCs,
@@ -160,6 +157,15 @@ internal sealed class Navigation
         state.NavigationInput=Math.Abs(dx)>Math.Abs(dy)?(dx>0?"Right":"Left"):(dy>0?"Up":"Down");
         bool partial=(int)target.x!=goal.X || (int)target.y!=goal.Y;
         state.Detail=$"Walk to ({goal.X},{goal.Y},{goal.Layer}){(partial?$" via ({target.x},{target.y})":"")}; path {cursor+1}/{path.Count}";
+    }
+    private void StepInto(Snapshot state,Vector3 cell,Vector3 goalCell,Destination goal)
+    {
+        state.NavigationInput=Toward(cell,goalCell,0);
+        state.Detail=$"Step into ({goal.X},{goal.Y},{goal.Layer})";
+        // Pushing doesn't move him: the goal is an NPC or object to talk to
+        // (Mysidia's Elder, the Ordeals mirror). He is facing it now, so
+        // Confirm between pushes starts the talk.
+        if(unchanged>20 && unchanged%12<3) {state.NavigationInput="Confirm";state.Detail=$"Talk to ({goal.X},{goal.Y},{goal.Layer})";}
     }
     private Destination? entityGoal;private int entityLookAt;
     // Nearest field entity whose map name (PropertyEntity.Name) contains the
