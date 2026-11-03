@@ -14,6 +14,7 @@ from route_kit import *
 MYSIDIA,MANOR,WEAPONS,ARMOR,ITEMS=57,58,61,62,65
 ENTRANCE,RIDGE,PASS,SUMMIT=182,183,184,185
 CECIL,PALADIN,TELLAH,PALOM,POROM=1,13,6,9,10
+TWINCAST=18
 TENT,POTION,PHOENIX=21,2,9
 MILON,MILON_Z,DARK_KNIGHT=166,167,206
 FIRA=34
@@ -38,7 +39,12 @@ milon=[
     {'character':PALOM,'command':8,'ability':FIRA,'targetAll':True,'minMp':15,'whileMonster':MILON},
     {'character':TELLAH,'command':8,'ability':33,'targetAll':True,'minMp':5,'whileMonster':MILON},
 ]+ordeals
+# Milon Z: Porom Twincasts with Palom when nobody needs healing (user: Cure
+# on him "seems underwhelming ... better to use twin"; the guide has Porom
+# and Tellah heal and Palom cast Fira, and Porom's heals still come first).
+# Palom's turn goes into the Twincast too; Fira when it can't be done.
 milon_z=[
+    {'character':POROM,'command':TWINCAST,'minMp':20,'whileMonster':MILON_Z},
     {'character':PALOM,'command':8,'ability':FIRA,'minMp':15,'whileMonster':MILON_Z},
     {'character':PALOM,'command':8,'ability':33,'minMp':5,'whileMonster':MILON_Z},
     {'character':TELLAH,'command':8,'ability':33,'minMp':5,'whileMonster':MILON_Z},

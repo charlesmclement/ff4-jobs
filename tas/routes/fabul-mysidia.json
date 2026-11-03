@@ -3438,6 +3438,12 @@
       "timeoutFrames": 54000,
       "battlePlan": [
         {
+          "character": 10,
+          "command": 18,
+          "minMp": 20,
+          "whileMonster": 167
+        },
+        {
           "character": 9,
           "command": 8,
           "ability": 34,
@@ -3536,6 +3542,12 @@
       "timeoutFrames": 216000,
       "battlePlan": [
         {
+          "character": 10,
+          "command": 18,
+          "minMp": 20,
+          "whileMonster": 167
+        },
+        {
           "character": 9,
           "command": 8,
           "ability": 34,
@@ -3623,6 +3635,12 @@
       "stableFrames": 15,
       "timeoutFrames": 54000,
       "battlePlan": [
+        {
+          "character": 10,
+          "command": 18,
+          "minMp": 20,
+          "whileMonster": 167
+        },
         {
           "character": 9,
           "command": 8,
@@ -3722,6 +3740,12 @@
       "timeoutFrames": 216000,
       "battlePlan": [
         {
+          "character": 10,
+          "command": 18,
+          "minMp": 20,
+          "whileMonster": 167
+        },
+        {
           "character": 9,
           "command": 8,
           "ability": 34,
@@ -3809,6 +3833,12 @@
       "stableFrames": 15,
       "timeoutFrames": 54000,
       "battlePlan": [
+        {
+          "character": 10,
+          "command": 18,
+          "minMp": 20,
+          "whileMonster": 167
+        },
         {
           "character": 9,
           "command": 8,
@@ -3899,6 +3929,12 @@
       "pressedFrames": 2,
       "timeoutFrames": 216000,
       "battlePlan": [
+        {
+          "character": 10,
+          "command": 18,
+          "minMp": 20,
+          "whileMonster": 167
+        },
         {
           "character": 9,
           "command": 8,

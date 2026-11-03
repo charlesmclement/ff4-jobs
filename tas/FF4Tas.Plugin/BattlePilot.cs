@@ -490,6 +490,16 @@ internal sealed class BattlePilot
             if(HasItem(2) && !edwardHeals && (!casterCanCure || (injured==rosaLow && me!=Rosa)))
             {pendingItem=2;pendingTarget=target;Queue(actor,target);Log(actor,"Potion on ally #"+target);return;}
         }
+        // A boss rule naming this member (whileMonster) beats the automatic
+        // Cure on undead: Porom Twincasts on Milon Z when nobody needs healing
+        // (user: "the cure seems underwhelming"). Twincast greyed out (Palom
+        // down) falls back to the Cure.
+        if(undead!=null && plan!=null && Array.Exists(plan,r=>r.Character==me && r.WhileMonster!=null))
+        {
+            ChoosePlan(info,actor,plan);
+            if(pendingRule>=0 && plan[pendingRule].WhileMonster!=null && (pendingItem!=0 || CommandEnabled(info,pendingCommand)))return;
+            pendingItem=0;pendingTarget=0;pendingCommand=1;pendingAbility=0;pendingRule=-1;castOnUndead=false;targetAll=false;itemOnEnemies=false;aimFlyer=false;
+        }
         // Cure hurts undead: cast it (on all of them when there are several).
         // Tellah joins in while he stays above the MP his route plan reserves.
         if(undead!=null && canCure && (!isTellah || stats!.CurrentMP>=CureMp+Reserve(plan,Tellah)))
