@@ -37,20 +37,20 @@ field=[
 # Yang (Monk, 62000 HP: a scripted fight that ends by itself). Guide: his
 # Kick hits everyone; the casters Defend through it, Cecil attacks.
 monk=[{'character':c,'command':2,'whileMonster':MONK} for c in (PALOM,POROM,TELLAH)]
-# Baigan (user, live): the arms come back only after BOTH are dead, and
-# Twincast (it hits every enemy) killed both at once. Order: the arm nearest
-# the party (master 170), the body, the other arm (route killFirst, which
-# also aims single-target spells). User: "use strong singular spells on the
-# body": Palom and Tellah cast their strongest single-target spell at the
-# target even while Baigan has Reflect up (ignoreReflect); the first one each
-# knows is used (a spell he doesn't know is skipped after one try). Porom
-# heals, else Defends. No Twincast or AOE (these rules block the twins'
-# Twincast default).
-BIO,FIRAGA,BLIZZAGA=48,35,38
-baigan=[]
-for who,spells in ((PALOM,(BIO,FIRA,THUNDARA)),(TELLAH,(BIO,FIRAGA,THUNDAGA,BLIZZAGA,FIRA))):
-    for sp in spells:
-        baigan.append({'character':who,'command':8,'ability':sp,'minMp':30 if sp in (FIRAGA,THUNDAGA,BLIZZAGA) else 20 if sp==BIO else 15,'whileMonster':BAIGAN,'ignoreReflect':True})
+# Baigan (user's strat, live): "kill the one arm, then fire 3 the body and
+# attack it. fire2 with palom ON THE BODY not on ALL". The arms come back
+# only after BOTH are dead, so: the arm nearest the party (master 170) by
+# attacks while the casters Defend; then the body (route killFirst) -
+# Tellah Firaga (he got it back at the summit), Palom single-target Fira,
+# Cecil and Yang attack. Spells only while the body is the target (onTarget)
+# and through his Reflect (ignoreReflect). Porom heals, else Defends. No
+# Twincast or AOE (these rules block the twins' Twincast default).
+FIRAGA=35
+baigan=[
+    {'character':TELLAH,'command':8,'ability':FIRAGA,'minMp':30,'onTarget':BAIGAN,'ignoreReflect':True,'whileMonster':BAIGAN},
+    {'character':TELLAH,'command':8,'ability':FIRA,'minMp':15,'onTarget':BAIGAN,'ignoreReflect':True,'whileMonster':BAIGAN},
+    {'character':PALOM,'command':8,'ability':FIRA,'minMp':15,'onTarget':BAIGAN,'ignoreReflect':True,'whileMonster':BAIGAN},
+]
 baigan+=[{'character':c,'command':2,'whileMonster':BAIGAN} for c in (PALOM,POROM,TELLAH)]+field
 # Cagnazzo: weak to lightning (guide). User: "HEAVY LIGHTNING WHEN HE IS
 # OUT OF HIS SHELL". In the shell his sprite changes: whileMonsterChanged

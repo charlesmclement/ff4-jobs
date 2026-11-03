@@ -669,6 +669,7 @@ internal sealed class BattlePilot
                (monsterHp>rule.WhileMonsterHpAtMost || monsterHp<=rule.WhileMonsterHpAbove))continue;
             if(rule.WhileMonsterGrown is bool wantGrown && wantGrown!=grown)continue;
             if(rule.WhileMonsterChanged is bool wantChanged && wantChanged!=changed)continue;
+            if(rule.OnTarget is int onTarget && weakest?.MonsterMaster?.Id!=onTarget)continue;
             // Darkness is an HP-costing wave that can kill Cecil (user rule).
             // Only on large groups (4+), and only while Cecil is above a fifth
             // of his HP (it costs ~8-9% a use; the explosion leaves him low and

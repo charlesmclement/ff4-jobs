@@ -212,6 +212,9 @@ public sealed class BattleRule
     // Cast black magic / Twincast at the target even while it has Reflect
     // (user: "use strong singular spells on the body" - Baigan).
     public bool IgnoreReflect {get;set;}
+    // Only while the current target (kill order, else lowest HP) is this
+    // monster: Baigan's spells wait until the arm is dead and the body is up.
+    public int? OnTarget {get;set;}
     // Target the whole enemy side (one Thunder on all instead of three singles).
     public bool TargetAll {get;set;}
     // Pick Fire/Blizzard/Thunder by the living enemies' shared weakness

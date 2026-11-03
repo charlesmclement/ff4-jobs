@@ -800,3 +800,10 @@ User: "use strong singular spells on the body", "Kainazzo needs to be hit with H
 * **Cagnazzo, out of the shell** (changed false): Tellah Thundaga (else Thundara), Palom Thundara (else Thunder).
 * **Cagnazzo, in the shell:** the casters Defend. Porom heals or Defends, which also blocks a Twincast that would take Palom's turn.
 * Unverified: whether the shell is a sprite change (the Mom Bomb grow was).
+
+### 114. Baigan: the user's full strat
+"Tellah should have gotten fire3 from the light. Kill the one arm, then fire 3 the body and attack it. fire2 with palom ON THE BODY not on ALL."
+* New BattleRule `onTarget`: the rule applies only while the current target (kill order, else lowest HP) is that monster.
+* Baigan: arm 170 first by attacks; the casters Defend.
+* Then the body: Tellah Firaga (else Fira), Palom single-target Fira, both `onTarget` Baigan with `ignoreReflect`. Cecil and Yang attack.
+* Porom heals or Defends. No Twincast or AOE.

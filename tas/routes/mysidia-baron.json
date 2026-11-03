@@ -2020,68 +2020,31 @@
       "timeoutFrames": 54000,
       "battlePlan": [
         {
-          "character": 9,
-          "command": 8,
-          "ability": 48,
-          "minMp": 20,
-          "whileMonster": 168,
-          "ignoreReflect": true
-        },
-        {
-          "character": 9,
-          "command": 8,
-          "ability": 34,
-          "minMp": 15,
-          "whileMonster": 168,
-          "ignoreReflect": true
-        },
-        {
-          "character": 9,
-          "command": 8,
-          "ability": 40,
-          "minMp": 15,
-          "whileMonster": 168,
-          "ignoreReflect": true
-        },
-        {
-          "character": 6,
-          "command": 8,
-          "ability": 48,
-          "minMp": 20,
-          "whileMonster": 168,
-          "ignoreReflect": true
-        },
-        {
           "character": 6,
           "command": 8,
           "ability": 35,
           "minMp": 30,
-          "whileMonster": 168,
-          "ignoreReflect": true
-        },
-        {
-          "character": 6,
-          "command": 8,
-          "ability": 41,
-          "minMp": 30,
-          "whileMonster": 168,
-          "ignoreReflect": true
-        },
-        {
-          "character": 6,
-          "command": 8,
-          "ability": 38,
-          "minMp": 30,
-          "whileMonster": 168,
-          "ignoreReflect": true
+          "onTarget": 168,
+          "ignoreReflect": true,
+          "whileMonster": 168
         },
         {
           "character": 6,
           "command": 8,
           "ability": 34,
           "minMp": 15,
-          "whileMonster": 168,
-          "ignoreReflect": true
+          "onTarget": 168,
+          "ignoreReflect": true,
+          "whileMonster": 168
+        },
+        {
+          "character": 9,
+          "command": 8,
+          "ability": 34,
+          "minMp": 15,
+          "onTarget": 168,
+          "ignoreReflect": true,
+          "whileMonster": 168
         },
         {
           "character": 9,
@@ -2176,68 +2139,31 @@
       "timeoutFrames": 216000,
       "battlePlan": [
         {
-          "character": 9,
-          "command": 8,
-          "ability": 48,
-          "minMp": 20,
-          "whileMonster": 168,
-          "ignoreReflect": true
-        },
-        {
-          "character": 9,
-          "command": 8,
-          "ability": 34,
-          "minMp": 15,
-          "whileMonster": 168,
-          "ignoreReflect": true
-        },
-        {
-          "character": 9,
-          "command": 8,
-          "ability": 40,
-          "minMp": 15,
-          "whileMonster": 168,
-          "ignoreReflect": true
-        },
-        {
-          "character": 6,
-          "command": 8,
-          "ability": 48,
-          "minMp": 20,
-          "whileMonster": 168,
-          "ignoreReflect": true
-        },
-        {
           "character": 6,
           "command": 8,
           "ability": 35,
           "minMp": 30,
-          "whileMonster": 168,
-          "ignoreReflect": true
-        },
-        {
-          "character": 6,
-          "command": 8,
-          "ability": 41,
-          "minMp": 30,
-          "whileMonster": 168,
-          "ignoreReflect": true
-        },
-        {
-          "character": 6,
-          "command": 8,
-          "ability": 38,
-          "minMp": 30,
-          "whileMonster": 168,
-          "ignoreReflect": true
+          "onTarget": 168,
+          "ignoreReflect": true,
+          "whileMonster": 168
         },
         {
           "character": 6,
           "command": 8,
           "ability": 34,
           "minMp": 15,
-          "whileMonster": 168,
-          "ignoreReflect": true
+          "onTarget": 168,
+          "ignoreReflect": true,
+          "whileMonster": 168
+        },
+        {
+          "character": 9,
+          "command": 8,
+          "ability": 34,
+          "minMp": 15,
+          "onTarget": 168,
+          "ignoreReflect": true,
+          "whileMonster": 168
         },
         {
           "character": 9,
@@ -2322,68 +2248,31 @@
       "timeoutFrames": 54000,
       "battlePlan": [
         {
-          "character": 9,
-          "command": 8,
-          "ability": 48,
-          "minMp": 20,
-          "whileMonster": 168,
-          "ignoreReflect": true
-        },
-        {
-          "character": 9,
-          "command": 8,
-          "ability": 34,
-          "minMp": 15,
-          "whileMonster": 168,
-          "ignoreReflect": true
-        },
-        {
-          "character": 9,
-          "command": 8,
-          "ability": 40,
-          "minMp": 15,
-          "whileMonster": 168,
-          "ignoreReflect": true
-        },
-        {
-          "character": 6,
-          "command": 8,
-          "ability": 48,
-          "minMp": 20,
-          "whileMonster": 168,
-          "ignoreReflect": true
-        },
-        {
           "character": 6,
           "command": 8,
           "ability": 35,
           "minMp": 30,
-          "whileMonster": 168,
-          "ignoreReflect": true
-        },
-        {
-          "character": 6,
-          "command": 8,
-          "ability": 41,
-          "minMp": 30,
-          "whileMonster": 168,
-          "ignoreReflect": true
-        },
-        {
-          "character": 6,
-          "command": 8,
-          "ability": 38,
-          "minMp": 30,
-          "whileMonster": 168,
-          "ignoreReflect": true
+          "onTarget": 168,
+          "ignoreReflect": true,
+          "whileMonster": 168
         },
         {
           "character": 6,
           "command": 8,
           "ability": 34,
           "minMp": 15,
-          "whileMonster": 168,
-          "ignoreReflect": true
+          "onTarget": 168,
+          "ignoreReflect": true,
+          "whileMonster": 168
+        },
+        {
+          "character": 9,
+          "command": 8,
+          "ability": 34,
+          "minMp": 15,
+          "onTarget": 168,
+          "ignoreReflect": true,
+          "whileMonster": 168
         },
         {
           "character": 9,
@@ -2478,68 +2367,31 @@
       "timeoutFrames": 216000,
       "battlePlan": [
         {
-          "character": 9,
-          "command": 8,
-          "ability": 48,
-          "minMp": 20,
-          "whileMonster": 168,
-          "ignoreReflect": true
-        },
-        {
-          "character": 9,
-          "command": 8,
-          "ability": 34,
-          "minMp": 15,
-          "whileMonster": 168,
-          "ignoreReflect": true
-        },
-        {
-          "character": 9,
-          "command": 8,
-          "ability": 40,
-          "minMp": 15,
-          "whileMonster": 168,
-          "ignoreReflect": true
-        },
-        {
-          "character": 6,
-          "command": 8,
-          "ability": 48,
-          "minMp": 20,
-          "whileMonster": 168,
-          "ignoreReflect": true
-        },
-        {
           "character": 6,
           "command": 8,
           "ability": 35,
           "minMp": 30,
-          "whileMonster": 168,
-          "ignoreReflect": true
-        },
-        {
-          "character": 6,
-          "command": 8,
-          "ability": 41,
-          "minMp": 30,
-          "whileMonster": 168,
-          "ignoreReflect": true
-        },
-        {
-          "character": 6,
-          "command": 8,
-          "ability": 38,
-          "minMp": 30,
-          "whileMonster": 168,
-          "ignoreReflect": true
+          "onTarget": 168,
+          "ignoreReflect": true,
+          "whileMonster": 168
         },
         {
           "character": 6,
           "command": 8,
           "ability": 34,
           "minMp": 15,
-          "whileMonster": 168,
-          "ignoreReflect": true
+          "onTarget": 168,
+          "ignoreReflect": true,
+          "whileMonster": 168
+        },
+        {
+          "character": 9,
+          "command": 8,
+          "ability": 34,
+          "minMp": 15,
+          "onTarget": 168,
+          "ignoreReflect": true,
+          "whileMonster": 168
         },
         {
           "character": 9,
@@ -2624,68 +2476,31 @@
       "timeoutFrames": 54000,
       "battlePlan": [
         {
-          "character": 9,
-          "command": 8,
-          "ability": 48,
-          "minMp": 20,
-          "whileMonster": 168,
-          "ignoreReflect": true
-        },
-        {
-          "character": 9,
-          "command": 8,
-          "ability": 34,
-          "minMp": 15,
-          "whileMonster": 168,
-          "ignoreReflect": true
-        },
-        {
-          "character": 9,
-          "command": 8,
-          "ability": 40,
-          "minMp": 15,
-          "whileMonster": 168,
-          "ignoreReflect": true
-        },
-        {
-          "character": 6,
-          "command": 8,
-          "ability": 48,
-          "minMp": 20,
-          "whileMonster": 168,
-          "ignoreReflect": true
-        },
-        {
           "character": 6,
           "command": 8,
           "ability": 35,
           "minMp": 30,
-          "whileMonster": 168,
-          "ignoreReflect": true
-        },
-        {
-          "character": 6,
-          "command": 8,
-          "ability": 41,
-          "minMp": 30,
-          "whileMonster": 168,
-          "ignoreReflect": true
-        },
-        {
-          "character": 6,
-          "command": 8,
-          "ability": 38,
-          "minMp": 30,
-          "whileMonster": 168,
-          "ignoreReflect": true
+          "onTarget": 168,
+          "ignoreReflect": true,
+          "whileMonster": 168
         },
         {
           "character": 6,
           "command": 8,
           "ability": 34,
           "minMp": 15,
-          "whileMonster": 168,
-          "ignoreReflect": true
+          "onTarget": 168,
+          "ignoreReflect": true,
+          "whileMonster": 168
+        },
+        {
+          "character": 9,
+          "command": 8,
+          "ability": 34,
+          "minMp": 15,
+          "onTarget": 168,
+          "ignoreReflect": true,
+          "whileMonster": 168
         },
         {
           "character": 9,
@@ -2772,68 +2587,31 @@
       "timeoutFrames": 216000,
       "battlePlan": [
         {
-          "character": 9,
-          "command": 8,
-          "ability": 48,
-          "minMp": 20,
-          "whileMonster": 168,
-          "ignoreReflect": true
-        },
-        {
-          "character": 9,
-          "command": 8,
-          "ability": 34,
-          "minMp": 15,
-          "whileMonster": 168,
-          "ignoreReflect": true
-        },
-        {
-          "character": 9,
-          "command": 8,
-          "ability": 40,
-          "minMp": 15,
-          "whileMonster": 168,
-          "ignoreReflect": true
-        },
-        {
-          "character": 6,
-          "command": 8,
-          "ability": 48,
-          "minMp": 20,
-          "whileMonster": 168,
-          "ignoreReflect": true
-        },
-        {
           "character": 6,
           "command": 8,
           "ability": 35,
           "minMp": 30,
-          "whileMonster": 168,
-          "ignoreReflect": true
-        },
-        {
-          "character": 6,
-          "command": 8,
-          "ability": 41,
-          "minMp": 30,
-          "whileMonster": 168,
-          "ignoreReflect": true
-        },
-        {
-          "character": 6,
-          "command": 8,
-          "ability": 38,
-          "minMp": 30,
-          "whileMonster": 168,
-          "ignoreReflect": true
+          "onTarget": 168,
+          "ignoreReflect": true,
+          "whileMonster": 168
         },
         {
           "character": 6,
           "command": 8,
           "ability": 34,
           "minMp": 15,
-          "whileMonster": 168,
-          "ignoreReflect": true
+          "onTarget": 168,
+          "ignoreReflect": true,
+          "whileMonster": 168
+        },
+        {
+          "character": 9,
+          "command": 8,
+          "ability": 34,
+          "minMp": 15,
+          "onTarget": 168,
+          "ignoreReflect": true,
+          "whileMonster": 168
         },
         {
           "character": 9,
