@@ -526,6 +526,218 @@
       "group": "flag47"
     },
     {
+      "label": "Babil 8F: Dr. Lugae and Barnabas, then Lugaborg; the Tower Key (flag 47) - scene on the way",
+      "kind": "mash",
+      "keys": [
+        "Confirm"
+      ],
+      "phases": [
+        "None",
+        "Init",
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "any": [
+          {
+            "phase": "Player",
+            "mapId": 225
+          },
+          {
+            "phase": "Player",
+            "storyFlag": 47
+          }
+        ]
+      },
+      "stableFrames": 60,
+      "periodFrames": 8,
+      "pressedFrames": 2,
+      "timeoutFrames": 216000,
+      "battlePlan": [
+        {
+          "character": 2,
+          "command": 11,
+          "whileMonster": 183
+        },
+        {
+          "character": 2,
+          "command": 11,
+          "whileMonster": 184
+        },
+        {
+          "character": 2,
+          "command": 11,
+          "whileMonster": 185
+        }
+      ],
+      "skipIf": {
+        "storyFlag": 47
+      },
+      "group": "flag47"
+    },
+    {
+      "label": "Babil 8F: Dr. Lugae and Barnabas, then Lugaborg; the Tower Key (flag 47) - walk in (2)",
+      "kind": "navigate",
+      "mapId": 225,
+      "goal": {
+        "x": 26,
+        "y": 20,
+        "layer": 0
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Event"
+      },
+      "stableFrames": 15,
+      "timeoutFrames": 54000,
+      "battlePlan": [
+        {
+          "character": 2,
+          "command": 11,
+          "whileMonster": 183
+        },
+        {
+          "character": 2,
+          "command": 11,
+          "whileMonster": 184
+        },
+        {
+          "character": 2,
+          "command": 11,
+          "whileMonster": 185
+        }
+      ],
+      "skipIf": {
+        "storyFlag": 47
+      },
+      "group": "flag47"
+    },
+    {
+      "label": "Babil 8F: Dr. Lugae and Barnabas, then Lugaborg; the Tower Key (flag 47) - scene on the way (2)",
+      "kind": "mash",
+      "keys": [
+        "Confirm"
+      ],
+      "phases": [
+        "None",
+        "Init",
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "any": [
+          {
+            "phase": "Player",
+            "mapId": 225
+          },
+          {
+            "phase": "Player",
+            "storyFlag": 47
+          }
+        ]
+      },
+      "stableFrames": 60,
+      "periodFrames": 8,
+      "pressedFrames": 2,
+      "timeoutFrames": 216000,
+      "battlePlan": [
+        {
+          "character": 2,
+          "command": 11,
+          "whileMonster": 183
+        },
+        {
+          "character": 2,
+          "command": 11,
+          "whileMonster": 184
+        },
+        {
+          "character": 2,
+          "command": 11,
+          "whileMonster": 185
+        }
+      ],
+      "skipIf": {
+        "storyFlag": 47
+      },
+      "group": "flag47"
+    },
+    {
+      "label": "Babil 8F: Dr. Lugae and Barnabas, then Lugaborg; the Tower Key (flag 47) - walk in (3)",
+      "kind": "navigate",
+      "mapId": 225,
+      "goal": {
+        "x": 26,
+        "y": 20,
+        "layer": 0
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Event"
+      },
+      "stableFrames": 15,
+      "timeoutFrames": 54000,
+      "battlePlan": [
+        {
+          "character": 2,
+          "command": 11,
+          "whileMonster": 183
+        },
+        {
+          "character": 2,
+          "command": 11,
+          "whileMonster": 184
+        },
+        {
+          "character": 2,
+          "command": 11,
+          "whileMonster": 185
+        }
+      ],
+      "skipIf": {
+        "storyFlag": 47
+      },
+      "group": "flag47"
+    },
+    {
       "label": "Babil 8F: Dr. Lugae and Barnabas, then Lugaborg; the Tower Key (flag 47)",
       "kind": "mash",
       "keys": [
@@ -802,6 +1014,150 @@
       "group": "flag48"
     },
     {
+      "label": "Cannon room: three Goblin Captains; Yang stops the Super Cannon (flag 48, autosave) - scene on the way",
+      "kind": "mash",
+      "keys": [
+        "Confirm"
+      ],
+      "phases": [
+        "None",
+        "Init",
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "any": [
+          {
+            "phase": "Player",
+            "mapId": 221
+          },
+          {
+            "phase": "Player",
+            "storyFlag": 48
+          }
+        ]
+      },
+      "stableFrames": 60,
+      "periodFrames": 8,
+      "pressedFrames": 2,
+      "timeoutFrames": 216000,
+      "skipIf": {
+        "storyFlag": 48
+      },
+      "group": "flag48"
+    },
+    {
+      "label": "Cannon room: three Goblin Captains; Yang stops the Super Cannon (flag 48, autosave) - walk in (2)",
+      "kind": "navigate",
+      "mapId": 221,
+      "goal": {
+        "x": 5,
+        "y": 10,
+        "layer": 0
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Event"
+      },
+      "stableFrames": 15,
+      "timeoutFrames": 54000,
+      "skipIf": {
+        "storyFlag": 48
+      },
+      "group": "flag48"
+    },
+    {
+      "label": "Cannon room: three Goblin Captains; Yang stops the Super Cannon (flag 48, autosave) - scene on the way (2)",
+      "kind": "mash",
+      "keys": [
+        "Confirm"
+      ],
+      "phases": [
+        "None",
+        "Init",
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "any": [
+          {
+            "phase": "Player",
+            "mapId": 221
+          },
+          {
+            "phase": "Player",
+            "storyFlag": 48
+          }
+        ]
+      },
+      "stableFrames": 60,
+      "periodFrames": 8,
+      "pressedFrames": 2,
+      "timeoutFrames": 216000,
+      "skipIf": {
+        "storyFlag": 48
+      },
+      "group": "flag48"
+    },
+    {
+      "label": "Cannon room: three Goblin Captains; Yang stops the Super Cannon (flag 48, autosave) - walk in (3)",
+      "kind": "navigate",
+      "mapId": 221,
+      "goal": {
+        "x": 5,
+        "y": 10,
+        "layer": 0
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Event"
+      },
+      "stableFrames": 15,
+      "timeoutFrames": 54000,
+      "skipIf": {
+        "storyFlag": 48
+      },
+      "group": "flag48"
+    },
+    {
       "label": "Cannon room: three Goblin Captains; Yang stops the Super Cannon (flag 48, autosave)",
       "kind": "mash",
       "keys": [
@@ -948,6 +1304,150 @@
     },
     {
       "label": "Babil 1F: Golbez breaks the bridge; Cid and the Enterprise; the hook; out of the Underworld (flag 49, autosave) - walk in",
+      "kind": "navigate",
+      "mapId": 210,
+      "goal": {
+        "x": 20,
+        "y": 22,
+        "layer": 0
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Event"
+      },
+      "stableFrames": 15,
+      "timeoutFrames": 54000,
+      "skipIf": {
+        "storyFlag": 49
+      },
+      "group": "flag49"
+    },
+    {
+      "label": "Babil 1F: Golbez breaks the bridge; Cid and the Enterprise; the hook; out of the Underworld (flag 49, autosave) - scene on the way",
+      "kind": "mash",
+      "keys": [
+        "Confirm"
+      ],
+      "phases": [
+        "None",
+        "Init",
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "any": [
+          {
+            "phase": "Player",
+            "mapId": 210
+          },
+          {
+            "storyFlag": 49,
+            "mapId": 1
+          }
+        ]
+      },
+      "stableFrames": 60,
+      "periodFrames": 8,
+      "pressedFrames": 2,
+      "timeoutFrames": 216000,
+      "skipIf": {
+        "storyFlag": 49
+      },
+      "group": "flag49"
+    },
+    {
+      "label": "Babil 1F: Golbez breaks the bridge; Cid and the Enterprise; the hook; out of the Underworld (flag 49, autosave) - walk in (2)",
+      "kind": "navigate",
+      "mapId": 210,
+      "goal": {
+        "x": 20,
+        "y": 22,
+        "layer": 0
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Event"
+      },
+      "stableFrames": 15,
+      "timeoutFrames": 54000,
+      "skipIf": {
+        "storyFlag": 49
+      },
+      "group": "flag49"
+    },
+    {
+      "label": "Babil 1F: Golbez breaks the bridge; Cid and the Enterprise; the hook; out of the Underworld (flag 49, autosave) - scene on the way (2)",
+      "kind": "mash",
+      "keys": [
+        "Confirm"
+      ],
+      "phases": [
+        "None",
+        "Init",
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "any": [
+          {
+            "phase": "Player",
+            "mapId": 210
+          },
+          {
+            "storyFlag": 49,
+            "mapId": 1
+          }
+        ]
+      },
+      "stableFrames": 60,
+      "periodFrames": 8,
+      "pressedFrames": 2,
+      "timeoutFrames": 216000,
+      "skipIf": {
+        "storyFlag": 49
+      },
+      "group": "flag49"
+    },
+    {
+      "label": "Babil 1F: Golbez breaks the bridge; Cid and the Enterprise; the hook; out of the Underworld (flag 49, autosave) - walk in (3)",
       "kind": "navigate",
       "mapId": 210,
       "goal": {

@@ -222,6 +222,150 @@
       "group": "flag56"
     },
     {
+      "label": "Throne room: King Giott gives Luca's necklace (flag 56) - scene on the way",
+      "kind": "mash",
+      "keys": [
+        "Confirm"
+      ],
+      "phases": [
+        "None",
+        "Init",
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "any": [
+          {
+            "phase": "Player",
+            "mapId": 120
+          },
+          {
+            "phase": "Player",
+            "storyFlag": 56
+          }
+        ]
+      },
+      "stableFrames": 60,
+      "periodFrames": 8,
+      "pressedFrames": 2,
+      "timeoutFrames": 216000,
+      "skipIf": {
+        "storyFlag": 56
+      },
+      "group": "flag56"
+    },
+    {
+      "label": "Throne room: King Giott gives Luca's necklace (flag 56) - walk in (2)",
+      "kind": "navigate",
+      "mapId": 120,
+      "goal": {
+        "x": 11,
+        "y": 11,
+        "layer": 0
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Event"
+      },
+      "stableFrames": 15,
+      "timeoutFrames": 54000,
+      "skipIf": {
+        "storyFlag": 56
+      },
+      "group": "flag56"
+    },
+    {
+      "label": "Throne room: King Giott gives Luca's necklace (flag 56) - scene on the way (2)",
+      "kind": "mash",
+      "keys": [
+        "Confirm"
+      ],
+      "phases": [
+        "None",
+        "Init",
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "any": [
+          {
+            "phase": "Player",
+            "mapId": 120
+          },
+          {
+            "phase": "Player",
+            "storyFlag": 56
+          }
+        ]
+      },
+      "stableFrames": 60,
+      "periodFrames": 8,
+      "pressedFrames": 2,
+      "timeoutFrames": 216000,
+      "skipIf": {
+        "storyFlag": 56
+      },
+      "group": "flag56"
+    },
+    {
+      "label": "Throne room: King Giott gives Luca's necklace (flag 56) - walk in (3)",
+      "kind": "navigate",
+      "mapId": 120,
+      "goal": {
+        "x": 11,
+        "y": 11,
+        "layer": 0
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Event"
+      },
+      "stableFrames": 15,
+      "timeoutFrames": 54000,
+      "skipIf": {
+        "storyFlag": 56
+      },
+      "group": "flag56"
+    },
+    {
       "label": "Throne room: King Giott gives Luca's necklace (flag 56)",
       "kind": "mash",
       "keys": [
@@ -368,6 +512,150 @@
     },
     {
       "label": "Hangar: Cid is back; he fits the heat shield to the Falcon (flag 57) - walk in",
+      "kind": "navigate",
+      "mapId": 126,
+      "goal": {
+        "x": 15,
+        "y": 9,
+        "layer": 0
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Event"
+      },
+      "stableFrames": 15,
+      "timeoutFrames": 54000,
+      "skipIf": {
+        "storyFlag": 57
+      },
+      "group": "flag57"
+    },
+    {
+      "label": "Hangar: Cid is back; he fits the heat shield to the Falcon (flag 57) - scene on the way",
+      "kind": "mash",
+      "keys": [
+        "Confirm"
+      ],
+      "phases": [
+        "None",
+        "Init",
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "any": [
+          {
+            "phase": "Player",
+            "mapId": 126
+          },
+          {
+            "phase": "Player",
+            "storyFlag": 57
+          }
+        ]
+      },
+      "stableFrames": 60,
+      "periodFrames": 8,
+      "pressedFrames": 2,
+      "timeoutFrames": 216000,
+      "skipIf": {
+        "storyFlag": 57
+      },
+      "group": "flag57"
+    },
+    {
+      "label": "Hangar: Cid is back; he fits the heat shield to the Falcon (flag 57) - walk in (2)",
+      "kind": "navigate",
+      "mapId": 126,
+      "goal": {
+        "x": 15,
+        "y": 9,
+        "layer": 0
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Event"
+      },
+      "stableFrames": 15,
+      "timeoutFrames": 54000,
+      "skipIf": {
+        "storyFlag": 57
+      },
+      "group": "flag57"
+    },
+    {
+      "label": "Hangar: Cid is back; he fits the heat shield to the Falcon (flag 57) - scene on the way (2)",
+      "kind": "mash",
+      "keys": [
+        "Confirm"
+      ],
+      "phases": [
+        "None",
+        "Init",
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "any": [
+          {
+            "phase": "Player",
+            "mapId": 126
+          },
+          {
+            "phase": "Player",
+            "storyFlag": 57
+          }
+        ]
+      },
+      "stableFrames": 60,
+      "periodFrames": 8,
+      "pressedFrames": 2,
+      "timeoutFrames": 216000,
+      "skipIf": {
+        "storyFlag": 57
+      },
+      "group": "flag57"
+    },
+    {
+      "label": "Hangar: Cid is back; he fits the heat shield to the Falcon (flag 57) - walk in (3)",
       "kind": "navigate",
       "mapId": 126,
       "goal": {
@@ -1192,6 +1480,150 @@
       "group": "flag59"
     },
     {
+      "label": "Crystal room: the last Dark Crystal (flag 59) - scene on the way",
+      "kind": "mash",
+      "keys": [
+        "Confirm"
+      ],
+      "phases": [
+        "None",
+        "Init",
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "any": [
+          {
+            "phase": "Player",
+            "mapId": 290
+          },
+          {
+            "phase": "Player",
+            "storyFlag": 59
+          }
+        ]
+      },
+      "stableFrames": 60,
+      "periodFrames": 8,
+      "pressedFrames": 2,
+      "timeoutFrames": 216000,
+      "skipIf": {
+        "storyFlag": 59
+      },
+      "group": "flag59"
+    },
+    {
+      "label": "Crystal room: the last Dark Crystal (flag 59) - walk in (2)",
+      "kind": "navigate",
+      "mapId": 290,
+      "goal": {
+        "x": 11,
+        "y": 9,
+        "layer": 0
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Event"
+      },
+      "stableFrames": 15,
+      "timeoutFrames": 54000,
+      "skipIf": {
+        "storyFlag": 59
+      },
+      "group": "flag59"
+    },
+    {
+      "label": "Crystal room: the last Dark Crystal (flag 59) - scene on the way (2)",
+      "kind": "mash",
+      "keys": [
+        "Confirm"
+      ],
+      "phases": [
+        "None",
+        "Init",
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "any": [
+          {
+            "phase": "Player",
+            "mapId": 290
+          },
+          {
+            "phase": "Player",
+            "storyFlag": 59
+          }
+        ]
+      },
+      "stableFrames": 60,
+      "periodFrames": 8,
+      "pressedFrames": 2,
+      "timeoutFrames": 216000,
+      "skipIf": {
+        "storyFlag": 59
+      },
+      "group": "flag59"
+    },
+    {
+      "label": "Crystal room: the last Dark Crystal (flag 59) - walk in (3)",
+      "kind": "navigate",
+      "mapId": 290,
+      "goal": {
+        "x": 11,
+        "y": 9,
+        "layer": 0
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Event"
+      },
+      "stableFrames": 15,
+      "timeoutFrames": 54000,
+      "skipIf": {
+        "storyFlag": 59
+      },
+      "group": "flag59"
+    },
+    {
       "label": "Crystal room: the last Dark Crystal (flag 59)",
       "kind": "mash",
       "keys": [
@@ -1286,6 +1718,206 @@
     },
     {
       "label": "Sealed Cave B5: the Demon Wall (flag 60) - walk in",
+      "kind": "navigate",
+      "mapId": 289,
+      "goal": {
+        "x": 16,
+        "y": 7,
+        "layer": 0
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Event"
+      },
+      "stableFrames": 15,
+      "timeoutFrames": 54000,
+      "battlePlan": [
+        {
+          "character": 2,
+          "command": 11,
+          "whileMonster": 192
+        },
+        {
+          "character": 4,
+          "command": 8,
+          "ability": 48,
+          "minMp": 20,
+          "whileMonster": 192
+        }
+      ],
+      "skipIf": {
+        "storyFlag": 60
+      },
+      "group": "flag60"
+    },
+    {
+      "label": "Sealed Cave B5: the Demon Wall (flag 60) - scene on the way",
+      "kind": "mash",
+      "keys": [
+        "Confirm"
+      ],
+      "phases": [
+        "None",
+        "Init",
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "any": [
+          {
+            "phase": "Player",
+            "mapId": 289
+          },
+          {
+            "phase": "Player",
+            "storyFlag": 60
+          }
+        ]
+      },
+      "stableFrames": 60,
+      "periodFrames": 8,
+      "pressedFrames": 2,
+      "timeoutFrames": 216000,
+      "battlePlan": [
+        {
+          "character": 2,
+          "command": 11,
+          "whileMonster": 192
+        },
+        {
+          "character": 4,
+          "command": 8,
+          "ability": 48,
+          "minMp": 20,
+          "whileMonster": 192
+        }
+      ],
+      "skipIf": {
+        "storyFlag": 60
+      },
+      "group": "flag60"
+    },
+    {
+      "label": "Sealed Cave B5: the Demon Wall (flag 60) - walk in (2)",
+      "kind": "navigate",
+      "mapId": 289,
+      "goal": {
+        "x": 16,
+        "y": 7,
+        "layer": 0
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Event"
+      },
+      "stableFrames": 15,
+      "timeoutFrames": 54000,
+      "battlePlan": [
+        {
+          "character": 2,
+          "command": 11,
+          "whileMonster": 192
+        },
+        {
+          "character": 4,
+          "command": 8,
+          "ability": 48,
+          "minMp": 20,
+          "whileMonster": 192
+        }
+      ],
+      "skipIf": {
+        "storyFlag": 60
+      },
+      "group": "flag60"
+    },
+    {
+      "label": "Sealed Cave B5: the Demon Wall (flag 60) - scene on the way (2)",
+      "kind": "mash",
+      "keys": [
+        "Confirm"
+      ],
+      "phases": [
+        "None",
+        "Init",
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "any": [
+          {
+            "phase": "Player",
+            "mapId": 289
+          },
+          {
+            "phase": "Player",
+            "storyFlag": 60
+          }
+        ]
+      },
+      "stableFrames": 60,
+      "periodFrames": 8,
+      "pressedFrames": 2,
+      "timeoutFrames": 216000,
+      "battlePlan": [
+        {
+          "character": 2,
+          "command": 11,
+          "whileMonster": 192
+        },
+        {
+          "character": 4,
+          "command": 8,
+          "ability": 48,
+          "minMp": 20,
+          "whileMonster": 192
+        }
+      ],
+      "skipIf": {
+        "storyFlag": 60
+      },
+      "group": "flag60"
+    },
+    {
+      "label": "Sealed Cave B5: the Demon Wall (flag 60) - walk in (3)",
       "kind": "navigate",
       "mapId": 289,
       "goal": {
@@ -1660,6 +2292,150 @@
       "group": "flag61"
     },
     {
+      "label": "Sealed Cave entrance: Golbez takes Kain again; Kain leaves with the crystal (flag 61) - scene on the way",
+      "kind": "mash",
+      "keys": [
+        "Confirm"
+      ],
+      "phases": [
+        "None",
+        "Init",
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "any": [
+          {
+            "phase": "Player",
+            "mapId": 268
+          },
+          {
+            "phase": "Player",
+            "storyFlag": 61
+          }
+        ]
+      },
+      "stableFrames": 60,
+      "periodFrames": 8,
+      "pressedFrames": 2,
+      "timeoutFrames": 216000,
+      "skipIf": {
+        "storyFlag": 61
+      },
+      "group": "flag61"
+    },
+    {
+      "label": "Sealed Cave entrance: Golbez takes Kain again; Kain leaves with the crystal (flag 61) - walk in (2)",
+      "kind": "navigate",
+      "mapId": 268,
+      "goal": {
+        "x": 13,
+        "y": 6,
+        "layer": 0
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Event"
+      },
+      "stableFrames": 15,
+      "timeoutFrames": 54000,
+      "skipIf": {
+        "storyFlag": 61
+      },
+      "group": "flag61"
+    },
+    {
+      "label": "Sealed Cave entrance: Golbez takes Kain again; Kain leaves with the crystal (flag 61) - scene on the way (2)",
+      "kind": "mash",
+      "keys": [
+        "Confirm"
+      ],
+      "phases": [
+        "None",
+        "Init",
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "any": [
+          {
+            "phase": "Player",
+            "mapId": 268
+          },
+          {
+            "phase": "Player",
+            "storyFlag": 61
+          }
+        ]
+      },
+      "stableFrames": 60,
+      "periodFrames": 8,
+      "pressedFrames": 2,
+      "timeoutFrames": 216000,
+      "skipIf": {
+        "storyFlag": 61
+      },
+      "group": "flag61"
+    },
+    {
+      "label": "Sealed Cave entrance: Golbez takes Kain again; Kain leaves with the crystal (flag 61) - walk in (3)",
+      "kind": "navigate",
+      "mapId": 268,
+      "goal": {
+        "x": 13,
+        "y": 6,
+        "layer": 0
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Event"
+      },
+      "stableFrames": 15,
+      "timeoutFrames": 54000,
+      "skipIf": {
+        "storyFlag": 61
+      },
+      "group": "flag61"
+    },
+    {
       "label": "Sealed Cave entrance: Golbez takes Kain again; Kain leaves with the crystal (flag 61)",
       "kind": "mash",
       "keys": [
@@ -1889,6 +2665,150 @@
     },
     {
       "label": "Throne room: the dwarves fit the drill to the Falcon (flag 62, autosave) - walk in",
+      "kind": "navigate",
+      "mapId": 120,
+      "goal": {
+        "x": 11,
+        "y": 11,
+        "layer": 0
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Event"
+      },
+      "stableFrames": 15,
+      "timeoutFrames": 54000,
+      "skipIf": {
+        "storyFlag": 62
+      },
+      "group": "flag62"
+    },
+    {
+      "label": "Throne room: the dwarves fit the drill to the Falcon (flag 62, autosave) - scene on the way",
+      "kind": "mash",
+      "keys": [
+        "Confirm"
+      ],
+      "phases": [
+        "None",
+        "Init",
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "any": [
+          {
+            "phase": "Player",
+            "mapId": 120
+          },
+          {
+            "phase": "Player",
+            "storyFlag": 62
+          }
+        ]
+      },
+      "stableFrames": 60,
+      "periodFrames": 8,
+      "pressedFrames": 2,
+      "timeoutFrames": 216000,
+      "skipIf": {
+        "storyFlag": 62
+      },
+      "group": "flag62"
+    },
+    {
+      "label": "Throne room: the dwarves fit the drill to the Falcon (flag 62, autosave) - walk in (2)",
+      "kind": "navigate",
+      "mapId": 120,
+      "goal": {
+        "x": 11,
+        "y": 11,
+        "layer": 0
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Event"
+      },
+      "stableFrames": 15,
+      "timeoutFrames": 54000,
+      "skipIf": {
+        "storyFlag": 62
+      },
+      "group": "flag62"
+    },
+    {
+      "label": "Throne room: the dwarves fit the drill to the Falcon (flag 62, autosave) - scene on the way (2)",
+      "kind": "mash",
+      "keys": [
+        "Confirm"
+      ],
+      "phases": [
+        "None",
+        "Init",
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "any": [
+          {
+            "phase": "Player",
+            "mapId": 120
+          },
+          {
+            "phase": "Player",
+            "storyFlag": 62
+          }
+        ]
+      },
+      "stableFrames": 60,
+      "periodFrames": 8,
+      "pressedFrames": 2,
+      "timeoutFrames": 216000,
+      "skipIf": {
+        "storyFlag": 62
+      },
+      "group": "flag62"
+    },
+    {
+      "label": "Throne room: the dwarves fit the drill to the Falcon (flag 62, autosave) - walk in (3)",
       "kind": "navigate",
       "mapId": 120,
       "goal": {

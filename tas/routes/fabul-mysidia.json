@@ -78,6 +78,194 @@
       "group": "flag22"
     },
     {
+      "label": "Overworld: to Fabul harbor; the voyage, Leviathan, Cecil alone on the beach (flag 22, autosave) - scene on the way",
+      "kind": "mash",
+      "keys": [
+        "Confirm"
+      ],
+      "phases": [
+        "None",
+        "Init",
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "any": [
+          {
+            "phase": "Player",
+            "mapId": 1
+          },
+          {
+            "phase": "Player",
+            "storyFlag": 22
+          }
+        ]
+      },
+      "stableFrames": 60,
+      "periodFrames": 8,
+      "pressedFrames": 2,
+      "timeoutFrames": 216000,
+      "skipIf": {
+        "storyFlag": 22
+      },
+      "group": "flag22"
+    },
+    {
+      "label": "Overworld: to Fabul harbor; the voyage, Leviathan, Cecil alone on the beach (flag 22, autosave) - walk in (2)",
+      "kind": "navigate",
+      "mapId": 1,
+      "goal": {
+        "x": 226,
+        "y": 43,
+        "layer": 0
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Event"
+      },
+      "stableFrames": 15,
+      "timeoutFrames": 54000,
+      "waypoints": [
+        {
+          "x": 221,
+          "y": 46,
+          "layer": 0
+        },
+        {
+          "x": 221,
+          "y": 45,
+          "layer": 0
+        },
+        {
+          "x": 225,
+          "y": 45,
+          "layer": 0
+        },
+        {
+          "x": 225,
+          "y": 43,
+          "layer": 0
+        }
+      ],
+      "skipIf": {
+        "storyFlag": 22
+      },
+      "group": "flag22"
+    },
+    {
+      "label": "Overworld: to Fabul harbor; the voyage, Leviathan, Cecil alone on the beach (flag 22, autosave) - scene on the way (2)",
+      "kind": "mash",
+      "keys": [
+        "Confirm"
+      ],
+      "phases": [
+        "None",
+        "Init",
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "any": [
+          {
+            "phase": "Player",
+            "mapId": 1
+          },
+          {
+            "phase": "Player",
+            "storyFlag": 22
+          }
+        ]
+      },
+      "stableFrames": 60,
+      "periodFrames": 8,
+      "pressedFrames": 2,
+      "timeoutFrames": 216000,
+      "skipIf": {
+        "storyFlag": 22
+      },
+      "group": "flag22"
+    },
+    {
+      "label": "Overworld: to Fabul harbor; the voyage, Leviathan, Cecil alone on the beach (flag 22, autosave) - walk in (3)",
+      "kind": "navigate",
+      "mapId": 1,
+      "goal": {
+        "x": 226,
+        "y": 43,
+        "layer": 0
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Event"
+      },
+      "stableFrames": 15,
+      "timeoutFrames": 54000,
+      "waypoints": [
+        {
+          "x": 221,
+          "y": 46,
+          "layer": 0
+        },
+        {
+          "x": 221,
+          "y": 45,
+          "layer": 0
+        },
+        {
+          "x": 225,
+          "y": 45,
+          "layer": 0
+        },
+        {
+          "x": 225,
+          "y": 43,
+          "layer": 0
+        }
+      ],
+      "skipIf": {
+        "storyFlag": 22
+      },
+      "group": "flag22"
+    },
+    {
       "label": "Overworld: to Fabul harbor; the voyage, Leviathan, Cecil alone on the beach (flag 22, autosave)",
       "kind": "mash",
       "keys": [
@@ -180,6 +368,150 @@
     },
     {
       "label": "Manor: talk to the Elder; Palom and Porom join (flag 23) - walk in",
+      "kind": "navigate",
+      "mapId": 58,
+      "goal": {
+        "x": 15,
+        "y": 6,
+        "layer": 0
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Event"
+      },
+      "stableFrames": 15,
+      "timeoutFrames": 54000,
+      "skipIf": {
+        "storyFlag": 23
+      },
+      "group": "flag23"
+    },
+    {
+      "label": "Manor: talk to the Elder; Palom and Porom join (flag 23) - scene on the way",
+      "kind": "mash",
+      "keys": [
+        "Confirm"
+      ],
+      "phases": [
+        "None",
+        "Init",
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "any": [
+          {
+            "phase": "Player",
+            "mapId": 58
+          },
+          {
+            "phase": "Player",
+            "storyFlag": 23
+          }
+        ]
+      },
+      "stableFrames": 60,
+      "periodFrames": 8,
+      "pressedFrames": 2,
+      "timeoutFrames": 216000,
+      "skipIf": {
+        "storyFlag": 23
+      },
+      "group": "flag23"
+    },
+    {
+      "label": "Manor: talk to the Elder; Palom and Porom join (flag 23) - walk in (2)",
+      "kind": "navigate",
+      "mapId": 58,
+      "goal": {
+        "x": 15,
+        "y": 6,
+        "layer": 0
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Event"
+      },
+      "stableFrames": 15,
+      "timeoutFrames": 54000,
+      "skipIf": {
+        "storyFlag": 23
+      },
+      "group": "flag23"
+    },
+    {
+      "label": "Manor: talk to the Elder; Palom and Porom join (flag 23) - scene on the way (2)",
+      "kind": "mash",
+      "keys": [
+        "Confirm"
+      ],
+      "phases": [
+        "None",
+        "Init",
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "any": [
+          {
+            "phase": "Player",
+            "mapId": 58
+          },
+          {
+            "phase": "Player",
+            "storyFlag": 23
+          }
+        ]
+      },
+      "stableFrames": 60,
+      "periodFrames": 8,
+      "pressedFrames": 2,
+      "timeoutFrames": 216000,
+      "skipIf": {
+        "storyFlag": 23
+      },
+      "group": "flag23"
+    },
+    {
+      "label": "Manor: talk to the Elder; Palom and Porom join (flag 23) - walk in (3)",
       "kind": "navigate",
       "mapId": 58,
       "goal": {
@@ -1346,6 +1678,294 @@
       "group": "flag24"
     },
     {
+      "label": "Mt. Ordeals: the burning trees; Palom and Porom put the fire out (flag 24) - scene on the way",
+      "kind": "mash",
+      "keys": [
+        "Confirm"
+      ],
+      "phases": [
+        "None",
+        "Init",
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "any": [
+          {
+            "phase": "Player",
+            "mapId": 182
+          },
+          {
+            "phase": "Player",
+            "storyFlag": 24
+          }
+        ]
+      },
+      "stableFrames": 60,
+      "periodFrames": 8,
+      "pressedFrames": 2,
+      "timeoutFrames": 216000,
+      "battlePlan": [
+        {
+          "character": 9,
+          "command": 8,
+          "ability": 34,
+          "targetAll": true,
+          "minEnemies": 2,
+          "minMp": 15
+        },
+        {
+          "character": 9,
+          "command": 8,
+          "byWeakness": true,
+          "minMp": 5
+        },
+        {
+          "character": 9,
+          "command": 2
+        },
+        {
+          "character": 6,
+          "command": 8,
+          "byWeakness": true,
+          "minEnemies": 3,
+          "minMp": 40
+        },
+        {
+          "character": 6,
+          "command": 2,
+          "reserveMp": 30
+        },
+        {
+          "character": 10,
+          "command": 2
+        }
+      ],
+      "skipIf": {
+        "storyFlag": 24
+      },
+      "group": "flag24"
+    },
+    {
+      "label": "Mt. Ordeals: the burning trees; Palom and Porom put the fire out (flag 24) - walk in (2)",
+      "kind": "navigate",
+      "mapId": 182,
+      "goal": {
+        "x": 11,
+        "y": 29,
+        "layer": 0
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Event"
+      },
+      "stableFrames": 15,
+      "timeoutFrames": 54000,
+      "battlePlan": [
+        {
+          "character": 9,
+          "command": 8,
+          "ability": 34,
+          "targetAll": true,
+          "minEnemies": 2,
+          "minMp": 15
+        },
+        {
+          "character": 9,
+          "command": 8,
+          "byWeakness": true,
+          "minMp": 5
+        },
+        {
+          "character": 9,
+          "command": 2
+        },
+        {
+          "character": 6,
+          "command": 8,
+          "byWeakness": true,
+          "minEnemies": 3,
+          "minMp": 40
+        },
+        {
+          "character": 6,
+          "command": 2,
+          "reserveMp": 30
+        },
+        {
+          "character": 10,
+          "command": 2
+        }
+      ],
+      "skipIf": {
+        "storyFlag": 24
+      },
+      "group": "flag24"
+    },
+    {
+      "label": "Mt. Ordeals: the burning trees; Palom and Porom put the fire out (flag 24) - scene on the way (2)",
+      "kind": "mash",
+      "keys": [
+        "Confirm"
+      ],
+      "phases": [
+        "None",
+        "Init",
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "any": [
+          {
+            "phase": "Player",
+            "mapId": 182
+          },
+          {
+            "phase": "Player",
+            "storyFlag": 24
+          }
+        ]
+      },
+      "stableFrames": 60,
+      "periodFrames": 8,
+      "pressedFrames": 2,
+      "timeoutFrames": 216000,
+      "battlePlan": [
+        {
+          "character": 9,
+          "command": 8,
+          "ability": 34,
+          "targetAll": true,
+          "minEnemies": 2,
+          "minMp": 15
+        },
+        {
+          "character": 9,
+          "command": 8,
+          "byWeakness": true,
+          "minMp": 5
+        },
+        {
+          "character": 9,
+          "command": 2
+        },
+        {
+          "character": 6,
+          "command": 8,
+          "byWeakness": true,
+          "minEnemies": 3,
+          "minMp": 40
+        },
+        {
+          "character": 6,
+          "command": 2,
+          "reserveMp": 30
+        },
+        {
+          "character": 10,
+          "command": 2
+        }
+      ],
+      "skipIf": {
+        "storyFlag": 24
+      },
+      "group": "flag24"
+    },
+    {
+      "label": "Mt. Ordeals: the burning trees; Palom and Porom put the fire out (flag 24) - walk in (3)",
+      "kind": "navigate",
+      "mapId": 182,
+      "goal": {
+        "x": 11,
+        "y": 29,
+        "layer": 0
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Event"
+      },
+      "stableFrames": 15,
+      "timeoutFrames": 54000,
+      "battlePlan": [
+        {
+          "character": 9,
+          "command": 8,
+          "ability": 34,
+          "targetAll": true,
+          "minEnemies": 2,
+          "minMp": 15
+        },
+        {
+          "character": 9,
+          "command": 8,
+          "byWeakness": true,
+          "minMp": 5
+        },
+        {
+          "character": 9,
+          "command": 2
+        },
+        {
+          "character": 6,
+          "command": 8,
+          "byWeakness": true,
+          "minEnemies": 3,
+          "minMp": 40
+        },
+        {
+          "character": 6,
+          "command": 2,
+          "reserveMp": 30
+        },
+        {
+          "character": 10,
+          "command": 2
+        }
+      ],
+      "skipIf": {
+        "storyFlag": 24
+      },
+      "group": "flag24"
+    },
+    {
       "label": "Mt. Ordeals: the burning trees; Palom and Porom put the fire out (flag 24)",
       "kind": "mash",
       "keys": [
@@ -1480,6 +2100,294 @@
     },
     {
       "label": "Ridge: Tellah again; he joins (flag 25) - walk in",
+      "kind": "navigate",
+      "mapId": 183,
+      "goal": {
+        "x": 21,
+        "y": 12,
+        "layer": 0
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Event"
+      },
+      "stableFrames": 15,
+      "timeoutFrames": 54000,
+      "battlePlan": [
+        {
+          "character": 9,
+          "command": 8,
+          "ability": 34,
+          "targetAll": true,
+          "minEnemies": 2,
+          "minMp": 15
+        },
+        {
+          "character": 9,
+          "command": 8,
+          "byWeakness": true,
+          "minMp": 5
+        },
+        {
+          "character": 9,
+          "command": 2
+        },
+        {
+          "character": 6,
+          "command": 8,
+          "byWeakness": true,
+          "minEnemies": 3,
+          "minMp": 40
+        },
+        {
+          "character": 6,
+          "command": 2,
+          "reserveMp": 30
+        },
+        {
+          "character": 10,
+          "command": 2
+        }
+      ],
+      "skipIf": {
+        "storyFlag": 25
+      },
+      "group": "flag25"
+    },
+    {
+      "label": "Ridge: Tellah again; he joins (flag 25) - scene on the way",
+      "kind": "mash",
+      "keys": [
+        "Confirm"
+      ],
+      "phases": [
+        "None",
+        "Init",
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "any": [
+          {
+            "phase": "Player",
+            "mapId": 183
+          },
+          {
+            "phase": "Player",
+            "storyFlag": 25
+          }
+        ]
+      },
+      "stableFrames": 60,
+      "periodFrames": 8,
+      "pressedFrames": 2,
+      "timeoutFrames": 216000,
+      "battlePlan": [
+        {
+          "character": 9,
+          "command": 8,
+          "ability": 34,
+          "targetAll": true,
+          "minEnemies": 2,
+          "minMp": 15
+        },
+        {
+          "character": 9,
+          "command": 8,
+          "byWeakness": true,
+          "minMp": 5
+        },
+        {
+          "character": 9,
+          "command": 2
+        },
+        {
+          "character": 6,
+          "command": 8,
+          "byWeakness": true,
+          "minEnemies": 3,
+          "minMp": 40
+        },
+        {
+          "character": 6,
+          "command": 2,
+          "reserveMp": 30
+        },
+        {
+          "character": 10,
+          "command": 2
+        }
+      ],
+      "skipIf": {
+        "storyFlag": 25
+      },
+      "group": "flag25"
+    },
+    {
+      "label": "Ridge: Tellah again; he joins (flag 25) - walk in (2)",
+      "kind": "navigate",
+      "mapId": 183,
+      "goal": {
+        "x": 21,
+        "y": 12,
+        "layer": 0
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Event"
+      },
+      "stableFrames": 15,
+      "timeoutFrames": 54000,
+      "battlePlan": [
+        {
+          "character": 9,
+          "command": 8,
+          "ability": 34,
+          "targetAll": true,
+          "minEnemies": 2,
+          "minMp": 15
+        },
+        {
+          "character": 9,
+          "command": 8,
+          "byWeakness": true,
+          "minMp": 5
+        },
+        {
+          "character": 9,
+          "command": 2
+        },
+        {
+          "character": 6,
+          "command": 8,
+          "byWeakness": true,
+          "minEnemies": 3,
+          "minMp": 40
+        },
+        {
+          "character": 6,
+          "command": 2,
+          "reserveMp": 30
+        },
+        {
+          "character": 10,
+          "command": 2
+        }
+      ],
+      "skipIf": {
+        "storyFlag": 25
+      },
+      "group": "flag25"
+    },
+    {
+      "label": "Ridge: Tellah again; he joins (flag 25) - scene on the way (2)",
+      "kind": "mash",
+      "keys": [
+        "Confirm"
+      ],
+      "phases": [
+        "None",
+        "Init",
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "any": [
+          {
+            "phase": "Player",
+            "mapId": 183
+          },
+          {
+            "phase": "Player",
+            "storyFlag": 25
+          }
+        ]
+      },
+      "stableFrames": 60,
+      "periodFrames": 8,
+      "pressedFrames": 2,
+      "timeoutFrames": 216000,
+      "battlePlan": [
+        {
+          "character": 9,
+          "command": 8,
+          "ability": 34,
+          "targetAll": true,
+          "minEnemies": 2,
+          "minMp": 15
+        },
+        {
+          "character": 9,
+          "command": 8,
+          "byWeakness": true,
+          "minMp": 5
+        },
+        {
+          "character": 9,
+          "command": 2
+        },
+        {
+          "character": 6,
+          "command": 8,
+          "byWeakness": true,
+          "minEnemies": 3,
+          "minMp": 40
+        },
+        {
+          "character": 6,
+          "command": 2,
+          "reserveMp": 30
+        },
+        {
+          "character": 10,
+          "command": 2
+        }
+      ],
+      "skipIf": {
+        "storyFlag": 25
+      },
+      "group": "flag25"
+    },
+    {
+      "label": "Ridge: Tellah again; he joins (flag 25) - walk in (3)",
       "kind": "navigate",
       "mapId": 183,
       "goal": {
@@ -1965,6 +2873,358 @@
       "group": "flag26"
     },
     {
+      "label": "Summit: the bridge - Milon and four Revenants (flag 26) - scene on the way",
+      "kind": "mash",
+      "keys": [
+        "Confirm"
+      ],
+      "phases": [
+        "None",
+        "Init",
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "any": [
+          {
+            "phase": "Player",
+            "mapId": 185
+          },
+          {
+            "phase": "Player",
+            "storyFlag": 26
+          }
+        ]
+      },
+      "stableFrames": 60,
+      "periodFrames": 8,
+      "pressedFrames": 2,
+      "timeoutFrames": 216000,
+      "battlePlan": [
+        {
+          "character": 9,
+          "command": 8,
+          "ability": 34,
+          "targetAll": true,
+          "minMp": 15,
+          "whileMonster": 166
+        },
+        {
+          "character": 6,
+          "command": 8,
+          "ability": 33,
+          "targetAll": true,
+          "minMp": 5,
+          "whileMonster": 166
+        },
+        {
+          "character": 9,
+          "command": 8,
+          "ability": 34,
+          "targetAll": true,
+          "minEnemies": 2,
+          "minMp": 15
+        },
+        {
+          "character": 9,
+          "command": 8,
+          "byWeakness": true,
+          "minMp": 5
+        },
+        {
+          "character": 9,
+          "command": 2
+        },
+        {
+          "character": 6,
+          "command": 8,
+          "byWeakness": true,
+          "minEnemies": 3,
+          "minMp": 40
+        },
+        {
+          "character": 6,
+          "command": 2,
+          "reserveMp": 30
+        },
+        {
+          "character": 10,
+          "command": 2
+        }
+      ],
+      "skipIf": {
+        "storyFlag": 26
+      },
+      "group": "flag26"
+    },
+    {
+      "label": "Summit: the bridge - Milon and four Revenants (flag 26) - walk in (2)",
+      "kind": "navigate",
+      "mapId": 185,
+      "goal": {
+        "x": 17,
+        "y": 7,
+        "layer": 0
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Event"
+      },
+      "stableFrames": 15,
+      "timeoutFrames": 54000,
+      "battlePlan": [
+        {
+          "character": 9,
+          "command": 8,
+          "ability": 34,
+          "targetAll": true,
+          "minMp": 15,
+          "whileMonster": 166
+        },
+        {
+          "character": 6,
+          "command": 8,
+          "ability": 33,
+          "targetAll": true,
+          "minMp": 5,
+          "whileMonster": 166
+        },
+        {
+          "character": 9,
+          "command": 8,
+          "ability": 34,
+          "targetAll": true,
+          "minEnemies": 2,
+          "minMp": 15
+        },
+        {
+          "character": 9,
+          "command": 8,
+          "byWeakness": true,
+          "minMp": 5
+        },
+        {
+          "character": 9,
+          "command": 2
+        },
+        {
+          "character": 6,
+          "command": 8,
+          "byWeakness": true,
+          "minEnemies": 3,
+          "minMp": 40
+        },
+        {
+          "character": 6,
+          "command": 2,
+          "reserveMp": 30
+        },
+        {
+          "character": 10,
+          "command": 2
+        }
+      ],
+      "skipIf": {
+        "storyFlag": 26
+      },
+      "group": "flag26"
+    },
+    {
+      "label": "Summit: the bridge - Milon and four Revenants (flag 26) - scene on the way (2)",
+      "kind": "mash",
+      "keys": [
+        "Confirm"
+      ],
+      "phases": [
+        "None",
+        "Init",
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "any": [
+          {
+            "phase": "Player",
+            "mapId": 185
+          },
+          {
+            "phase": "Player",
+            "storyFlag": 26
+          }
+        ]
+      },
+      "stableFrames": 60,
+      "periodFrames": 8,
+      "pressedFrames": 2,
+      "timeoutFrames": 216000,
+      "battlePlan": [
+        {
+          "character": 9,
+          "command": 8,
+          "ability": 34,
+          "targetAll": true,
+          "minMp": 15,
+          "whileMonster": 166
+        },
+        {
+          "character": 6,
+          "command": 8,
+          "ability": 33,
+          "targetAll": true,
+          "minMp": 5,
+          "whileMonster": 166
+        },
+        {
+          "character": 9,
+          "command": 8,
+          "ability": 34,
+          "targetAll": true,
+          "minEnemies": 2,
+          "minMp": 15
+        },
+        {
+          "character": 9,
+          "command": 8,
+          "byWeakness": true,
+          "minMp": 5
+        },
+        {
+          "character": 9,
+          "command": 2
+        },
+        {
+          "character": 6,
+          "command": 8,
+          "byWeakness": true,
+          "minEnemies": 3,
+          "minMp": 40
+        },
+        {
+          "character": 6,
+          "command": 2,
+          "reserveMp": 30
+        },
+        {
+          "character": 10,
+          "command": 2
+        }
+      ],
+      "skipIf": {
+        "storyFlag": 26
+      },
+      "group": "flag26"
+    },
+    {
+      "label": "Summit: the bridge - Milon and four Revenants (flag 26) - walk in (3)",
+      "kind": "navigate",
+      "mapId": 185,
+      "goal": {
+        "x": 17,
+        "y": 7,
+        "layer": 0
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Event"
+      },
+      "stableFrames": 15,
+      "timeoutFrames": 54000,
+      "battlePlan": [
+        {
+          "character": 9,
+          "command": 8,
+          "ability": 34,
+          "targetAll": true,
+          "minMp": 15,
+          "whileMonster": 166
+        },
+        {
+          "character": 6,
+          "command": 8,
+          "ability": 33,
+          "targetAll": true,
+          "minMp": 5,
+          "whileMonster": 166
+        },
+        {
+          "character": 9,
+          "command": 8,
+          "ability": 34,
+          "targetAll": true,
+          "minEnemies": 2,
+          "minMp": 15
+        },
+        {
+          "character": 9,
+          "command": 8,
+          "byWeakness": true,
+          "minMp": 5
+        },
+        {
+          "character": 9,
+          "command": 2
+        },
+        {
+          "character": 6,
+          "command": 8,
+          "byWeakness": true,
+          "minEnemies": 3,
+          "minMp": 40
+        },
+        {
+          "character": 6,
+          "command": 2,
+          "reserveMp": 30
+        },
+        {
+          "character": 10,
+          "command": 2
+        }
+      ],
+      "skipIf": {
+        "storyFlag": 26
+      },
+      "group": "flag26"
+    },
+    {
       "label": "Summit: the bridge - Milon and four Revenants (flag 26)",
       "kind": "mash",
       "keys": [
@@ -2239,6 +3499,378 @@
       "group": "flag27"
     },
     {
+      "label": "Summit: Milon Z attacks from behind (back attack: Row) (flag 27) - scene on the way",
+      "kind": "mash",
+      "keys": [
+        "Confirm"
+      ],
+      "phases": [
+        "None",
+        "Init",
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "any": [
+          {
+            "phase": "Player",
+            "mapId": 185
+          },
+          {
+            "phase": "Player",
+            "storyFlag": 27
+          }
+        ]
+      },
+      "stableFrames": 60,
+      "periodFrames": 8,
+      "pressedFrames": 2,
+      "timeoutFrames": 216000,
+      "battlePlan": [
+        {
+          "character": 9,
+          "command": 8,
+          "ability": 34,
+          "minMp": 15,
+          "whileMonster": 167
+        },
+        {
+          "character": 9,
+          "command": 8,
+          "ability": 33,
+          "minMp": 5,
+          "whileMonster": 167
+        },
+        {
+          "character": 6,
+          "command": 8,
+          "ability": 33,
+          "minMp": 5,
+          "whileMonster": 167
+        },
+        {
+          "character": 9,
+          "command": 8,
+          "ability": 34,
+          "targetAll": true,
+          "minEnemies": 2,
+          "minMp": 15
+        },
+        {
+          "character": 9,
+          "command": 8,
+          "byWeakness": true,
+          "minMp": 5
+        },
+        {
+          "character": 9,
+          "command": 2
+        },
+        {
+          "character": 6,
+          "command": 8,
+          "byWeakness": true,
+          "minEnemies": 3,
+          "minMp": 40
+        },
+        {
+          "character": 6,
+          "command": 2,
+          "reserveMp": 30
+        },
+        {
+          "character": 10,
+          "command": 2
+        }
+      ],
+      "skipIf": {
+        "storyFlag": 27
+      },
+      "group": "flag27"
+    },
+    {
+      "label": "Summit: Milon Z attacks from behind (back attack: Row) (flag 27) - walk in (2)",
+      "kind": "navigate",
+      "mapId": 185,
+      "goal": {
+        "x": 12,
+        "y": 7,
+        "layer": 0
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Event"
+      },
+      "stableFrames": 15,
+      "timeoutFrames": 54000,
+      "battlePlan": [
+        {
+          "character": 9,
+          "command": 8,
+          "ability": 34,
+          "minMp": 15,
+          "whileMonster": 167
+        },
+        {
+          "character": 9,
+          "command": 8,
+          "ability": 33,
+          "minMp": 5,
+          "whileMonster": 167
+        },
+        {
+          "character": 6,
+          "command": 8,
+          "ability": 33,
+          "minMp": 5,
+          "whileMonster": 167
+        },
+        {
+          "character": 9,
+          "command": 8,
+          "ability": 34,
+          "targetAll": true,
+          "minEnemies": 2,
+          "minMp": 15
+        },
+        {
+          "character": 9,
+          "command": 8,
+          "byWeakness": true,
+          "minMp": 5
+        },
+        {
+          "character": 9,
+          "command": 2
+        },
+        {
+          "character": 6,
+          "command": 8,
+          "byWeakness": true,
+          "minEnemies": 3,
+          "minMp": 40
+        },
+        {
+          "character": 6,
+          "command": 2,
+          "reserveMp": 30
+        },
+        {
+          "character": 10,
+          "command": 2
+        }
+      ],
+      "skipIf": {
+        "storyFlag": 27
+      },
+      "group": "flag27"
+    },
+    {
+      "label": "Summit: Milon Z attacks from behind (back attack: Row) (flag 27) - scene on the way (2)",
+      "kind": "mash",
+      "keys": [
+        "Confirm"
+      ],
+      "phases": [
+        "None",
+        "Init",
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "any": [
+          {
+            "phase": "Player",
+            "mapId": 185
+          },
+          {
+            "phase": "Player",
+            "storyFlag": 27
+          }
+        ]
+      },
+      "stableFrames": 60,
+      "periodFrames": 8,
+      "pressedFrames": 2,
+      "timeoutFrames": 216000,
+      "battlePlan": [
+        {
+          "character": 9,
+          "command": 8,
+          "ability": 34,
+          "minMp": 15,
+          "whileMonster": 167
+        },
+        {
+          "character": 9,
+          "command": 8,
+          "ability": 33,
+          "minMp": 5,
+          "whileMonster": 167
+        },
+        {
+          "character": 6,
+          "command": 8,
+          "ability": 33,
+          "minMp": 5,
+          "whileMonster": 167
+        },
+        {
+          "character": 9,
+          "command": 8,
+          "ability": 34,
+          "targetAll": true,
+          "minEnemies": 2,
+          "minMp": 15
+        },
+        {
+          "character": 9,
+          "command": 8,
+          "byWeakness": true,
+          "minMp": 5
+        },
+        {
+          "character": 9,
+          "command": 2
+        },
+        {
+          "character": 6,
+          "command": 8,
+          "byWeakness": true,
+          "minEnemies": 3,
+          "minMp": 40
+        },
+        {
+          "character": 6,
+          "command": 2,
+          "reserveMp": 30
+        },
+        {
+          "character": 10,
+          "command": 2
+        }
+      ],
+      "skipIf": {
+        "storyFlag": 27
+      },
+      "group": "flag27"
+    },
+    {
+      "label": "Summit: Milon Z attacks from behind (back attack: Row) (flag 27) - walk in (3)",
+      "kind": "navigate",
+      "mapId": 185,
+      "goal": {
+        "x": 12,
+        "y": 7,
+        "layer": 0
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Event"
+      },
+      "stableFrames": 15,
+      "timeoutFrames": 54000,
+      "battlePlan": [
+        {
+          "character": 9,
+          "command": 8,
+          "ability": 34,
+          "minMp": 15,
+          "whileMonster": 167
+        },
+        {
+          "character": 9,
+          "command": 8,
+          "ability": 33,
+          "minMp": 5,
+          "whileMonster": 167
+        },
+        {
+          "character": 6,
+          "command": 8,
+          "ability": 33,
+          "minMp": 5,
+          "whileMonster": 167
+        },
+        {
+          "character": 9,
+          "command": 8,
+          "ability": 34,
+          "targetAll": true,
+          "minEnemies": 2,
+          "minMp": 15
+        },
+        {
+          "character": 9,
+          "command": 8,
+          "byWeakness": true,
+          "minMp": 5
+        },
+        {
+          "character": 9,
+          "command": 2
+        },
+        {
+          "character": 6,
+          "command": 8,
+          "byWeakness": true,
+          "minEnemies": 3,
+          "minMp": 40
+        },
+        {
+          "character": 6,
+          "command": 2,
+          "reserveMp": 30
+        },
+        {
+          "character": 10,
+          "command": 2
+        }
+      ],
+      "skipIf": {
+        "storyFlag": 27
+      },
+      "group": "flag27"
+    },
+    {
       "label": "Summit: Milon Z attacks from behind (back attack: Row) (flag 27)",
       "kind": "mash",
       "keys": [
@@ -2330,6 +3962,198 @@
     },
     {
       "label": "Summit: the mirror - the Dark Knight trial, Cecil Defends until it ends; Cecil becomes a Paladin (flag 28) - walk in",
+      "kind": "navigate",
+      "mapId": 185,
+      "goal": {
+        "x": 9,
+        "y": 6,
+        "layer": 0
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Event"
+      },
+      "stableFrames": 15,
+      "timeoutFrames": 54000,
+      "battlePlan": [
+        {
+          "character": 13,
+          "command": 2,
+          "whileMonster": 206
+        },
+        {
+          "character": 1,
+          "command": 2,
+          "whileMonster": 206
+        }
+      ],
+      "skipIf": {
+        "storyFlag": 28
+      },
+      "group": "flag28"
+    },
+    {
+      "label": "Summit: the mirror - the Dark Knight trial, Cecil Defends until it ends; Cecil becomes a Paladin (flag 28) - scene on the way",
+      "kind": "mash",
+      "keys": [
+        "Confirm"
+      ],
+      "phases": [
+        "None",
+        "Init",
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "any": [
+          {
+            "phase": "Player",
+            "mapId": 185
+          },
+          {
+            "phase": "Player",
+            "storyFlag": 28
+          }
+        ]
+      },
+      "stableFrames": 60,
+      "periodFrames": 8,
+      "pressedFrames": 2,
+      "timeoutFrames": 216000,
+      "battlePlan": [
+        {
+          "character": 13,
+          "command": 2,
+          "whileMonster": 206
+        },
+        {
+          "character": 1,
+          "command": 2,
+          "whileMonster": 206
+        }
+      ],
+      "skipIf": {
+        "storyFlag": 28
+      },
+      "group": "flag28"
+    },
+    {
+      "label": "Summit: the mirror - the Dark Knight trial, Cecil Defends until it ends; Cecil becomes a Paladin (flag 28) - walk in (2)",
+      "kind": "navigate",
+      "mapId": 185,
+      "goal": {
+        "x": 9,
+        "y": 6,
+        "layer": 0
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Event"
+      },
+      "stableFrames": 15,
+      "timeoutFrames": 54000,
+      "battlePlan": [
+        {
+          "character": 13,
+          "command": 2,
+          "whileMonster": 206
+        },
+        {
+          "character": 1,
+          "command": 2,
+          "whileMonster": 206
+        }
+      ],
+      "skipIf": {
+        "storyFlag": 28
+      },
+      "group": "flag28"
+    },
+    {
+      "label": "Summit: the mirror - the Dark Knight trial, Cecil Defends until it ends; Cecil becomes a Paladin (flag 28) - scene on the way (2)",
+      "kind": "mash",
+      "keys": [
+        "Confirm"
+      ],
+      "phases": [
+        "None",
+        "Init",
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "any": [
+          {
+            "phase": "Player",
+            "mapId": 185
+          },
+          {
+            "phase": "Player",
+            "storyFlag": 28
+          }
+        ]
+      },
+      "stableFrames": 60,
+      "periodFrames": 8,
+      "pressedFrames": 2,
+      "timeoutFrames": 216000,
+      "battlePlan": [
+        {
+          "character": 13,
+          "command": 2,
+          "whileMonster": 206
+        },
+        {
+          "character": 1,
+          "command": 2,
+          "whileMonster": 206
+        }
+      ],
+      "skipIf": {
+        "storyFlag": 28
+      },
+      "group": "flag28"
+    },
+    {
+      "label": "Summit: the mirror - the Dark Knight trial, Cecil Defends until it ends; Cecil becomes a Paladin (flag 28) - walk in (3)",
       "kind": "navigate",
       "mapId": 185,
       "goal": {
@@ -2860,6 +4684,150 @@
     },
     {
       "label": "Manor: the Elder sees the Paladin; the twins stay with Cecil, the Devil's Road opens (flag 29) - walk in",
+      "kind": "navigate",
+      "mapId": 58,
+      "goal": {
+        "x": 15,
+        "y": 6,
+        "layer": 0
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Event"
+      },
+      "stableFrames": 15,
+      "timeoutFrames": 54000,
+      "skipIf": {
+        "storyFlag": 29
+      },
+      "group": "flag29"
+    },
+    {
+      "label": "Manor: the Elder sees the Paladin; the twins stay with Cecil, the Devil's Road opens (flag 29) - scene on the way",
+      "kind": "mash",
+      "keys": [
+        "Confirm"
+      ],
+      "phases": [
+        "None",
+        "Init",
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "any": [
+          {
+            "phase": "Player",
+            "mapId": 58
+          },
+          {
+            "phase": "Player",
+            "storyFlag": 29
+          }
+        ]
+      },
+      "stableFrames": 60,
+      "periodFrames": 8,
+      "pressedFrames": 2,
+      "timeoutFrames": 216000,
+      "skipIf": {
+        "storyFlag": 29
+      },
+      "group": "flag29"
+    },
+    {
+      "label": "Manor: the Elder sees the Paladin; the twins stay with Cecil, the Devil's Road opens (flag 29) - walk in (2)",
+      "kind": "navigate",
+      "mapId": 58,
+      "goal": {
+        "x": 15,
+        "y": 6,
+        "layer": 0
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Event"
+      },
+      "stableFrames": 15,
+      "timeoutFrames": 54000,
+      "skipIf": {
+        "storyFlag": 29
+      },
+      "group": "flag29"
+    },
+    {
+      "label": "Manor: the Elder sees the Paladin; the twins stay with Cecil, the Devil's Road opens (flag 29) - scene on the way (2)",
+      "kind": "mash",
+      "keys": [
+        "Confirm"
+      ],
+      "phases": [
+        "None",
+        "Init",
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "any": [
+          {
+            "phase": "Player",
+            "mapId": 58
+          },
+          {
+            "phase": "Player",
+            "storyFlag": 29
+          }
+        ]
+      },
+      "stableFrames": 60,
+      "periodFrames": 8,
+      "pressedFrames": 2,
+      "timeoutFrames": 216000,
+      "skipIf": {
+        "storyFlag": 29
+      },
+      "group": "flag29"
+    },
+    {
+      "label": "Manor: the Elder sees the Paladin; the twins stay with Cecil, the Devil's Road opens (flag 29) - walk in (3)",
       "kind": "navigate",
       "mapId": 58,
       "goal": {

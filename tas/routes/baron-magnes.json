@@ -191,6 +191,150 @@
       "group": "flag34"
     },
     {
+      "label": "Edward's sickbed: he gives the Twin Harp (flag 34) - scene on the way",
+      "kind": "mash",
+      "keys": [
+        "Confirm"
+      ],
+      "phases": [
+        "None",
+        "Init",
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "any": [
+          {
+            "phase": "Player",
+            "mapId": 100
+          },
+          {
+            "phase": "Player",
+            "storyFlag": 34
+          }
+        ]
+      },
+      "stableFrames": 60,
+      "periodFrames": 8,
+      "pressedFrames": 2,
+      "timeoutFrames": 216000,
+      "skipIf": {
+        "storyFlag": 34
+      },
+      "group": "flag34"
+    },
+    {
+      "label": "Edward's sickbed: he gives the Twin Harp (flag 34) - walk in (2)",
+      "kind": "navigate",
+      "mapId": 100,
+      "goal": {
+        "x": 9,
+        "y": 5,
+        "layer": 0
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Event"
+      },
+      "stableFrames": 15,
+      "timeoutFrames": 54000,
+      "skipIf": {
+        "storyFlag": 34
+      },
+      "group": "flag34"
+    },
+    {
+      "label": "Edward's sickbed: he gives the Twin Harp (flag 34) - scene on the way (2)",
+      "kind": "mash",
+      "keys": [
+        "Confirm"
+      ],
+      "phases": [
+        "None",
+        "Init",
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "any": [
+          {
+            "phase": "Player",
+            "mapId": 100
+          },
+          {
+            "phase": "Player",
+            "storyFlag": 34
+          }
+        ]
+      },
+      "stableFrames": 60,
+      "periodFrames": 8,
+      "pressedFrames": 2,
+      "timeoutFrames": 216000,
+      "skipIf": {
+        "storyFlag": 34
+      },
+      "group": "flag34"
+    },
+    {
+      "label": "Edward's sickbed: he gives the Twin Harp (flag 34) - walk in (3)",
+      "kind": "navigate",
+      "mapId": 100,
+      "goal": {
+        "x": 9,
+        "y": 5,
+        "layer": 0
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Event"
+      },
+      "stableFrames": 15,
+      "timeoutFrames": 54000,
+      "skipIf": {
+        "storyFlag": 34
+      },
+      "group": "flag34"
+    },
+    {
       "label": "Edward's sickbed: he gives the Twin Harp (flag 34)",
       "kind": "mash",
       "keys": [
@@ -719,6 +863,206 @@
       "group": "flag100"
     },
     {
+      "label": "Cave of Magnes: the metal grows heavy (flag 100) - scene on the way",
+      "kind": "mash",
+      "keys": [
+        "Confirm"
+      ],
+      "phases": [
+        "None",
+        "Init",
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "any": [
+          {
+            "phase": "Player",
+            "mapId": 192
+          },
+          {
+            "phase": "Player",
+            "storyFlag": 100
+          }
+        ]
+      },
+      "stableFrames": 60,
+      "periodFrames": 8,
+      "pressedFrames": 2,
+      "timeoutFrames": 216000,
+      "battlePlan": [
+        {
+          "character": 6,
+          "command": 8,
+          "byWeakness": true,
+          "minEnemies": 3,
+          "minMp": 60
+        },
+        {
+          "character": 6,
+          "command": 2,
+          "reserveMp": 20
+        }
+      ],
+      "skipIf": {
+        "storyFlag": 100
+      },
+      "group": "flag100"
+    },
+    {
+      "label": "Cave of Magnes: the metal grows heavy (flag 100) - walk in (2)",
+      "kind": "navigate",
+      "mapId": 192,
+      "goal": {
+        "x": 18,
+        "y": 9,
+        "layer": 0
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Event"
+      },
+      "stableFrames": 15,
+      "timeoutFrames": 54000,
+      "battlePlan": [
+        {
+          "character": 6,
+          "command": 8,
+          "byWeakness": true,
+          "minEnemies": 3,
+          "minMp": 60
+        },
+        {
+          "character": 6,
+          "command": 2,
+          "reserveMp": 20
+        }
+      ],
+      "skipIf": {
+        "storyFlag": 100
+      },
+      "group": "flag100"
+    },
+    {
+      "label": "Cave of Magnes: the metal grows heavy (flag 100) - scene on the way (2)",
+      "kind": "mash",
+      "keys": [
+        "Confirm"
+      ],
+      "phases": [
+        "None",
+        "Init",
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "any": [
+          {
+            "phase": "Player",
+            "mapId": 192
+          },
+          {
+            "phase": "Player",
+            "storyFlag": 100
+          }
+        ]
+      },
+      "stableFrames": 60,
+      "periodFrames": 8,
+      "pressedFrames": 2,
+      "timeoutFrames": 216000,
+      "battlePlan": [
+        {
+          "character": 6,
+          "command": 8,
+          "byWeakness": true,
+          "minEnemies": 3,
+          "minMp": 60
+        },
+        {
+          "character": 6,
+          "command": 2,
+          "reserveMp": 20
+        }
+      ],
+      "skipIf": {
+        "storyFlag": 100
+      },
+      "group": "flag100"
+    },
+    {
+      "label": "Cave of Magnes: the metal grows heavy (flag 100) - walk in (3)",
+      "kind": "navigate",
+      "mapId": 192,
+      "goal": {
+        "x": 18,
+        "y": 9,
+        "layer": 0
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Event"
+      },
+      "stableFrames": 15,
+      "timeoutFrames": 54000,
+      "battlePlan": [
+        {
+          "character": 6,
+          "command": 8,
+          "byWeakness": true,
+          "minEnemies": 3,
+          "minMp": 60
+        },
+        {
+          "character": 6,
+          "command": 2,
+          "reserveMp": 20
+        }
+      ],
+      "skipIf": {
+        "storyFlag": 100
+      },
+      "group": "flag100"
+    },
+    {
       "label": "Cave of Magnes: the metal grows heavy (flag 100)",
       "kind": "mash",
       "keys": [
@@ -1164,6 +1508,238 @@
       "group": "flag97"
     },
     {
+      "label": "Crystal room: the Dark Elf - lose the first fight (all Defend); Edward plays the harp (flag 97) - scene on the way",
+      "kind": "mash",
+      "keys": [
+        "Confirm"
+      ],
+      "phases": [
+        "None",
+        "Init",
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "any": [
+          {
+            "phase": "Player",
+            "mapId": 201
+          },
+          {
+            "phase": "Player",
+            "storyFlag": 97
+          }
+        ]
+      },
+      "stableFrames": 60,
+      "periodFrames": 8,
+      "pressedFrames": 2,
+      "timeoutFrames": 216000,
+      "battlePlan": [
+        {
+          "character": 13,
+          "command": 2,
+          "whileMonster": 172
+        },
+        {
+          "character": 5,
+          "command": 2,
+          "whileMonster": 172
+        },
+        {
+          "character": 6,
+          "command": 2,
+          "whileMonster": 172
+        },
+        {
+          "character": 8,
+          "command": 2,
+          "whileMonster": 172
+        }
+      ],
+      "skipIf": {
+        "storyFlag": 97
+      },
+      "group": "flag97"
+    },
+    {
+      "label": "Crystal room: the Dark Elf - lose the first fight (all Defend); Edward plays the harp (flag 97) - walk in (2)",
+      "kind": "navigate",
+      "mapId": 201,
+      "goal": {
+        "x": 12,
+        "y": 13,
+        "layer": 0
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Event"
+      },
+      "stableFrames": 15,
+      "timeoutFrames": 54000,
+      "battlePlan": [
+        {
+          "character": 13,
+          "command": 2,
+          "whileMonster": 172
+        },
+        {
+          "character": 5,
+          "command": 2,
+          "whileMonster": 172
+        },
+        {
+          "character": 6,
+          "command": 2,
+          "whileMonster": 172
+        },
+        {
+          "character": 8,
+          "command": 2,
+          "whileMonster": 172
+        }
+      ],
+      "skipIf": {
+        "storyFlag": 97
+      },
+      "group": "flag97"
+    },
+    {
+      "label": "Crystal room: the Dark Elf - lose the first fight (all Defend); Edward plays the harp (flag 97) - scene on the way (2)",
+      "kind": "mash",
+      "keys": [
+        "Confirm"
+      ],
+      "phases": [
+        "None",
+        "Init",
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "any": [
+          {
+            "phase": "Player",
+            "mapId": 201
+          },
+          {
+            "phase": "Player",
+            "storyFlag": 97
+          }
+        ]
+      },
+      "stableFrames": 60,
+      "periodFrames": 8,
+      "pressedFrames": 2,
+      "timeoutFrames": 216000,
+      "battlePlan": [
+        {
+          "character": 13,
+          "command": 2,
+          "whileMonster": 172
+        },
+        {
+          "character": 5,
+          "command": 2,
+          "whileMonster": 172
+        },
+        {
+          "character": 6,
+          "command": 2,
+          "whileMonster": 172
+        },
+        {
+          "character": 8,
+          "command": 2,
+          "whileMonster": 172
+        }
+      ],
+      "skipIf": {
+        "storyFlag": 97
+      },
+      "group": "flag97"
+    },
+    {
+      "label": "Crystal room: the Dark Elf - lose the first fight (all Defend); Edward plays the harp (flag 97) - walk in (3)",
+      "kind": "navigate",
+      "mapId": 201,
+      "goal": {
+        "x": 12,
+        "y": 13,
+        "layer": 0
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Event"
+      },
+      "stableFrames": 15,
+      "timeoutFrames": 54000,
+      "battlePlan": [
+        {
+          "character": 13,
+          "command": 2,
+          "whileMonster": 172
+        },
+        {
+          "character": 5,
+          "command": 2,
+          "whileMonster": 172
+        },
+        {
+          "character": 6,
+          "command": 2,
+          "whileMonster": 172
+        },
+        {
+          "character": 8,
+          "command": 2,
+          "whileMonster": 172
+        }
+      ],
+      "skipIf": {
+        "storyFlag": 97
+      },
+      "group": "flag97"
+    },
+    {
       "label": "Crystal room: the Dark Elf - lose the first fight (all Defend); Edward plays the harp (flag 97)",
       "kind": "mash",
       "keys": [
@@ -1290,6 +1866,226 @@
       "group": "flag36"
     },
     {
+      "label": "Crystal room: the Dark Elf again, then the Dark Dragon (flag 36) - scene on the way",
+      "kind": "mash",
+      "keys": [
+        "Confirm"
+      ],
+      "phases": [
+        "None",
+        "Init",
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "any": [
+          {
+            "phase": "Player",
+            "mapId": 201
+          },
+          {
+            "phase": "Player",
+            "storyFlag": 36
+          }
+        ]
+      },
+      "stableFrames": 60,
+      "periodFrames": 8,
+      "pressedFrames": 2,
+      "timeoutFrames": 216000,
+      "battlePlan": [
+        {
+          "character": 6,
+          "command": 2,
+          "whileMonster": 173
+        },
+        {
+          "character": 6,
+          "command": 8,
+          "byWeakness": true,
+          "minEnemies": 3,
+          "minMp": 60
+        },
+        {
+          "character": 6,
+          "command": 2,
+          "reserveMp": 20
+        }
+      ],
+      "skipIf": {
+        "storyFlag": 36
+      },
+      "group": "flag36"
+    },
+    {
+      "label": "Crystal room: the Dark Elf again, then the Dark Dragon (flag 36) - walk in (2)",
+      "kind": "navigate",
+      "mapId": 201,
+      "goal": {
+        "x": 12,
+        "y": 13,
+        "layer": 0
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Event"
+      },
+      "stableFrames": 15,
+      "timeoutFrames": 54000,
+      "battlePlan": [
+        {
+          "character": 6,
+          "command": 2,
+          "whileMonster": 173
+        },
+        {
+          "character": 6,
+          "command": 8,
+          "byWeakness": true,
+          "minEnemies": 3,
+          "minMp": 60
+        },
+        {
+          "character": 6,
+          "command": 2,
+          "reserveMp": 20
+        }
+      ],
+      "skipIf": {
+        "storyFlag": 36
+      },
+      "group": "flag36"
+    },
+    {
+      "label": "Crystal room: the Dark Elf again, then the Dark Dragon (flag 36) - scene on the way (2)",
+      "kind": "mash",
+      "keys": [
+        "Confirm"
+      ],
+      "phases": [
+        "None",
+        "Init",
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "any": [
+          {
+            "phase": "Player",
+            "mapId": 201
+          },
+          {
+            "phase": "Player",
+            "storyFlag": 36
+          }
+        ]
+      },
+      "stableFrames": 60,
+      "periodFrames": 8,
+      "pressedFrames": 2,
+      "timeoutFrames": 216000,
+      "battlePlan": [
+        {
+          "character": 6,
+          "command": 2,
+          "whileMonster": 173
+        },
+        {
+          "character": 6,
+          "command": 8,
+          "byWeakness": true,
+          "minEnemies": 3,
+          "minMp": 60
+        },
+        {
+          "character": 6,
+          "command": 2,
+          "reserveMp": 20
+        }
+      ],
+      "skipIf": {
+        "storyFlag": 36
+      },
+      "group": "flag36"
+    },
+    {
+      "label": "Crystal room: the Dark Elf again, then the Dark Dragon (flag 36) - walk in (3)",
+      "kind": "navigate",
+      "mapId": 201,
+      "goal": {
+        "x": 12,
+        "y": 13,
+        "layer": 0
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Event"
+      },
+      "stableFrames": 15,
+      "timeoutFrames": 54000,
+      "battlePlan": [
+        {
+          "character": 6,
+          "command": 2,
+          "whileMonster": 173
+        },
+        {
+          "character": 6,
+          "command": 8,
+          "byWeakness": true,
+          "minEnemies": 3,
+          "minMp": 60
+        },
+        {
+          "character": 6,
+          "command": 2,
+          "reserveMp": 20
+        }
+      ],
+      "skipIf": {
+        "storyFlag": 36
+      },
+      "group": "flag36"
+    },
+    {
       "label": "Crystal room: the Dark Elf again, then the Dark Dragon (flag 36)",
       "kind": "mash",
       "keys": [
@@ -1343,6 +2139,150 @@
     },
     {
       "label": "Crystal room: take the Earth Crystal (flag 98) - walk in",
+      "kind": "navigate",
+      "mapId": 201,
+      "goal": {
+        "x": 12,
+        "y": 10,
+        "layer": 0
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Event"
+      },
+      "stableFrames": 15,
+      "timeoutFrames": 54000,
+      "skipIf": {
+        "storyFlag": 98
+      },
+      "group": "flag98"
+    },
+    {
+      "label": "Crystal room: take the Earth Crystal (flag 98) - scene on the way",
+      "kind": "mash",
+      "keys": [
+        "Confirm"
+      ],
+      "phases": [
+        "None",
+        "Init",
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "any": [
+          {
+            "phase": "Player",
+            "mapId": 201
+          },
+          {
+            "phase": "Player",
+            "storyFlag": 98
+          }
+        ]
+      },
+      "stableFrames": 60,
+      "periodFrames": 8,
+      "pressedFrames": 2,
+      "timeoutFrames": 216000,
+      "skipIf": {
+        "storyFlag": 98
+      },
+      "group": "flag98"
+    },
+    {
+      "label": "Crystal room: take the Earth Crystal (flag 98) - walk in (2)",
+      "kind": "navigate",
+      "mapId": 201,
+      "goal": {
+        "x": 12,
+        "y": 10,
+        "layer": 0
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Event"
+      },
+      "stableFrames": 15,
+      "timeoutFrames": 54000,
+      "skipIf": {
+        "storyFlag": 98
+      },
+      "group": "flag98"
+    },
+    {
+      "label": "Crystal room: take the Earth Crystal (flag 98) - scene on the way (2)",
+      "kind": "mash",
+      "keys": [
+        "Confirm"
+      ],
+      "phases": [
+        "None",
+        "Init",
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "any": [
+          {
+            "phase": "Player",
+            "mapId": 201
+          },
+          {
+            "phase": "Player",
+            "storyFlag": 98
+          }
+        ]
+      },
+      "stableFrames": 60,
+      "periodFrames": 8,
+      "pressedFrames": 2,
+      "timeoutFrames": 216000,
+      "skipIf": {
+        "storyFlag": 98
+      },
+      "group": "flag98"
+    },
+    {
+      "label": "Crystal room: take the Earth Crystal (flag 98) - walk in (3)",
       "kind": "navigate",
       "mapId": 201,
       "goal": {

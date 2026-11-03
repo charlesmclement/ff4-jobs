@@ -53,13 +53,20 @@ def trigger(label,map_id,goal,flag,waypoints=None,battlePlan=None,choice=None,**
     """Walk onto an event tile / into an NPC until the scene starts, then hold
     Confirm through it (fights included) until the story flag is set and the
     field has control (the Fabul pattern: a walk can't follow a scene that
-    changes maps). Two steps."""
+    changes maps). Six steps; a group skipped once the flag is set."""
     plan={'battlePlan':battlePlan} if battlePlan else {}
     # Already happened (a scene that chained on by itself, or a resume): skip
     # both steps instead of waiting for a scene that won't come again.
     skip={'skipIf':{'storyFlag':flag},'group':f'flag{flag}'}
-    walk=nav(label+' - walk in',map_id,goal,{'phase':'Event'},waypoints,stableFrames=15,**plan,**skip,**extra)
-    return [walk,mash(label,flag,choice=choice,**plan,**skip)]
+    walk=lambda n:nav(label+' - walk in'+n,map_id,goal,{'phase':'Event'},waypoints,stableFrames=15,**plan,**skip,**extra)
+    # A smaller scene on the way (the summit's voice on the stairs before
+    # Milon) also starts an Event and hands control back without the flag:
+    # those mashes end after a second back in control and the walk goes on.
+    # Up to two such scenes; the last mash waits for the flag.
+    # write() widens each to "or the trigger's own end" (after any builder
+    # override of it), so a scene that ends on another map still finishes.
+    detour=lambda n:mash(label+' - scene on the way'+n,flag,choice=choice,until={'phase':'Player','mapId':map_id},stableFrames=60,_detour=True,**plan,**skip)
+    return [walk(''),detour(''),walk(' (2)'),detour(' (2)'),walk(' (3)'),mash(label,flag,choice=choice,**plan,**skip)]
 
 def mash(label,flag,map_id=None,choice=None,**extra):
     u={'phase':'Player','storyFlag':flag}
@@ -113,6 +120,10 @@ def save_points(map_id):
 
 def write(path,name,steps,**route):
     """Write the route with weaknesses filled from master data (weaknesses.py)."""
+    for i,st in enumerate(steps):
+        if st.pop('_detour',False):
+            end=next(t for t in reversed(steps) if t.get('group')==st['group'] and t['kind']=='mash')
+            st['until']={'any':[st['until'],end['until']]}
     out={'schema':1,'name':name}
     out.update(route);out['steps']=steps
     # Every segment ends on saveable ground (user rule): the overworld maps

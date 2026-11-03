@@ -120,6 +120,150 @@
       "group": "flag30"
     },
     {
+      "label": "Devil's Road: across to Baron (flag 30, autosave) - scene on the way",
+      "kind": "mash",
+      "keys": [
+        "Confirm"
+      ],
+      "phases": [
+        "None",
+        "Init",
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "any": [
+          {
+            "phase": "Player",
+            "mapId": 66
+          },
+          {
+            "phase": "Player",
+            "storyFlag": 30
+          }
+        ]
+      },
+      "stableFrames": 60,
+      "periodFrames": 8,
+      "pressedFrames": 2,
+      "timeoutFrames": 216000,
+      "skipIf": {
+        "storyFlag": 30
+      },
+      "group": "flag30"
+    },
+    {
+      "label": "Devil's Road: across to Baron (flag 30, autosave) - walk in (2)",
+      "kind": "navigate",
+      "mapId": 66,
+      "goal": {
+        "x": 5,
+        "y": 6,
+        "layer": 0
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Event"
+      },
+      "stableFrames": 15,
+      "timeoutFrames": 54000,
+      "skipIf": {
+        "storyFlag": 30
+      },
+      "group": "flag30"
+    },
+    {
+      "label": "Devil's Road: across to Baron (flag 30, autosave) - scene on the way (2)",
+      "kind": "mash",
+      "keys": [
+        "Confirm"
+      ],
+      "phases": [
+        "None",
+        "Init",
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "any": [
+          {
+            "phase": "Player",
+            "mapId": 66
+          },
+          {
+            "phase": "Player",
+            "storyFlag": 30
+          }
+        ]
+      },
+      "stableFrames": 60,
+      "periodFrames": 8,
+      "pressedFrames": 2,
+      "timeoutFrames": 216000,
+      "skipIf": {
+        "storyFlag": 30
+      },
+      "group": "flag30"
+    },
+    {
+      "label": "Devil's Road: across to Baron (flag 30, autosave) - walk in (3)",
+      "kind": "navigate",
+      "mapId": 66,
+      "goal": {
+        "x": 5,
+        "y": 6,
+        "layer": 0
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Event"
+      },
+      "stableFrames": 15,
+      "timeoutFrames": 54000,
+      "skipIf": {
+        "storyFlag": 30
+      },
+      "group": "flag30"
+    },
+    {
       "label": "Devil's Road: across to Baron (flag 30, autosave)",
       "kind": "mash",
       "keys": [
@@ -210,6 +354,354 @@
     },
     {
       "label": "Inn: talk to Yang - two Baron Guards, then Yang himself; he joins with the Baron Key (flag 31) - walk in",
+      "kind": "navigate",
+      "mapId": 25,
+      "goal": {
+        "x": 21,
+        "y": 5,
+        "layer": 0
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Event"
+      },
+      "stableFrames": 15,
+      "timeoutFrames": 54000,
+      "battlePlan": [
+        {
+          "character": 9,
+          "command": 2,
+          "whileMonster": 205
+        },
+        {
+          "character": 10,
+          "command": 2,
+          "whileMonster": 205
+        },
+        {
+          "character": 6,
+          "command": 2,
+          "whileMonster": 205
+        },
+        {
+          "character": 9,
+          "command": 8,
+          "ability": 34,
+          "targetAll": true,
+          "minEnemies": 3,
+          "minMp": 15
+        },
+        {
+          "character": 9,
+          "command": 8,
+          "byWeakness": true,
+          "minMp": 5
+        },
+        {
+          "character": 9,
+          "command": 2
+        },
+        {
+          "character": 6,
+          "command": 8,
+          "byWeakness": true,
+          "minEnemies": 3,
+          "minMp": 65
+        },
+        {
+          "character": 6,
+          "command": 2,
+          "reserveMp": 60
+        },
+        {
+          "character": 10,
+          "command": 2
+        }
+      ],
+      "skipIf": {
+        "storyFlag": 31
+      },
+      "group": "flag31"
+    },
+    {
+      "label": "Inn: talk to Yang - two Baron Guards, then Yang himself; he joins with the Baron Key (flag 31) - scene on the way",
+      "kind": "mash",
+      "keys": [
+        "Confirm"
+      ],
+      "phases": [
+        "None",
+        "Init",
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "any": [
+          {
+            "phase": "Player",
+            "mapId": 25
+          },
+          {
+            "phase": "Player",
+            "storyFlag": 31
+          }
+        ]
+      },
+      "stableFrames": 60,
+      "periodFrames": 8,
+      "pressedFrames": 2,
+      "timeoutFrames": 216000,
+      "battlePlan": [
+        {
+          "character": 9,
+          "command": 2,
+          "whileMonster": 205
+        },
+        {
+          "character": 10,
+          "command": 2,
+          "whileMonster": 205
+        },
+        {
+          "character": 6,
+          "command": 2,
+          "whileMonster": 205
+        },
+        {
+          "character": 9,
+          "command": 8,
+          "ability": 34,
+          "targetAll": true,
+          "minEnemies": 3,
+          "minMp": 15
+        },
+        {
+          "character": 9,
+          "command": 8,
+          "byWeakness": true,
+          "minMp": 5
+        },
+        {
+          "character": 9,
+          "command": 2
+        },
+        {
+          "character": 6,
+          "command": 8,
+          "byWeakness": true,
+          "minEnemies": 3,
+          "minMp": 65
+        },
+        {
+          "character": 6,
+          "command": 2,
+          "reserveMp": 60
+        },
+        {
+          "character": 10,
+          "command": 2
+        }
+      ],
+      "skipIf": {
+        "storyFlag": 31
+      },
+      "group": "flag31"
+    },
+    {
+      "label": "Inn: talk to Yang - two Baron Guards, then Yang himself; he joins with the Baron Key (flag 31) - walk in (2)",
+      "kind": "navigate",
+      "mapId": 25,
+      "goal": {
+        "x": 21,
+        "y": 5,
+        "layer": 0
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Event"
+      },
+      "stableFrames": 15,
+      "timeoutFrames": 54000,
+      "battlePlan": [
+        {
+          "character": 9,
+          "command": 2,
+          "whileMonster": 205
+        },
+        {
+          "character": 10,
+          "command": 2,
+          "whileMonster": 205
+        },
+        {
+          "character": 6,
+          "command": 2,
+          "whileMonster": 205
+        },
+        {
+          "character": 9,
+          "command": 8,
+          "ability": 34,
+          "targetAll": true,
+          "minEnemies": 3,
+          "minMp": 15
+        },
+        {
+          "character": 9,
+          "command": 8,
+          "byWeakness": true,
+          "minMp": 5
+        },
+        {
+          "character": 9,
+          "command": 2
+        },
+        {
+          "character": 6,
+          "command": 8,
+          "byWeakness": true,
+          "minEnemies": 3,
+          "minMp": 65
+        },
+        {
+          "character": 6,
+          "command": 2,
+          "reserveMp": 60
+        },
+        {
+          "character": 10,
+          "command": 2
+        }
+      ],
+      "skipIf": {
+        "storyFlag": 31
+      },
+      "group": "flag31"
+    },
+    {
+      "label": "Inn: talk to Yang - two Baron Guards, then Yang himself; he joins with the Baron Key (flag 31) - scene on the way (2)",
+      "kind": "mash",
+      "keys": [
+        "Confirm"
+      ],
+      "phases": [
+        "None",
+        "Init",
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "any": [
+          {
+            "phase": "Player",
+            "mapId": 25
+          },
+          {
+            "phase": "Player",
+            "storyFlag": 31
+          }
+        ]
+      },
+      "stableFrames": 60,
+      "periodFrames": 8,
+      "pressedFrames": 2,
+      "timeoutFrames": 216000,
+      "battlePlan": [
+        {
+          "character": 9,
+          "command": 2,
+          "whileMonster": 205
+        },
+        {
+          "character": 10,
+          "command": 2,
+          "whileMonster": 205
+        },
+        {
+          "character": 6,
+          "command": 2,
+          "whileMonster": 205
+        },
+        {
+          "character": 9,
+          "command": 8,
+          "ability": 34,
+          "targetAll": true,
+          "minEnemies": 3,
+          "minMp": 15
+        },
+        {
+          "character": 9,
+          "command": 8,
+          "byWeakness": true,
+          "minMp": 5
+        },
+        {
+          "character": 9,
+          "command": 2
+        },
+        {
+          "character": 6,
+          "command": 8,
+          "byWeakness": true,
+          "minEnemies": 3,
+          "minMp": 65
+        },
+        {
+          "character": 6,
+          "command": 2,
+          "reserveMp": 60
+        },
+        {
+          "character": 10,
+          "command": 2
+        }
+      ],
+      "skipIf": {
+        "storyFlag": 31
+      },
+      "group": "flag31"
+    },
+    {
+      "label": "Inn: talk to Yang - two Baron Guards, then Yang himself; he joins with the Baron Key (flag 31) - walk in (3)",
       "kind": "navigate",
       "mapId": 25,
       "goal": {
@@ -1147,6 +1639,446 @@
       "group": "flag32"
     },
     {
+      "label": "Castle hall: Baigan \"joins\", the twins smell a monster - Baigan and his arms (flag 32) - scene on the way",
+      "kind": "mash",
+      "keys": [
+        "Confirm"
+      ],
+      "phases": [
+        "None",
+        "Init",
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "any": [
+          {
+            "phase": "Player",
+            "mapId": 5
+          },
+          {
+            "phase": "Player",
+            "storyFlag": 32
+          }
+        ]
+      },
+      "stableFrames": 60,
+      "periodFrames": 8,
+      "pressedFrames": 2,
+      "timeoutFrames": 216000,
+      "battlePlan": [
+        {
+          "character": 9,
+          "command": 8,
+          "ability": 34,
+          "minMp": 15,
+          "whileMonster": 169
+        },
+        {
+          "character": 6,
+          "command": 8,
+          "ability": 40,
+          "minMp": 15,
+          "whileMonster": 169
+        },
+        {
+          "character": 9,
+          "command": 8,
+          "ability": 34,
+          "minMp": 15,
+          "whileMonster": 170
+        },
+        {
+          "character": 6,
+          "command": 8,
+          "ability": 40,
+          "minMp": 15,
+          "whileMonster": 170
+        },
+        {
+          "character": 9,
+          "command": 2,
+          "whileMonster": 168
+        },
+        {
+          "character": 6,
+          "command": 2,
+          "whileMonster": 168
+        },
+        {
+          "character": 9,
+          "command": 8,
+          "ability": 34,
+          "targetAll": true,
+          "minEnemies": 3,
+          "minMp": 15
+        },
+        {
+          "character": 9,
+          "command": 8,
+          "byWeakness": true,
+          "minMp": 5
+        },
+        {
+          "character": 9,
+          "command": 2
+        },
+        {
+          "character": 6,
+          "command": 8,
+          "byWeakness": true,
+          "minEnemies": 3,
+          "minMp": 65
+        },
+        {
+          "character": 6,
+          "command": 2,
+          "reserveMp": 60
+        },
+        {
+          "character": 10,
+          "command": 2
+        }
+      ],
+      "skipIf": {
+        "storyFlag": 32
+      },
+      "group": "flag32"
+    },
+    {
+      "label": "Castle hall: Baigan \"joins\", the twins smell a monster - Baigan and his arms (flag 32) - walk in (2)",
+      "kind": "navigate",
+      "mapId": 5,
+      "goal": {
+        "x": 11,
+        "y": 11,
+        "layer": 0
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Event"
+      },
+      "stableFrames": 15,
+      "timeoutFrames": 54000,
+      "battlePlan": [
+        {
+          "character": 9,
+          "command": 8,
+          "ability": 34,
+          "minMp": 15,
+          "whileMonster": 169
+        },
+        {
+          "character": 6,
+          "command": 8,
+          "ability": 40,
+          "minMp": 15,
+          "whileMonster": 169
+        },
+        {
+          "character": 9,
+          "command": 8,
+          "ability": 34,
+          "minMp": 15,
+          "whileMonster": 170
+        },
+        {
+          "character": 6,
+          "command": 8,
+          "ability": 40,
+          "minMp": 15,
+          "whileMonster": 170
+        },
+        {
+          "character": 9,
+          "command": 2,
+          "whileMonster": 168
+        },
+        {
+          "character": 6,
+          "command": 2,
+          "whileMonster": 168
+        },
+        {
+          "character": 9,
+          "command": 8,
+          "ability": 34,
+          "targetAll": true,
+          "minEnemies": 3,
+          "minMp": 15
+        },
+        {
+          "character": 9,
+          "command": 8,
+          "byWeakness": true,
+          "minMp": 5
+        },
+        {
+          "character": 9,
+          "command": 2
+        },
+        {
+          "character": 6,
+          "command": 8,
+          "byWeakness": true,
+          "minEnemies": 3,
+          "minMp": 65
+        },
+        {
+          "character": 6,
+          "command": 2,
+          "reserveMp": 60
+        },
+        {
+          "character": 10,
+          "command": 2
+        }
+      ],
+      "skipIf": {
+        "storyFlag": 32
+      },
+      "group": "flag32"
+    },
+    {
+      "label": "Castle hall: Baigan \"joins\", the twins smell a monster - Baigan and his arms (flag 32) - scene on the way (2)",
+      "kind": "mash",
+      "keys": [
+        "Confirm"
+      ],
+      "phases": [
+        "None",
+        "Init",
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "any": [
+          {
+            "phase": "Player",
+            "mapId": 5
+          },
+          {
+            "phase": "Player",
+            "storyFlag": 32
+          }
+        ]
+      },
+      "stableFrames": 60,
+      "periodFrames": 8,
+      "pressedFrames": 2,
+      "timeoutFrames": 216000,
+      "battlePlan": [
+        {
+          "character": 9,
+          "command": 8,
+          "ability": 34,
+          "minMp": 15,
+          "whileMonster": 169
+        },
+        {
+          "character": 6,
+          "command": 8,
+          "ability": 40,
+          "minMp": 15,
+          "whileMonster": 169
+        },
+        {
+          "character": 9,
+          "command": 8,
+          "ability": 34,
+          "minMp": 15,
+          "whileMonster": 170
+        },
+        {
+          "character": 6,
+          "command": 8,
+          "ability": 40,
+          "minMp": 15,
+          "whileMonster": 170
+        },
+        {
+          "character": 9,
+          "command": 2,
+          "whileMonster": 168
+        },
+        {
+          "character": 6,
+          "command": 2,
+          "whileMonster": 168
+        },
+        {
+          "character": 9,
+          "command": 8,
+          "ability": 34,
+          "targetAll": true,
+          "minEnemies": 3,
+          "minMp": 15
+        },
+        {
+          "character": 9,
+          "command": 8,
+          "byWeakness": true,
+          "minMp": 5
+        },
+        {
+          "character": 9,
+          "command": 2
+        },
+        {
+          "character": 6,
+          "command": 8,
+          "byWeakness": true,
+          "minEnemies": 3,
+          "minMp": 65
+        },
+        {
+          "character": 6,
+          "command": 2,
+          "reserveMp": 60
+        },
+        {
+          "character": 10,
+          "command": 2
+        }
+      ],
+      "skipIf": {
+        "storyFlag": 32
+      },
+      "group": "flag32"
+    },
+    {
+      "label": "Castle hall: Baigan \"joins\", the twins smell a monster - Baigan and his arms (flag 32) - walk in (3)",
+      "kind": "navigate",
+      "mapId": 5,
+      "goal": {
+        "x": 11,
+        "y": 11,
+        "layer": 0
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Event"
+      },
+      "stableFrames": 15,
+      "timeoutFrames": 54000,
+      "battlePlan": [
+        {
+          "character": 9,
+          "command": 8,
+          "ability": 34,
+          "minMp": 15,
+          "whileMonster": 169
+        },
+        {
+          "character": 6,
+          "command": 8,
+          "ability": 40,
+          "minMp": 15,
+          "whileMonster": 169
+        },
+        {
+          "character": 9,
+          "command": 8,
+          "ability": 34,
+          "minMp": 15,
+          "whileMonster": 170
+        },
+        {
+          "character": 6,
+          "command": 8,
+          "ability": 40,
+          "minMp": 15,
+          "whileMonster": 170
+        },
+        {
+          "character": 9,
+          "command": 2,
+          "whileMonster": 168
+        },
+        {
+          "character": 6,
+          "command": 2,
+          "whileMonster": 168
+        },
+        {
+          "character": 9,
+          "command": 8,
+          "ability": 34,
+          "targetAll": true,
+          "minEnemies": 3,
+          "minMp": 15
+        },
+        {
+          "character": 9,
+          "command": 8,
+          "byWeakness": true,
+          "minMp": 5
+        },
+        {
+          "character": 9,
+          "command": 2
+        },
+        {
+          "character": 6,
+          "command": 8,
+          "byWeakness": true,
+          "minEnemies": 3,
+          "minMp": 65
+        },
+        {
+          "character": 6,
+          "command": 2,
+          "reserveMp": 60
+        },
+        {
+          "character": 10,
+          "command": 2
+        }
+      ],
+      "skipIf": {
+        "storyFlag": 32
+      },
+      "group": "flag32"
+    },
+    {
       "label": "Castle hall: Baigan \"joins\", the twins smell a monster - Baigan and his arms (flag 32)",
       "kind": "mash",
       "keys": [
@@ -1465,6 +2397,378 @@
     },
     {
       "label": "Throne room: the King is Cagnazzo; Cid, the twins turn to stone, the Enterprise, Kain's message (flags 33, 107; autosave) - walk in",
+      "kind": "navigate",
+      "mapId": 8,
+      "goal": {
+        "x": 9,
+        "y": 7,
+        "layer": 0
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Event"
+      },
+      "stableFrames": 15,
+      "timeoutFrames": 54000,
+      "battlePlan": [
+        {
+          "character": 6,
+          "command": 8,
+          "ability": 41,
+          "minMp": 30,
+          "whileMonster": 171
+        },
+        {
+          "character": 9,
+          "command": 8,
+          "ability": 40,
+          "minMp": 15,
+          "whileMonster": 171
+        },
+        {
+          "character": 9,
+          "command": 8,
+          "ability": 39,
+          "minMp": 5,
+          "whileMonster": 171
+        },
+        {
+          "character": 9,
+          "command": 8,
+          "ability": 34,
+          "targetAll": true,
+          "minEnemies": 3,
+          "minMp": 15
+        },
+        {
+          "character": 9,
+          "command": 8,
+          "byWeakness": true,
+          "minMp": 5
+        },
+        {
+          "character": 9,
+          "command": 2
+        },
+        {
+          "character": 6,
+          "command": 8,
+          "byWeakness": true,
+          "minEnemies": 3,
+          "minMp": 65
+        },
+        {
+          "character": 6,
+          "command": 2,
+          "reserveMp": 60
+        },
+        {
+          "character": 10,
+          "command": 2
+        }
+      ],
+      "skipIf": {
+        "storyFlag": 107
+      },
+      "group": "flag107"
+    },
+    {
+      "label": "Throne room: the King is Cagnazzo; Cid, the twins turn to stone, the Enterprise, Kain's message (flags 33, 107; autosave) - scene on the way",
+      "kind": "mash",
+      "keys": [
+        "Confirm"
+      ],
+      "phases": [
+        "None",
+        "Init",
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "any": [
+          {
+            "phase": "Player",
+            "mapId": 8
+          },
+          {
+            "storyFlag": 107,
+            "mapId": 1
+          }
+        ]
+      },
+      "stableFrames": 60,
+      "periodFrames": 8,
+      "pressedFrames": 2,
+      "timeoutFrames": 216000,
+      "battlePlan": [
+        {
+          "character": 6,
+          "command": 8,
+          "ability": 41,
+          "minMp": 30,
+          "whileMonster": 171
+        },
+        {
+          "character": 9,
+          "command": 8,
+          "ability": 40,
+          "minMp": 15,
+          "whileMonster": 171
+        },
+        {
+          "character": 9,
+          "command": 8,
+          "ability": 39,
+          "minMp": 5,
+          "whileMonster": 171
+        },
+        {
+          "character": 9,
+          "command": 8,
+          "ability": 34,
+          "targetAll": true,
+          "minEnemies": 3,
+          "minMp": 15
+        },
+        {
+          "character": 9,
+          "command": 8,
+          "byWeakness": true,
+          "minMp": 5
+        },
+        {
+          "character": 9,
+          "command": 2
+        },
+        {
+          "character": 6,
+          "command": 8,
+          "byWeakness": true,
+          "minEnemies": 3,
+          "minMp": 65
+        },
+        {
+          "character": 6,
+          "command": 2,
+          "reserveMp": 60
+        },
+        {
+          "character": 10,
+          "command": 2
+        }
+      ],
+      "skipIf": {
+        "storyFlag": 107
+      },
+      "group": "flag107"
+    },
+    {
+      "label": "Throne room: the King is Cagnazzo; Cid, the twins turn to stone, the Enterprise, Kain's message (flags 33, 107; autosave) - walk in (2)",
+      "kind": "navigate",
+      "mapId": 8,
+      "goal": {
+        "x": 9,
+        "y": 7,
+        "layer": 0
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Event"
+      },
+      "stableFrames": 15,
+      "timeoutFrames": 54000,
+      "battlePlan": [
+        {
+          "character": 6,
+          "command": 8,
+          "ability": 41,
+          "minMp": 30,
+          "whileMonster": 171
+        },
+        {
+          "character": 9,
+          "command": 8,
+          "ability": 40,
+          "minMp": 15,
+          "whileMonster": 171
+        },
+        {
+          "character": 9,
+          "command": 8,
+          "ability": 39,
+          "minMp": 5,
+          "whileMonster": 171
+        },
+        {
+          "character": 9,
+          "command": 8,
+          "ability": 34,
+          "targetAll": true,
+          "minEnemies": 3,
+          "minMp": 15
+        },
+        {
+          "character": 9,
+          "command": 8,
+          "byWeakness": true,
+          "minMp": 5
+        },
+        {
+          "character": 9,
+          "command": 2
+        },
+        {
+          "character": 6,
+          "command": 8,
+          "byWeakness": true,
+          "minEnemies": 3,
+          "minMp": 65
+        },
+        {
+          "character": 6,
+          "command": 2,
+          "reserveMp": 60
+        },
+        {
+          "character": 10,
+          "command": 2
+        }
+      ],
+      "skipIf": {
+        "storyFlag": 107
+      },
+      "group": "flag107"
+    },
+    {
+      "label": "Throne room: the King is Cagnazzo; Cid, the twins turn to stone, the Enterprise, Kain's message (flags 33, 107; autosave) - scene on the way (2)",
+      "kind": "mash",
+      "keys": [
+        "Confirm"
+      ],
+      "phases": [
+        "None",
+        "Init",
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "any": [
+          {
+            "phase": "Player",
+            "mapId": 8
+          },
+          {
+            "storyFlag": 107,
+            "mapId": 1
+          }
+        ]
+      },
+      "stableFrames": 60,
+      "periodFrames": 8,
+      "pressedFrames": 2,
+      "timeoutFrames": 216000,
+      "battlePlan": [
+        {
+          "character": 6,
+          "command": 8,
+          "ability": 41,
+          "minMp": 30,
+          "whileMonster": 171
+        },
+        {
+          "character": 9,
+          "command": 8,
+          "ability": 40,
+          "minMp": 15,
+          "whileMonster": 171
+        },
+        {
+          "character": 9,
+          "command": 8,
+          "ability": 39,
+          "minMp": 5,
+          "whileMonster": 171
+        },
+        {
+          "character": 9,
+          "command": 8,
+          "ability": 34,
+          "targetAll": true,
+          "minEnemies": 3,
+          "minMp": 15
+        },
+        {
+          "character": 9,
+          "command": 8,
+          "byWeakness": true,
+          "minMp": 5
+        },
+        {
+          "character": 9,
+          "command": 2
+        },
+        {
+          "character": 6,
+          "command": 8,
+          "byWeakness": true,
+          "minEnemies": 3,
+          "minMp": 65
+        },
+        {
+          "character": 6,
+          "command": 2,
+          "reserveMp": 60
+        },
+        {
+          "character": 10,
+          "command": 2
+        }
+      ],
+      "skipIf": {
+        "storyFlag": 107
+      },
+      "group": "flag107"
+    },
+    {
+      "label": "Throne room: the King is Cagnazzo; Cid, the twins turn to stone, the Enterprise, Kain's message (flags 33, 107; autosave) - walk in (3)",
       "kind": "navigate",
       "mapId": 8,
       "goal": {

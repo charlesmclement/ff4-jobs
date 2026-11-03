@@ -234,6 +234,150 @@
       "group": "flag38"
     },
     {
+      "label": "Clerics: Kain calls - take the Earth Crystal to his airship (flag 38) - scene on the way",
+      "kind": "mash",
+      "keys": [
+        "Confirm"
+      ],
+      "phases": [
+        "None",
+        "Init",
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "any": [
+          {
+            "phase": "Player",
+            "mapId": 98
+          },
+          {
+            "phase": "Player",
+            "storyFlag": 38
+          }
+        ]
+      },
+      "stableFrames": 60,
+      "periodFrames": 8,
+      "pressedFrames": 2,
+      "timeoutFrames": 216000,
+      "skipIf": {
+        "storyFlag": 38
+      },
+      "group": "flag38"
+    },
+    {
+      "label": "Clerics: Kain calls - take the Earth Crystal to his airship (flag 38) - walk in (2)",
+      "kind": "navigate",
+      "mapId": 98,
+      "goal": {
+        "x": 6,
+        "y": 17,
+        "layer": 0
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Event"
+      },
+      "stableFrames": 15,
+      "timeoutFrames": 54000,
+      "skipIf": {
+        "storyFlag": 38
+      },
+      "group": "flag38"
+    },
+    {
+      "label": "Clerics: Kain calls - take the Earth Crystal to his airship (flag 38) - scene on the way (2)",
+      "kind": "mash",
+      "keys": [
+        "Confirm"
+      ],
+      "phases": [
+        "None",
+        "Init",
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "any": [
+          {
+            "phase": "Player",
+            "mapId": 98
+          },
+          {
+            "phase": "Player",
+            "storyFlag": 38
+          }
+        ]
+      },
+      "stableFrames": 60,
+      "periodFrames": 8,
+      "pressedFrames": 2,
+      "timeoutFrames": 216000,
+      "skipIf": {
+        "storyFlag": 38
+      },
+      "group": "flag38"
+    },
+    {
+      "label": "Clerics: Kain calls - take the Earth Crystal to his airship (flag 38) - walk in (3)",
+      "kind": "navigate",
+      "mapId": 98,
+      "goal": {
+        "x": 6,
+        "y": 17,
+        "layer": 0
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Event"
+      },
+      "stableFrames": 15,
+      "timeoutFrames": 54000,
+      "skipIf": {
+        "storyFlag": 38
+      },
+      "group": "flag38"
+    },
+    {
       "label": "Clerics: Kain calls - take the Earth Crystal to his airship (flag 38)",
       "kind": "mash",
       "keys": [
@@ -352,6 +496,150 @@
     },
     {
       "label": "Overworld: Kain's airship to the Tower of Zot (flag 39, autosave) - walk in",
+      "kind": "navigate",
+      "mapId": 1,
+      "goal": {
+        "x": 41,
+        "y": 70,
+        "layer": 0
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Event"
+      },
+      "stableFrames": 15,
+      "timeoutFrames": 54000,
+      "skipIf": {
+        "storyFlag": 39
+      },
+      "group": "flag39"
+    },
+    {
+      "label": "Overworld: Kain's airship to the Tower of Zot (flag 39, autosave) - scene on the way",
+      "kind": "mash",
+      "keys": [
+        "Confirm"
+      ],
+      "phases": [
+        "None",
+        "Init",
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "any": [
+          {
+            "phase": "Player",
+            "mapId": 1
+          },
+          {
+            "phase": "Player",
+            "storyFlag": 39
+          }
+        ]
+      },
+      "stableFrames": 60,
+      "periodFrames": 8,
+      "pressedFrames": 2,
+      "timeoutFrames": 216000,
+      "skipIf": {
+        "storyFlag": 39
+      },
+      "group": "flag39"
+    },
+    {
+      "label": "Overworld: Kain's airship to the Tower of Zot (flag 39, autosave) - walk in (2)",
+      "kind": "navigate",
+      "mapId": 1,
+      "goal": {
+        "x": 41,
+        "y": 70,
+        "layer": 0
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Event"
+      },
+      "stableFrames": 15,
+      "timeoutFrames": 54000,
+      "skipIf": {
+        "storyFlag": 39
+      },
+      "group": "flag39"
+    },
+    {
+      "label": "Overworld: Kain's airship to the Tower of Zot (flag 39, autosave) - scene on the way (2)",
+      "kind": "mash",
+      "keys": [
+        "Confirm"
+      ],
+      "phases": [
+        "None",
+        "Init",
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "any": [
+          {
+            "phase": "Player",
+            "mapId": 1
+          },
+          {
+            "phase": "Player",
+            "storyFlag": 39
+          }
+        ]
+      },
+      "stableFrames": 60,
+      "periodFrames": 8,
+      "pressedFrames": 2,
+      "timeoutFrames": 216000,
+      "skipIf": {
+        "storyFlag": 39
+      },
+      "group": "flag39"
+    },
+    {
+      "label": "Overworld: Kain's airship to the Tower of Zot (flag 39, autosave) - walk in (3)",
       "kind": "navigate",
       "mapId": 1,
       "goal": {
@@ -778,6 +1066,266 @@
       "group": "flag40"
     },
     {
+      "label": "Zot 5F: the Magus Sisters (Mindy first) (flag 40) - scene on the way",
+      "kind": "mash",
+      "keys": [
+        "Confirm"
+      ],
+      "phases": [
+        "None",
+        "Init",
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "any": [
+          {
+            "phase": "Player",
+            "mapId": 206
+          },
+          {
+            "phase": "Player",
+            "storyFlag": 40
+          }
+        ]
+      },
+      "stableFrames": 60,
+      "periodFrames": 8,
+      "pressedFrames": 2,
+      "timeoutFrames": 216000,
+      "battlePlan": [
+        {
+          "character": 6,
+          "command": 2,
+          "whileMonster": 176
+        },
+        {
+          "character": 6,
+          "command": 2,
+          "whileMonster": 175
+        },
+        {
+          "character": 6,
+          "command": 2,
+          "whileMonster": 174
+        },
+        {
+          "character": 6,
+          "command": 8,
+          "byWeakness": true,
+          "minEnemies": 3,
+          "minMp": 60
+        },
+        {
+          "character": 6,
+          "command": 2,
+          "reserveMp": 20
+        }
+      ],
+      "skipIf": {
+        "storyFlag": 40
+      },
+      "group": "flag40"
+    },
+    {
+      "label": "Zot 5F: the Magus Sisters (Mindy first) (flag 40) - walk in (2)",
+      "kind": "navigate",
+      "mapId": 206,
+      "goal": {
+        "x": 20,
+        "y": 17,
+        "layer": 0
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Event"
+      },
+      "stableFrames": 15,
+      "timeoutFrames": 54000,
+      "battlePlan": [
+        {
+          "character": 6,
+          "command": 2,
+          "whileMonster": 176
+        },
+        {
+          "character": 6,
+          "command": 2,
+          "whileMonster": 175
+        },
+        {
+          "character": 6,
+          "command": 2,
+          "whileMonster": 174
+        },
+        {
+          "character": 6,
+          "command": 8,
+          "byWeakness": true,
+          "minEnemies": 3,
+          "minMp": 60
+        },
+        {
+          "character": 6,
+          "command": 2,
+          "reserveMp": 20
+        }
+      ],
+      "skipIf": {
+        "storyFlag": 40
+      },
+      "group": "flag40"
+    },
+    {
+      "label": "Zot 5F: the Magus Sisters (Mindy first) (flag 40) - scene on the way (2)",
+      "kind": "mash",
+      "keys": [
+        "Confirm"
+      ],
+      "phases": [
+        "None",
+        "Init",
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "any": [
+          {
+            "phase": "Player",
+            "mapId": 206
+          },
+          {
+            "phase": "Player",
+            "storyFlag": 40
+          }
+        ]
+      },
+      "stableFrames": 60,
+      "periodFrames": 8,
+      "pressedFrames": 2,
+      "timeoutFrames": 216000,
+      "battlePlan": [
+        {
+          "character": 6,
+          "command": 2,
+          "whileMonster": 176
+        },
+        {
+          "character": 6,
+          "command": 2,
+          "whileMonster": 175
+        },
+        {
+          "character": 6,
+          "command": 2,
+          "whileMonster": 174
+        },
+        {
+          "character": 6,
+          "command": 8,
+          "byWeakness": true,
+          "minEnemies": 3,
+          "minMp": 60
+        },
+        {
+          "character": 6,
+          "command": 2,
+          "reserveMp": 20
+        }
+      ],
+      "skipIf": {
+        "storyFlag": 40
+      },
+      "group": "flag40"
+    },
+    {
+      "label": "Zot 5F: the Magus Sisters (Mindy first) (flag 40) - walk in (3)",
+      "kind": "navigate",
+      "mapId": 206,
+      "goal": {
+        "x": 20,
+        "y": 17,
+        "layer": 0
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Event"
+      },
+      "stableFrames": 15,
+      "timeoutFrames": 54000,
+      "battlePlan": [
+        {
+          "character": 6,
+          "command": 2,
+          "whileMonster": 176
+        },
+        {
+          "character": 6,
+          "command": 2,
+          "whileMonster": 175
+        },
+        {
+          "character": 6,
+          "command": 2,
+          "whileMonster": 174
+        },
+        {
+          "character": 6,
+          "command": 8,
+          "byWeakness": true,
+          "minEnemies": 3,
+          "minMp": 60
+        },
+        {
+          "character": 6,
+          "command": 2,
+          "reserveMp": 20
+        }
+      ],
+      "skipIf": {
+        "storyFlag": 40
+      },
+      "group": "flag40"
+    },
+    {
       "label": "Zot 5F: the Magus Sisters (Mindy first) (flag 40)",
       "kind": "mash",
       "keys": [
@@ -931,6 +1479,150 @@
       "group": "flag41"
     },
     {
+      "label": "Zot 6F: Golbez and Kain; Tellah fights alone, Meteor, Tellah dies (flag 41) - scene on the way",
+      "kind": "mash",
+      "keys": [
+        "Confirm"
+      ],
+      "phases": [
+        "None",
+        "Init",
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "any": [
+          {
+            "phase": "Player",
+            "mapId": 208
+          },
+          {
+            "phase": "Player",
+            "storyFlag": 41
+          }
+        ]
+      },
+      "stableFrames": 60,
+      "periodFrames": 8,
+      "pressedFrames": 2,
+      "timeoutFrames": 216000,
+      "skipIf": {
+        "storyFlag": 41
+      },
+      "group": "flag41"
+    },
+    {
+      "label": "Zot 6F: Golbez and Kain; Tellah fights alone, Meteor, Tellah dies (flag 41) - walk in (2)",
+      "kind": "navigate",
+      "mapId": 208,
+      "goal": {
+        "x": 10,
+        "y": 9,
+        "layer": 0
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Event"
+      },
+      "stableFrames": 15,
+      "timeoutFrames": 54000,
+      "skipIf": {
+        "storyFlag": 41
+      },
+      "group": "flag41"
+    },
+    {
+      "label": "Zot 6F: Golbez and Kain; Tellah fights alone, Meteor, Tellah dies (flag 41) - scene on the way (2)",
+      "kind": "mash",
+      "keys": [
+        "Confirm"
+      ],
+      "phases": [
+        "None",
+        "Init",
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "any": [
+          {
+            "phase": "Player",
+            "mapId": 208
+          },
+          {
+            "phase": "Player",
+            "storyFlag": 41
+          }
+        ]
+      },
+      "stableFrames": 60,
+      "periodFrames": 8,
+      "pressedFrames": 2,
+      "timeoutFrames": 216000,
+      "skipIf": {
+        "storyFlag": 41
+      },
+      "group": "flag41"
+    },
+    {
+      "label": "Zot 6F: Golbez and Kain; Tellah fights alone, Meteor, Tellah dies (flag 41) - walk in (3)",
+      "kind": "navigate",
+      "mapId": 208,
+      "goal": {
+        "x": 10,
+        "y": 9,
+        "layer": 0
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Event"
+      },
+      "stableFrames": 15,
+      "timeoutFrames": 54000,
+      "skipIf": {
+        "storyFlag": 41
+      },
+      "group": "flag41"
+    },
+    {
       "label": "Zot 6F: Golbez and Kain; Tellah fights alone, Meteor, Tellah dies (flag 41)",
       "kind": "mash",
       "keys": [
@@ -965,6 +1657,150 @@
     },
     {
       "label": "Zot 6F: Kain wakes; Rosa saved from the guillotine (flag 42, autosave) - walk in",
+      "kind": "navigate",
+      "mapId": 208,
+      "goal": {
+        "x": 8,
+        "y": 6,
+        "layer": 0
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Event"
+      },
+      "stableFrames": 15,
+      "timeoutFrames": 54000,
+      "skipIf": {
+        "storyFlag": 42
+      },
+      "group": "flag42"
+    },
+    {
+      "label": "Zot 6F: Kain wakes; Rosa saved from the guillotine (flag 42, autosave) - scene on the way",
+      "kind": "mash",
+      "keys": [
+        "Confirm"
+      ],
+      "phases": [
+        "None",
+        "Init",
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "any": [
+          {
+            "phase": "Player",
+            "mapId": 208
+          },
+          {
+            "phase": "Player",
+            "storyFlag": 42
+          }
+        ]
+      },
+      "stableFrames": 60,
+      "periodFrames": 8,
+      "pressedFrames": 2,
+      "timeoutFrames": 216000,
+      "skipIf": {
+        "storyFlag": 42
+      },
+      "group": "flag42"
+    },
+    {
+      "label": "Zot 6F: Kain wakes; Rosa saved from the guillotine (flag 42, autosave) - walk in (2)",
+      "kind": "navigate",
+      "mapId": 208,
+      "goal": {
+        "x": 8,
+        "y": 6,
+        "layer": 0
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Event"
+      },
+      "stableFrames": 15,
+      "timeoutFrames": 54000,
+      "skipIf": {
+        "storyFlag": 42
+      },
+      "group": "flag42"
+    },
+    {
+      "label": "Zot 6F: Kain wakes; Rosa saved from the guillotine (flag 42, autosave) - scene on the way (2)",
+      "kind": "mash",
+      "keys": [
+        "Confirm"
+      ],
+      "phases": [
+        "None",
+        "Init",
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "any": [
+          {
+            "phase": "Player",
+            "mapId": 208
+          },
+          {
+            "phase": "Player",
+            "storyFlag": 42
+          }
+        ]
+      },
+      "stableFrames": 60,
+      "periodFrames": 8,
+      "pressedFrames": 2,
+      "timeoutFrames": 216000,
+      "skipIf": {
+        "storyFlag": 42
+      },
+      "group": "flag42"
+    },
+    {
+      "label": "Zot 6F: Kain wakes; Rosa saved from the guillotine (flag 42, autosave) - walk in (3)",
       "kind": "navigate",
       "mapId": 208,
       "goal": {
@@ -1100,6 +1936,178 @@
     },
     {
       "label": "Zot 7F: Barbariccia (Kain Jumps her out of the whirlwind); Rosa's Exit to Baron, the Magma Key (flag 43, autosave) - walk in",
+      "kind": "navigate",
+      "mapId": 209,
+      "goal": {
+        "x": 10,
+        "y": 10,
+        "layer": 0
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Event"
+      },
+      "stableFrames": 15,
+      "timeoutFrames": 54000,
+      "battlePlan": [
+        {
+          "character": 2,
+          "command": 11,
+          "whileMonster": 178
+        }
+      ],
+      "skipIf": {
+        "storyFlag": 43
+      },
+      "group": "flag43"
+    },
+    {
+      "label": "Zot 7F: Barbariccia (Kain Jumps her out of the whirlwind); Rosa's Exit to Baron, the Magma Key (flag 43, autosave) - scene on the way",
+      "kind": "mash",
+      "keys": [
+        "Confirm"
+      ],
+      "phases": [
+        "None",
+        "Init",
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "any": [
+          {
+            "phase": "Player",
+            "mapId": 209
+          },
+          {
+            "phase": "Player",
+            "storyFlag": 43
+          }
+        ]
+      },
+      "stableFrames": 60,
+      "periodFrames": 8,
+      "pressedFrames": 2,
+      "timeoutFrames": 216000,
+      "battlePlan": [
+        {
+          "character": 2,
+          "command": 11,
+          "whileMonster": 178
+        }
+      ],
+      "skipIf": {
+        "storyFlag": 43
+      },
+      "group": "flag43"
+    },
+    {
+      "label": "Zot 7F: Barbariccia (Kain Jumps her out of the whirlwind); Rosa's Exit to Baron, the Magma Key (flag 43, autosave) - walk in (2)",
+      "kind": "navigate",
+      "mapId": 209,
+      "goal": {
+        "x": 10,
+        "y": 10,
+        "layer": 0
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Event"
+      },
+      "stableFrames": 15,
+      "timeoutFrames": 54000,
+      "battlePlan": [
+        {
+          "character": 2,
+          "command": 11,
+          "whileMonster": 178
+        }
+      ],
+      "skipIf": {
+        "storyFlag": 43
+      },
+      "group": "flag43"
+    },
+    {
+      "label": "Zot 7F: Barbariccia (Kain Jumps her out of the whirlwind); Rosa's Exit to Baron, the Magma Key (flag 43, autosave) - scene on the way (2)",
+      "kind": "mash",
+      "keys": [
+        "Confirm"
+      ],
+      "phases": [
+        "None",
+        "Init",
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "any": [
+          {
+            "phase": "Player",
+            "mapId": 209
+          },
+          {
+            "phase": "Player",
+            "storyFlag": 43
+          }
+        ]
+      },
+      "stableFrames": 60,
+      "periodFrames": 8,
+      "pressedFrames": 2,
+      "timeoutFrames": 216000,
+      "battlePlan": [
+        {
+          "character": 2,
+          "command": 11,
+          "whileMonster": 178
+        }
+      ],
+      "skipIf": {
+        "storyFlag": 43
+      },
+      "group": "flag43"
+    },
+    {
+      "label": "Zot 7F: Barbariccia (Kain Jumps her out of the whirlwind); Rosa's Exit to Baron, the Magma Key (flag 43, autosave) - walk in (3)",
       "kind": "navigate",
       "mapId": 209,
       "goal": {
