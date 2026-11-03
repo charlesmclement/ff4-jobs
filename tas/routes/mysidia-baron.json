@@ -3,9 +3,9 @@
   "name": "Mysidia → Baron → Cagnazzo (segment 7) — UNTESTED",
   "fleeTough": true,
   "killFirst": [
-    169,
+    170,
     168,
-    170
+    169
   ],
   "steps": [
     {
@@ -2020,28 +2020,16 @@
       "timeoutFrames": 54000,
       "battlePlan": [
         {
-          "character": 10,
-          "command": 18,
-          "minMp": 20,
-          "whileMonster": 168
-        },
-        {
           "character": 9,
-          "command": 18,
-          "minMp": 20,
+          "command": 8,
+          "ability": 34,
+          "minMp": 15,
           "whileMonster": 168
         },
         {
           "character": 6,
           "command": 8,
           "ability": 40,
-          "minMp": 15,
-          "whileMonster": 168
-        },
-        {
-          "character": 9,
-          "command": 8,
-          "ability": 34,
           "minMp": 15,
           "whileMonster": 168
         },
@@ -2138,28 +2126,16 @@
       "timeoutFrames": 216000,
       "battlePlan": [
         {
-          "character": 10,
-          "command": 18,
-          "minMp": 20,
-          "whileMonster": 168
-        },
-        {
           "character": 9,
-          "command": 18,
-          "minMp": 20,
+          "command": 8,
+          "ability": 34,
+          "minMp": 15,
           "whileMonster": 168
         },
         {
           "character": 6,
           "command": 8,
           "ability": 40,
-          "minMp": 15,
-          "whileMonster": 168
-        },
-        {
-          "character": 9,
-          "command": 8,
-          "ability": 34,
           "minMp": 15,
           "whileMonster": 168
         },
@@ -2246,28 +2222,16 @@
       "timeoutFrames": 54000,
       "battlePlan": [
         {
-          "character": 10,
-          "command": 18,
-          "minMp": 20,
-          "whileMonster": 168
-        },
-        {
           "character": 9,
-          "command": 18,
-          "minMp": 20,
+          "command": 8,
+          "ability": 34,
+          "minMp": 15,
           "whileMonster": 168
         },
         {
           "character": 6,
           "command": 8,
           "ability": 40,
-          "minMp": 15,
-          "whileMonster": 168
-        },
-        {
-          "character": 9,
-          "command": 8,
-          "ability": 34,
           "minMp": 15,
           "whileMonster": 168
         },
@@ -2364,28 +2328,16 @@
       "timeoutFrames": 216000,
       "battlePlan": [
         {
-          "character": 10,
-          "command": 18,
-          "minMp": 20,
-          "whileMonster": 168
-        },
-        {
           "character": 9,
-          "command": 18,
-          "minMp": 20,
+          "command": 8,
+          "ability": 34,
+          "minMp": 15,
           "whileMonster": 168
         },
         {
           "character": 6,
           "command": 8,
           "ability": 40,
-          "minMp": 15,
-          "whileMonster": 168
-        },
-        {
-          "character": 9,
-          "command": 8,
-          "ability": 34,
           "minMp": 15,
           "whileMonster": 168
         },
@@ -2472,28 +2424,16 @@
       "timeoutFrames": 54000,
       "battlePlan": [
         {
-          "character": 10,
-          "command": 18,
-          "minMp": 20,
-          "whileMonster": 168
-        },
-        {
           "character": 9,
-          "command": 18,
-          "minMp": 20,
+          "command": 8,
+          "ability": 34,
+          "minMp": 15,
           "whileMonster": 168
         },
         {
           "character": 6,
           "command": 8,
           "ability": 40,
-          "minMp": 15,
-          "whileMonster": 168
-        },
-        {
-          "character": 9,
-          "command": 8,
-          "ability": 34,
           "minMp": 15,
           "whileMonster": 168
         },
@@ -2582,28 +2522,16 @@
       "timeoutFrames": 216000,
       "battlePlan": [
         {
-          "character": 10,
-          "command": 18,
-          "minMp": 20,
-          "whileMonster": 168
-        },
-        {
           "character": 9,
-          "command": 18,
-          "minMp": 20,
+          "command": 8,
+          "ability": 34,
+          "minMp": 15,
           "whileMonster": 168
         },
         {
           "character": 6,
           "command": 8,
           "ability": 40,
-          "minMp": 15,
-          "whileMonster": 168
-        },
-        {
-          "character": 9,
-          "command": 8,
-          "ability": 34,
           "minMp": 15,
           "whileMonster": 168
         },

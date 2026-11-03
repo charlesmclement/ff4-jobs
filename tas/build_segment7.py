@@ -37,17 +37,15 @@ field=[
 # Yang (Monk, 62000 HP: a scripted fight that ends by itself). Guide: his
 # Kick hits everyone; the casters Defend through it, Cecil attacks.
 monk=[{'character':c,'command':2,'whileMonster':MONK} for c in (PALOM,POROM,TELLAH)]
-# Baigan (user, after watching it live): "twincast ... does reflect. new
-# strat. kill right arm, kill body, kill left arm" and "focus damage so he
-# doesnt reflect then regenerate". Route killFirst sets the order for
-# attacks and single-target spells. The twins Twincast and Tellah casts
-# Thundara at whatever the order points to - but the pilot skips black magic
-# and Twincast while that target has Reflect (Baigan's Wall), and then the
-# casters Defend. Porom still heals first.
-baigan=[{'character':POROM,'command':TWINCAST,'minMp':20,'whileMonster':BAIGAN},
-        {'character':PALOM,'command':TWINCAST,'minMp':20,'whileMonster':BAIGAN},
-        {'character':TELLAH,'command':8,'ability':THUNDARA,'minMp':15,'whileMonster':BAIGAN},
-        {'character':PALOM,'command':8,'ability':FIRA,'minMp':15,'whileMonster':BAIGAN}]
+# Baigan (user, live): the arms come back only after BOTH are dead, and
+# Twincast (it hits every enemy, and it reflects) killed both at once. "kill
+# right arm, kill body, kill left arm": the arm the user calls right is
+# master 170 (the run was hitting 169 and the user saw the left arm hit).
+# Single targets only: Palom's Fira and Tellah's Thundara at the kill-order
+# target (the pilot skips them while it has Reflect), Porom heals or
+# Defends; no Twincast here (these rules also block the twins' default).
+baigan=[{'character':PALOM,'command':8,'ability':FIRA,'minMp':15,'whileMonster':BAIGAN},
+        {'character':TELLAH,'command':8,'ability':THUNDARA,'minMp':15,'whileMonster':BAIGAN}]
 baigan+=[{'character':c,'command':2,'whileMonster':BAIGAN} for c in (PALOM,POROM,TELLAH)]+field
 # Cagnazzo: weak to lightning. Guide: "have Tellah use LIT-3 ... then just
 # keep attacking him".
@@ -130,4 +128,4 @@ s.append(nav('Enterprise: land and step off outside Baron (Confirm at the spot, 
 s.append(heal('Beside the Enterprise: heal',OVERWORLD))
 s.append(checkpoint('Segment 7 complete: Cagnazzo defeated, the Enterprise is ours, outside Baron',OVERWORLD,107))
 
-write('tas/routes/mysidia-baron.json','Mysidia → Baron → Cagnazzo (segment 7) — UNTESTED',s,fleeTough=True,killFirst=[RIGHT_ARM,BAIGAN,LEFT_ARM])
+write('tas/routes/mysidia-baron.json','Mysidia → Baron → Cagnazzo (segment 7) — UNTESTED',s,fleeTough=True,killFirst=[LEFT_ARM,BAIGAN,RIGHT_ARM])

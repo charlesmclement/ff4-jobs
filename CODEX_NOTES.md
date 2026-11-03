@@ -784,3 +784,9 @@ Exact equip, live: before any Thunder Claws were bought, the inn step skipped th
 * At most 8 presses, then skip.
 
 Segment 7 no longer asks for exact claws (none can be owned before Cagnazzo). The fixed plugin needs a game restart to load; this session continued on the old plugin with segment 7's equipItems removed.
+
+### 112. Baigan (user, live, emphatic)
+The arms come back only after BOTH are dead. Twincast hits every enemy (and reflects), so it killed both arms at once. The run was also hitting the wrong arm first: master 169 "Right Arm", which the user saw as the left one. Orders: "START WITH THE OTHER ARM. DONT CAST TWINCAST", "KILL THE BODY AFTER THE ARM CLOSEST TO THE PARTY".
+* killFirst=[170, Baigan, 169].
+* Single targets only: Palom Fira and Tellah Thundara at the kill-order target (skipped while it has Reflect), else Defend. Porom heals or Defends. No Twincast: the Baigan rules for the twins block their default.
+* BattlePilot: the kill order only moves forward within a fight. A monster that was seen alive and has died isn't chased again if it comes back (`killStage`, `killSeen`, reset per fight).

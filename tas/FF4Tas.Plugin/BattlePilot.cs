@@ -35,7 +35,7 @@ internal sealed class BattlePilot
         abilityLastIndex=-1;abilityLastKey=null;lastInfo=lastCursor=-1;lastActor=IntPtr.Zero;previousHp=-1;
         pendingRule=-1;abilityConfirms=abilityStuck=targetPresses=0;decision="";
         blockedRules.Clear();blockedCure.Clear();blockedLife.Clear();blockedItems.Clear();blockedStatusSpell.Clear();usedOnce.Clear();wasMist=false;
-        fleeFrames=0;sidePresses=0;unreachable.Clear();fellThisFight.Clear();targetPresses=0;bossSeen=false;turnActor=IntPtr.Zero;turnRule=-1;fightSeconds=0;fightFrame=-1;rowDone=false;firstSprite.Clear();grown=false;spriteLine="";queuedHeals.Clear();
+        fleeFrames=0;sidePresses=0;unreachable.Clear();fellThisFight.Clear();targetPresses=0;bossSeen=false;turnActor=IntPtr.Zero;turnRule=-1;fightSeconds=0;fightFrame=-1;rowDone=false;firstSprite.Clear();grown=false;spriteLine="";queuedHeals.Clear();killStage=0;killSeen.Clear();
     }
     internal void Read(Snapshot state,int frame,BattleRule[]? plan=null,int[]? fleeMonsters=null,bool grinding=false,bool story=false)
     {
@@ -131,6 +131,12 @@ internal sealed class BattlePilot
             // else, then the lowest HP (user: Gatlinger before the Domovoi
             // imps; the party was wiped while it picked off the imps).
             int rank=KillRank(e.MonsterMaster?.Id??0);
+            // The kill order only moves forward: a monster whose turn has
+            // passed (it died) isn't chased again when it comes back (live:
+            // Baigan's Right Arm regrew after every kill and the attackers
+            // never reached Baigan; user: "kill right arm, kill body, kill
+            // left arm").
+            if(rank<killStage)rank=int.MaxValue;
             if(weakest==null || rank<weakestRank || rank==weakestRank && p.CurrentHP<weakest.BattleUnitDataInfo.Parameter.CurrentHP) {
                 weakest=e;weakestRank=rank;targetReflect=false;
                 var conds=p.CurrentConditionList;
@@ -190,6 +196,8 @@ internal sealed class BattlePilot
         if(fleeMonsters!=null)foreach(var id in fleeMonsters)if(group.Contains(id))fleeTarget=true;
         // Route.Rng.AvoidMonsters: a dangerous group the steering couldn't dodge.
         foreach(var id in EncounterWatch.Avoid)if(group.Contains(id))fleeTarget=true;
+        while(livingEnemies>0 && killStage<KillFirst.Length && !livingIds.Contains(KillFirst[killStage]) && killSeen.Contains(KillFirst[killStage]))killStage++;
+        foreach(int id in livingIds)killSeen.Add(id);
         foreach(var rule in FleeCounts)
         {
             int count=0;
@@ -329,6 +337,9 @@ internal sealed class BattlePilot
     internal int[][] FleeCounts=Array.Empty<int[]>();
     internal bool FleeTough;
     internal int[] KillFirst=Array.Empty<int>();
+    // Position in KillFirst this fight, and the kill-order monsters seen
+    // alive in it (a stage passes only once its monster was seen and died).
+    private int killStage;private readonly HashSet<int> killSeen=new();
     internal int[] RealFights=Array.Empty<int>();
     private int weakestRank;
     // The current target (kill order, else lowest HP) has Reflect (Baigan's Wall).
