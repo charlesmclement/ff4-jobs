@@ -97,7 +97,7 @@ internal sealed class BattlePilot
         // Scripted losses (Titan at Mist) wipe the party and the story goes on;
         // a real game over leaves the battle for GotoTitle, which no step allows.
         if(players.Length>0 && alive==0) {state.Detail="Party down; waiting for the game";return;}
-        var enemyText=new System.Text.StringBuilder();bool mist=false,hasEnemy=false;scripted=false;fleeTarget=false;undead=null;weakest=null;toughestFlyer=null;undeadCount=livingEnemies=0;tough=boss=false;Array.Clear(elementCounts);livingIds.Clear();livingHp.Clear();
+        var enemyText=new System.Text.StringBuilder();bool mist=false,hasEnemy=false;scripted=false;fleeTarget=false;undead=null;weakest=null;toughestFlyer=null;weakestRank=int.MaxValue;undeadCount=livingEnemies=0;tough=boss=false;Array.Clear(elementCounts);livingIds.Clear();livingHp.Clear();
         for(int i=0;i<enemies.Length;i++)
         {
             var e=enemies[i];var p=e?.BattleUnitDataInfo?.Parameter;
@@ -118,7 +118,11 @@ internal sealed class BattlePilot
             // 60000 HP): never spend items or MP on them.
             if(e.MonsterMaster?.Id==207 || p.ConfirmedMaxHp()>=30000)scripted=true;
 
-            if(weakest==null || p.CurrentHP<weakest.BattleUnitDataInfo.Parameter.CurrentHP)weakest=e;
+            // Kill-first monsters (Route.KillFirst, in order) before anything
+            // else, then the lowest HP (user: Gatlinger before the Domovoi
+            // imps; the party was wiped while it picked off the imps).
+            int rank=KillRank(e.MonsterMaster?.Id??0);
+            if(weakest==null || rank<weakestRank || rank==weakestRank && p.CurrentHP<weakest.BattleUnitDataInfo.Parameter.CurrentHP) {weakest=e;weakestRank=rank;}
             if(e.MonsterMaster?.Species==UndeadSpecies)
             {
                 undeadCount++;
@@ -306,6 +310,9 @@ internal sealed class BattlePilot
     internal List<HashSet<int>> FleeParties=new();
     internal int[][] FleeCounts=Array.Empty<int[]>();
     internal bool FleeTough;
+    internal int[] KillFirst=Array.Empty<int>();
+    private int weakestRank;
+    private int KillRank(int id) {int i=Array.IndexOf(KillFirst,id);return i<0?int.MaxValue:i;}
     private int fleeFrames;
     private const int FleeGiveUp=600;
     // Listed groups (Skeletons on Mount Hobs) keep trying longer: 600 frames

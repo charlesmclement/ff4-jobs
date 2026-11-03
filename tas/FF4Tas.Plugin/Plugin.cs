@@ -264,7 +264,7 @@ public sealed class Controller : MonoBehaviour
                     {
                         if(Engine?.Running==true)throw new InvalidOperationException("Stop the current route first");
                         var route=command.Route??throw new InvalidOperationException("Missing route");
-                        var next=new RouteEngine(route);navigation.Reset();battle.Reset();battle.Weaknesses=route.Weaknesses;battle.FleeParties=route.FleeParties.Select(g=>new HashSet<int>(g)).ToList();battle.FleeTough=route.FleeTough;battle.FleeCounts=route.FleeCounts;battle.Db=BattleDb.Load(Path.Combine(Plugin.DirectoryPath,"battle.json"));EncounterWatch.Db=battle.Db;rngPlan=route.Rng;EncounterWatch.Avoid=new HashSet<int>(route.Rng?.AvoidMonsters??Array.Empty<int>());burning=false;burnsHere=0;burnMap=-1;lastPhase="";Engine=next;routeName=route.Name;error="";RunClock.Reset();
+                        var next=new RouteEngine(route);navigation.Reset();battle.Reset();battle.Weaknesses=route.Weaknesses;battle.FleeParties=route.FleeParties.Select(g=>new HashSet<int>(g)).ToList();battle.FleeTough=route.FleeTough;battle.KillFirst=route.KillFirst;battle.FleeCounts=route.FleeCounts;battle.Db=BattleDb.Load(Path.Combine(Plugin.DirectoryPath,"battle.json"));EncounterWatch.Db=battle.Db;rngPlan=route.Rng;EncounterWatch.Avoid=new HashSet<int>(route.Rng?.AvoidMonsters??Array.Empty<int>());burning=false;burnsHere=0;burnMap=-1;lastPhase="";Engine=next;routeName=route.Name;error="";RunClock.Reset();
                         // First synthetic input begins next frame, never partway through this one.
                     }
                     else throw new InvalidOperationException("Unknown command");

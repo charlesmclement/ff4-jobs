@@ -29,6 +29,9 @@ public sealed class Route
     // Run at once from tough ordinary fights (an enemy with defense >= 200,
     // which attacks barely scratch) instead of spending MP on them.
     public bool FleeTough { get; set; }
+    // Monster ids attacked before anything else, in this order (Gatlinger 32
+    // before the Domovoi that come with it); then the lowest HP as usual.
+    public int[] KillFirst { get; set; } = Array.Empty<int>();
     // RNG steering (docs/TAS-ENCOUNTERS.md); null = off.
     public RngPlan? Rng { get; set; }
     public void Validate()

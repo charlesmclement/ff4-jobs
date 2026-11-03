@@ -220,6 +220,9 @@
     ]
   },
   "fleeTough": true,
+  "killFirst": [
+    32
+  ],
   "steps": [
     {
       "label": "Overworld: revive and heal before the walk to Fabul (Life/Cure first, then Phoenix Down, Potions)",
