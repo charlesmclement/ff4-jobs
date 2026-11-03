@@ -768,6 +768,142 @@
       "timeoutFrames": 36000
     },
     {
+      "label": "Kaipo: into the weapon shop (Rydia's bow)",
+      "kind": "navigate",
+      "mapId": 32,
+      "goal": {
+        "x": 24,
+        "y": 22,
+        "layer": 2
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Player",
+        "mapId": 33
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 54000
+    },
+    {
+      "label": "Kaipo weapon shop: up to the counter",
+      "kind": "navigate",
+      "mapId": 33,
+      "goal": {
+        "x": 5,
+        "y": 6,
+        "layer": 0
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "atDestination": true
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 54000
+    },
+    {
+      "label": "Kaipo weapon shop: a Bow and Iron Arrows for Rydia (user: she is much better with a bow; arrows are used up, so stock them)",
+      "kind": "menu",
+      "mapId": 33,
+      "phases": [
+        "Player",
+        "Menu",
+        "Shop",
+        "Message",
+        "FieldReady",
+        "ChangeMap"
+      ],
+      "until": {
+        "menuDone": true
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 10800,
+      "facing": "Up",
+      "shop": {
+        "buy": [
+          {
+            "content": 196,
+            "count": 1
+          },
+          {
+            "content": 204,
+            "count": 25
+          }
+        ],
+        "sell": []
+      }
+    },
+    {
+      "label": "Kaipo weapon shop: Strongest on Rydia (Bow and arrows instead of the Rod)",
+      "kind": "menu",
+      "mapId": 33,
+      "phases": [
+        "Player",
+        "Menu",
+        "Shop",
+        "Message",
+        "FieldReady",
+        "ChangeMap"
+      ],
+      "until": {
+        "menuDone": true
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 10800,
+      "equip": [
+        4
+      ]
+    },
+    {
+      "label": "Kaipo weapon shop: back outside",
+      "kind": "navigate",
+      "mapId": 33,
+      "goal": {
+        "x": 5,
+        "y": 11,
+        "layer": 0
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Player",
+        "mapId": 32
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 54000
+    },
+    {
       "label": "Kaipo: enter the house in the northeast",
       "kind": "navigate",
       "mapId": 32,

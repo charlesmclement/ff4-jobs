@@ -509,6 +509,257 @@
       ]
     },
     {
+      "label": "Kaipo: into the weapon shop (arrows)",
+      "kind": "navigate",
+      "mapId": 32,
+      "goal": {
+        "x": 24,
+        "y": 22,
+        "layer": 2
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Player",
+        "mapId": 33
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 54000
+    },
+    {
+      "label": "Kaipo weapon shop: up to the counter",
+      "kind": "navigate",
+      "mapId": 33,
+      "goal": {
+        "x": 5,
+        "y": 6,
+        "layer": 0
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "atDestination": true
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 54000
+    },
+    {
+      "label": "Kaipo weapon shop: Iron Arrows (Rosa had 1 left; Rydia shares the stock)",
+      "kind": "menu",
+      "mapId": 33,
+      "phases": [
+        "Player",
+        "Menu",
+        "Shop",
+        "Message",
+        "FieldReady",
+        "ChangeMap"
+      ],
+      "until": {
+        "menuDone": true
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 10800,
+      "facing": "Up",
+      "shop": {
+        "buy": [
+          {
+            "content": 204,
+            "count": 40
+          }
+        ],
+        "sell": []
+      }
+    },
+    {
+      "label": "Kaipo weapon shop: Rosa takes everything off, then Strongest for Rosa and Rydia (picks up the new arrows)",
+      "kind": "menu",
+      "mapId": 33,
+      "phases": [
+        "Player",
+        "Menu",
+        "Shop",
+        "Message",
+        "FieldReady",
+        "ChangeMap"
+      ],
+      "until": {
+        "menuDone": true
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 10800,
+      "equip": [
+        3,
+        4
+      ],
+      "equipReset": [
+        3
+      ]
+    },
+    {
+      "label": "Kaipo weapon shop: back outside",
+      "kind": "navigate",
+      "mapId": 33,
+      "goal": {
+        "x": 5,
+        "y": 11,
+        "layer": 0
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Player",
+        "mapId": 32
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 54000
+    },
+    {
+      "label": "Kaipo: into the armor shop (Yang's cap and armlet)",
+      "kind": "navigate",
+      "mapId": 32,
+      "goal": {
+        "x": 10,
+        "y": 17,
+        "layer": 2
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Player",
+        "mapId": 36
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 54000
+    },
+    {
+      "label": "Kaipo armor shop: up to the counter",
+      "kind": "navigate",
+      "mapId": 36,
+      "goal": {
+        "x": 5,
+        "y": 6,
+        "layer": 0
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "atDestination": true
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 54000
+    },
+    {
+      "label": "Kaipo armor shop: a Leather Cap and an Iron Armlet for Yang (his head and arms are empty; Fabul sells neither)",
+      "kind": "menu",
+      "mapId": 36,
+      "phases": [
+        "Player",
+        "Menu",
+        "Shop",
+        "Message",
+        "FieldReady",
+        "ChangeMap"
+      ],
+      "until": {
+        "menuDone": true
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 10800,
+      "facing": "Up",
+      "shop": {
+        "buy": [
+          {
+            "content": 241,
+            "count": 3
+          },
+          {
+            "content": 294,
+            "count": 3
+          }
+        ],
+        "sell": []
+      }
+    },
+    {
+      "label": "Kaipo armor shop: back outside",
+      "kind": "navigate",
+      "mapId": 36,
+      "goal": {
+        "x": 5,
+        "y": 11,
+        "layer": 0
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Player",
+        "mapId": 32
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 54000
+    },
+    {
       "label": "Kaipo: leave town",
       "kind": "navigate",
       "mapId": 32,

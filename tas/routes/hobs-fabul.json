@@ -362,7 +362,7 @@
       ]
     },
     {
-      "label": "Overworld outside Fabul: fight random battles until 4100 gil (guide shopping list 6130 - 2100 from selling the Iron and Hades sets)",
+      "label": "Overworld outside Fabul: fight random battles until 4700 gil (guide shopping list 6680 - 2100 from selling the Iron and Hades sets)",
       "kind": "navigate",
       "mapId": 1,
       "goal": {
@@ -390,7 +390,7 @@
       ],
       "handleBattles": true,
       "until": {
-        "gilAtLeast": 4100
+        "gilAtLeast": 4700
       },
       "stableFrames": 2,
       "timeoutFrames": 216000,
@@ -597,7 +597,7 @@
       ]
     },
     {
-      "label": "Gear shop: sell Kain's Iron set, buy Demon Armor, Demon Helm, Demon Gloves, Fire Claw (guide)",
+      "label": "Gear shop: sell Kain's Iron set, buy Demon Armor, Demon Helm, Demon Gloves, Fire Claw, Thunder Claw (second claw: Yang fights with one in each hand) (guide)",
       "kind": "menu",
       "mapId": 50,
       "phases": [
@@ -627,6 +627,9 @@
           },
           {
             "content": 162
+          },
+          {
+            "content": 164
           }
         ],
         "sell": [
@@ -639,7 +642,7 @@
       }
     },
     {
-      "label": "Gear shop: equip the strongest gear on Cecil and Yang",
+      "label": "Gear shop: equip the strongest gear on Cecil and Yang (Yang takes everything off first so both hands get a claw, plus the Kaipo cap and armlet)",
       "kind": "menu",
       "mapId": 50,
       "phases": [
@@ -657,6 +660,9 @@
       "timeoutFrames": 10800,
       "equip": [
         1,
+        8
+      ],
+      "equipReset": [
         8
       ]
     },
@@ -691,6 +697,9 @@
           },
           {
             "content": 162
+          },
+          {
+            "content": 164
           }
         ],
         "sell": [
@@ -758,6 +767,9 @@
           },
           {
             "content": 162
+          },
+          {
+            "content": 164
           }
         ],
         "sell": [

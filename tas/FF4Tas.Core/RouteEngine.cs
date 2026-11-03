@@ -60,6 +60,7 @@ public sealed class Route
             if(s.BattlePlan!=null && (!s.HandleBattles || s.BattlePlan.Length>32 || s.BattlePlan.Any(r=>r==null || r.Command is <1 or >64 || r.MinHpPercent is <0 or >100 || r.MinMp is <0 or >999 || r.ReserveMp is <0 or >999 || r.MinEnemies is <0 or >8 || r.Item is <1 or >5000 || r.Ability is <1 or >2000)))
                 throw new ArgumentException("Battle plans need handleBattles and valid rules");
             if(s.Choice is <0 or >15)throw new ArgumentException("Invalid choice index");
+            if(s.EquipReset!=null && (s.Equip==null || s.EquipReset.Any(id=>!s.Equip.Contains(id))))throw new ArgumentException("equipReset members must be in equip");
             if((s.MenuItem!=null || s.Equip!=null || s.Shop!=null || s.Formation!=null) && s.Kind!="menu")throw new ArgumentException("Item/equip/shop need a menu step");
             if(s.Shop!=null && (s.Shop.Buy.Any(b=>b==null || b.Content<1 || b.Count is <1 or >99) || s.Shop.Sell.Any(c=>c<1)))throw new ArgumentException("Invalid shop order");
             if(s.Facing!=null && s.Facing is not ("Up" or "Down" or "Left" or "Right"))throw new ArgumentException("Invalid facing direction");
@@ -127,6 +128,10 @@ public sealed class Step
     public int? MenuItem {get;set;}
     // Equip: character_status ids to give the native "Strongest" equipment.
     public int[]? Equip {get;set;}
+    // Of those, members who first take everything off (native Remove
+    // Everything) so Strongest re-picks from the whole bag: an equipped arrow
+    // stack plus the new arrows bought for it (Rosa had 1 Iron Arrow left).
+    public int[]? EquipReset {get;set;}
     // Shop: talk to the shopkeeper the step faces, then sell, then buy in
     // order (each buy only while affordable and owned+equipped < Count).
     public ShopOrder? Shop {get;set;}

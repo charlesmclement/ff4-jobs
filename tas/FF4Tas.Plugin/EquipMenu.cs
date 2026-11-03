@@ -11,17 +11,18 @@ namespace FF4Tas;
 // slot it shows; SwitchRight steps to the next member.
 internal sealed class EquipMenu
 {
-    private const int MenuEquipment=3,Strongest=2,WindowCommand=1,AfterEquip=30,MaxSwitches=12;
+    private const int MenuEquipment=3,Strongest=2,RemoveEverything=3,WindowCommand=1,AfterEquip=30,MaxSwitches=12;
     private int[] wanted=Array.Empty<int>();
-    private readonly HashSet<int> done=new();
+    private readonly HashSet<int> done=new(),removed=new();
+    private int[] reset=Array.Empty<int>();
     private bool finished,sideways;
     private int wait,switches,stuck,lastIndex=-1;
     private string? lastKey;
     private MainMenuController? main;
     private EquipmentWindowController? window;
-    internal void Reset(int[] characters)
+    internal void Reset(int[] characters,int[]? removeFirst=null)
     {
-        wanted=characters;done.Clear();finished=sideways=false;wait=switches=stuck=0;lastIndex=-1;lastKey=null;main=null;window=null;
+        wanted=characters;reset=removeFirst??Array.Empty<int>();removed.Clear();done.Clear();finished=sideways=false;wait=switches=stuck=0;lastIndex=-1;lastKey=null;main=null;window=null;
     }
     internal void Read(Snapshot s,int frame)
     {
@@ -63,14 +64,18 @@ internal sealed class EquipMenu
         if((int)window.stateMachine.Current!=WindowCommand) {Pulse(s,frame,"Back","Back to the equip commands");return;}
         var c=window.commandController;
         if(c?.contents==null || c.selectCursor==null)return;
-        int target=-1;
-        for(int i=0;i<c.contents.Count;i++)if(c.contents[i]?.Data!=null && (int)c.contents[i].Data.Id==Strongest) {target=i;break;}
+        // Members in `reset` take everything off first, then Strongest. If the
+        // removal asks to confirm and gets backed out, Strongest still runs.
+        bool clearing=Array.IndexOf(reset,next)>=0 && !removed.Contains(next);
+        int command=clearing?RemoveEverything:Strongest,target=-1;
+        for(int i=0;i<c.contents.Count;i++)if(c.contents[i]?.Data!=null && (int)c.contents[i].Data.Id==command) {target=i;break;}
+        if(target<0 && clearing) {removed.Add(next);return;}
         if(target<0) {finished=true;return;}
         int cursor=c.selectCursor.Index;
         if(cursor==target)
         {
-            if(frame%12==0) {done.Add(next);wait=AfterEquip;}
-            Pulse(s,frame,"Confirm","Strongest for #"+next);return;
+            if(frame%12==0) {if(clearing)removed.Add(next);else done.Add(next);wait=AfterEquip;}
+            Pulse(s,frame,"Confirm",(clearing?"Remove everything from #":"Strongest for #")+next);return;
         }
         // The command row may be horizontal: flip axes if a key doesn't move it.
         string key=sideways?(target<cursor?"Left":"Right"):(target<cursor?"Up":"Down");
