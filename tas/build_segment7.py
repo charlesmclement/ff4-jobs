@@ -37,20 +37,17 @@ field=[
 # Yang (Monk, 62000 HP: a scripted fight that ends by itself). Guide: his
 # Kick hits everyone; the casters Defend through it, Cecil attacks.
 monk=[{'character':c,'command':2,'whileMonster':MONK} for c in (PALOM,POROM,TELLAH)]
-# Baigan (user's strat, live): "kill the one arm, then fire 3 the body and
-# attack it. fire2 with palom ON THE BODY not on ALL". The arms come back
-# only after BOTH are dead, so: the arm nearest the party (master 170) by
-# attacks while the casters Defend; then the body (route killFirst) -
-# Tellah Firaga (he got it back at the summit), Palom single-target Fira,
-# Cecil and Yang attack. Spells only while the body is the target (onTarget)
-# and through his Reflect (ignoreReflect). Porom heals, else Defends. No
-# Twincast or AOE (these rules block the twins' Twincast default).
+# Baigan (user's strat, live): the arms come back only after BOTH are
+# dead, so: the arm nearest the party (master 170) by attacks while the
+# casters Defend; then the body (route killFirst). He puts up Reflect after
+# the first spell cast on him (user: "firaga needs to go off and not fira
+# he reflects after the first spell"), so the one spell is Tellah's Firaga
+# (he got it back at the summit) - once, as soon as the body is the target;
+# Palom casts nothing at him. Then Cecil and Yang attack, the casters
+# Defend, Porom heals. No Twincast or AOE (these rules block the twins'
+# Twincast default).
 FIRAGA=35
-baigan=[
-    {'character':TELLAH,'command':8,'ability':FIRAGA,'minMp':30,'onTarget':BAIGAN,'ignoreReflect':True,'whileMonster':BAIGAN},
-    {'character':TELLAH,'command':8,'ability':FIRA,'minMp':15,'onTarget':BAIGAN,'ignoreReflect':True,'whileMonster':BAIGAN},
-    {'character':PALOM,'command':8,'ability':FIRA,'minMp':15,'onTarget':BAIGAN,'ignoreReflect':True,'whileMonster':BAIGAN},
-]
+baigan=[{'character':TELLAH,'command':8,'ability':FIRAGA,'minMp':30,'onTarget':BAIGAN,'whileMonster':BAIGAN,'oncePerBattle':True}]
 baigan+=[{'character':c,'command':2,'whileMonster':BAIGAN} for c in (PALOM,POROM,TELLAH)]+field
 # Cagnazzo (user: "real similar to mist dragon but he goes inside his
 # shell", "hit him with Lit3 when he comes out, any time he's out").

@@ -816,3 +816,6 @@ User: "real similar to mist dragon but he goes inside his shell", "Lit3 when he 
 * Plan: in the shell (mode 4) all five Defend.
 * Out of the shell: Tellah Thundaga (else Thundara), Palom Thundara (else Thunder), Cecil and Yang attack, Porom heals or Defends.
 * The sprite-based `whileMonsterChanged` stays available but isn't used.
+
+### 116. Baigan: one Firaga, then physical
+Live: the arm went down cleanly by attacks. Then Palom's Fira was the first spell on the body (110), Tellah's Firaga followed (600), and the game closed mid-fight. User: "firaga needs to go off and not fira he reflects after the first spell". Plan: Tellah Firaga once (`oncePerBattle`, `onTarget` Baigan, no ignoreReflect); Palom casts nothing at him. Then Cecil and Yang attack, the casters Defend, Porom heals.

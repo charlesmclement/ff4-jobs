@@ -2025,26 +2025,8 @@
           "ability": 35,
           "minMp": 30,
           "onTarget": 168,
-          "ignoreReflect": true,
-          "whileMonster": 168
-        },
-        {
-          "character": 6,
-          "command": 8,
-          "ability": 34,
-          "minMp": 15,
-          "onTarget": 168,
-          "ignoreReflect": true,
-          "whileMonster": 168
-        },
-        {
-          "character": 9,
-          "command": 8,
-          "ability": 34,
-          "minMp": 15,
-          "onTarget": 168,
-          "ignoreReflect": true,
-          "whileMonster": 168
+          "whileMonster": 168,
+          "oncePerBattle": true
         },
         {
           "character": 9,
@@ -2144,26 +2126,8 @@
           "ability": 35,
           "minMp": 30,
           "onTarget": 168,
-          "ignoreReflect": true,
-          "whileMonster": 168
-        },
-        {
-          "character": 6,
-          "command": 8,
-          "ability": 34,
-          "minMp": 15,
-          "onTarget": 168,
-          "ignoreReflect": true,
-          "whileMonster": 168
-        },
-        {
-          "character": 9,
-          "command": 8,
-          "ability": 34,
-          "minMp": 15,
-          "onTarget": 168,
-          "ignoreReflect": true,
-          "whileMonster": 168
+          "whileMonster": 168,
+          "oncePerBattle": true
         },
         {
           "character": 9,
@@ -2253,26 +2217,8 @@
           "ability": 35,
           "minMp": 30,
           "onTarget": 168,
-          "ignoreReflect": true,
-          "whileMonster": 168
-        },
-        {
-          "character": 6,
-          "command": 8,
-          "ability": 34,
-          "minMp": 15,
-          "onTarget": 168,
-          "ignoreReflect": true,
-          "whileMonster": 168
-        },
-        {
-          "character": 9,
-          "command": 8,
-          "ability": 34,
-          "minMp": 15,
-          "onTarget": 168,
-          "ignoreReflect": true,
-          "whileMonster": 168
+          "whileMonster": 168,
+          "oncePerBattle": true
         },
         {
           "character": 9,
@@ -2372,26 +2318,8 @@
           "ability": 35,
           "minMp": 30,
           "onTarget": 168,
-          "ignoreReflect": true,
-          "whileMonster": 168
-        },
-        {
-          "character": 6,
-          "command": 8,
-          "ability": 34,
-          "minMp": 15,
-          "onTarget": 168,
-          "ignoreReflect": true,
-          "whileMonster": 168
-        },
-        {
-          "character": 9,
-          "command": 8,
-          "ability": 34,
-          "minMp": 15,
-          "onTarget": 168,
-          "ignoreReflect": true,
-          "whileMonster": 168
+          "whileMonster": 168,
+          "oncePerBattle": true
         },
         {
           "character": 9,
@@ -2481,26 +2409,8 @@
           "ability": 35,
           "minMp": 30,
           "onTarget": 168,
-          "ignoreReflect": true,
-          "whileMonster": 168
-        },
-        {
-          "character": 6,
-          "command": 8,
-          "ability": 34,
-          "minMp": 15,
-          "onTarget": 168,
-          "ignoreReflect": true,
-          "whileMonster": 168
-        },
-        {
-          "character": 9,
-          "command": 8,
-          "ability": 34,
-          "minMp": 15,
-          "onTarget": 168,
-          "ignoreReflect": true,
-          "whileMonster": 168
+          "whileMonster": 168,
+          "oncePerBattle": true
         },
         {
           "character": 9,
@@ -2592,26 +2502,8 @@
           "ability": 35,
           "minMp": 30,
           "onTarget": 168,
-          "ignoreReflect": true,
-          "whileMonster": 168
-        },
-        {
-          "character": 6,
-          "command": 8,
-          "ability": 34,
-          "minMp": 15,
-          "onTarget": 168,
-          "ignoreReflect": true,
-          "whileMonster": 168
-        },
-        {
-          "character": 9,
-          "command": 8,
-          "ability": 34,
-          "minMp": 15,
-          "onTarget": 168,
-          "ignoreReflect": true,
-          "whileMonster": 168
+          "whileMonster": 168,
+          "oncePerBattle": true
         },
         {
           "character": 9,
