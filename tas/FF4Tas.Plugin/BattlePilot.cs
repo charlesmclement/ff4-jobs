@@ -238,6 +238,11 @@ internal sealed class BattlePilot
                  pendingItem=0;pendingAbility=0;pendingTarget=0;pendingRule=-1;targetAll=false;aimFlyer=false;pendingCommand=1;decision+=" -> greyed out, Attack";}
                 SelectCommand(info,pendingItem!=0?3:mist && pendingCommand!=Row?2:pendingCommand,state,frame);
                 break;
+            // Row asks for a target too (the party side, every member): the
+            // enemy-side cursor logic pushed Left at it forever (segment 6,
+            // Scarmiglione's back attack). Confirm whatever it offers.
+            case 3 or 5 or 6 when pendingCommand==Row:
+                Pulse(state,frame,"Confirm","Confirm Row");break;
             case 2 or 4 when pendingTarget!=0 && unreachable.Contains(pendingTarget):
                 // Backing out of a heal on someone the cursor can't reach: up
                 // to the command list, where Decide picks someone else.

@@ -684,3 +684,6 @@ Live test, segment 6 step 45, at the summit save point: the Tent closed the menu
 
 ### 96. Triggers walk on after a smaller scene on the way
 Live test, segment 6, the walk to Milon at (17,7): the path crossed the stairs at (20,12), whose event (script 81, a voice line) started an Event. The walk-in step ended and the mash then waited forever for flag 26 back in control at (20,12). `trigger()` now emits up to two detours: walk until Event, then mash until either 60 frames back in control on the trigger's map, or the trigger's own end. `write()` fills in that "own end" after any builder override of the last mash, so scenes that leave the map still finish. A third walk follows, then the real mash waits for the flag. Once the flag is set, the rest of the group is skipped. All routes are rebuilt and the 47 offline checks pass.
+
+### 97. Row's target prompt is confirmed
+Live test, segment 6, Milon Z (Scarmiglione's back attack): Cecil chose Row and the game opened a target prompt for the party side. The pilot sent it to SelectEnemy, which pushed Left toward the enemy side forever. Now, any target stage (3/5/6) reached while the pending command is Row just presses Confirm. This applies to every back attack in the game.
