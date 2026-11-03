@@ -74,10 +74,8 @@ s.append(door('Baron: into the weapon shop',BARON_TOWN,(15,17),WEAPON_SHOP))
 s.append(nav('Weapon shop: up to the weaponsmith',WEAPON_SHOP,(11,8),{'atDestination':True}))
 # Two Thunder Claws (user: "He should have 2 thunder claws for KAINAZZO";
 # Cagnazzo is weak to lightning).
-# Spare Fire and Ice Claws are sold first, so that Strongest (claws all list
-# attack 0) can only fill his hands with the Thunder Claws.
-s.append(shop("Weapon shop: two Thunder Claws for Yang (Cagnazzo is weak to lightning); sell spare Fire/Ice Claws",WEAPON_SHOP,
-              [{'content':THUNDER_CLAW,'count':2}],sell=[FIRE_CLAW,ICE_CLAW]))
+# Never sell claws (user: "we need them for elemental weaknesses").
+s.append(shop("Weapon shop: two Thunder Claws for Yang (Cagnazzo is weak to lightning)",WEAPON_SHOP,[{'content':THUNDER_CLAW,'count':2}]))
 s.append(door('Weapon shop: out',WEAPON_SHOP,(13,13),BARON_TOWN))
 s.append(door('Baron: into the item shop',BARON_TOWN,(13,27),ITEM_SHOP))
 s.append(nav('Item shop: up to the counter',ITEM_SHOP,(6,6),{'atDestination':True}))
