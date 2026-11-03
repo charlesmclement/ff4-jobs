@@ -16,8 +16,11 @@ internal sealed class FieldMagic
     private const int MenuMagic=2,WhiteMagicCommand=7,Cure=6,Life=11,Esuna=10,CureMp=3,LifeMp=8,EsunaMp=20,AfterCast=48;
     // AbilityWindowController.State (Command) and AbilityUseContentListController.State (All).
     private const int CommandState=4,UseAll=2;
-    // Rosa, Rydia, Tellah, Porom, FuSoYa (Knows() skips anyone without the spell).
-    private static readonly int[] Casters={3,4,6,10,12};
+    // Rosa, Rydia, Porom, FuSoYa, then Tellah (Knows() skips anyone without
+    // the spell). Tellah last: his MP is for bosses (live: the heal after
+    // Baigan spent his last 20 MP on Cures while Porom had 83, and he met
+    // Cagnazzo with none for Thundaga).
+    private static readonly int[] Casters={3,4,10,12,6};
     private float topUpBelow=.7f;
     // RNG steering casts one Cure, never Tellah's, and keeps the caster's MP reserve.
     private int maxCasts=12,keepMp;private bool tellah=true;

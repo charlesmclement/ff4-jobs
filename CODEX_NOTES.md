@@ -837,3 +837,15 @@ User: "Palom needs to backup Porom with potions on heal duty. Tellah needs to ca
 * New BattleRule `targetInjured` (with `item`): the item goes on the member most in need of healing (the pilot's injured pick, already excluding members someone else is healing), and is queued. The rule is skipped when nobody needs it.
 * Baigan: Palom Potion with targetInjured and `first`. Tellah Firaga on the body with no oncePerBattle and no ignoreReflect, so he casts whenever Reflect is down.
 * The battle line shows `[reflect]` while the target has it, to check live that condition 28 is Baigan's Wall.
+
+### 120. Live Baigan with the reflect read; Tellah's MP
+Live (autosave load, Tellah at 50 MP):
+* Arm 170 died by attacks. Tellah's Firaga took ~1600. `[reflect]` appeared right after it and dropped near Baigan 995, so condition 28 is his Wall.
+* No second Firaga: Tellah had 20 MP, and Firaga needs 30.
+* Palom's Potions (targetInjured) and Cecil's attacks worked, and Baigan died.
+* The field heal after the fight then cast Cure with Tellah (caster order Rosa, Rydia, Tellah, Porom) until he hit 0, while Porom had 83. Cagnazzo was met with no Thundaga.
+
+Fixes:
+* FieldMagic caster order is now Rosa, Rydia, Porom, FuSoYa, Tellah (last), in every segment.
+* Cagnazzo: Cecil Attack (`first`) while out of the shell, Defend (`first`) in it.
+* The AI-mode read works: the battle line shows `[mode 171:3]` at the start.

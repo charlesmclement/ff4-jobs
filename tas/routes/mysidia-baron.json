@@ -3019,7 +3019,17 @@
           "whileMonster": 171,
           "whileModeIn": [
             4
-          ]
+          ],
+          "first": true
+        },
+        {
+          "character": 13,
+          "command": 1,
+          "whileMonster": 171,
+          "whileModeNot": [
+            4
+          ],
+          "first": true
         },
         {
           "character": 8,
@@ -3191,7 +3201,17 @@
           "whileMonster": 171,
           "whileModeIn": [
             4
-          ]
+          ],
+          "first": true
+        },
+        {
+          "character": 13,
+          "command": 1,
+          "whileMonster": 171,
+          "whileModeNot": [
+            4
+          ],
+          "first": true
         },
         {
           "character": 8,
@@ -3353,7 +3373,17 @@
           "whileMonster": 171,
           "whileModeIn": [
             4
-          ]
+          ],
+          "first": true
+        },
+        {
+          "character": 13,
+          "command": 1,
+          "whileMonster": 171,
+          "whileModeNot": [
+            4
+          ],
+          "first": true
         },
         {
           "character": 8,
@@ -3525,7 +3555,17 @@
           "whileMonster": 171,
           "whileModeIn": [
             4
-          ]
+          ],
+          "first": true
+        },
+        {
+          "character": 13,
+          "command": 1,
+          "whileMonster": 171,
+          "whileModeNot": [
+            4
+          ],
+          "first": true
         },
         {
           "character": 8,
@@ -3687,7 +3727,17 @@
           "whileMonster": 171,
           "whileModeIn": [
             4
-          ]
+          ],
+          "first": true
+        },
+        {
+          "character": 13,
+          "command": 1,
+          "whileMonster": 171,
+          "whileModeNot": [
+            4
+          ],
+          "first": true
         },
         {
           "character": 8,
@@ -3851,7 +3901,17 @@
           "whileMonster": 171,
           "whileModeIn": [
             4
-          ]
+          ],
+          "first": true
+        },
+        {
+          "character": 13,
+          "command": 1,
+          "whileMonster": 171,
+          "whileModeNot": [
+            4
+          ],
+          "first": true
         },
         {
           "character": 8,

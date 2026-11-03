@@ -70,7 +70,10 @@ baigan+=[{'character':c,'command':2,'whileMonster':BAIGAN} for c in (PALOM,POROM
 # Thunder; Cecil and Yang attack. Porom heals, else Defends (a Twincast
 # would take Palom's turn from the lightning).
 SHELL=[4]
-cagnazzo=[{'character':c,'command':2,'whileMonster':CAGNAZZO,'whileModeIn':SHELL} for c in (PALADIN,YANG,PALOM,POROM,TELLAH)]
+# Cecil attacks instead of curing (as at Baigan, user), except in the shell.
+cagnazzo=[{'character':PALADIN,'command':2,'whileMonster':CAGNAZZO,'whileModeIn':SHELL,'first':True},
+          {'character':PALADIN,'command':1,'whileMonster':CAGNAZZO,'whileModeNot':SHELL,'first':True}]
+cagnazzo+=[{'character':c,'command':2,'whileMonster':CAGNAZZO,'whileModeIn':SHELL} for c in (YANG,PALOM,POROM,TELLAH)]
 cagnazzo+=[
     {'character':TELLAH,'command':8,'ability':THUNDAGA,'minMp':30,'whileMonster':CAGNAZZO,'whileModeNot':SHELL},
     {'character':TELLAH,'command':8,'ability':THUNDARA,'minMp':15,'whileMonster':CAGNAZZO,'whileModeNot':SHELL},
