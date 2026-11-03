@@ -1196,6 +1196,78 @@
       "timeoutFrames": 54000
     },
     {
+      "label": "Baron: walk up to the locked weapon shop door",
+      "kind": "navigate",
+      "mapId": 24,
+      "goal": {
+        "x": 15,
+        "y": 18,
+        "layer": 0
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Event"
+      },
+      "stableFrames": 15,
+      "timeoutFrames": 54000,
+      "waypoints": [
+        {
+          "x": 15,
+          "y": 19,
+          "layer": 0
+        }
+      ],
+      "skipIf": {
+        "flag2": 15
+      },
+      "group": "weaponkey"
+    },
+    {
+      "label": "Baron: open the weapon shop with the Baron Key (item choice)",
+      "kind": "mash",
+      "keys": [
+        "Confirm"
+      ],
+      "phases": [
+        "None",
+        "Init",
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Player",
+        "flag2": 15
+      },
+      "stableFrames": 30,
+      "periodFrames": 8,
+      "pressedFrames": 2,
+      "timeoutFrames": 216000,
+      "itemChoice": 68,
+      "skipIf": {
+        "flag2": 15
+      },
+      "group": "weaponkey"
+    },
+    {
       "label": "Baron: into the weapon shop",
       "kind": "navigate",
       "mapId": 24,

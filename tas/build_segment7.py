@@ -131,8 +131,12 @@ s.append(door('Inn: out',INN,(21,22),BARON_TOWN))
 # claws count. Then a claw in each hand, Thunder first (Strongest skips
 # claws). Weapon shop: map 31, door (15,18), weaponsmith (11,6).
 # The door is the GotoMap at (15,18) (arrival outside (15,19)); before Yang
-# a "can't enter" message sits on it (ev_e_0030), after Yang it's gone
-# (ev_e_0033).
+# a "can't enter" message sits on it (ev_e_0030). After Yang it is locked
+# with the Baron Key, like the waterway door: the item list opens and the
+# key (item 68) is one to the right of the default (user). sc_e_0156 sets
+# ScenarioFlag2 15 when it opens.
+s.append(nav('Baron: walk up to the locked weapon shop door',BARON_TOWN,(15,18),{'phase':'Event'},[(15,19)],stableFrames=15,skipIf={'flag2':15},group='weaponkey'))
+s.append(mash('Baron: open the weapon shop with the Baron Key (item choice)',None,itemChoice=BARON_KEY,until={'phase':'Player','flag2':15},skipIf={'flag2':15},group='weaponkey'))
 s.append(door('Baron: into the weapon shop',BARON_TOWN,(15,18),WEAPON_SHOP,[(15,19)]))
 s.append(nav('Weapon shop: up to the weaponsmith',WEAPON_SHOP,(11,8),{'atDestination':True}))
 s.append(shop("Weapon shop: claw pairs for Yang - 2 Thunder, 2 Fire, 2 Ice",WEAPON_SHOP,
