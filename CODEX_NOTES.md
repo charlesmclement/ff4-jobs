@@ -664,3 +664,6 @@ User (3 Nov, going to sleep): build as far into the game as possible, big segmen
 
 ### 90. Segments 12–13 built: hook, hovercraft, Eblan, Rubicant, Falcon (untested)
 `tas/build_segment12.py` → `babil-hook.json` (12 steps) and `tas/build_segment13.py` → `eblan-falcon.json` (40 steps). New condition `moveState` (FieldPlayer.moveState) and navigate `goalVehicle` (the owned-transportation record's position; cell vs world units is a guess: y<0 → world). The hook is one held Confirm over the hovercraft, then a 4 s wait. The Cave of Eblan has only 4 walkable cells, so the hovercraft is needed. docs/TAS-SEGMENT-12-13.md.
+
+### 91. Segment 14 built: Falcon → Dwarf Castle → Sealed Cave → drill (untested)
+`tas/build_segment14.py` → `falcon-sealed-cave.json` (69 steps). The Falcon changes vehicle id as it's upgraded (4 → 8 heat shield → 9 drill); every boarding uses `goalVehicle` with the current id. The necklace door is an itemChoice mash (item 74). The drill is an Underworld trigger at (122–124,21–23) that only takes vehicle 9. docs/TAS-SEGMENT-14.md.
