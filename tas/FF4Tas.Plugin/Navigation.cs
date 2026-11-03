@@ -206,10 +206,20 @@ internal sealed class Navigation
     // progressively closer to us along the straight line, with small offsets.
     private static IEnumerable<Vector3> Candidates(Vector3 from,Vector3 goal,float playerLayer)
     {
-        yield return goal;
         // A route written with the wrong collision layer (Bottom 0, Ground 1,
-        // Upper 2) never finds a path; retry the same cell on the player's layer.
-        if((int)playerLayer!=(int)goal.z)yield return new Vector3(goal.x,goal.y,playerLayer);
+        // Upper 2) never finds a path: every candidate is tried on the goal's
+        // layer and then on the player's. Only the goal itself was retried, so
+        // in Baron (player on Ground 1, routes on 0) the cells beside the
+        // locked waterway door, and every partial leg, were all unreachable.
+        foreach(var c in Cells(from,goal))
+        {
+            yield return c;
+            if((int)playerLayer!=(int)goal.z)yield return new Vector3(c.x,c.y,playerLayer);
+        }
+    }
+    private static IEnumerable<Vector3> Cells(Vector3 from,Vector3 goal)
+    {
+        yield return goal;
         foreach(var (ox,oy) in Offsets(1))yield return new Vector3(goal.x+ox,goal.y+oy,goal.z);
         foreach(var f in new[]{.75f,.5f,.3f,.15f})
         {

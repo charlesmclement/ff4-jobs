@@ -325,6 +325,137 @@
       "timeoutFrames": 54000
     },
     {
+      "label": "Baron: into the item shop",
+      "kind": "navigate",
+      "mapId": 24,
+      "goal": {
+        "x": 13,
+        "y": 27,
+        "layer": 0
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Player",
+        "mapId": 26
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 54000
+    },
+    {
+      "label": "Item shop: up to the counter",
+      "kind": "navigate",
+      "mapId": 26,
+      "goal": {
+        "x": 6,
+        "y": 6,
+        "layer": 0
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "atDestination": true
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 54000
+    },
+    {
+      "label": "Item shop: status cures - Antidotes, Eye Drops, Maiden's Kisses, Gold Needles - and Potions, Phoenix Downs",
+      "kind": "menu",
+      "mapId": 26,
+      "phases": [
+        "Player",
+        "Menu",
+        "Shop",
+        "Message",
+        "FieldReady",
+        "ChangeMap"
+      ],
+      "until": {
+        "menuDone": true
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 10800,
+      "facing": "Up",
+      "shop": {
+        "buy": [
+          {
+            "content": 16,
+            "count": 3
+          },
+          {
+            "content": 15,
+            "count": 3
+          },
+          {
+            "content": 11,
+            "count": 3
+          },
+          {
+            "content": 2,
+            "count": 10
+          },
+          {
+            "content": 9,
+            "count": 5
+          },
+          {
+            "content": 10,
+            "count": 2
+          }
+        ],
+        "sell": []
+      }
+    },
+    {
+      "label": "Item shop: out",
+      "kind": "navigate",
+      "mapId": 26,
+      "goal": {
+        "x": 6,
+        "y": 11,
+        "layer": 0
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Player",
+        "mapId": 24
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 54000
+    },
+    {
       "label": "Baron: into the inn",
       "kind": "navigate",
       "mapId": 24,

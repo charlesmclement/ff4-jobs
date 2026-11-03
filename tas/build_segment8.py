@@ -17,7 +17,7 @@ MAGNES=[192,193,195,198,199]
 SAVE_ROOM,CRYSTAL_ROOM=200,201
 PALADIN,CID,TELLAH,YANG=13,5,6,8
 TENT,POTION,PHOENIX=21,2,9
-ANTIDOTE=16
+ANTIDOTE,EYE_DROPS,ECHO_HERBS,MAIDENS_KISS,MALLET,DIET_FOOD,GOLD_NEEDLE=16,15,14,11,12,13,10
 DARK_ELF,DARK_ELF_REAL=172,173
 ENTERPRISE,BLACK_CHOCOBO=3,7
 
@@ -48,8 +48,8 @@ s.append(door('Toroia Castle grounds: out',TOROIA_GROUNDS,(16,32),OVERWORLD))
 s.append(door('Overworld: into the town of Toroia',OVERWORLD,(40,70),TOROIA_TOWN))
 s.append(door('Toroia: item shop',TOROIA_TOWN,(20,18),ITEM_SHOP))
 s.append(nav('Item shop: up to the counter',ITEM_SHOP,(6,6),{'atDestination':True}))
-s.append(shop('Item shop: Tents, Potions, Phoenix Downs, Antidotes (Tellah is the only healer)',ITEM_SHOP,
-              [{'content':TENT,'count':4},{'content':POTION,'count':15},{'content':PHOENIX,'count':6},{'content':ANTIDOTE,'count':5}]))
+s.append(shop('Item shop: Tents, Potions, Phoenix Downs, status cures (Tellah is the only healer)',ITEM_SHOP,
+              [{'content':TENT,'count':4},{'content':POTION,'count':15},{'content':PHOENIX,'count':6},{'content':ANTIDOTE,'count':3},{'content':EYE_DROPS,'count':3},{'content':ECHO_HERBS,'count':3},{'content':MAIDENS_KISS,'count':3},{'content':MALLET,'count':3},{'content':DIET_FOOD,'count':2},{'content':GOLD_NEEDLE,'count':2}]))
 s.append(door('Item shop: out',ITEM_SHOP,(6,11),TOROIA_TOWN))
 s.append(door('Toroia: out',TOROIA_TOWN,(19,30),OVERWORLD))
 s.append(walk_world('Overworld: north to the Chocobo Village (guide: "north of the castle of Toroia")',(41,71),(46,40),CHOCOBO_VILLAGE))

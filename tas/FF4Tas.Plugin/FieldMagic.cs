@@ -117,6 +117,7 @@ internal sealed class FieldMagic
         caster=spell=target=0;
         var user=UserDataManager.Instance();var corps=user?.corpsList;var owned=user?.OwnedCharacterList;
         if(corps==null || owned==null)return;
+        // poisoned: anyone with a lasting status (not only Poison).
         int dead=0,hurt=0,poisoned=0;float lowest=topUpBelow;
         var members=new List<Last.Data.User.OwnedCharacterData>();
         for(int c=0;c<corps.Count;c++)
@@ -130,23 +131,24 @@ internal sealed class FieldMagic
             if(p.CurrentHP<=0) {if(dead==0 || m.characterStatusId==3)dead=m.Id;continue;}
             float ratio=p.CurrentHP/(float)Math.Max(1,p.ConfirmedMaxHp());
             if(ratio<lowest) {lowest=ratio;hurt=m.Id;}
-            if(poisoned==0 && Poisoned(m))poisoned=m.Id;
+            if(poisoned==0 && Status(m)!=0)poisoned=m.Id;
         }
         foreach(int who in Casters)
         {
             var m=members.Find(x=>x.characterStatusId==who);
-            if(m==null || m.Parameter.CurrentHP<=0)continue;
+            if(m==null || m.Parameter.CurrentHP<=0 || Muted(m))continue;
             int mp=m.Parameter.CurrentMP;
             if(dead!=0 && mp>=LifeMp && Knows(m,Life)) {caster=who;spell=Life;target=dead;return;}
         }
-        // Poison stays after the fight and drains HP as he walks (user:
-        // "if antidote or esuna isn't in the field cure add it"): Esuna,
-        // else FieldMenu's Antidote.
+        // A lasting status (Poison drains HP as he walks; Tellah Mini'd by
+        // Baron's guards): Esuna clears all of them, else FieldMenu's item
+        // for that status (user: "look into each status effect and what
+        // cures it").
         if(poisoned!=0)
             foreach(int who in Casters)
             {
                 var m=members.Find(x=>x.characterStatusId==who);
-                if(m==null || m.Parameter.CurrentHP<=0)continue;
+                if(m==null || m.Parameter.CurrentHP<=0 || Muted(m))continue;
                 if(m.Parameter.CurrentMP>=EsunaMp+keepMp && Knows(m,Esuna)) {caster=who;spell=Esuna;target=poisoned;return;}
             }
         if(hurt==0)return;
@@ -155,16 +157,25 @@ internal sealed class FieldMagic
             var m=members.Find(x=>x.characterStatusId==who);
             if(m==null || m.Parameter.CurrentHP<=0)continue;
             if(who==6 && !tellah)continue;
+            if(Muted(m))continue;
             if(m.Parameter.CurrentMP>=CureMp+keepMp && Knows(m,Cure)) {caster=who;spell=Cure;target=hurt;return;}
         }
     }
-    // Master condition 10 is Poison.
-    internal static bool Poisoned(Last.Data.User.OwnedCharacterData m)
+    // Statuses that last after the fight, and what clears each out of battle
+    // (master function groups: Esuna and Remedy clear condition group 76;
+    // the items clear one each). Sleep, Paralyze and Confuse end with the fight.
+    // Silence 6, Darkness 9, Poison 10, Petrify 11 / gradual 17, Mini 13/57,
+    // Toad 14/58, Pig 15/59, Curse 18.
+    internal static readonly int[] Lasting={6,9,10,11,13,14,15,17,18,57,58,59};
+    // The first lasting status on a member, else 0.
+    internal static int Status(Last.Data.User.OwnedCharacterData m)
     {
         var list=m.Parameter?.CurrentConditionList;
-        for(int i=0;list!=null && i<list.Count;i++)if(list[i]?.Id==10)return true;
-        return false;
+        for(int i=0;list!=null && i<list.Count;i++)if(list[i]?.Id is int id && Array.IndexOf(Lasting,id)>=0)return id;
+        return 0;
     }
+    // Silence, Toad and Pig stop spells; Mini still casts.
+    private static bool Muted(Last.Data.User.OwnedCharacterData m)=>Status(m) is 6 or 14 or 15 or 58 or 59;
     private static bool Knows(Last.Data.User.OwnedCharacterData m,int ability)
     {
         var list=m.OwnedAbilityList;

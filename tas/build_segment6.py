@@ -16,7 +16,7 @@ ENTRANCE,RIDGE,PASS,SUMMIT=182,183,184,185
 CECIL,PALADIN,TELLAH,PALOM,POROM=1,13,6,9,10
 TWINCAST=18
 TENT,POTION,PHOENIX=21,2,9
-ANTIDOTE=16
+ANTIDOTE,EYE_DROPS,ECHO_HERBS,MAIDENS_KISS,MALLET,DIET_FOOD,GOLD_NEEDLE=16,15,14,11,12,13,10
 MILON,MILON_Z,DARK_KNIGHT=166,167,206
 FIRA=34
 
@@ -82,8 +82,8 @@ s.append(equip('Armor shop: Strongest on Palom and Porom',ARMOR,[PALOM,POROM]))
 s.append(door('Armor shop: out',ARMOR,(5,11),MYSIDIA))
 s.append(door('Mysidia: item shop',MYSIDIA,(39,27),ITEMS))
 s.append(nav('Item shop: up to the counter',ITEMS,(6,6),{'atDestination':True}))
-s.append(shop('Item shop: Tents for the Mt. Ordeals rests, Potions, Phoenix Downs, Antidotes',ITEMS,
-              [{'content':TENT,'count':4},{'content':POTION,'count':10},{'content':PHOENIX,'count':5},{'content':ANTIDOTE,'count':5}]))
+s.append(shop('Item shop: Tents for the Mt. Ordeals rests, Potions, Phoenix Downs, status cures',ITEMS,
+              [{'content':TENT,'count':4},{'content':POTION,'count':10},{'content':PHOENIX,'count':5},{'content':ANTIDOTE,'count':3},{'content':EYE_DROPS,'count':3},{'content':ECHO_HERBS,'count':3},{'content':MAIDENS_KISS,'count':3},{'content':MALLET,'count':3},{'content':DIET_FOOD,'count':2},{'content':GOLD_NEEDLE,'count':2}]))
 s.append(door('Item shop: out',ITEMS,(6,11),MYSIDIA))
 s.append(door('Mysidia: out by the south gate',MYSIDIA,(28,33),OVERWORLD))
 s.append(walk_world("Overworld: the long walk east to Mt. Ordeals (guide: \"its a long walk\")",(159,187),(223,186),ENTRANCE))
@@ -135,8 +135,8 @@ s.append(equip('Armor shop: Strongest on everyone',ARMOR,[0]))
 s.append(door('Armor shop: out',ARMOR,(5,11),MYSIDIA))
 s.append(door('Mysidia: item shop',MYSIDIA,(39,27),ITEMS))
 s.append(nav('Item shop: up to the counter',ITEMS,(6,6),{'atDestination':True}))
-s.append(shop('Item shop: restock Potions, Phoenix Downs, Antidotes, Tents',ITEMS,
-              [{'content':POTION,'count':10},{'content':PHOENIX,'count':5},{'content':ANTIDOTE,'count':5},{'content':TENT,'count':3}]))
+s.append(shop('Item shop: restock Potions, Phoenix Downs, status cures, Tents',ITEMS,
+              [{'content':POTION,'count':10},{'content':PHOENIX,'count':5},{'content':ANTIDOTE,'count':3},{'content':EYE_DROPS,'count':3},{'content':ECHO_HERBS,'count':3},{'content':MAIDENS_KISS,'count':3},{'content':MALLET,'count':3},{'content':DIET_FOOD,'count':2},{'content':GOLD_NEEDLE,'count':2},{'content':TENT,'count':3}]))
 s.append(door('Item shop: out',ITEMS,(6,11),MYSIDIA))
 s.append(door('Mysidia: out by the south gate',MYSIDIA,(28,33),OVERWORLD))
 s.append(checkpoint('Segment 6 complete: Cecil is a Paladin, the Devil\'s Road is open, outside Mysidia',OVERWORLD,29))

@@ -10,11 +10,12 @@ the guide (Return To Baron, Waterway, Return To Baron Castle).
 from route_kit import *
 
 MYSIDIA,DEVILS_ROAD=57,66
-BARON_TOWN,INN,BARON_ROAD_HOUSE=24,25,29
+BARON_TOWN,INN,BARON_ROAD_HOUSE,ITEM_SHOP=24,25,29,26
 WATERWAY_IN,WW1,WW2,WW3,WW4,WW_SAVE=318,186,187,188,189,190
 CASTLE_OUT,CASTLE_HALL,CASTLE_2F,WALL_ROOM,THRONE=4,5,6,7,8
 PALADIN,TELLAH,YANG,PALOM,POROM=13,6,8,9,10
 TENT=21
+POTION,PHOENIX,GOLD_NEEDLE,MAIDENS_KISS,EYE_DROPS,ANTIDOTE=2,9,10,11,15,16
 MONK,BAIGAN,RIGHT_ARM,LEFT_ARM,CAGNAZZO=205,168,169,170,171
 FIRA,THUNDARA,THUNDAGA=34,40,41
 TWINCAST=18
@@ -59,6 +60,16 @@ s.append(walk_world('Overworld: into Mysidia',(159,187),(159,186),MYSIDIA))
 s.append(door("Mysidia: to the Devil's Road",MYSIDIA,(37,18),DEVILS_ROAD))
 s.extend(trigger("Devil's Road: across to Baron (flag 30, autosave)",DEVILS_ROAD,(5,6),30))
 s.append(door("Baron: out of the Devil's Road house",BARON_ROAD_HOUSE,(6,15),BARON_TOWN))
+# Item shop before Yang (user: "do this first and buy a little of each
+# status item"; the guards Mini people). Baron stocks Potions, Phoenix Downs,
+# Gold Needles, Maiden's Kisses, Eye Drops, Antidotes, Tents (product group 3);
+# no Mallets, Echo Herbs or Diet Food here. Never Remedies (user: "spendy").
+s.append(door('Baron: into the item shop',BARON_TOWN,(13,27),ITEM_SHOP))
+s.append(nav('Item shop: up to the counter',ITEM_SHOP,(6,6),{'atDestination':True}))
+s.append(shop('Item shop: status cures - Antidotes, Eye Drops, Maiden\'s Kisses, Gold Needles - and Potions, Phoenix Downs',ITEM_SHOP,
+              [{'content':ANTIDOTE,'count':3},{'content':EYE_DROPS,'count':3},{'content':MAIDENS_KISS,'count':3},
+               {'content':POTION,'count':10},{'content':PHOENIX,'count':5},{'content':GOLD_NEEDLE,'count':2}]))
+s.append(door('Item shop: out',ITEM_SHOP,(6,11),BARON_TOWN))
 s.append(door('Baron: into the inn',BARON_TOWN,(20,27),INN))
 s.extend(trigger('Inn: talk to Yang - two Baron Guards, then Yang himself; he joins with the Baron Key (flag 31)',INN,(21,5),31,battlePlan=monk+field))
 s.append(formation('Inn: formation - Palom, Cecil, Porom, Yang, Tellah; Cecil and Yang in front',INN,[PALOM,PALADIN,POROM,YANG,TELLAH],[1,3]))

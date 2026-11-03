@@ -13,7 +13,7 @@ namespace FF4Tas;
 // cursors (Last.UI.KeyInput.MainMenuController / ItemWindowController).
 internal sealed class FieldMenu
 {
-    private const int Potion=2,PhoenixDown=9,Antidote=16,MaxUses=12,AfterUse=48,Rosa=3;
+    private const int Potion=2,PhoenixDown=9,Remedy=18,MaxUses=12,AfterUse=48,Rosa=3;
     private const int MenuItem=1,ItemUse=1;
     // ItemWindowController.State and ItemUseController.State.
     private const int CommandSelect=1,UseSelect=2,TargetSelect=5,UseAll=2;
@@ -160,14 +160,39 @@ internal sealed class FieldMenu
                 if(p.CurrentHP<=0) {if(dead==0 || id==Rosa)dead=id;break;}
                 float ratio=p.CurrentHP/(float)Math.Max(1,p.ConfirmedMaxHp());
                 if(ratio<lowest) {lowest=ratio;hurt=id;}
-                if(poisoned==0 && FieldMagic.Poisoned(member))poisoned=id;
+                if(poisoned==0 && FieldMagic.Status(member) is int st && st!=0 && CureFor(st)!=0)poisoned=id;
                 break;
             }
         }
         party=$"{seen}; Potions {Count(Potion)}, Phoenix Downs {Count(PhoenixDown)}";
         if(dead!=0 && Has(PhoenixDown)) {item=PhoenixDown;target=dead;}
-        else if(poisoned!=0 && Has(Antidote)) {item=Antidote;target=poisoned;}
+        else if(poisoned!=0) {item=CureFor(StatusOf(poisoned));target=poisoned;}
         else if(hurt!=0 && Has(Potion)) {item=Potion;target=hurt;}
+    }
+    // The item that clears a status (master function groups), if owned;
+    // a Remedy (clears every status) only when the cheap one is missing -
+    // the run never buys them (user: "remedy is spendy").
+    private static int CureFor(int status)
+    {
+        int item=status switch
+        {
+            6=>14,          // Silence: Echo Herbs
+            9=>15,          // Darkness: Eye Drops
+            10=>16,         // Poison: Antidote
+            11 or 17=>10,   // Petrify: Gold Needle
+            13 or 57=>12,   // Mini: Mallet
+            14 or 58=>11,   // Toad: Maiden's Kiss
+            15 or 59=>13,   // Pig: Diet Food
+            _=>0,           // Curse: Esuna or a Remedy
+        };
+        if(item!=0 && Has(item))return item;
+        return Has(Remedy)?Remedy:0;
+    }
+    private static int StatusOf(int ownedId)
+    {
+        var owned=UserDataManager.Instance()?.OwnedCharacterList;
+        for(int o=0;owned!=null && o<owned.Count;o++)if(owned[o]?.Id==ownedId)return FieldMagic.Status(owned[o]);
+        return 0;
     }
     private static bool Has(int contentId)=>Count(contentId)>0;
     private static int Count(int contentId)

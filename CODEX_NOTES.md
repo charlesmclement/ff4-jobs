@@ -702,3 +702,15 @@ Item shops (Mysidia x2, Toroia) now also buy up to 5 Antidotes (content 16); an 
 ### 101. Summit: heal after Milon Z, and waypoints to the mirror
 Live test (resume after Milon Z, poisoned): the route had no heal between Milon Z and the mirror, so nothing cured the poison. The resume picked the mirror walk-in directly. Now a `heal` step comes first, and a resume backs up onto it. The mirror (9,6) can only be reached from (9,7) by way of row 8, and the native search found no route to it or to any candidate cell. It logged "no native route" and the greedy steering wandered until a random fight. The trigger now has waypoints (11,8) → (9,8) → (9,7), and the adjacency StepInto (note 94) does the talk. Still open: why the native search fails there (possibly the PointIn arrival at (9,7)). Other NPC goals reached only through a one-tile approach may need waypoints too.
 Baigan: Porom Twincasts (first rule, whileMonster Baigan) - twin magic can't be reflected (guide), so Baigan's Wall doesn't matter (user OK).
+
+### 102. Navigation: candidate cells on the player's layer
+Live test, segment 7: leaving Baron's inn, the walk to the locked waterway door (4,20) logged "no native route" and the greedy steering paced row 28 by the item shop. In Baron the player is on Ground (layer 1) and route cells are on 0. `Candidates` retried only the goal itself on the player's layer, so every neighbour and partial leg stayed on layer 0 and none were reachable. Now every candidate is tried on the goal's layer and then on the player's. This probably also explains the summit mirror (note 101). Note: `show_map.py` prints only the first collision layer (Bottom); towns walk on GroundCollision.
+
+### 103. Status cures, from the master data
+Function groups (function 11 = clear one condition, 12 = clear a condition group): Eye Drops → Darkness 9; Antidote → Poison 10; Echo Herbs → Silence 6; Gold Needle → Petrify 11/17; Maiden's Kiss → Toad 14/58; Mallet → Mini 13/57; Diet Food → Pig 15/59. Esuna and Remedy both use group 76, which clears all of these plus Sleep, Paralyze, Confuse and Curse. Sleep, Paralyze and Confuse end with the fight.
+* FieldMagic: Esuna on anyone with a lasting status, cast by someone who isn't Silenced, a Toad or a Pig (those also never cast Cure or Life).
+* FieldMenu: the matching item; a Remedy only if one is owned and the cheap cure is missing.
+* The run never buys Remedies (user: "spendy").
+* Shops:
+  * Baron's item shop (map 26, door (13,27), product group 3) is now visited before Yang (user: "do this first"). It buys 3 Antidotes, 3 Eye Drops, 3 Maiden's Kisses, Potions, Phoenix Downs and 2 Gold Needles.
+  * The Mysidia and Toroia shops buy the full small set; anything a shop doesn't stock is skipped.
