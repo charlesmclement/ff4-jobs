@@ -580,7 +580,16 @@
       "battlePlan": [
         {
           "character": 6,
-          "command": 1,
+          "command": 8,
+          "ability": 35,
+          "minMp": 30,
+          "whileMonster": 205
+        },
+        {
+          "character": 6,
+          "command": 8,
+          "ability": 34,
+          "minMp": 15,
           "whileMonster": 205
         },
         {
@@ -662,7 +671,16 @@
       "battlePlan": [
         {
           "character": 6,
-          "command": 1,
+          "command": 8,
+          "ability": 35,
+          "minMp": 30,
+          "whileMonster": 205
+        },
+        {
+          "character": 6,
+          "command": 8,
+          "ability": 34,
+          "minMp": 15,
           "whileMonster": 205
         },
         {
@@ -734,7 +752,16 @@
       "battlePlan": [
         {
           "character": 6,
-          "command": 1,
+          "command": 8,
+          "ability": 35,
+          "minMp": 30,
+          "whileMonster": 205
+        },
+        {
+          "character": 6,
+          "command": 8,
+          "ability": 34,
+          "minMp": 15,
           "whileMonster": 205
         },
         {
@@ -816,7 +843,16 @@
       "battlePlan": [
         {
           "character": 6,
-          "command": 1,
+          "command": 8,
+          "ability": 35,
+          "minMp": 30,
+          "whileMonster": 205
+        },
+        {
+          "character": 6,
+          "command": 8,
+          "ability": 34,
+          "minMp": 15,
           "whileMonster": 205
         },
         {
@@ -888,7 +924,16 @@
       "battlePlan": [
         {
           "character": 6,
-          "command": 1,
+          "command": 8,
+          "ability": 35,
+          "minMp": 30,
+          "whileMonster": 205
+        },
+        {
+          "character": 6,
+          "command": 8,
+          "ability": 34,
+          "minMp": 15,
           "whileMonster": 205
         },
         {
@@ -962,7 +1007,16 @@
       "battlePlan": [
         {
           "character": 6,
-          "command": 1,
+          "command": 8,
+          "ability": 35,
+          "minMp": 30,
+          "whileMonster": 205
+        },
+        {
+          "character": 6,
+          "command": 8,
+          "ability": 34,
+          "minMp": 15,
           "whileMonster": 205
         },
         {

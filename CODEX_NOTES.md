@@ -887,3 +887,4 @@ User: "upgrade all weapons and armor to optimal for everyone at this point", and
 * Cagnazzo out of the shell: Tellah Thundaga → Thundara → Thunder Rod. Palom Thundara → Thunder Rod.
 Yang (user: not Cecil 1-on-1): Palom, Porom and Tellah Attack while the Monk lives (rules also block Twincast); Monk 205 is a route realFight, so the heal logic runs (scripted 30000+ HP fights are attack-only). No MP spent: the fight ends by script, and Baigan needs the MP.
 Yang (user: 'do twincast them'): the twins use their Twincast default; only Tellah has a rule (Attack).
+Yang: Tellah casts Firaga, else Fira (user: the inn is just before, and the waterway Tent refills MP before the castle).

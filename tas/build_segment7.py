@@ -36,10 +36,13 @@ field=[
 ]
 # Yang (Monk, 62000 HP; the fight ends by itself). Not Cecil alone (user:
 # "you shouldn't make cecil 1 on 1 against yang"): the twins Twincast (their
-# default - user: "do twincast them"), Tellah attacks, Porom still heals
-# first (Yang is a route realFight, so the normal heal logic runs instead of
-# the scripted-fight attack-only path).
-monk=[{'character':TELLAH,'command':1,'whileMonster':MONK}]
+# default - user: "do twincast them"), Tellah casts his strongest (user:
+# "why wouldn't tellah cast a spell. we're in an inn" - the inn rest is just
+# before and the waterway save room's Tent refills MP before the castle),
+# Porom still heals first (Yang is a route realFight, so the normal heal
+# logic runs instead of the scripted-fight attack-only path).
+monk=[{'character':TELLAH,'command':8,'ability':35,'minMp':30,'whileMonster':MONK},
+      {'character':TELLAH,'command':8,'ability':FIRA,'minMp':15,'whileMonster':MONK}]
 # Baigan (user's strat, live): the arms come back only after BOTH are
 # dead, so: the arm nearest the party (master 170) by attacks while the
 # casters Defend; then the body (route killFirst). He puts up Reflect after
