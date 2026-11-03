@@ -355,14 +355,7 @@
         "atDestination": true
       },
       "stableFrames": 2,
-      "timeoutFrames": 54000,
-      "battlePlan": [
-        {
-          "character": 8,
-          "command": 26,
-          "minEnemies": 2
-        }
-      ]
+      "timeoutFrames": 54000
     },
     {
       "label": "Overworld outside Fabul: fight random battles until 4700 gil (guide shopping list 6680 - 2100 from selling the Iron and Hades sets)",
@@ -397,13 +390,6 @@
       },
       "stableFrames": 2,
       "timeoutFrames": 216000,
-      "battlePlan": [
-        {
-          "character": 8,
-          "command": 26,
-          "minEnemies": 2
-        }
-      ],
       "loop": true
     },
     {
@@ -431,14 +417,7 @@
         "atDestination": true
       },
       "stableFrames": 2,
-      "timeoutFrames": 54000,
-      "battlePlan": [
-        {
-          "character": 8,
-          "command": 26,
-          "minEnemies": 2
-        }
-      ]
+      "timeoutFrames": 54000
     },
     {
       "label": "Outside Fabul: use a Tent (guide: rest before the castle)",
@@ -486,14 +465,7 @@
         "mapId": 44
       },
       "stableFrames": 2,
-      "timeoutFrames": 54000,
-      "battlePlan": [
-        {
-          "character": 8,
-          "command": 26,
-          "minEnemies": 2
-        }
-      ]
+      "timeoutFrames": 54000
     },
     {
       "label": "Fabul courtyard: into the castle",
@@ -521,14 +493,7 @@
         "mapId": 45
       },
       "stableFrames": 2,
-      "timeoutFrames": 54000,
-      "battlePlan": [
-        {
-          "character": 8,
-          "command": 26,
-          "minEnemies": 2
-        }
-      ]
+      "timeoutFrames": 54000
     },
     {
       "label": "Fabul hall: east door to the gear shop",
@@ -556,14 +521,7 @@
         "mapId": 50
       },
       "stableFrames": 2,
-      "timeoutFrames": 54000,
-      "battlePlan": [
-        {
-          "character": 8,
-          "command": 26,
-          "minEnemies": 2
-        }
-      ]
+      "timeoutFrames": 54000
     },
     {
       "label": "Gear shop: up to the counter",
@@ -590,14 +548,7 @@
         "atDestination": true
       },
       "stableFrames": 2,
-      "timeoutFrames": 54000,
-      "battlePlan": [
-        {
-          "character": 8,
-          "command": 26,
-          "minEnemies": 2
-        }
-      ]
+      "timeoutFrames": 54000
     },
     {
       "label": "Gear shop: sell Kain's Iron set, buy Demon Armor, Demon Helm, Demon Gloves, Fire Claw, Thunder Claw (second claw: Yang fights with one in each hand) (guide)",
@@ -835,14 +786,7 @@
         "mapId": 45
       },
       "stableFrames": 2,
-      "timeoutFrames": 54000,
-      "battlePlan": [
-        {
-          "character": 8,
-          "command": 26,
-          "minEnemies": 2
-        }
-      ]
+      "timeoutFrames": 54000
     },
     {
       "label": "Fabul hall: west door to the item shop",
@@ -870,14 +814,7 @@
         "mapId": 49
       },
       "stableFrames": 2,
-      "timeoutFrames": 54000,
-      "battlePlan": [
-        {
-          "character": 8,
-          "command": 26,
-          "minEnemies": 2
-        }
-      ]
+      "timeoutFrames": 54000
     },
     {
       "label": "Item shop: up to the counter",
@@ -904,14 +841,7 @@
         "atDestination": true
       },
       "stableFrames": 2,
-      "timeoutFrames": 54000,
-      "battlePlan": [
-        {
-          "character": 8,
-          "command": 26,
-          "minEnemies": 2
-        }
-      ]
+      "timeoutFrames": 54000
     },
     {
       "label": "Item shop: Phoenix Downs, Potions, Tents with what's left",
@@ -975,14 +905,7 @@
         "mapId": 45
       },
       "stableFrames": 2,
-      "timeoutFrames": 54000,
-      "battlePlan": [
-        {
-          "character": 8,
-          "command": 26,
-          "minEnemies": 2
-        }
-      ]
+      "timeoutFrames": 54000
     },
     {
       "label": "Fabul hall: north door",
@@ -1010,14 +933,7 @@
         "mapId": 46
       },
       "stableFrames": 2,
-      "timeoutFrames": 54000,
-      "battlePlan": [
-        {
-          "character": 8,
-          "command": 26,
-          "minEnemies": 2
-        }
-      ]
+      "timeoutFrames": 54000
     },
     {
       "label": "Fabul corridor: north stairs to the king's hall",
@@ -1045,14 +961,7 @@
         "mapId": 47
       },
       "stableFrames": 2,
-      "timeoutFrames": 54000,
-      "battlePlan": [
-        {
-          "character": 8,
-          "command": 26,
-          "minEnemies": 2
-        }
-      ]
+      "timeoutFrames": 54000
     },
     {
       "label": "King's hall: revive and heal before the audience (the defense refills HP but revives nobody; Cecil went in KO'd)",
@@ -1097,14 +1006,7 @@
         "phase": "Event"
       },
       "stableFrames": 15,
-      "timeoutFrames": 54000,
-      "battlePlan": [
-        {
-          "character": 8,
-          "command": 26,
-          "minEnemies": 2
-        }
-      ]
+      "timeoutFrames": 54000
     },
     {
       "label": "Fabul: audience (choice 0 = help; the cursor starts on No, which sends the party back out), gate and castle defense fights, Kain, Golbez takes Rosa",
@@ -1134,13 +1036,6 @@
       "periodFrames": 8,
       "pressedFrames": 1,
       "timeoutFrames": 108000,
-      "battlePlan": [
-        {
-          "character": 8,
-          "command": 26,
-          "minEnemies": 2
-        }
-      ],
       "choice": 0
     },
     {
@@ -1169,14 +1064,7 @@
         "mapId": 47
       },
       "stableFrames": 2,
-      "timeoutFrames": 54000,
-      "battlePlan": [
-        {
-          "character": 8,
-          "command": 26,
-          "minEnemies": 2
-        }
-      ]
+      "timeoutFrames": 54000
     },
     {
       "label": "King's hall: south door",
@@ -1204,14 +1092,7 @@
         "mapId": 46
       },
       "stableFrames": 2,
-      "timeoutFrames": 54000,
-      "battlePlan": [
-        {
-          "character": 8,
-          "command": 26,
-          "minEnemies": 2
-        }
-      ]
+      "timeoutFrames": 54000
     },
     {
       "label": "Fabul corridor: south door to the hall",
@@ -1239,14 +1120,7 @@
         "mapId": 45
       },
       "stableFrames": 2,
-      "timeoutFrames": 54000,
-      "battlePlan": [
-        {
-          "character": 8,
-          "command": 26,
-          "minEnemies": 2
-        }
-      ]
+      "timeoutFrames": 54000
     },
     {
       "label": "Fabul hall: west door to the guest room",
@@ -1274,14 +1148,7 @@
         "mapId": 49
       },
       "stableFrames": 2,
-      "timeoutFrames": 54000,
-      "battlePlan": [
-        {
-          "character": 8,
-          "command": 26,
-          "minEnemies": 2
-        }
-      ]
+      "timeoutFrames": 54000
     },
     {
       "label": "Guest room: walk up to the monk (rest scene starts)",
@@ -1308,14 +1175,7 @@
         "phase": "Event"
       },
       "stableFrames": 15,
-      "timeoutFrames": 54000,
-      "battlePlan": [
-        {
-          "character": 8,
-          "command": 26,
-          "minEnemies": 2
-        }
-      ]
+      "timeoutFrames": 54000
     },
     {
       "label": "Fabul: rest for the night (first choice = yes); the king gives the Deathbringer and the ship",
@@ -1344,14 +1204,7 @@
       "stableFrames": 30,
       "periodFrames": 8,
       "pressedFrames": 1,
-      "timeoutFrames": 108000,
-      "battlePlan": [
-        {
-          "character": 8,
-          "command": 26,
-          "minEnemies": 2
-        }
-      ]
+      "timeoutFrames": 108000
     },
     {
       "label": "King's chamber: equip the strongest gear on Cecil (Deathbringer)",
@@ -1400,14 +1253,7 @@
         "mapId": 55
       },
       "stableFrames": 2,
-      "timeoutFrames": 54000,
-      "battlePlan": [
-        {
-          "character": 8,
-          "command": 26,
-          "minEnemies": 2
-        }
-      ]
+      "timeoutFrames": 54000
     },
     {
       "label": "East tower: stairs down",
@@ -1435,14 +1281,7 @@
         "mapId": 54
       },
       "stableFrames": 2,
-      "timeoutFrames": 54000,
-      "battlePlan": [
-        {
-          "character": 8,
-          "command": 26,
-          "minEnemies": 2
-        }
-      ]
+      "timeoutFrames": 54000
     },
     {
       "label": "East tower base: out to the courtyard",
@@ -1470,14 +1309,7 @@
         "mapId": 44
       },
       "stableFrames": 2,
-      "timeoutFrames": 54000,
-      "battlePlan": [
-        {
-          "character": 8,
-          "command": 26,
-          "minEnemies": 2
-        }
-      ]
+      "timeoutFrames": 54000
     },
     {
       "label": "Fabul courtyard: from the east tower along the wall to the corridor door (the wall walk and bridge don't reach the gate lane; only the castle connects them)",
@@ -1506,13 +1338,6 @@
       },
       "stableFrames": 2,
       "timeoutFrames": 54000,
-      "battlePlan": [
-        {
-          "character": 8,
-          "command": 26,
-          "minEnemies": 2
-        }
-      ],
       "waypoints": [
         {
           "x": 17,
@@ -1547,14 +1372,7 @@
         "mapId": 45
       },
       "stableFrames": 2,
-      "timeoutFrames": 54000,
-      "battlePlan": [
-        {
-          "character": 8,
-          "command": 26,
-          "minEnemies": 2
-        }
-      ]
+      "timeoutFrames": 54000
     },
     {
       "label": "Fabul hall: out to the courtyard",
@@ -1582,14 +1400,7 @@
         "mapId": 44
       },
       "stableFrames": 2,
-      "timeoutFrames": 54000,
-      "battlePlan": [
-        {
-          "character": 8,
-          "command": 26,
-          "minEnemies": 2
-        }
-      ]
+      "timeoutFrames": 54000
     },
     {
       "label": "Fabul courtyard: leave by the south gate",
@@ -1617,14 +1428,7 @@
         "mapId": 1
       },
       "stableFrames": 2,
-      "timeoutFrames": 54000,
-      "battlePlan": [
-        {
-          "character": 8,
-          "command": 26,
-          "minEnemies": 2
-        }
-      ]
+      "timeoutFrames": 54000
     },
     {
       "label": "Segment 5 complete: Fabul defended, ship promised, outside Fabul",

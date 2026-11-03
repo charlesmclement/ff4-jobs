@@ -262,14 +262,7 @@
         "riding": true
       },
       "stableFrames": 2,
-      "timeoutFrames": 3600,
-      "battlePlan": [
-        {
-          "character": 8,
-          "command": 26,
-          "minEnemies": 2
-        }
-      ]
+      "timeoutFrames": 3600
     },
     {
       "label": "Hovercraft: to Kaipo; get off at the town",
@@ -395,14 +388,7 @@
         "atDestination": true
       },
       "stableFrames": 2,
-      "timeoutFrames": 54000,
-      "battlePlan": [
-        {
-          "character": 8,
-          "command": 26,
-          "minEnemies": 2
-        }
-      ]
+      "timeoutFrames": 54000
     },
     {
       "label": "Overworld: walk into Kaipo",
@@ -430,14 +416,7 @@
         "mapId": 32
       },
       "stableFrames": 2,
-      "timeoutFrames": 54000,
-      "battlePlan": [
-        {
-          "character": 8,
-          "command": 26,
-          "minEnemies": 2
-        }
-      ]
+      "timeoutFrames": 54000
     },
     {
       "label": "Kaipo: to Rosa's house",
@@ -465,14 +444,7 @@
         "mapId": 37
       },
       "stableFrames": 2,
-      "timeoutFrames": 54000,
-      "battlePlan": [
-        {
-          "character": 8,
-          "command": 26,
-          "minEnemies": 2
-        }
-      ]
+      "timeoutFrames": 54000
     },
     {
       "label": "Rosa's house: stand beside Rosa's bed (left of her)",
@@ -499,14 +471,7 @@
         "atDestination": true
       },
       "stableFrames": 2,
-      "timeoutFrames": 54000,
-      "battlePlan": [
-        {
-          "character": 8,
-          "command": 26,
-          "minEnemies": 2
-        }
-      ]
+      "timeoutFrames": 54000
     },
     {
       "label": "Rosa's house: talk to Rosa",
@@ -559,13 +524,6 @@
       "periodFrames": 8,
       "pressedFrames": 1,
       "timeoutFrames": 72000,
-      "battlePlan": [
-        {
-          "character": 8,
-          "command": 26,
-          "minEnemies": 2
-        }
-      ],
       "itemChoice": 64
     },
     {
@@ -594,14 +552,7 @@
         "mapId": 32
       },
       "stableFrames": 2,
-      "timeoutFrames": 54000,
-      "battlePlan": [
-        {
-          "character": 8,
-          "command": 26,
-          "minEnemies": 2
-        }
-      ]
+      "timeoutFrames": 54000
     },
     {
       "label": "Kaipo: into the inn building (item shop)",
@@ -629,14 +580,7 @@
         "mapId": 34
       },
       "stableFrames": 2,
-      "timeoutFrames": 54000,
-      "battlePlan": [
-        {
-          "character": 8,
-          "command": 26,
-          "minEnemies": 2
-        }
-      ]
+      "timeoutFrames": 54000
     },
     {
       "label": "Kaipo item shop: up to the counter",
@@ -663,14 +607,7 @@
         "atDestination": true
       },
       "stableFrames": 2,
-      "timeoutFrames": 54000,
-      "battlePlan": [
-        {
-          "character": 8,
-          "command": 26,
-          "minEnemies": 2
-        }
-      ]
+      "timeoutFrames": 54000
     },
     {
       "label": "Kaipo item shop: Phoenix Downs, Potions and Tents (guide: stock up before Mount Hobs; Tents for the EXP plan's rests)",
@@ -734,14 +671,7 @@
         "mapId": 32
       },
       "stableFrames": 2,
-      "timeoutFrames": 54000,
-      "battlePlan": [
-        {
-          "character": 8,
-          "command": 26,
-          "minEnemies": 2
-        }
-      ]
+      "timeoutFrames": 54000
     },
     {
       "label": "Kaipo: into the weapon shop (arrows)",
@@ -1020,14 +950,7 @@
         "mapId": 1
       },
       "stableFrames": 2,
-      "timeoutFrames": 54000,
-      "battlePlan": [
-        {
-          "character": 8,
-          "command": 26,
-          "minEnemies": 2
-        }
-      ]
+      "timeoutFrames": 54000
     },
     {
       "label": "Overworld: board the hovercraft outside Kaipo",
@@ -1054,14 +977,7 @@
         "riding": true
       },
       "stableFrames": 2,
-      "timeoutFrames": 3600,
-      "battlePlan": [
-        {
-          "character": 8,
-          "command": 26,
-          "minEnemies": 2
-        }
-      ]
+      "timeoutFrames": 3600
     },
     {
       "label": "Hovercraft: north past Damcyan to Mount Hobs; get off below it",
@@ -1197,14 +1113,7 @@
         "atDestination": true
       },
       "stableFrames": 2,
-      "timeoutFrames": 54000,
-      "battlePlan": [
-        {
-          "character": 8,
-          "command": 26,
-          "minEnemies": 2
-        }
-      ]
+      "timeoutFrames": 54000
     },
     {
       "label": "Overworld: walk into Mount Hobs",
@@ -1232,14 +1141,7 @@
         "mapId": 178
       },
       "stableFrames": 2,
-      "timeoutFrames": 54000,
-      "battlePlan": [
-        {
-          "character": 8,
-          "command": 26,
-          "minEnemies": 2
-        }
-      ]
+      "timeoutFrames": 54000
     },
     {
       "label": "Mount Hobs: walk up to the ice (Rydia's Fire scene)",
@@ -1266,14 +1168,7 @@
         "phase": "Event"
       },
       "stableFrames": 15,
-      "timeoutFrames": 54000,
-      "battlePlan": [
-        {
-          "character": 8,
-          "command": 26,
-          "minEnemies": 2
-        }
-      ]
+      "timeoutFrames": 54000
     },
     {
       "label": "Mount Hobs: Rydia learns Fire and melts the ice",
@@ -1302,14 +1197,7 @@
       "stableFrames": 30,
       "periodFrames": 8,
       "pressedFrames": 1,
-      "timeoutFrames": 72000,
-      "battlePlan": [
-        {
-          "character": 8,
-          "command": 26,
-          "minEnemies": 2
-        }
-      ]
+      "timeoutFrames": 72000
     },
     {
       "label": "Mount Hobs east cave: EXP plan, grind 1 - random battles until Cecil 16, Rydia 13, Rosa 12, Edward 12, or Rosa/Rydia low on MP (flyers for Rosa, Skeleton groups fled)",
@@ -1360,13 +1248,6 @@
       },
       "stableFrames": 2,
       "timeoutFrames": 216000,
-      "battlePlan": [
-        {
-          "character": 8,
-          "command": 26,
-          "minEnemies": 2
-        }
-      ],
       "loop": true
     },
     {
@@ -1396,13 +1277,6 @@
       "stableFrames": 2,
       "timeoutFrames": 5400,
       "handleBattles": true,
-      "battlePlan": [
-        {
-          "character": 8,
-          "command": 26,
-          "minEnemies": 2
-        }
-      ],
       "facing": "Down"
     },
     {
@@ -1452,13 +1326,6 @@
       },
       "stableFrames": 2,
       "timeoutFrames": 54000,
-      "battlePlan": [
-        {
-          "character": 8,
-          "command": 26,
-          "minEnemies": 2
-        }
-      ],
       "waypoints": [
         {
           "x": 157,
@@ -1516,13 +1383,6 @@
       },
       "stableFrames": 2,
       "timeoutFrames": 216000,
-      "battlePlan": [
-        {
-          "character": 8,
-          "command": 26,
-          "minEnemies": 2
-        }
-      ],
       "loop": true,
       "skipIf": {
         "levelAtLeast": {
@@ -1561,13 +1421,6 @@
       "stableFrames": 2,
       "timeoutFrames": 5400,
       "handleBattles": true,
-      "battlePlan": [
-        {
-          "character": 8,
-          "command": 26,
-          "minEnemies": 2
-        }
-      ],
       "group": "rest2",
       "facing": "Down"
     },
@@ -1619,13 +1472,6 @@
       },
       "stableFrames": 2,
       "timeoutFrames": 54000,
-      "battlePlan": [
-        {
-          "character": 8,
-          "command": 26,
-          "minEnemies": 2
-        }
-      ],
       "waypoints": [
         {
           "x": 157,
@@ -1684,13 +1530,6 @@
       },
       "stableFrames": 2,
       "timeoutFrames": 216000,
-      "battlePlan": [
-        {
-          "character": 8,
-          "command": 26,
-          "minEnemies": 2
-        }
-      ],
       "loop": true,
       "skipIf": {
         "levelAtLeast": {
@@ -1729,13 +1568,6 @@
       "stableFrames": 2,
       "timeoutFrames": 5400,
       "handleBattles": true,
-      "battlePlan": [
-        {
-          "character": 8,
-          "command": 26,
-          "minEnemies": 2
-        }
-      ],
       "group": "rest3",
       "facing": "Down"
     },
@@ -1787,13 +1619,6 @@
       },
       "stableFrames": 2,
       "timeoutFrames": 54000,
-      "battlePlan": [
-        {
-          "character": 8,
-          "command": 26,
-          "minEnemies": 2
-        }
-      ],
       "waypoints": [
         {
           "x": 157,
@@ -1852,13 +1677,6 @@
       },
       "stableFrames": 2,
       "timeoutFrames": 216000,
-      "battlePlan": [
-        {
-          "character": 8,
-          "command": 26,
-          "minEnemies": 2
-        }
-      ],
       "loop": true,
       "skipIf": {
         "levelAtLeast": {
@@ -1897,13 +1715,6 @@
       "stableFrames": 2,
       "timeoutFrames": 5400,
       "handleBattles": true,
-      "battlePlan": [
-        {
-          "character": 8,
-          "command": 26,
-          "minEnemies": 2
-        }
-      ],
       "group": "rest4",
       "facing": "Down"
     },
@@ -1955,13 +1766,6 @@
       },
       "stableFrames": 2,
       "timeoutFrames": 54000,
-      "battlePlan": [
-        {
-          "character": 8,
-          "command": 26,
-          "minEnemies": 2
-        }
-      ],
       "waypoints": [
         {
           "x": 157,
@@ -1997,14 +1801,7 @@
         "mapId": 180
       },
       "stableFrames": 2,
-      "timeoutFrames": 54000,
-      "battlePlan": [
-        {
-          "character": 8,
-          "command": 26,
-          "minEnemies": 2
-        }
-      ]
+      "timeoutFrames": 54000
     },
     {
       "label": "Mount Hobs summit: heal before the Mom Bomb (Phoenix Down, Potions)",
@@ -2078,17 +1875,10 @@
         "phase": "Event"
       },
       "stableFrames": 15,
-      "timeoutFrames": 54000,
-      "battlePlan": [
-        {
-          "character": 8,
-          "command": 26,
-          "minEnemies": 2
-        }
-      ]
+      "timeoutFrames": 54000
     },
     {
-      "label": "Mount Hobs summit: Yang vs the bombs, then Mom Bomb (attack until it grows, all Defend/Gird while big, then Darkness, Fire/Thunder on all, Kick)",
+      "label": "Mount Hobs summit: Yang vs the bombs, then Mom Bomb (attack until it grows, all Defend/Gird while big, then Darkness, Fire/Thunder on all)",
       "kind": "mash",
       "keys": [
         "Confirm"
@@ -2197,16 +1987,6 @@
           "targetAll": true,
           "minEnemies": 2,
           "bossOnly": true
-        },
-        {
-          "character": 8,
-          "command": 26,
-          "bossOnly": true
-        },
-        {
-          "character": 8,
-          "command": 26,
-          "minEnemies": 2
         }
       ]
     },
@@ -2254,14 +2034,7 @@
         "mapId": 181
       },
       "stableFrames": 2,
-      "timeoutFrames": 54000,
-      "battlePlan": [
-        {
-          "character": 8,
-          "command": 26,
-          "minEnemies": 2
-        }
-      ]
+      "timeoutFrames": 54000
     },
     {
       "label": "Mount Hobs east slope: exit to the overworld",
@@ -2289,14 +2062,7 @@
         "mapId": 1
       },
       "stableFrames": 2,
-      "timeoutFrames": 54000,
-      "battlePlan": [
-        {
-          "character": 8,
-          "command": 26,
-          "minEnemies": 2
-        }
-      ]
+      "timeoutFrames": 54000
     },
     {
       "label": "Segment 4 complete: Mom Bomb defeated, outside Mount Hobs (Fabul side)",
