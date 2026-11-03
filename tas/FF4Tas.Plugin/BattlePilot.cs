@@ -35,7 +35,7 @@ internal sealed class BattlePilot
         abilityLastIndex=-1;abilityLastKey=null;lastInfo=lastCursor=-1;lastActor=IntPtr.Zero;previousHp=-1;
         pendingRule=-1;abilityConfirms=abilityStuck=targetPresses=0;decision="";
         blockedRules.Clear();blockedCure.Clear();blockedLife.Clear();blockedItems.Clear();blockedStatusSpell.Clear();usedOnce.Clear();wasMist=false;
-        fleeFrames=0;sidePresses=0;unreachable.Clear();targetPresses=0;bossSeen=false;turnActor=IntPtr.Zero;turnRule=-1;fightSeconds=0;fightFrame=-1;rowDone=false;firstSprite.Clear();grown=false;spriteLine="";queuedHeals.Clear();
+        fleeFrames=0;sidePresses=0;unreachable.Clear();fellThisFight.Clear();targetPresses=0;bossSeen=false;turnActor=IntPtr.Zero;turnRule=-1;fightSeconds=0;fightFrame=-1;rowDone=false;firstSprite.Clear();grown=false;spriteLine="";queuedHeals.Clear();
     }
     internal void Read(Snapshot state,int frame,BattleRule[]? plan=null,int[]? fleeMonsters=null,bool grinding=false)
     {
@@ -67,7 +67,7 @@ internal sealed class BattlePilot
             hpByStatus[member]=hp;
             if(queuedHeals.TryGetValue(member,out var queued) && (hp>queued.Hp || fightSeconds-queued.At>HealLandSeconds))queuedHeals.Remove(member);
             bool taken=queuedHeals.TryGetValue(member,out queued) && queued.Healer!=deciding;
-            if(hp<=0) {if(rank>=0 && !taken && (dead==null || rank<HealRank(dead)))dead=p;continue;}
+            if(hp<=0) {fellThisFight.Add(member);if(rank>=0 && !taken && (dead==null || rank<HealRank(dead)))dead=p;continue;}
             alive++;
             float ratio=hp/(float)Math.Max(1,stats.ConfirmedMaxHp());
             int who=p!.GetOwnedCharacterData()?.characterStatusId??0;
@@ -90,9 +90,9 @@ internal sealed class BattlePilot
             if(rank<0 || taken || away)continue;
             // Rosa tops up Rosa/Cecil/Yang under 75%, Rydia/Edward under 65%;
             // lowest share first (HealKey: a small edge for the first three,
-            // anyone critical before all; she once topped up a 200 HP Yang
+            // a member raised this fight and still low before all; she once topped up a 200 HP Yang
             // while Edward sat at 17).
-            float heal=HealKey(rank,ratio);
+            float heal=HealKey(rank,ratio,fellThisFight.Contains(member));
             if(rosaParty && ratio<(rank==0?RosaHealBelow:OthersHealBelow) && heal<rosaKey) {rosaTarget=p;rosaKey=heal;}
             if(ratio>=HealBelow)continue;
             float key=rosaParty?heal:ratio-(IsCecil(p!)?.05f:0);
@@ -368,7 +368,10 @@ internal sealed class BattlePilot
     // (user: "loosen that up", "I would have healed Ed there"), and anyone
     // under CriticalHp comes before everyone else.
     private const float PriorityEdge=.1f,OthersHealBelow=.65f;
-    private static float HealKey(int rank,float ratio)=>ratio<CriticalHp?ratio-1:ratio-(rank==0?PriorityEdge:0);
+    // Raised this fight and still under CriticalHp: before everyone (user:
+    // "only if raised"; a Phoenix Down is wasted if they are left to die).
+    private static float HealKey(int rank,float ratio,bool raised)=>raised && ratio<CriticalHp?ratio-1:ratio-(rank==0?PriorityEdge:0);
+    private readonly HashSet<int> fellThisFight=new();
     private const int Summon=9,ChocoboSummon=65,ChocoboMp=7,RydiaBossReserve=14,Edward=7;
     // Heal order with Rosa in the party: Rosa, Cecil and Yang (rank 0, the
     // lowest HP% of them first), then everyone else (rank 1). Without Rosa
@@ -424,8 +427,9 @@ internal sealed class BattlePilot
         // wait, and anyone under half HP is Rydia's
         // to Cure. Rosa still heals that when Rydia can't, and revives first.
         bool urgent=injured!=null || rosaLow!=null;
-        // Someone near death: Rosa heals now instead of leaving it to Rydia.
-        bool critical=injured!=null && injuredRatioNow<CriticalHp;
+        // Someone raised this fight and still low: Rosa heals now instead of
+        // leaving it to Rydia.
+        bool critical=injured!=null && injuredRatioNow<CriticalHp && fellThisFight.Contains(injured.GetOwnedCharacterData()?.characterStatusId??0);
         if(me==Rosa && toughestFlyer!=null && CommandEnabled(info,Aim) && (dead==null || !Knows(actor,LifeAbility)) && (!urgent || RydiaCovers && !critical))
         {pendingCommand=Aim;aimFlyer=true;if(newTurn)flyerAims++;Log(actor,$"Aim at {Db.MonsterName(toughestFlyer.MonsterMaster.Id)} (weak to arrows){(urgent?"; Rydia heals":"")}");return;}
         // Rosa always heals: Rosa/Cecil/Yang under 75% (lowest first), then
