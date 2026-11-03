@@ -294,7 +294,7 @@ internal sealed class BattlePilot
                 if(pendingItem==0) {Pulse(state,frame,"Back","Cancel unexpected item list");break;}
                 SelectItem(info,pendingItem,state,frame);break;
             case 3:
-                if(itemOnEnemies)SelectEnemy(info,state,frame,"Throw item at the enemies",weakest,true);
+                if(itemOnEnemies)SelectEnemy(info,state,frame,heldUse?"Held item at the target":"Throw item at the enemies",weakest,!heldUse);
                 else SelectHealingTarget(info,state,frame);
                 break;
             case 6:
@@ -483,7 +483,7 @@ internal sealed class BattlePilot
     private void Decide(BattleInfomationController info,BattlePlayerData actor,BattlePlayerData? dead,BattlePlayerData? injured,bool mist,BattleRule[]? plan)
     {
         injuredNow=injured;
-        pendingItem=0;pendingTarget=0;pendingCommand=1;pendingAbility=0;pendingRule=-1;castOnUndead=false;targetAll=false;itemOnEnemies=false;aimFlyer=false;
+        pendingItem=0;pendingTarget=0;pendingCommand=1;pendingAbility=0;pendingRule=-1;castOnUndead=false;targetAll=false;itemOnEnemies=false;aimFlyer=false;heldUse=false;
         // Decide re-runs every frame of a turn; count a turn once.
         bool newTurn=actor.Pointer!=decidingActor;decidingActor=actor.Pointer;
         abilityConfirms=abilityStuck=abilityStride=0;abilityLastIndex=-1;abilityLastKey=null;
@@ -598,7 +598,7 @@ internal sealed class BattlePilot
         {
             ChoosePlan(info,actor,plan);
             if(pendingRule>=0 && plan[pendingRule].WhileMonster!=null && (pendingItem!=0 || CommandEnabled(info,pendingCommand)))return;
-            pendingItem=0;pendingTarget=0;pendingCommand=1;pendingAbility=0;pendingRule=-1;castOnUndead=false;targetAll=false;itemOnEnemies=false;aimFlyer=false;
+            pendingItem=0;pendingTarget=0;pendingCommand=1;pendingAbility=0;pendingRule=-1;castOnUndead=false;targetAll=false;itemOnEnemies=false;aimFlyer=false;heldUse=false;
         }
         // Cure hurts undead: cast it (on all of them when there are several).
         // Tellah joins in while he stays above the MP his route plan reserves.
@@ -689,6 +689,13 @@ internal sealed class BattlePilot
             // of his HP (it costs ~8-9% a use; the explosion leaves him low and
             // the user wants it on the split bombs).
             if(rule.Command==DarknessCommand && (livingEnemies<4 || (stats!=null && stats.CurrentHP*5<Math.Max(1,stats.ConfirmedMaxHp()))))continue;
+            if(rule.HeldItem is int held)
+            {
+                if(!Holds(actor,held) || blockedItems.Contains(held))continue;
+                pendingItem=held;pendingTarget=0;pendingRule=r;itemOnEnemies=true;heldUse=true;
+                Log(actor,$"held item {held} (plan rule {r+1})");
+                return;
+            }
             if(rule.Item is int item)
             {
                 if(!HasItem(item))continue;
@@ -794,8 +801,35 @@ internal sealed class BattlePilot
         if(wantedIndex<0) {state.Failure=$"Required native command {wanted} not visible; stop instead of guessing";return;}
         Pulse(state,frame,wantedIndex<index?"Up":"Down","Select battle command");
     }
+    // Held items (a rod in hand): the item list's Up from the top opens the
+    // hand row (BattleItemInfomationController.State UseEquipSelect 2,
+    // equipContnetList), where Left/Right picks the hand (user: "you go to
+    // item menu then push up, then it shows your held items").
+    private bool heldUse;
+    private const int ItemUseSelect=1,ItemUseEquipSelect=2;
+    private static bool Holds(BattlePlayerData actor,int content)
+    {
+        var eq=actor.GetOwnedCharacterData()?.EquipmentData;
+        if(eq==null)return true; // can't tell: try it (SelectItem backs out if absent)
+        foreach(var kv in eq)if(kv.Value?.ContentId==content)return true;
+        return false;
+    }
+    private void SelectHeld(BattleInfomationController info,int wanted,Snapshot state,int frame)
+    {
+        var c=info.itemSelectController;if(c?.selectCursor==null || c.stateMachine==null)return;
+        int st=(int)c.stateMachine.Current;
+        if(st==ItemUseSelect) {Pulse(state,frame,"Up","Up to the held items");return;}
+        if(st!=ItemUseEquipSelect)return;
+        var rows=c.equipContnetList;int desired=-1;
+        for(int i=0;rows!=null && i<rows.Count;i++)if(rows[i]?.Data?.contentId==wanted) {desired=i;break;}
+        if(desired<0) {blockedItems.Add(wanted);Pulse(state,frame,"Back","Held item not in hand");return;}
+        int index=c.selectCursor.Index;
+        if(index==desired) {Pulse(state,frame,"Confirm","Use held item");return;}
+        Pulse(state,frame,desired<index?"Left":"Right","Find held item");
+    }
     private void SelectItem(BattleInfomationController info,int wanted,Snapshot state,int frame)
     {
+        if(heldUse) {SelectHeld(info,wanted,state,frame);return;}
         var c=info.itemSelectController;if(c?.selectCursor==null || c.displayDataList==null)return;
         int index=c.selectCursor.Index,desired=-1;
         for(int i=0;i<c.displayDataList.Count;i++)

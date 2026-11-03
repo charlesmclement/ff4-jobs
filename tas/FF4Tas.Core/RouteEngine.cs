@@ -64,7 +64,7 @@ public sealed class Route
                 throw new ArgumentException("Navigation needs a map and valid destination");
             if(s.Waypoints!=null && (s.Kind!="navigate" || s.Waypoints.Length>256 || s.Waypoints.Any(w=>w==null || w.X is <0 or >1024 || w.Y is <0 or >1024 || w.Layer is <0 or >15)))
                 throw new ArgumentException("Waypoints need a navigate step and valid cells");
-            if(s.BattlePlan!=null && (!s.HandleBattles || s.BattlePlan.Length>32 || s.BattlePlan.Any(r=>r==null || r.Command is <1 or >64 || r.MinHpPercent is <0 or >100 || r.MinMp is <0 or >999 || r.ReserveMp is <0 or >999 || r.MinEnemies is <0 or >8 || r.Item is <1 or >5000 || r.Ability is <1 or >2000)))
+            if(s.BattlePlan!=null && (!s.HandleBattles || s.BattlePlan.Length>32 || s.BattlePlan.Any(r=>r==null || r.Command is <1 or >64 || r.MinHpPercent is <0 or >100 || r.MinMp is <0 or >999 || r.ReserveMp is <0 or >999 || r.MinEnemies is <0 or >8 || r.Item is <1 or >5000 || r.HeldItem is <1 or >5000 || r.Ability is <1 or >2000)))
                 throw new ArgumentException("Battle plans need handleBattles and valid rules");
             if(s.Choice is <0 or >15)throw new ArgumentException("Invalid choice index");
             if(s.EquipReset!=null && (s.Equip==null || s.EquipReset.Any(id=>!s.Equip.Contains(id))))throw new ArgumentException("equipReset members must be in equip");
@@ -227,6 +227,10 @@ public sealed class BattleRule
     // the heal line and not already someone else's heal); skip the rule when
     // nobody is (Palom backing up Porom with Potions at Baigan).
     public bool TargetInjured {get;set;}
+    // Use the weapon held in hand as an item (Items, then Up to the held
+    // items): a Thunder Rod casts Thunder for no MP (user). Aimed at the
+    // kill-order target. Skipped when the actor holds no such item.
+    public int? HeldItem {get;set;}
     // Target the whole enemy side (one Thunder on all instead of three singles).
     public bool TargetAll {get;set;}
     // Pick Fire/Blizzard/Thunder by the living enemies' shared weakness

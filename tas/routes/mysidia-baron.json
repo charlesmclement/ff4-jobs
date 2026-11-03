@@ -1201,7 +1201,7 @@
       "mapId": 24,
       "goal": {
         "x": 15,
-        "y": 18,
+        "y": 17,
         "layer": 0
       },
       "phases": [
@@ -1221,13 +1221,6 @@
       },
       "stableFrames": 15,
       "timeoutFrames": 54000,
-      "waypoints": [
-        {
-          "x": 15,
-          "y": 19,
-          "layer": 0
-        }
-      ],
       "skipIf": {
         "flag2": 15
       },
@@ -1273,7 +1266,7 @@
       "mapId": 24,
       "goal": {
         "x": 15,
-        "y": 18,
+        "y": 17,
         "layer": 0
       },
       "phases": [
@@ -1293,14 +1286,7 @@
         "mapId": 31
       },
       "stableFrames": 2,
-      "timeoutFrames": 54000,
-      "waypoints": [
-        {
-          "x": 15,
-          "y": 19,
-          "layer": 0
-        }
-      ]
+      "timeoutFrames": 54000
     },
     {
       "label": "Weapon shop: up to the weaponsmith",
@@ -1330,7 +1316,7 @@
       "timeoutFrames": 54000
     },
     {
-      "label": "Weapon shop: claw pairs for Yang - 2 Thunder, 2 Fire, 2 Ice",
+      "label": "Weaponsmith: 2 Thunder Claws, 2 Thunder Rods",
       "kind": "menu",
       "mapId": 31,
       "phases": [
@@ -1354,6 +1340,124 @@
             "count": 2
           },
           {
+            "content": 184,
+            "count": 2
+          }
+        ],
+        "sell": []
+      }
+    },
+    {
+      "label": "Weapon shop: over to the armorer",
+      "kind": "navigate",
+      "mapId": 31,
+      "goal": {
+        "x": 16,
+        "y": 8,
+        "layer": 0
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "atDestination": true
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 54000
+    },
+    {
+      "label": "Armorer: Headband, 2 more Silver Armlets (4 with the twins'), Kenpo Gi",
+      "kind": "menu",
+      "mapId": 31,
+      "phases": [
+        "Player",
+        "Menu",
+        "Shop",
+        "Message",
+        "FieldReady",
+        "ChangeMap"
+      ],
+      "until": {
+        "menuDone": true
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 10800,
+      "facing": "Up",
+      "shop": {
+        "buy": [
+          {
+            "content": 242,
+            "count": 1
+          },
+          {
+            "content": 298,
+            "count": 4
+          },
+          {
+            "content": 270,
+            "count": 1
+          }
+        ],
+        "sell": []
+      }
+    },
+    {
+      "label": "Weapon shop: back to the weaponsmith",
+      "kind": "navigate",
+      "mapId": 31,
+      "goal": {
+        "x": 11,
+        "y": 8,
+        "layer": 0
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "atDestination": true
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 54000
+    },
+    {
+      "label": "Weaponsmith: Fire and Ice Claw pairs for Yang",
+      "kind": "menu",
+      "mapId": 31,
+      "phases": [
+        "Player",
+        "Menu",
+        "Shop",
+        "Message",
+        "FieldReady",
+        "ChangeMap"
+      ],
+      "until": {
+        "menuDone": true
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 10800,
+      "facing": "Up",
+      "shop": {
+        "buy": [
+          {
             "content": 162,
             "count": 2
           },
@@ -1364,6 +1468,27 @@
         ],
         "sell": []
       }
+    },
+    {
+      "label": "Weapon shop: Strongest on everyone (new rods and armor)",
+      "kind": "menu",
+      "mapId": 31,
+      "phases": [
+        "Player",
+        "Menu",
+        "Shop",
+        "Message",
+        "FieldReady",
+        "ChangeMap"
+      ],
+      "until": {
+        "menuDone": true
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 10800,
+      "equip": [
+        0
+      ]
     },
     {
       "label": "Weapon shop: Yang - Thunder Claws in both hands (else any claws)",
@@ -3342,6 +3467,15 @@
           ]
         },
         {
+          "character": 6,
+          "command": 3,
+          "heldItem": 184,
+          "whileMonster": 171,
+          "whileModeNot": [
+            4
+          ]
+        },
+        {
           "character": 9,
           "command": 8,
           "ability": 40,
@@ -3353,9 +3487,8 @@
         },
         {
           "character": 9,
-          "command": 8,
-          "ability": 39,
-          "minMp": 5,
+          "command": 3,
+          "heldItem": 184,
           "whileMonster": 171,
           "whileModeNot": [
             4
@@ -3524,6 +3657,15 @@
           ]
         },
         {
+          "character": 6,
+          "command": 3,
+          "heldItem": 184,
+          "whileMonster": 171,
+          "whileModeNot": [
+            4
+          ]
+        },
+        {
           "character": 9,
           "command": 8,
           "ability": 40,
@@ -3535,9 +3677,8 @@
         },
         {
           "character": 9,
-          "command": 8,
-          "ability": 39,
-          "minMp": 5,
+          "command": 3,
+          "heldItem": 184,
           "whileMonster": 171,
           "whileModeNot": [
             4
@@ -3696,6 +3837,15 @@
           ]
         },
         {
+          "character": 6,
+          "command": 3,
+          "heldItem": 184,
+          "whileMonster": 171,
+          "whileModeNot": [
+            4
+          ]
+        },
+        {
           "character": 9,
           "command": 8,
           "ability": 40,
@@ -3707,9 +3857,8 @@
         },
         {
           "character": 9,
-          "command": 8,
-          "ability": 39,
-          "minMp": 5,
+          "command": 3,
+          "heldItem": 184,
           "whileMonster": 171,
           "whileModeNot": [
             4
@@ -3878,6 +4027,15 @@
           ]
         },
         {
+          "character": 6,
+          "command": 3,
+          "heldItem": 184,
+          "whileMonster": 171,
+          "whileModeNot": [
+            4
+          ]
+        },
+        {
           "character": 9,
           "command": 8,
           "ability": 40,
@@ -3889,9 +4047,8 @@
         },
         {
           "character": 9,
-          "command": 8,
-          "ability": 39,
-          "minMp": 5,
+          "command": 3,
+          "heldItem": 184,
           "whileMonster": 171,
           "whileModeNot": [
             4
@@ -4050,6 +4207,15 @@
           ]
         },
         {
+          "character": 6,
+          "command": 3,
+          "heldItem": 184,
+          "whileMonster": 171,
+          "whileModeNot": [
+            4
+          ]
+        },
+        {
           "character": 9,
           "command": 8,
           "ability": 40,
@@ -4061,9 +4227,8 @@
         },
         {
           "character": 9,
-          "command": 8,
-          "ability": 39,
-          "minMp": 5,
+          "command": 3,
+          "heldItem": 184,
           "whileMonster": 171,
           "whileModeNot": [
             4
@@ -4224,6 +4389,15 @@
           ]
         },
         {
+          "character": 6,
+          "command": 3,
+          "heldItem": 184,
+          "whileMonster": 171,
+          "whileModeNot": [
+            4
+          ]
+        },
+        {
           "character": 9,
           "command": 8,
           "ability": 40,
@@ -4235,9 +4409,8 @@
         },
         {
           "character": 9,
-          "command": 8,
-          "ability": 39,
-          "minMp": 5,
+          "command": 3,
+          "heldItem": 184,
           "whileMonster": 171,
           "whileModeNot": [
             4

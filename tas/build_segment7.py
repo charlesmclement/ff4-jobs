@@ -78,11 +78,16 @@ SHELL=[4]
 cagnazzo=[{'character':PALADIN,'command':2,'whileMonster':CAGNAZZO,'whileModeIn':SHELL,'first':True},
           {'character':PALADIN,'command':1,'whileMonster':CAGNAZZO,'whileModeNot':SHELL,'first':True}]
 cagnazzo+=[{'character':c,'command':2,'whileMonster':CAGNAZZO,'whileModeIn':SHELL} for c in (YANG,PALOM,POROM,TELLAH)]
+# Tellah spams his strongest lightning (user), the Thunder Rod only once
+# he's dry; Palom Thundara, then his Thunder Rod (a free Thunder: Items, Up
+# to the held items - user).
+THUNDER_ROD_ITEM=184
 cagnazzo+=[
     {'character':TELLAH,'command':8,'ability':THUNDAGA,'minMp':30,'whileMonster':CAGNAZZO,'whileModeNot':SHELL},
     {'character':TELLAH,'command':8,'ability':THUNDARA,'minMp':15,'whileMonster':CAGNAZZO,'whileModeNot':SHELL},
+    {'character':TELLAH,'command':3,'heldItem':THUNDER_ROD_ITEM,'whileMonster':CAGNAZZO,'whileModeNot':SHELL},
     {'character':PALOM,'command':8,'ability':THUNDARA,'minMp':15,'whileMonster':CAGNAZZO,'whileModeNot':SHELL},
-    {'character':PALOM,'command':8,'ability':39,'minMp':5,'whileMonster':CAGNAZZO,'whileModeNot':SHELL},
+    {'character':PALOM,'command':3,'heldItem':THUNDER_ROD_ITEM,'whileMonster':CAGNAZZO,'whileModeNot':SHELL},
     {'character':TELLAH,'command':2,'whileMonster':CAGNAZZO},
     {'character':PALOM,'command':2,'whileMonster':CAGNAZZO},
     {'character':POROM,'command':2,'whileMonster':CAGNAZZO},
@@ -129,18 +134,36 @@ s.append(heal('Inn: heal after the fights',INN))
 s.append(door('Inn: out',INN,(21,22),BARON_TOWN))
 # Claws right after Yang (user): 2 Thunder (Cagnazzo), 2 Fire, 2 Ice; owned
 # claws count. Then a claw in each hand, Thunder first (Strongest skips
-# claws). Weapon shop: map 31, door (15,18), weaponsmith (11,6).
-# The door is the GotoMap at (15,18) (arrival outside (15,19)); before Yang
+# claws). Weapon shop: map 31, door (15,17), weaponsmith (11,6).
+# The door is (15,17), pushed into from (15,18) (show_map's cells; an ad-hoc
+# read without the tile-object offset said (15,18), live it wasn't). Before Yang
 # a "can't enter" message sits on it (ev_e_0030). After Yang it is locked
 # with the Baron Key, like the waterway door: the item list opens and the
 # key (item 68) is one to the right of the default (user). sc_e_0156 sets
 # ScenarioFlag2 15 when it opens.
-s.append(nav('Baron: walk up to the locked weapon shop door',BARON_TOWN,(15,18),{'phase':'Event'},[(15,19)],stableFrames=15,skipIf={'flag2':15},group='weaponkey'))
+s.append(nav('Baron: walk up to the locked weapon shop door',BARON_TOWN,(15,17),{'phase':'Event'},stableFrames=15,skipIf={'flag2':15},group='weaponkey'))
 s.append(mash('Baron: open the weapon shop with the Baron Key (item choice)',None,itemChoice=BARON_KEY,until={'phase':'Player','flag2':15},skipIf={'flag2':15},group='weaponkey'))
-s.append(door('Baron: into the weapon shop',BARON_TOWN,(15,18),WEAPON_SHOP,[(15,19)]))
+s.append(door('Baron: into the weapon shop',BARON_TOWN,(15,17),WEAPON_SHOP))
+# Best gear Baron sells (user: "upgrade all weapons and armor to optimal for
+# everyone at this point"; master data, product groups 1 and 2):
+#   Thunder Rod (atk 10, int +3) for Palom (Flame Rod atk 7) and Tellah;
+#   Headband (def 1, eva 10), Silver Armlet (def 4, mdef 4) and Kenpo Gi
+#   (def 5 vs Leather Garb 2) for Yang, who had no head or arms; a Silver
+#   Armlet for Tellah. Cecil's Paladin set and the twins' Mysidia gear are
+#   already the best on offer. Counts include what's worn (the twins wear 2
+#   Silver Armlets). Thunder Claws first (Cagnazzo), the 4000-gil Gi after
+#   the cheap upgrades, Fire/Ice pairs last.
+THUNDER_ROD,HEADBAND,SILVER_ARMLET,KENPO_GI=184,242,298,270
 s.append(nav('Weapon shop: up to the weaponsmith',WEAPON_SHOP,(11,8),{'atDestination':True}))
-s.append(shop("Weapon shop: claw pairs for Yang - 2 Thunder, 2 Fire, 2 Ice",WEAPON_SHOP,
-              [{'content':THUNDER_CLAW,'count':2},{'content':FIRE_CLAW,'count':2},{'content':ICE_CLAW,'count':2}]))
+s.append(shop("Weaponsmith: 2 Thunder Claws, 2 Thunder Rods",WEAPON_SHOP,
+              [{'content':THUNDER_CLAW,'count':2},{'content':THUNDER_ROD,'count':2}]))
+s.append(nav('Weapon shop: over to the armorer',WEAPON_SHOP,(16,8),{'atDestination':True}))
+s.append(shop("Armorer: Headband, 2 more Silver Armlets (4 with the twins'), Kenpo Gi",WEAPON_SHOP,
+              [{'content':HEADBAND,'count':1},{'content':SILVER_ARMLET,'count':4},{'content':KENPO_GI,'count':1}]))
+s.append(nav('Weapon shop: back to the weaponsmith',WEAPON_SHOP,(11,8),{'atDestination':True}))
+s.append(shop("Weaponsmith: Fire and Ice Claw pairs for Yang",WEAPON_SHOP,
+              [{'content':FIRE_CLAW,'count':2},{'content':ICE_CLAW,'count':2}]))
+s.append(equip('Weapon shop: Strongest on everyone (new rods and armor)',WEAPON_SHOP,[0]))
 s.append(claws('Weapon shop: Yang - Thunder Claws in both hands (else any claws)',WEAPON_SHOP,LIGHTNING))
 s.append(door('Weapon shop: out',WEAPON_SHOP,(13,13),BARON_TOWN))
 s.append(nav('Baron: west to the locked waterway door - walk in',BARON_TOWN,(4,20),{'phase':'Event'},stableFrames=15))

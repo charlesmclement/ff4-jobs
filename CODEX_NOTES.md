@@ -875,3 +875,13 @@ User: "none of the programming should be based on what slot the character is in.
 * Item and battle targets already went by character (TargetCursor, GetPlayerTarget).
 * Weapon shop door fix: it's the GotoMap (15,18) (arrival outside (15,19)), not the animation tile (15,17). Before Yang a "can't enter" message entity sits on it (ev_e_0030); after Yang (ev_e_0033) it's gone.
 Weapon shop door after Yang (live): locked with the Baron Key, and the plain door step confirmed the default item. sc_e_0156 opens it on item 68 and sets ScenarioFlag2 15. Steps: walk in until Event, then mash with itemChoice 68 until flag2 15 (group weaponkey, skipped once open), then the door. The engine's item-list steering already moves Left/Right in the two-column grid.
+
+### 125. Baron gear upgrade; held items (Thunder Rod)
+User: "upgrade all weapons and armor to optimal for everyone at this point", and the Thunder Rod gives free Thunder from the item menu ("push up, then it shows your held items").
+* Baron weapon shop (map 31). Weaponsmith (11,6), group 1: Thunder Rod, Healing Staff, the claws. Armorer (16,6), group 2: Headband, Kenpo Gi, Silver Armlet.
+* Buys: 2 Thunder Claws and 2 Thunder Rods (Palom, Tellah: atk 10 vs the Flame Rod's 7, int +3); a Headband, Silver Armlets to 4 total, and a Kenpo Gi (Yang had no head or arms, Leather Garb def 2); then Fire and Ice Claw pairs.
+* Then Strongest on everyone, then Yang's Thunder pair. Cecil's Paladin set and the twins' gear are already the best on offer.
+* Rods: weapon.trigger_ability_id. The Flame Rod casts Fire (33), the Ice Rod Blizzard (36), the Thunder Rod Thunder (39).
+* New BattleRule `heldItem`: Items (command 3), Up from the bag list into BattleItemInfomationController state UseEquipSelect 2 (`equipContnetList`, Data.contentId), Left/Right to the hand, Confirm, then a single enemy (the kill-order target).
+* `Holds()` checks OwnedCharacterData.EquipmentData. A held item that isn't found is blocked for the fight.
+* Cagnazzo out of the shell: Tellah Thundaga → Thundara → Thunder Rod. Palom Thundara → Thunder Rod.
