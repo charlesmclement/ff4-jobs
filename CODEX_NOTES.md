@@ -697,3 +697,4 @@ Milon (first form) gets the same Porom Twincast rule (user).
 
 ### 100. Field cure handles Poison
 User, after Milon Z: "We are poisoned so if antidote or esuna isn't in the field cure add it". FieldMagic: after Life on the fallen, a poisoned member (master condition 10 in the owned Parameter.CurrentConditionList) gets Esuna (ability 10, 20 MP) from the first caster who knows it, before any Cure. FieldMenu: after Phoenix Down, an Antidote (content 16) goes to a poisoned member, before Potions. Poison makes FieldCare.Wanted() true, so the after-fight heal also clears it. Shops don't buy Antidotes yet.
+Item shops (Mysidia x2, Toroia) now also buy up to 5 Antidotes (content 16); an item a shop doesn't stock is skipped (ShopDriver.NextBuy).

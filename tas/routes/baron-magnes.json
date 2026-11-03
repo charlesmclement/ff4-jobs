@@ -539,7 +539,7 @@
       "timeoutFrames": 54000
     },
     {
-      "label": "Item shop: Tents, Potions, Phoenix Downs (Tellah is the only healer)",
+      "label": "Item shop: Tents, Potions, Phoenix Downs, Antidotes (Tellah is the only healer)",
       "kind": "menu",
       "mapId": 89,
       "phases": [
@@ -569,6 +569,10 @@
           {
             "content": 9,
             "count": 6
+          },
+          {
+            "content": 16,
+            "count": 5
           }
         ],
         "sell": []

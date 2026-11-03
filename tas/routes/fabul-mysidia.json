@@ -912,7 +912,7 @@
       "timeoutFrames": 54000
     },
     {
-      "label": "Item shop: Tents for the Mt. Ordeals rests, Potions, Phoenix Downs",
+      "label": "Item shop: Tents for the Mt. Ordeals rests, Potions, Phoenix Downs, Antidotes",
       "kind": "menu",
       "mapId": 65,
       "phases": [
@@ -941,6 +941,10 @@
           },
           {
             "content": 9,
+            "count": 5
+          },
+          {
+            "content": 16,
             "count": 5
           }
         ],
@@ -5186,7 +5190,7 @@
       "timeoutFrames": 54000
     },
     {
-      "label": "Item shop: restock Potions, Phoenix Downs, Tents",
+      "label": "Item shop: restock Potions, Phoenix Downs, Antidotes, Tents",
       "kind": "menu",
       "mapId": 65,
       "phases": [
@@ -5211,6 +5215,10 @@
           },
           {
             "content": 9,
+            "count": 5
+          },
+          {
+            "content": 16,
             "count": 5
           },
           {
