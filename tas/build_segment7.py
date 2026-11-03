@@ -39,9 +39,10 @@ field=[
 # Everyone Defends; healing still comes first (Yang is a route realFight, so
 # the normal heal logic runs). The rules name the twins, which also blocks
 # their Twincast default.
-# Potions are fine here (user): Cecil, Palom and Tellah Potion whoever is
-# hurt; Porom Cures; otherwise everyone Defends.
-monk=[{'character':c,'command':3,'item':2,'targetInjured':True,'whileMonster':MONK,'first':True} for c in (PALADIN,PALOM,TELLAH)]
+# Cecil, Tellah and Porom have Cure (user): they heal with it through the
+# normal heal logic. Palom has none, so he uses Potions (user: "using potion
+# is A-ok"). Otherwise everyone Defends.
+monk=[{'character':PALOM,'command':3,'item':2,'targetInjured':True,'whileMonster':MONK,'first':True}]
 monk+=[{'character':c,'command':2,'whileMonster':MONK} for c in (PALADIN,PALOM,POROM,TELLAH)]
 # Baigan (user's strat, live): the arms come back only after BOTH are
 # dead, so: the arm nearest the party (master 170) by attacks while the
