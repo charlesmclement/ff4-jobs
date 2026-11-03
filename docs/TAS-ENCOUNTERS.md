@@ -94,6 +94,17 @@ manipulation) doesn't apply directly: the Pixel Remaster rolls a
 threshold with Unity's generator, as above. SNES addresses and formulas
 were not used.
 
+## Live results (first run, overworld Hobs → Fabul)
+
+* **Forecast works** (user, live): the battles started when the counter reached the threshold (174/174, 178/180, 127/129).
+* **RNG model verified (live)**: 2681 of 2685 traced `Random.RandomRangeInt` results matched Unity Xorshift128 from the last `InitState`. The 4 misses come right after a seed and point to an untraced draw (likely a float `Random.value`/`Range(float)`).
+* **Enemy group roll verified (live)**: rolls 892, 295, 995 gave the groups the per-mille ranges predict (monster sets 6/15: 798–922 Bombs, 169–336 Gatlinger/Domovoi, 985–1000 Sword Rats).
+* **When the rolls happen**: the enemy roll `Range(1,1001)` and the next threshold `Range(150,201)` are drawn the moment a battle triggers, from whatever state the generator is in. Nothing draws on the field while walking.
+* **Seeds**: each battle start reseeds with `(int)DateTime.Now.Ticks` (CommonUtility.SetSeed; 100 ns ticks, not controllable). Level-ups reseed with small values (51, 1684, 2806 seen), and the next field rolls came straight from seed 51: party roll 295 and threshold 178, predicted exactly.
+* **Battles use the same generator** (10,619 `Range(0,101)` rolls, plus damage-sized ranges). Field menus draw too (`Range(0,99)` ×92, `Range(0,9)` ×16: likely healing amounts).
+
+So the next battle's group and the threshold after it are fixed when the last battle ends. Legitimate ways to change them before walking into it: anything that draws or reseeds (a map transition runs `Shuffle`, which draws one value; field healing draws), or changing which area's monster set is active where the battle triggers.
+
 ## Tools
 
 * `tas/FF4Tas.Plugin/EncounterWatch.cs`: read-only hooks (Harmony postfixes)
