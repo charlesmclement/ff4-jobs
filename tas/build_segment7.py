@@ -57,7 +57,11 @@ FIRAGA=35
 POTION=2
 baigan=[{'character':PALADIN,'command':1,'whileMonster':BAIGAN,'first':True},
         {'character':PALOM,'command':3,'item':POTION,'targetInjured':True,'whileMonster':BAIGAN,'first':True},
-        {'character':TELLAH,'command':8,'ability':FIRAGA,'minMp':30,'onTarget':BAIGAN,'whileMonster':BAIGAN}]
+        {'character':TELLAH,'command':8,'ability':FIRAGA,'minMp':30,'onTarget':BAIGAN,'whileMonster':BAIGAN,'oncePerBattle':True},
+        # Later Firagas (each time his Reflect is down) only while 30 MP stay
+        # for Cagnazzo's Thundaga (user: "fix it for next time" - Tellah
+        # reached Cagnazzo empty). reserveMp keeps his in-fight Cures above 30.
+        {'character':TELLAH,'command':8,'ability':FIRAGA,'minMp':60,'onTarget':BAIGAN,'whileMonster':BAIGAN,'reserveMp':30}]
 baigan+=[{'character':c,'command':2,'whileMonster':BAIGAN} for c in (PALOM,POROM,TELLAH)]+field
 # Cagnazzo (user: "real similar to mist dragon but he goes inside his
 # shell", "hit him with Lit3 when he comes out, any time he's out").

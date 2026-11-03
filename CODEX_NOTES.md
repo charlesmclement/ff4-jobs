@@ -849,3 +849,4 @@ Fixes:
 * FieldMagic caster order is now Rosa, Rydia, Porom, FuSoYa, Tellah (last), in every segment.
 * Cagnazzo: Cecil Attack (`first`) while out of the shell, Defend (`first`) in it.
 * The AI-mode read works: the battle line shows `[mode 171:3]` at the start.
+Tellah's MP budget at Baigan: the first Firaga at 30+ MP (oncePerBattle), later ones only at 60+ so 30 stays for Cagnazzo's Thundaga; reserveMp 30 keeps his in-fight Cures above that. Field heals already use him last.
