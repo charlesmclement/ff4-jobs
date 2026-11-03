@@ -183,7 +183,17 @@ internal sealed class EquipMenu
             // Not in the bag (or already worn there): skip it.
             if(want<0) {if(frame%12==0)itemsDone.Add(k);Pulse(s,frame,"Back",$"Item {e.Content} not in the list ({list.Count} entries)");return;}
             int at=cur.Index;
-            if(at==want) {if(frame%12==0) {itemsDone.Add(k);wait=AfterEquip;exactPresses=0;}Pulse(s,frame,"Confirm",$"Equip item {e.Content} in slot {e.Slot}");return;}
+            // Equipped: the other choices for this hand are spent too (a list
+            // of preferences per slot - Thunder, else Fire, else Ice Claw).
+            if(at==want)
+            {
+                if(frame%12==0)
+                {
+                    for(int o=0;o<items.Length;o++)if(items[o].Character==e.Character && items[o].Slot==e.Slot)itemsDone.Add(o);
+                    wait=AfterEquip;exactPresses=0;
+                }
+                Pulse(s,frame,"Confirm",$"Equip item {e.Content} in slot {e.Slot}");return;
+            }
             // A lap without landing (cursor index isn't the list index): give up on it.
             if(frame%12==0 && ++exactPresses>2*list.Count+6) {itemsDone.Add(k);exactPresses=0;Pulse(s,frame,"Back",$"Can't reach item {e.Content}");return;}
             Pulse(s,frame,want<at?"Up":"Down",$"Item {e.Content}: list {want}, cursor {at}");return;

@@ -47,7 +47,10 @@ monk=[{'character':c,'command':2,'whileMonster':MONK} for c in (PALOM,POROM,TELL
 # Defend, Porom heals. No Twincast or AOE (these rules block the twins'
 # Twincast default).
 FIRAGA=35
-baigan=[{'character':TELLAH,'command':8,'ability':FIRAGA,'minMp':30,'onTarget':BAIGAN,'whileMonster':BAIGAN,'oncePerBattle':True}]
+# Cecil attacks every turn here and leaves healing to Porom and Tellah (user:
+# "cecil to focus damage on the body and not heal during this fight").
+baigan=[{'character':PALADIN,'command':1,'whileMonster':BAIGAN,'first':True},
+        {'character':TELLAH,'command':8,'ability':FIRAGA,'minMp':30,'onTarget':BAIGAN,'whileMonster':BAIGAN,'oncePerBattle':True}]
 baigan+=[{'character':c,'command':2,'whileMonster':BAIGAN} for c in (PALOM,POROM,TELLAH)]+field
 # Cagnazzo (user: "real similar to mist dragon but he goes inside his
 # shell", "hit him with Lit3 when he comes out, any time he's out").
@@ -99,7 +102,10 @@ s.extend(trigger('Inn: talk to Yang - two Baron Guards, then Yang himself; he jo
 s.append(formation('Inn: formation - Palom, Cecil, Porom, Yang, Tellah; Cecil and Yang in front',INN,[PALOM,PALADIN,POROM,YANG,TELLAH],[1,3]))
 # Strongest only: no Thunder Claws can be owned yet (Baron's weapon shop
 # opens after Cagnazzo; segment 8 buys them).
-s.append(equip('Inn: Yang takes everything off, then Strongest',INN,[YANG],reset=[YANG]))
+# User: "make yang equip his claw or claws" - Strongest leaves claws off
+# (attack 0 in the table), so after it he puts on whatever claws are in the
+# bag, one per hand (Thunder, else Fire, else Ice).
+s.append(any_claws('Inn: Yang takes everything off, Strongest, then a claw in each hand',INN,reset=[YANG]))
 s.append(heal('Inn: heal after the fights',INN))
 s.append(door('Inn: out',INN,(21,22),BARON_TOWN))
 s.append(nav('Baron: west to the locked waterway door - walk in',BARON_TOWN,(4,20),{'phase':'Event'},stableFrames=15))
@@ -132,6 +138,8 @@ s.append(door('Side corridor: up and back out beside the hall',CASTLE_CORRIDOR,(
 s.append(door('Baron Castle: into the inner hall',CASTLE_OUT,(16,15),CASTLE_HALL,[(12,15)],battlePlan=field))
 s.extend(trigger('Castle hall: Baigan "joins", the twins smell a monster - Baigan and his arms (flag 32)',CASTLE_HALL,(11,11),32,battlePlan=baigan))
 s.append(heal('Castle hall: heal after Baigan (guide: "This fight will leave you wounded")',CASTLE_HALL))
+# Cagnazzo is weak to lightning: Thunder Claws first if he has any.
+s.append(claws('Castle hall: Yang - Thunder Claws first for Cagnazzo, else any claws',CASTLE_HALL,LIGHTNING))
 s.append(door('Castle hall: north stairs',CASTLE_HALL,(13,2),CASTLE_2F,battlePlan=field))
 s.append(door('Castle 2F: to the throne room passage',CASTLE_2F,(25,5),WALL_ROOM,battlePlan=field))
 s.append(door('Passage: into the throne room',WALL_ROOM,(6,6),THRONE,battlePlan=field))

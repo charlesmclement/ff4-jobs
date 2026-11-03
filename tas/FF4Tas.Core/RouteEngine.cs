@@ -220,6 +220,9 @@ public sealed class BattleRule
     // Cagnazzo: mode 4 is "Turtle defense!" (the shell, Restore inside).
     public int[]? WhileModeIn {get;set;}
     public int[]? WhileModeNot {get;set;}
+    // Checked before any healing or status cure (user: Cecil should "focus
+    // damage on the body and not heal during this fight").
+    public bool First {get;set;}
     // Target the whole enemy side (one Thunder on all instead of three singles).
     public bool TargetAll {get;set;}
     // Pick Fire/Blizzard/Thunder by the living enemies' shared weakness

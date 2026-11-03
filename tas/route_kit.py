@@ -109,13 +109,22 @@ def equip(label,map_id,who,reset=None,**extra):
 YANG_ID,FIRE_CLAW_ID,ICE_CLAW_ID,THUNDER_CLAW_ID=8,162,163,164
 FIRE,ICE,LIGHTNING=1,2,3
 CLAW_FOR={FIRE:FIRE_CLAW_ID,ICE:ICE_CLAW_ID,LIGHTNING:THUNDER_CLAW_ID}
+def any_claws(label,map_id,first=None,**extra):
+    """Yang: a claw in each hand from whatever is in the bag (Strongest skips
+    claws - they list attack 0, and he stayed bare-handed). Per hand the
+    preference is `first`'s claw, then Thunder, Fire, Ice; a claw not owned
+    is skipped, and once a hand is filled its other choices are dropped."""
+    order=[CLAW_FOR[first]] if first else []
+    order+=[c for c in (THUNDER_CLAW_ID,FIRE_CLAW_ID,ICE_CLAW_ID) if c not in order]
+    items=[{'character':YANG_ID,'slot':slot,'content':c} for slot in (0,1) for c in order]
+    return equip(label,map_id,[YANG_ID],equipItems=items,**extra)
+
 def claws(label,map_id,element,**extra):
     """Yang's claws for a boss's weakness (user: "2 fire 2 ice 2 lightning",
     swapped by weakness): Strongest, then that element's claw in both hands
     (slots 0 and 1). The element comes from the guide - the master data has
     no weakness on the bosses (Cagnazzo, Baigan: resistance group 0)."""
-    claw=CLAW_FOR[element]
-    return equip(label,map_id,[YANG_ID],equipItems=[{'character':YANG_ID,'slot':0,'content':claw},{'character':YANG_ID,'slot':1,'content':claw}],**extra)
+    return any_claws(label,map_id,element,**extra)
 
 def formation(label,map_id,order,front,**extra):
     return menu(label,map_id,formation={'order':list(order),'front':list(front)},**extra)

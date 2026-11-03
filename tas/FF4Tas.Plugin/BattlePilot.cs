@@ -512,6 +512,8 @@ internal sealed class BattlePilot
         bool isTellah=actor.GetOwnedCharacterData()?.characterStatusId==Tellah;
         bool canCure=stats!=null && stats.CurrentMP>=CureMp && CommandEnabled(info,WhiteMagic) && !blockedCure.Contains(actor.Pointer);
         int me=actor.GetOwnedCharacterData()?.characterStatusId??0;
+        // Rules marked First beat every heal and cure (Cecil at Baigan).
+        if(plan!=null && Array.Exists(plan,r=>r.First)) {ChoosePlan(info,actor,plan,true);if(pendingRule>=0)return;}
         // Status cures before healing: the worst status on anyone (Petrify,
         // Confuse, Sleep, Paralyze, Toad, Pig, Silence, Mini) - its item, else
         // Esuna, else a Remedy; Toad/Mini then fall back to the toggle spells.
@@ -643,7 +645,7 @@ internal sealed class BattlePilot
     }
     // First plan rule for this actor whose command is visible and enabled and
     // whose HP condition holds. Ability availability is checked in the list.
-    private void ChoosePlan(BattleInfomationController info,BattlePlayerData actor,BattleRule[]? plan)
+    private void ChoosePlan(BattleInfomationController info,BattlePlayerData actor,BattleRule[]? plan,bool firstOnly=false)
     {
         if(plan==null)return;
         var stats=actor.BattleUnitDataInfo?.Parameter;
@@ -652,6 +654,7 @@ internal sealed class BattlePilot
         {
             var rule=plan[r];
             if(blockedRules.Contains(r))continue;
+            if(firstOnly && !rule.First)continue;
             // Decide re-runs every frame of a turn: the rule this turn already
             // took stays allowed, so a once-per-battle rule isn't skipped
             // before it is ever input (Yang skipped Attack x2 + Focus).

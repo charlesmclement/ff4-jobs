@@ -1094,7 +1094,7 @@
       }
     },
     {
-      "label": "Inn: Yang takes everything off, then Strongest",
+      "label": "Inn: Yang takes everything off, Strongest, then a claw in each hand",
       "kind": "menu",
       "mapId": 25,
       "phases": [
@@ -1112,6 +1112,38 @@
       "timeoutFrames": 10800,
       "equip": [
         8
+      ],
+      "equipItems": [
+        {
+          "character": 8,
+          "slot": 0,
+          "content": 164
+        },
+        {
+          "character": 8,
+          "slot": 0,
+          "content": 162
+        },
+        {
+          "character": 8,
+          "slot": 0,
+          "content": 163
+        },
+        {
+          "character": 8,
+          "slot": 1,
+          "content": 164
+        },
+        {
+          "character": 8,
+          "slot": 1,
+          "content": 162
+        },
+        {
+          "character": 8,
+          "slot": 1,
+          "content": 163
+        }
       ],
       "equipReset": [
         8
@@ -2020,6 +2052,12 @@
       "timeoutFrames": 54000,
       "battlePlan": [
         {
+          "character": 13,
+          "command": 1,
+          "whileMonster": 168,
+          "first": true
+        },
+        {
           "character": 6,
           "command": 8,
           "ability": 35,
@@ -2121,6 +2159,12 @@
       "timeoutFrames": 216000,
       "battlePlan": [
         {
+          "character": 13,
+          "command": 1,
+          "whileMonster": 168,
+          "first": true
+        },
+        {
           "character": 6,
           "command": 8,
           "ability": 35,
@@ -2211,6 +2255,12 @@
       "stableFrames": 15,
       "timeoutFrames": 54000,
       "battlePlan": [
+        {
+          "character": 13,
+          "command": 1,
+          "whileMonster": 168,
+          "first": true
+        },
         {
           "character": 6,
           "command": 8,
@@ -2313,6 +2363,12 @@
       "timeoutFrames": 216000,
       "battlePlan": [
         {
+          "character": 13,
+          "command": 1,
+          "whileMonster": 168,
+          "first": true
+        },
+        {
           "character": 6,
           "command": 8,
           "ability": 35,
@@ -2403,6 +2459,12 @@
       "stableFrames": 15,
       "timeoutFrames": 54000,
       "battlePlan": [
+        {
+          "character": 13,
+          "command": 1,
+          "whileMonster": 168,
+          "first": true
+        },
         {
           "character": 6,
           "command": 8,
@@ -2497,6 +2559,12 @@
       "timeoutFrames": 216000,
       "battlePlan": [
         {
+          "character": 13,
+          "command": 1,
+          "whileMonster": 168,
+          "first": true
+        },
+        {
           "character": 6,
           "command": 8,
           "ability": 35,
@@ -2577,6 +2645,59 @@
       },
       "stableFrames": 2,
       "timeoutFrames": 7200
+    },
+    {
+      "label": "Castle hall: Yang - Thunder Claws first for Cagnazzo, else any claws",
+      "kind": "menu",
+      "mapId": 5,
+      "phases": [
+        "Player",
+        "Menu",
+        "Shop",
+        "Message",
+        "FieldReady",
+        "ChangeMap"
+      ],
+      "until": {
+        "menuDone": true
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 10800,
+      "equip": [
+        8
+      ],
+      "equipItems": [
+        {
+          "character": 8,
+          "slot": 0,
+          "content": 164
+        },
+        {
+          "character": 8,
+          "slot": 0,
+          "content": 162
+        },
+        {
+          "character": 8,
+          "slot": 0,
+          "content": 163
+        },
+        {
+          "character": 8,
+          "slot": 1,
+          "content": 164
+        },
+        {
+          "character": 8,
+          "slot": 1,
+          "content": 162
+        },
+        {
+          "character": 8,
+          "slot": 1,
+          "content": 163
+        }
+      ]
     },
     {
       "label": "Castle hall: north stairs",

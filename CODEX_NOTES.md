@@ -819,3 +819,11 @@ User: "real similar to mist dragon but he goes inside his shell", "Lit3 when he 
 
 ### 116. Baigan: one Firaga, then physical
 Live: the arm went down cleanly by attacks. Then Palom's Fira was the first spell on the body (110), Tellah's Firaga followed (600), and the game closed mid-fight. User: "firaga needs to go off and not fira he reflects after the first spell". Plan: Tellah Firaga once (`oncePerBattle`, `onTarget` Baigan, no ignoreReflect); Palom casts nothing at him. Then Cecil and Yang attack, the casters Defend, Porom heals.
+
+### 117. Yang's claws, Cecil attacks at Baigan, Paralyze
+User: "make yang equip his claw or claws", "cecil to focus damage on the body and not heal during this fight", and Tellah got paralyzed with nobody to cure him.
+* Strongest leaves claws off (attack 0 in the table), so Yang stayed bare-handed. New `route_kit.any_claws`: after Strongest, a claw in each hand from the bag. Preference per hand is the boss element's claw, then Thunder, Fire, Ice.
+* EquipMenu: once a hand is filled, the other choices for that slot are dropped. `claws(element)` now uses this too.
+* Segment 7: at the inn (reset + Strongest + claws), and again before Cagnazzo (Thunder first).
+* New BattleRule `first`: checked before any heal or status cure. Baigan: Cecil Attack (`first`) every turn.
+* Paralyze (8): only Esuna and Remedy clear it (condition group 76). Tellah is the only Esuna caster, so a paralyzed Tellah waits it out unless a Remedy is owned; the run doesn't buy them.
