@@ -27,6 +27,10 @@ internal sealed class BattlePilot
     // Called whenever the game leaves the Battle phase: everything below is per fight.
     internal void Reset()
     {
+        // One line per fight (benchmark: game seconds, Rosa's shots at flyers).
+        if(fightSeconds>0)
+            try {File.AppendAllText(Path.Combine(Plugin.DirectoryPath,"fights.log"),$"{DateTime.Now:HH:mm:ss}\t{fightSeconds:0.0}s\taims {flyerAims}\t{enemyLine}\n");} catch {}
+        flyerAims=0;
         menu=null;pendingItem=pendingTarget=pendingAbility=stalled=abilityStride=0;pendingCommand=1;
         abilityLastIndex=-1;abilityLastKey=null;lastInfo=lastCursor=-1;lastActor=IntPtr.Zero;previousHp=-1;
         pendingRule=-1;abilityConfirms=abilityStuck=targetPresses=0;decision="";
@@ -46,7 +50,7 @@ internal sealed class BattlePilot
         // Yang come first (lowest of them), then Rydia and Edward.
         // Without Rosa: lowest percentage first, Cecil wins near-ties.
         BattlePlayerData? injured=null,dead=null;int alive=0,totalHp=0;float injuredRatio=2;casterCanCure=false;injuredRatioNow=1;toad=mini=null;
-        rosaParty=rosaCanCure=false;rosaTarget=rosaLow=null;float rosaKey=99;
+        rosaParty=rosaCanCure=false;rydiaMp=-1;rosaTarget=rosaLow=null;float rosaKey=99;
         for(int i=0;i<players.Length;i++)if(players[i]?.GetOwnedCharacterData()?.characterStatusId==Rosa)rosaParty=true;
         // A heal or revive someone else already queued on a member makes that
         // member nobody else's target until it lands (user: no double heals,
@@ -77,6 +81,7 @@ internal sealed class BattlePilot
             }
             if(who is Rydia or Tellah or Rosa && stats.CurrentMP>=CureMp)casterCanCure=true;
             if(who==Rosa && stats.CurrentMP>=CureMp)rosaCanCure=true;
+            if(who==Rydia && Knows(p!,CureAbility))rydiaMp=stats.CurrentMP;
             if(who==Rosa && ratio<HealBelow && !taken)rosaLow=p;
             if(rank<0 || taken)continue;
             // Rosa tops up her priority allies earlier (under 75%).
@@ -88,7 +93,7 @@ internal sealed class BattlePilot
         // Scripted losses (Titan at Mist) wipe the party and the story goes on;
         // a real game over leaves the battle for GotoTitle, which no step allows.
         if(players.Length>0 && alive==0) {state.Detail="Party down; waiting for the game";return;}
-        var enemyText=new System.Text.StringBuilder();bool mist=false,hasEnemy=false;scripted=false;fleeTarget=false;undead=null;weakest=null;undeadCount=livingEnemies=0;tough=boss=false;Array.Clear(elementCounts);livingIds.Clear();livingHp.Clear();
+        var enemyText=new System.Text.StringBuilder();bool mist=false,hasEnemy=false;scripted=false;fleeTarget=false;undead=null;weakest=null;weakestFlyer=null;undeadCount=livingEnemies=0;tough=boss=false;Array.Clear(elementCounts);livingIds.Clear();livingHp.Clear();
         for(int i=0;i<enemies.Length;i++)
         {
             var e=enemies[i];var p=e?.BattleUnitDataInfo?.Parameter;
@@ -100,6 +105,8 @@ internal sealed class BattlePilot
             {
                 if(master.Defense>=ToughDefense)tough=true;
                 if(master.Boss!=0)boss=bossSeen=true;
+                if(Db.Monsters.TryGetValue(master.Id,out var known) && known.Flying &&
+                   (weakestFlyer==null || p.CurrentHP<weakestFlyer.BattleUnitDataInfo.Parameter.CurrentHP))weakestFlyer=e;
                 foreach(var el in WeakTo(master))if(el is >=1 and <=3)elementCounts[el]++;
                 enemyText.Append(enemyText.Length>0?", ":"").Append(Db.MonsterName(master.Id)).Append(' ').Append(p.CurrentHP).Append("hp");
             }
@@ -214,7 +221,7 @@ internal sealed class BattlePilot
                 SelectAbility(info,state,frame);break;
             case 5:
                 if(pendingTarget!=0)SelectHealingTarget(info,state,frame);
-                else SelectEnemy(info,state,frame,"Cast on selected enemy",castOnUndead?undead:weakest,targetAll || (castOnUndead && undeadCount>1));
+                else SelectEnemy(info,state,frame,"Cast on selected enemy",castOnUndead?undead:aimFlyer?weakestFlyer:weakest,targetAll || (castOnUndead && undeadCount>1));
                 break;
             case 2:
                 if(pendingItem==0) {Pulse(state,frame,"Back","Cancel unexpected item list");break;}
@@ -225,7 +232,7 @@ internal sealed class BattlePilot
                 break;
             case 6:
                 if(mist) {Pulse(state,frame,"Back","Cancel attack: dragon became mist");break;}
-                SelectEnemy(info,state,frame,"Attack weakest enemy",weakest);break;
+                SelectEnemy(info,state,frame,aimFlyer?"Aim at the flyer":"Attack weakest enemy",aimFlyer?weakestFlyer:weakest);break;
             case 0:break;
             default:Pulse(state,frame,"Back","Return to supported battle commands");break;
         }
@@ -314,7 +321,13 @@ internal sealed class BattlePilot
     }
     private static readonly Dictionary<int,string> Names=new(){[1]="Cecil",[13]="Cecil",[2]="Kain",[4]="Rydia",[6]="Tellah",[3]="Rosa",[7]="Edward",[8]="Yang"};
     private static bool IsCecil(BattlePlayerData p)=>p.GetOwnedCharacterData()?.characterStatusId is 1 or 13;
-    private bool rosaParty,rosaCanCure,bossSeen;
+    private bool rosaParty,rosaCanCure,bossSeen,aimFlyer;
+    private int rydiaMp;
+    // Rydia covers Cures while Rosa shoots, but keeps her summon MP for the boss.
+    private bool RydiaCovers=>rydiaMp>=CureMp+(boss?0:RydiaBossReserve);
+    private BattleEnemyData? weakestFlyer;
+    private int flyerAims;
+    private IntPtr decidingActor;
     private IntPtr turnActor;private int turnRule=-1;private bool itemOnEnemies;
     private readonly HashSet<int> livingIds=new();private readonly Dictionary<int,int> livingHp=new();private readonly Dictionary<IntPtr,string> firstSprite=new();private bool grown;private string spriteLine="";private const string GrowWarning="E0020_01_180_b_01";private const int MomBomb=165;private BattlePlayerData? rosaTarget,rosaLow;
     private const float RosaHealBelow=.75f;
@@ -334,7 +347,9 @@ internal sealed class BattlePilot
     // reserve his route plan sets.
     private void Decide(BattleInfomationController info,BattlePlayerData actor,BattlePlayerData? dead,BattlePlayerData? injured,bool mist,BattleRule[]? plan)
     {
-        pendingItem=0;pendingTarget=0;pendingCommand=1;pendingAbility=0;pendingRule=-1;castOnUndead=false;targetAll=false;itemOnEnemies=false;
+        pendingItem=0;pendingTarget=0;pendingCommand=1;pendingAbility=0;pendingRule=-1;castOnUndead=false;targetAll=false;itemOnEnemies=false;aimFlyer=false;
+        // Decide re-runs every frame of a turn; count a turn once.
+        bool newTurn=actor.Pointer!=decidingActor;decidingActor=actor.Pointer;
         abilityConfirms=abilityStuck=abilityStride=0;abilityLastIndex=-1;abilityLastKey=null;
         if(mist) {Log(actor,"Defend: Mist Dragon in mist");return;}
         if(scripted) {Log(actor,"Attack: scripted fight, no items or MP");return;}
@@ -358,6 +373,13 @@ internal sealed class BattlePilot
             if(mini!=null && stats.CurrentMP>=Db.SpellMp(MiniSpell,6) && CommandEnabled(info,WhiteMagic))
             {pendingCommand=WhiteMagic;pendingAbility=MiniSpell;pendingTarget=mini.GetOwnedCharacterData().characterStatusId;Log(actor,"Mini on #"+pendingTarget+" (undo mini)");return;}
         }
+        // A flyer on the field: Rosa's arrows hit its weakness (user: "if you
+        // see a weakness you should try to exploit it. period."). Rosa Aims at
+        // the weakest flyer; top-ups wait, and anyone under half HP is Rydia's
+        // to Cure. Rosa still heals that when Rydia can't, and revives first.
+        bool urgent=injured!=null || rosaLow!=null;
+        if(me==Rosa && weakestFlyer!=null && CommandEnabled(info,Aim) && (dead==null || !Knows(actor,LifeAbility)) && (!urgent || RydiaCovers))
+        {pendingCommand=Aim;aimFlyer=true;if(newTurn)flyerAims++;Log(actor,$"Aim at {Db.MonsterName(weakestFlyer.MonsterMaster.Id)} (weak to arrows){(urgent?"; Rydia heals":"")}");return;}
         // Rosa always heals: Rosa/Cecil/Yang under 75% (lowest first), then
         // Rydia/Edward under 50%; else she Defends.
         if(me==Rosa && rosaTarget!=null && canCure)
@@ -378,7 +400,7 @@ internal sealed class BattlePilot
         // ...except Rosa herself: when she is under half HP anyone heals her
         // (user), with Cure or a Potion.
         if(rosaParty && me!=Rosa && rosaLow!=null)injured=rosaLow;
-        bool leaveToRosa=rosaParty && me!=Rosa && rosaCanCure && injured!=rosaLow;
+        bool leaveToRosa=rosaParty && me!=Rosa && rosaCanCure && injured!=rosaLow && !(me==Rydia && weakestFlyer!=null && RydiaCovers);
         if(injured!=null && !leaveToRosa)
         {
             int target=injured.GetOwnedCharacterData().characterStatusId;

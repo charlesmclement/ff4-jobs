@@ -13,6 +13,7 @@ internal sealed class BattleDb
         public int Defense {get;set;}
         public bool Undead {get;set;}
         public bool Boss {get;set;}
+        public bool Flying {get;set;}
         public int[] WeakIds {get;set;}=Array.Empty<int>();
     }
     internal sealed class Spell

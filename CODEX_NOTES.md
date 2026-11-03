@@ -563,3 +563,6 @@ Trace after the Mom Bomb: "Magic: Life (state 2, cursor 0 -> 5)", then "cursor 3
 
 ### 61. Resume on the Hobs summit after the Mom Bomb found no step (fixed); field Life works
 The launcher sat idle: auto_step reset its pick at the segment's closing checkpoint, which repeats the last story flag (19), so "No route step starts on map 180". Checkpoints no longer reset the pick. The grid walk from note 60 is confirmed live: Life cursor 0 -> 3 -> 4 -> 5, Life cast, then Cures, and the step finished.
+
+### 62. Rosa shoots flyers; Rydia covers the heals; per-fight time log (untested)
+User: "if you see a weakness you should try to exploit it. period." Flyers are the monsters weak to projectile (attribute 6, type 1/401) in the game's attribute groups: battle_db.py now writes `flying` (27 monsters, including Cockatrice, Gargoyle, Zu, Roc, the bats and the eyes). With a flyer alive, Rosa Aims at the weakest flyer instead of topping up. If someone is under half HP, Rydia Cures them when she can and still keeps her summon reserve (14 MP outside bosses); otherwise Rosa heals as before. Rosa still revives first when she knows Life. No damage comparison: a weakness is always used. Benchmark: each fight appends game seconds, Rosa's shots at flyers and the enemy line to fights.log in the TAS session folder. Compare those times with the old runs.

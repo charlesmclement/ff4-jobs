@@ -56,6 +56,9 @@ def main():
         monsters[m['id']]={'name':t.get(m['mes_id_name'],''),'hp':int(m['hp']),'level':int(m['lv']),
             'defense':int(m['defense']),'magicDefense':int(m['ability_defense']),'agility':int(m['agility']),
             'undead':m['species']=='4','boss':m['boss']!='0','weak':weak,'resist':resist,
+            # Weak to projectile (arrows): the flyers - Zu, Roc, Cockatrice,
+            # Gargoyle, bats, eyes. Rosa's bow exploits it.
+            'flying':any(el==6 and typ in('1','401') for el,typ in attrs.get(m['resistance_attribute'],[])),
             'weakIds':sorted({el for el,typ in attrs.get(m['resistance_attribute'],[]) if typ in('1','401') and el in(1,2,3)}),
             'steal':[item(c) for c in (m['steal_content_id1'],m['steal_content_id2']) if c!='0' and item(c)],
             'exp':int(m['exp']),'gil':int(m['gill']),'maps':[]}
