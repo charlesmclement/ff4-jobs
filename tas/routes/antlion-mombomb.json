@@ -822,6 +822,53 @@
       ]
     },
     {
+      "label": "Mount Hobs east cave: EXP plan - fight random battles to Cecil 16, Rydia 13, Rosa 12, Edward 12 (two levels over the tested runs; flyers for Rosa, Skeleton groups fled)",
+      "kind": "navigate",
+      "mapId": 178,
+      "goal": {
+        "x": 20,
+        "y": 19,
+        "layer": 0
+      },
+      "waypoints": [
+        {
+          "x": 20,
+          "y": 23,
+          "layer": 0
+        }
+      ],
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "levelAtLeast": {
+          "1": 16,
+          "4": 13,
+          "3": 12,
+          "7": 12
+        }
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 216000,
+      "battlePlan": [
+        {
+          "character": 8,
+          "command": 26,
+          "minEnemies": 2
+        }
+      ],
+      "loop": true
+    },
+    {
       "label": "Mount Hobs: east cave to the summit (skip the first cave)",
       "kind": "navigate",
       "mapId": 178,
@@ -1385,5 +1432,12 @@
       36,
       4
     ]
-  ]
+  ],
+  "rng": {
+    "avoidMonsters": [
+      36,
+      48
+    ],
+    "cureBurns": 0
+  }
 }

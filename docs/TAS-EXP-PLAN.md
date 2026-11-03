@@ -1,0 +1,43 @@
+# EXP plan (segments 1–4)
+
+User: "I feel like we're arriving at the Mom Bomb under-levelled." Goal: a
+comfortable run, not over-levelled, and the really dangerous fights avoided.
+
+## Where we are (every save, read locally with `tas/save_read.py`)
+
+| Point | Cecil | Rydia | Edward | Rosa | Yang |
+|---|---|---|---|---|---|
+| After the Mist Dragon (overworld) | 11 | – | – | – | – |
+| After Octomammoth (overworld) | 14 | 10 | – | – | – |
+| Mom Bomb summit, before the fight (map 180) | **14** | **11** | **10** | **10** | – |
+| After the Mom Bomb | 15 | 11–12 | 11–12 | 11 | 11 |
+
+The guide (SNES) lists the party at about 15 for the Antlion and **18 at Mount Hobs**. We arrive about 3–4 levels under it.
+
+## How exp works in this build (verified, code)
+
+* `BattleResultData.get_DistributionExp` = `GetExp / DistributionExpCount`: a fight's exp is split between the members who share it. Fewer members means more each.
+* Levels come from `exp_table` by each character's growth group; a save's `currentExp` counts only exp gained after joining (Cecil 1500 + 3438 = 4938 → L14).
+
+## Where to grind: Mount Hobs east cave (map 178), before the Mom Bomb
+
+| Spot | Who shares | Good groups (total exp) |
+|---|---|---|
+| Waterfall (seg 2) | Cecil, Rydia, Tellah (Tellah leaves) | Killer Fish×2+Alligator 331, Alligator×2 330 |
+| Antlion Cave (seg 3) | Cecil, Rydia, Edward | Yellow Jelly×4 404 (slow), Adamantoise (tough, fled) |
+| **Mount Hobs east cave (seg 4)** | **Cecil, Rydia, Edward, Rosa: all fight the Mom Bomb** | Cockatrice×2+Gargoyle 607, Cockatrice×3 579, Gargoyle×2 442, Spirit×2 390, Bombs 759–1130 |
+
+Mount Hobs wins: twice the Waterfall's exp per fight, every share goes to a Mom Bomb fighter, and most groups are flyers that Rosa shoots (Gargoyle fights took about 37 s).
+
+## The plan (in `antlion-mombomb.json`, step 19)
+
+* Pace (20,23) ↔ (20,19) in the east cave, fighting random battles until **Cecil 16, Rydia 13, Rosa 12, Edward 12**: two levels over the tested runs. About +1443 exp for Cecil, the slowest; roughly 10 fights at ~145 exp each.
+* Skeleton (36) and Bloodbones (48) groups are fled at once (route `rng.avoidMonsters`; 4 Skeletons were already fled). No Cure is spent to dodge them (`cureBurns: 0`), so Rosa's MP stays for the Mom Bomb.
+* Everything else is the tested segment: heal after fights, then walk to the summit, heal, formation, Mom Bomb.
+* Levels are now in status.json (`levels`) and the trace, so the levels at each boss can be read from any run.
+
+## Not done / open
+
+* Untested live. The step stops when all four targets are reached, or after 60 min of game time.
+* After-fight heals use Rosa's Cure first, so she may reach the Mom Bomb with less MP. The summit heal step tops HP up with items.
+* If more levels are wanted earlier (Octomammoth, Antlion), the same step type works in the Watery Pass (seg 2, 3-way split with Tellah).

@@ -42,6 +42,23 @@ public sealed class Controller : MonoBehaviour
     internal static readonly string Session=Guid.NewGuid().ToString("N");
     private static Snapshot snapshot=new();
     internal static Snapshot Current=>snapshot;
+    // Levels of the members in the party (Cecil's Paladin id 13 reported as 1).
+    private static Dictionary<int,int> PartyLevels()
+    {
+        var levels=new Dictionary<int,int>();
+        try
+        {
+            var user=UserDataManager.Instance();var corps=user?.corpsList;var owned=user?.OwnedCharacterList;
+            for(int c=0;corps!=null && owned!=null && c<corps.Count;c++)
+            {
+                int id=corps[c]?.CharacterId??0;if(id==0)continue;
+                for(int o=0;o<owned.Count;o++)if(owned[o]?.Id==id && owned[o].Parameter!=null)
+                {int who=owned[o].characterStatusId==13?1:owned[o].characterStatusId;levels[who]=owned[o].Parameter.ConfirmedLevel();break;}
+            }
+        }
+        catch {}
+        return levels;
+    }
     private static int frame=-1;
     private static FieldMap? field;
     private static readonly Navigation navigation=new();
@@ -109,6 +126,7 @@ public sealed class Controller : MonoBehaviour
                 snapshot.StoryFlags=flags.ToArray();
                 snapshot.Gil=UserDataManager.Instance()?.OwendGil??0;
                 snapshot.Encounter=EncounterWatch.Status();
+                snapshot.Levels=PartyLevels();
                 if(active?.Until?.TreasureFlag is int chest && storage.Get(DataStorage.Category.kTreasureFlag1,chest)!=0)
                     snapshot.TreasureFlags=new[]{chest};
                 if(active?.Until?.Flag2 is int f2 && storage.Get(DataStorage.Category.kScenarioFlag2,f2)!=0)
@@ -298,7 +316,7 @@ public sealed class Controller : MonoBehaviour
             session=Session,utc=DateTime.UtcNow,frame,route=routeName,status=Engine?.Paused==true?"paused":Engine?.Status??"idle",
             step=Engine?.Index,label=Engine?.Label,reason=Engine?.Reason,error,elapsedSeconds=Math.Round(RunClock.RealSeconds,2),gameSeconds=Math.Round(RunClock.GameSeconds,2),speedBoost=RunClock.Boost,speedMultiplier=RunClock.Speed,speedApplied=RunClock.Applied,
             phase=snapshot.Phase,mapId=snapshot.MapId,focused=snapshot.Focused,
-            x=snapshot.X,y=snapshot.Y,layer=snapshot.Layer,storyFlags=snapshot.StoryFlags,detail=snapshot.Detail,battle=snapshot.Battle,
+            x=snapshot.X,y=snapshot.Y,layer=snapshot.Layer,storyFlags=snapshot.StoryFlags,levels=snapshot.Levels,encounter=snapshot.Encounter,detail=snapshot.Detail,battle=snapshot.Battle,
             scope="Untested scripted Baron/Mist Dragon route; observed Unity frames, no deterministic savestates"
         },Plugin.Json));
         File.Move(target+".tmp",target,true);

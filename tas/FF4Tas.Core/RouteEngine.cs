@@ -51,7 +51,7 @@ public sealed class Route
             if(s.Kind=="mash" && (s.Keys.Length==0 || s.PeriodFrames<2 || s.PressedFrames<1 || s.PressedFrames>=s.PeriodFrames))
                 throw new ArgumentException("Mash requires a release interval");
             if(s.Kind is "wait" or "mash" or "checkpoint" or "navigate" or "interact" or "battle" or "menu")
-                if(s.Until==null || (s.Until.Phase==null && s.Until.MapId==null && s.Until.StoryFlag==null && s.Until.TreasureFlag==null && s.Until.Flag2==null && s.Until.Riding==null && !s.Until.AtDestination && !s.Until.MenuDone && s.Until.GilAtLeast==null && string.IsNullOrWhiteSpace(s.Until.Visual)))throw new ArgumentException("Step needs a completion condition");
+                if(s.Until==null || (s.Until.Phase==null && s.Until.MapId==null && s.Until.StoryFlag==null && s.Until.TreasureFlag==null && s.Until.Flag2==null && s.Until.Riding==null && !s.Until.AtDestination && !s.Until.MenuDone && s.Until.GilAtLeast==null && s.Until.LevelAtLeast==null && string.IsNullOrWhiteSpace(s.Until.Visual)))throw new ArgumentException("Step needs a completion condition");
             if(s.Until?.Phase!=null && !KnownPhases.Contains(s.Until.Phase))throw new ArgumentException("Unknown completion phase");
             if(s.Kind=="navigate" && (s.Goal==null || s.MapId==null || s.Goal.X is <0 or >1024 || s.Goal.Y is <0 or >1024 || s.Goal.Layer is <0 or >15))
                 throw new ArgumentException("Navigation needs a map and valid destination");
@@ -205,6 +205,9 @@ public sealed class Condition
     public bool MenuDone {get;set;}
     // Party gil at least this much (grind before the Fabul shops).
     public int? GilAtLeast {get;set;}
+    // EXP plan: every listed party member (character_status id -> level) is at
+    // least that level; members not in the party don't hold it up.
+    public Dictionary<int,int>? LevelAtLeast {get;set;}
     public bool Matches(Snapshot state)=>(Phase==null || state.Phase==Phase) && (MapId==null || state.MapId==MapId)
         && (Visual==null || state.VisualMatches.Contains(Visual))
         && (StoryFlag==null || state.StoryFlags.Contains(StoryFlag.Value))
@@ -213,7 +216,8 @@ public sealed class Condition
         && (!AtDestination || state.AtDestination)
         && (Riding==null || state.Riding==Riding)
         && (!MenuDone || state.MenuDone)
-        && (GilAtLeast==null || state.Gil>=GilAtLeast);
+        && (GilAtLeast==null || state.Gil>=GilAtLeast)
+        && (LevelAtLeast==null || LevelAtLeast.All(l=>!state.Levels.TryGetValue(l.Key,out int lv) || lv>=l.Value));
 }
 public sealed class Snapshot
 {
@@ -236,6 +240,8 @@ public sealed class Snapshot
     public string? MenuInput {get;set;}
     public bool MenuDone {get;set;}
     public int Gil {get;set;}
+    // Party levels by character_status id (Cecil as 1).
+    public Dictionary<int,int> Levels {get;set;}=new();
     // The plugin is healing between fights through the field menu (after a
     // battle on a walking step): MenuInput keys go out instead of the step's.
     public bool FieldHeal {get;set;}
