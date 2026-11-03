@@ -182,6 +182,7 @@ internal sealed class BattlePilot
             else changeVotes=0;
         }
         if(changed)enemyText.Append(" [changed]");
+        if(targetReflect)enemyText.Append(" [reflect]");
         if(plan!=null && Array.Exists(plan,r=>r.WhileModeIn!=null || r.WhileModeNot!=null))foreach(var kv in livingMode)enemyText.Append($" [mode {kv.Key}:{kv.Value}]");
         if(frame%12==0 && !grown && plan!=null && Array.Exists(plan,r=>r.WhileMonsterGrown!=null))
         {
@@ -477,8 +478,11 @@ internal sealed class BattlePilot
     // heal (Cure first for everyone, Potion only if nobody can cast); Cure on
     // undead; route plan; Attack the weakest enemy. Tellah keeps the MP
     // reserve his route plan sets.
+    // The member most in need of healing this frame, for TargetInjured rules.
+    private BattlePlayerData? injuredNow;
     private void Decide(BattleInfomationController info,BattlePlayerData actor,BattlePlayerData? dead,BattlePlayerData? injured,bool mist,BattleRule[]? plan)
     {
+        injuredNow=injured;
         pendingItem=0;pendingTarget=0;pendingCommand=1;pendingAbility=0;pendingRule=-1;castOnUndead=false;targetAll=false;itemOnEnemies=false;aimFlyer=false;
         // Decide re-runs every frame of a turn; count a turn once.
         bool newTurn=actor.Pointer!=decidingActor;decidingActor=actor.Pointer;
@@ -688,7 +692,9 @@ internal sealed class BattlePilot
             if(rule.Item is int item)
             {
                 if(!HasItem(item))continue;
-                pendingItem=item;pendingTarget=rule.TargetEnemies?0:rule.TargetCharacter??id;pendingRule=r;itemOnEnemies=rule.TargetEnemies;
+                if(rule.TargetInjured && injuredNow==null)continue;
+                pendingItem=item;pendingTarget=rule.TargetInjured?injuredNow!.GetOwnedCharacterData().characterStatusId:rule.TargetEnemies?0:rule.TargetCharacter??id;pendingRule=r;itemOnEnemies=rule.TargetEnemies;
+                if(rule.TargetInjured)Queue(actor,pendingTarget);
                 if(rule.OncePerBattle) {usedOnce.Add((r,actor.Pointer));turnActor=actor.Pointer;turnRule=r;}
                 Log(actor,$"item {item} on #{pendingTarget} (plan rule {r+1})");
                 return;

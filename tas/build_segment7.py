@@ -47,10 +47,17 @@ monk=[{'character':c,'command':2,'whileMonster':MONK} for c in (PALOM,POROM,TELL
 # Defend, Porom heals. No Twincast or AOE (these rules block the twins'
 # Twincast default).
 FIRAGA=35
-# Cecil attacks every turn here and leaves healing to Porom and Tellah (user:
+# Cecil attacks every turn here and leaves healing to Porom and Palom (user:
 # "cecil to focus damage on the body and not heal during this fight").
+# Palom backs Porom up on heal duty with Potions (user), before anything
+# else he'd do. Tellah casts Firaga whenever the body is the target and has
+# no Reflect on it (user: "another firaga as soon as the reflect wears off";
+# the pilot reads Baigan's Reflect condition, 28, rather than watching for
+# his Haste).
+POTION=2
 baigan=[{'character':PALADIN,'command':1,'whileMonster':BAIGAN,'first':True},
-        {'character':TELLAH,'command':8,'ability':FIRAGA,'minMp':30,'onTarget':BAIGAN,'whileMonster':BAIGAN,'oncePerBattle':True}]
+        {'character':PALOM,'command':3,'item':POTION,'targetInjured':True,'whileMonster':BAIGAN,'first':True},
+        {'character':TELLAH,'command':8,'ability':FIRAGA,'minMp':30,'onTarget':BAIGAN,'whileMonster':BAIGAN}]
 baigan+=[{'character':c,'command':2,'whileMonster':BAIGAN} for c in (PALOM,POROM,TELLAH)]+field
 # Cagnazzo (user: "real similar to mist dragon but he goes inside his
 # shell", "hit him with Lit3 when he comes out, any time he's out").

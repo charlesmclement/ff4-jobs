@@ -831,3 +831,9 @@ Claws before Baigan (live): a resume from the castle autosave starts at the Baig
 
 ### 118. Equip picks the member by character id
 Live: the claw step switched to the party "slot" the run worked out for Yang (window 1), but window 1 was Cecil. The claws were then "not in the list" (Cecil can't wear claws), and it backed out. User: "you should always use character id not slot". EquipMenu now reads the member the window shows (`EquipmentWindowController.GetTargetCharacterData(targetIndex).characterStatusId`) and presses SwitchRight until it's the wanted character. After MaxSwitches it gives up. `Slot()` is now only used to check that the member is in the party.
+
+### 119. Baigan: Palom's Potions, Firaga whenever Reflect is off
+User: "Palom needs to backup Porom with potions on heal duty. Tellah needs to cast another firaga as soon as the reflect wears off" (they watch for Haste landing; the pilot reads the Reflect condition, 28, on the target instead).
+* New BattleRule `targetInjured` (with `item`): the item goes on the member most in need of healing (the pilot's injured pick, already excluding members someone else is healing), and is queued. The rule is skipped when nobody needs it.
+* Baigan: Palom Potion with targetInjured and `first`. Tellah Firaga on the body with no oncePerBattle and no ignoreReflect, so he casts whenever Reflect is down.
+* The battle line shows `[reflect]` while the target has it, to check live that condition 28 is Baigan's Wall.

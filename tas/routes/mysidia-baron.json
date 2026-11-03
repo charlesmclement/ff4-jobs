@@ -2111,13 +2111,20 @@
           "first": true
         },
         {
+          "character": 9,
+          "command": 3,
+          "item": 2,
+          "targetInjured": true,
+          "whileMonster": 168,
+          "first": true
+        },
+        {
           "character": 6,
           "command": 8,
           "ability": 35,
           "minMp": 30,
           "onTarget": 168,
-          "whileMonster": 168,
-          "oncePerBattle": true
+          "whileMonster": 168
         },
         {
           "character": 9,
@@ -2218,13 +2225,20 @@
           "first": true
         },
         {
+          "character": 9,
+          "command": 3,
+          "item": 2,
+          "targetInjured": true,
+          "whileMonster": 168,
+          "first": true
+        },
+        {
           "character": 6,
           "command": 8,
           "ability": 35,
           "minMp": 30,
           "onTarget": 168,
-          "whileMonster": 168,
-          "oncePerBattle": true
+          "whileMonster": 168
         },
         {
           "character": 9,
@@ -2315,13 +2329,20 @@
           "first": true
         },
         {
+          "character": 9,
+          "command": 3,
+          "item": 2,
+          "targetInjured": true,
+          "whileMonster": 168,
+          "first": true
+        },
+        {
           "character": 6,
           "command": 8,
           "ability": 35,
           "minMp": 30,
           "onTarget": 168,
-          "whileMonster": 168,
-          "oncePerBattle": true
+          "whileMonster": 168
         },
         {
           "character": 9,
@@ -2422,13 +2443,20 @@
           "first": true
         },
         {
+          "character": 9,
+          "command": 3,
+          "item": 2,
+          "targetInjured": true,
+          "whileMonster": 168,
+          "first": true
+        },
+        {
           "character": 6,
           "command": 8,
           "ability": 35,
           "minMp": 30,
           "onTarget": 168,
-          "whileMonster": 168,
-          "oncePerBattle": true
+          "whileMonster": 168
         },
         {
           "character": 9,
@@ -2519,13 +2547,20 @@
           "first": true
         },
         {
+          "character": 9,
+          "command": 3,
+          "item": 2,
+          "targetInjured": true,
+          "whileMonster": 168,
+          "first": true
+        },
+        {
           "character": 6,
           "command": 8,
           "ability": 35,
           "minMp": 30,
           "onTarget": 168,
-          "whileMonster": 168,
-          "oncePerBattle": true
+          "whileMonster": 168
         },
         {
           "character": 9,
@@ -2618,13 +2653,20 @@
           "first": true
         },
         {
+          "character": 9,
+          "command": 3,
+          "item": 2,
+          "targetInjured": true,
+          "whileMonster": 168,
+          "first": true
+        },
+        {
           "character": 6,
           "command": 8,
           "ability": 35,
           "minMp": 30,
           "onTarget": 168,
-          "whileMonster": 168,
-          "oncePerBattle": true
+          "whileMonster": 168
         },
         {
           "character": 9,

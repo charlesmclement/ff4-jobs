@@ -223,6 +223,10 @@ public sealed class BattleRule
     // Checked before any healing or status cure (user: Cecil should "focus
     // damage on the body and not heal during this fight").
     public bool First {get;set;}
+    // With Item: use it on the party member most in need of healing (under
+    // the heal line and not already someone else's heal); skip the rule when
+    // nobody is (Palom backing up Porom with Potions at Baigan).
+    public bool TargetInjured {get;set;}
     // Target the whole enemy side (one Thunder on all instead of three singles).
     public bool TargetAll {get;set;}
     // Pick Fire/Blizzard/Thunder by the living enemies' shared weakness
