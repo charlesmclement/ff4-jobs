@@ -579,16 +579,6 @@
       "timeoutFrames": 54000,
       "battlePlan": [
         {
-          "character": 9,
-          "command": 1,
-          "whileMonster": 205
-        },
-        {
-          "character": 10,
-          "command": 1,
-          "whileMonster": 205
-        },
-        {
           "character": 6,
           "command": 1,
           "whileMonster": 205
@@ -671,16 +661,6 @@
       "timeoutFrames": 216000,
       "battlePlan": [
         {
-          "character": 9,
-          "command": 1,
-          "whileMonster": 205
-        },
-        {
-          "character": 10,
-          "command": 1,
-          "whileMonster": 205
-        },
-        {
           "character": 6,
           "command": 1,
           "whileMonster": 205
@@ -752,16 +732,6 @@
       "stableFrames": 15,
       "timeoutFrames": 54000,
       "battlePlan": [
-        {
-          "character": 9,
-          "command": 1,
-          "whileMonster": 205
-        },
-        {
-          "character": 10,
-          "command": 1,
-          "whileMonster": 205
-        },
         {
           "character": 6,
           "command": 1,
@@ -845,16 +815,6 @@
       "timeoutFrames": 216000,
       "battlePlan": [
         {
-          "character": 9,
-          "command": 1,
-          "whileMonster": 205
-        },
-        {
-          "character": 10,
-          "command": 1,
-          "whileMonster": 205
-        },
-        {
           "character": 6,
           "command": 1,
           "whileMonster": 205
@@ -926,16 +886,6 @@
       "stableFrames": 15,
       "timeoutFrames": 54000,
       "battlePlan": [
-        {
-          "character": 9,
-          "command": 1,
-          "whileMonster": 205
-        },
-        {
-          "character": 10,
-          "command": 1,
-          "whileMonster": 205
-        },
         {
           "character": 6,
           "command": 1,
@@ -1010,16 +960,6 @@
       "pressedFrames": 2,
       "timeoutFrames": 216000,
       "battlePlan": [
-        {
-          "character": 9,
-          "command": 1,
-          "whileMonster": 205
-        },
-        {
-          "character": 10,
-          "command": 1,
-          "whileMonster": 205
-        },
         {
           "character": 6,
           "command": 1,

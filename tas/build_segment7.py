@@ -35,12 +35,11 @@ field=[
     {'character':POROM,'command':2},
 ]
 # Yang (Monk, 62000 HP; the fight ends by itself). Not Cecil alone (user:
-# "you shouldn't make cecil 1 on 1 against yang"): everyone attacks, Porom
-# still heals (Yang is a route realFight, so the normal heal logic runs
-# instead of the scripted-fight attack-only path), and nobody spends MP on
-# him - no spells, no Twincast (these rules name the twins and Tellah, which
-# also blocks the twins' Twincast default).
-monk=[{'character':c,'command':1,'whileMonster':MONK} for c in (PALOM,POROM,TELLAH)]
+# "you shouldn't make cecil 1 on 1 against yang"): the twins Twincast (their
+# default - user: "do twincast them"), Tellah attacks, Porom still heals
+# first (Yang is a route realFight, so the normal heal logic runs instead of
+# the scripted-fight attack-only path).
+monk=[{'character':TELLAH,'command':1,'whileMonster':MONK}]
 # Baigan (user's strat, live): the arms come back only after BOTH are
 # dead, so: the arm nearest the party (master 170) by attacks while the
 # casters Defend; then the body (route killFirst). He puts up Reflect after
