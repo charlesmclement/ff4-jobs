@@ -1,0 +1,1889 @@
+{
+  "schema": 1,
+  "name": "Mysidia → Baron → Cagnazzo (segment 7) — UNTESTED",
+  "fleeTough": true,
+  "killFirst": [
+    169,
+    170
+  ],
+  "steps": [
+    {
+      "label": "Outside Mysidia: heal before Baron",
+      "kind": "menu",
+      "mapId": 1,
+      "phases": [
+        "Player",
+        "Menu",
+        "Shop",
+        "Message",
+        "FieldReady",
+        "ChangeMap"
+      ],
+      "until": {
+        "menuDone": true
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 7200
+    },
+    {
+      "label": "Overworld: into Mysidia",
+      "kind": "navigate",
+      "mapId": 1,
+      "goal": {
+        "x": 159,
+        "y": 186,
+        "layer": 0
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Player",
+        "mapId": 57
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 54000,
+      "waypoints": [
+        {
+          "x": 159,
+          "y": 187,
+          "layer": 0
+        }
+      ]
+    },
+    {
+      "label": "Mysidia: to the Devil's Road",
+      "kind": "navigate",
+      "mapId": 57,
+      "goal": {
+        "x": 37,
+        "y": 18,
+        "layer": 0
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Player",
+        "mapId": 66
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 54000
+    },
+    {
+      "label": "Devil's Road: across to Baron (flag 30, autosave) - walk in",
+      "kind": "navigate",
+      "mapId": 66,
+      "goal": {
+        "x": 5,
+        "y": 6,
+        "layer": 0
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Event"
+      },
+      "stableFrames": 15,
+      "timeoutFrames": 54000
+    },
+    {
+      "label": "Devil's Road: across to Baron (flag 30, autosave)",
+      "kind": "mash",
+      "keys": [
+        "Confirm"
+      ],
+      "phases": [
+        "None",
+        "Init",
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Player",
+        "storyFlag": 30
+      },
+      "stableFrames": 30,
+      "periodFrames": 8,
+      "pressedFrames": 2,
+      "timeoutFrames": 216000
+    },
+    {
+      "label": "Baron: out of the Devil's Road house",
+      "kind": "navigate",
+      "mapId": 29,
+      "goal": {
+        "x": 6,
+        "y": 15,
+        "layer": 0
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Player",
+        "mapId": 24
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 54000
+    },
+    {
+      "label": "Baron: into the inn",
+      "kind": "navigate",
+      "mapId": 24,
+      "goal": {
+        "x": 20,
+        "y": 27,
+        "layer": 0
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Player",
+        "mapId": 25
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 54000
+    },
+    {
+      "label": "Inn: talk to Yang - two Baron Guards, then Yang himself; he joins with the Baron Key (flag 31) - walk in",
+      "kind": "navigate",
+      "mapId": 25,
+      "goal": {
+        "x": 21,
+        "y": 5,
+        "layer": 0
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Event"
+      },
+      "stableFrames": 15,
+      "timeoutFrames": 54000,
+      "battlePlan": [
+        {
+          "character": 9,
+          "command": 2,
+          "whileMonster": 205
+        },
+        {
+          "character": 10,
+          "command": 2,
+          "whileMonster": 205
+        },
+        {
+          "character": 6,
+          "command": 2,
+          "whileMonster": 205
+        },
+        {
+          "character": 9,
+          "command": 8,
+          "ability": 34,
+          "targetAll": true,
+          "minEnemies": 3,
+          "minMp": 15
+        },
+        {
+          "character": 9,
+          "command": 8,
+          "byWeakness": true,
+          "minMp": 5
+        },
+        {
+          "character": 9,
+          "command": 2
+        },
+        {
+          "character": 6,
+          "command": 8,
+          "byWeakness": true,
+          "minEnemies": 3,
+          "minMp": 65
+        },
+        {
+          "character": 6,
+          "command": 2,
+          "reserveMp": 60
+        },
+        {
+          "character": 10,
+          "command": 2
+        }
+      ]
+    },
+    {
+      "label": "Inn: talk to Yang - two Baron Guards, then Yang himself; he joins with the Baron Key (flag 31)",
+      "kind": "mash",
+      "keys": [
+        "Confirm"
+      ],
+      "phases": [
+        "None",
+        "Init",
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Player",
+        "storyFlag": 31
+      },
+      "stableFrames": 30,
+      "periodFrames": 8,
+      "pressedFrames": 2,
+      "timeoutFrames": 216000,
+      "battlePlan": [
+        {
+          "character": 9,
+          "command": 2,
+          "whileMonster": 205
+        },
+        {
+          "character": 10,
+          "command": 2,
+          "whileMonster": 205
+        },
+        {
+          "character": 6,
+          "command": 2,
+          "whileMonster": 205
+        },
+        {
+          "character": 9,
+          "command": 8,
+          "ability": 34,
+          "targetAll": true,
+          "minEnemies": 3,
+          "minMp": 15
+        },
+        {
+          "character": 9,
+          "command": 8,
+          "byWeakness": true,
+          "minMp": 5
+        },
+        {
+          "character": 9,
+          "command": 2
+        },
+        {
+          "character": 6,
+          "command": 8,
+          "byWeakness": true,
+          "minEnemies": 3,
+          "minMp": 65
+        },
+        {
+          "character": 6,
+          "command": 2,
+          "reserveMp": 60
+        },
+        {
+          "character": 10,
+          "command": 2
+        }
+      ]
+    },
+    {
+      "label": "Inn: formation - Palom, Cecil, Porom, Yang, Tellah; Cecil and Yang in front",
+      "kind": "menu",
+      "mapId": 25,
+      "phases": [
+        "Player",
+        "Menu",
+        "Shop",
+        "Message",
+        "FieldReady",
+        "ChangeMap"
+      ],
+      "until": {
+        "menuDone": true
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 10800,
+      "formation": {
+        "order": [
+          9,
+          13,
+          10,
+          8,
+          6
+        ],
+        "front": [
+          1,
+          3
+        ]
+      }
+    },
+    {
+      "label": "Inn: heal after the fights",
+      "kind": "menu",
+      "mapId": 25,
+      "phases": [
+        "Player",
+        "Menu",
+        "Shop",
+        "Message",
+        "FieldReady",
+        "ChangeMap"
+      ],
+      "until": {
+        "menuDone": true
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 7200
+    },
+    {
+      "label": "Inn: out",
+      "kind": "navigate",
+      "mapId": 25,
+      "goal": {
+        "x": 21,
+        "y": 22,
+        "layer": 0
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Player",
+        "mapId": 24
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 54000
+    },
+    {
+      "label": "Baron: west to the locked waterway door - walk in",
+      "kind": "navigate",
+      "mapId": 24,
+      "goal": {
+        "x": 4,
+        "y": 20,
+        "layer": 0
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Event"
+      },
+      "stableFrames": 15,
+      "timeoutFrames": 54000
+    },
+    {
+      "label": "Baron: open it with the Baron Key (item choice)",
+      "kind": "mash",
+      "keys": [
+        "Confirm"
+      ],
+      "phases": [
+        "None",
+        "Init",
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Player",
+        "flag2": 16
+      },
+      "stableFrames": 30,
+      "periodFrames": 8,
+      "pressedFrames": 2,
+      "timeoutFrames": 216000,
+      "itemChoice": 68
+    },
+    {
+      "label": "Baron: through the unlocked door",
+      "kind": "navigate",
+      "mapId": 24,
+      "goal": {
+        "x": 4,
+        "y": 20,
+        "layer": 0
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Player",
+        "mapId": 318
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 54000
+    },
+    {
+      "label": "Waterway entrance: down the stairs",
+      "kind": "navigate",
+      "mapId": 318,
+      "goal": {
+        "x": 3,
+        "y": 5,
+        "layer": 0
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Player",
+        "mapId": 186
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 54000
+    },
+    {
+      "label": "Old Waterway 1: east to the next stairs",
+      "kind": "navigate",
+      "mapId": 186,
+      "goal": {
+        "x": 32,
+        "y": 6,
+        "layer": 0
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Player",
+        "mapId": 187
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 54000,
+      "battlePlan": [
+        {
+          "character": 9,
+          "command": 8,
+          "ability": 34,
+          "targetAll": true,
+          "minEnemies": 3,
+          "minMp": 15
+        },
+        {
+          "character": 9,
+          "command": 8,
+          "byWeakness": true,
+          "minMp": 5
+        },
+        {
+          "character": 9,
+          "command": 2
+        },
+        {
+          "character": 6,
+          "command": 8,
+          "byWeakness": true,
+          "minEnemies": 3,
+          "minMp": 65
+        },
+        {
+          "character": 6,
+          "command": 2,
+          "reserveMp": 60
+        },
+        {
+          "character": 10,
+          "command": 2
+        }
+      ]
+    },
+    {
+      "label": "Old Waterway 2: north-east stairs",
+      "kind": "navigate",
+      "mapId": 187,
+      "goal": {
+        "x": 35,
+        "y": 2,
+        "layer": 0
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Player",
+        "mapId": 188
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 54000,
+      "battlePlan": [
+        {
+          "character": 9,
+          "command": 8,
+          "ability": 34,
+          "targetAll": true,
+          "minEnemies": 3,
+          "minMp": 15
+        },
+        {
+          "character": 9,
+          "command": 8,
+          "byWeakness": true,
+          "minMp": 5
+        },
+        {
+          "character": 9,
+          "command": 2
+        },
+        {
+          "character": 6,
+          "command": 8,
+          "byWeakness": true,
+          "minEnemies": 3,
+          "minMp": 65
+        },
+        {
+          "character": 6,
+          "command": 2,
+          "reserveMp": 60
+        },
+        {
+          "character": 10,
+          "command": 2
+        }
+      ]
+    },
+    {
+      "label": "Old Waterway 3: north stairs",
+      "kind": "navigate",
+      "mapId": 188,
+      "goal": {
+        "x": 13,
+        "y": 2,
+        "layer": 0
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Player",
+        "mapId": 189
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 54000,
+      "battlePlan": [
+        {
+          "character": 9,
+          "command": 8,
+          "ability": 34,
+          "targetAll": true,
+          "minEnemies": 3,
+          "minMp": 15
+        },
+        {
+          "character": 9,
+          "command": 8,
+          "byWeakness": true,
+          "minMp": 5
+        },
+        {
+          "character": 9,
+          "command": 2
+        },
+        {
+          "character": 6,
+          "command": 8,
+          "byWeakness": true,
+          "minEnemies": 3,
+          "minMp": 65
+        },
+        {
+          "character": 6,
+          "command": 2,
+          "reserveMp": 60
+        },
+        {
+          "character": 10,
+          "command": 2
+        }
+      ]
+    },
+    {
+      "label": "Old Waterway 4: the save room (guide: \"immediately head for the door and in there you will find a save room\")",
+      "kind": "navigate",
+      "mapId": 189,
+      "goal": {
+        "x": 7,
+        "y": 9,
+        "layer": 0
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Player",
+        "mapId": 190
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 54000,
+      "battlePlan": [
+        {
+          "character": 9,
+          "command": 8,
+          "ability": 34,
+          "targetAll": true,
+          "minEnemies": 3,
+          "minMp": 15
+        },
+        {
+          "character": 9,
+          "command": 8,
+          "byWeakness": true,
+          "minMp": 5
+        },
+        {
+          "character": 9,
+          "command": 2
+        },
+        {
+          "character": 6,
+          "command": 8,
+          "byWeakness": true,
+          "minEnemies": 3,
+          "minMp": 65
+        },
+        {
+          "character": 6,
+          "command": 2,
+          "reserveMp": 60
+        },
+        {
+          "character": 10,
+          "command": 2
+        }
+      ]
+    },
+    {
+      "label": "Save room: onto the save point",
+      "kind": "navigate",
+      "mapId": 190,
+      "goal": {
+        "x": 9,
+        "y": 7,
+        "layer": 0
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "atDestination": true
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 54000
+    },
+    {
+      "label": "Save room: Tent before the castle",
+      "kind": "menu",
+      "mapId": 190,
+      "phases": [
+        "Player",
+        "Menu",
+        "Shop",
+        "Message",
+        "FieldReady",
+        "ChangeMap",
+        "Event"
+      ],
+      "until": {
+        "menuDone": true
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 10800,
+      "menuItem": 21
+    },
+    {
+      "label": "Save room: heal anyone the Tent missed",
+      "kind": "menu",
+      "mapId": 190,
+      "phases": [
+        "Player",
+        "Menu",
+        "Shop",
+        "Message",
+        "FieldReady",
+        "ChangeMap"
+      ],
+      "until": {
+        "menuDone": true
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 7200
+    },
+    {
+      "label": "Save room: back out",
+      "kind": "navigate",
+      "mapId": 190,
+      "goal": {
+        "x": 9,
+        "y": 13,
+        "layer": 0
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Player",
+        "mapId": 189
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 54000
+    },
+    {
+      "label": "Old Waterway 4: up into Baron Castle",
+      "kind": "navigate",
+      "mapId": 189,
+      "goal": {
+        "x": 19,
+        "y": 2,
+        "layer": 0
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Player",
+        "mapId": 4
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 54000,
+      "battlePlan": [
+        {
+          "character": 9,
+          "command": 8,
+          "ability": 34,
+          "targetAll": true,
+          "minEnemies": 3,
+          "minMp": 15
+        },
+        {
+          "character": 9,
+          "command": 8,
+          "byWeakness": true,
+          "minMp": 5
+        },
+        {
+          "character": 9,
+          "command": 2
+        },
+        {
+          "character": 6,
+          "command": 8,
+          "byWeakness": true,
+          "minEnemies": 3,
+          "minMp": 65
+        },
+        {
+          "character": 6,
+          "command": 2,
+          "reserveMp": 60
+        },
+        {
+          "character": 10,
+          "command": 2
+        }
+      ]
+    },
+    {
+      "label": "Baron Castle: round the walls to the inner hall",
+      "kind": "navigate",
+      "mapId": 4,
+      "goal": {
+        "x": 16,
+        "y": 15,
+        "layer": 0
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Player",
+        "mapId": 5
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 54000,
+      "battlePlan": [
+        {
+          "character": 9,
+          "command": 8,
+          "ability": 34,
+          "targetAll": true,
+          "minEnemies": 3,
+          "minMp": 15
+        },
+        {
+          "character": 9,
+          "command": 8,
+          "byWeakness": true,
+          "minMp": 5
+        },
+        {
+          "character": 9,
+          "command": 2
+        },
+        {
+          "character": 6,
+          "command": 8,
+          "byWeakness": true,
+          "minEnemies": 3,
+          "minMp": 65
+        },
+        {
+          "character": 6,
+          "command": 2,
+          "reserveMp": 60
+        },
+        {
+          "character": 10,
+          "command": 2
+        }
+      ]
+    },
+    {
+      "label": "Castle hall: Baigan \"joins\", the twins smell a monster - Baigan and his arms (flag 32) - walk in",
+      "kind": "navigate",
+      "mapId": 5,
+      "goal": {
+        "x": 11,
+        "y": 11,
+        "layer": 0
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Event"
+      },
+      "stableFrames": 15,
+      "timeoutFrames": 54000,
+      "battlePlan": [
+        {
+          "character": 9,
+          "command": 8,
+          "ability": 34,
+          "minMp": 15,
+          "whileMonster": 169
+        },
+        {
+          "character": 6,
+          "command": 8,
+          "ability": 40,
+          "minMp": 15,
+          "whileMonster": 169
+        },
+        {
+          "character": 9,
+          "command": 8,
+          "ability": 34,
+          "minMp": 15,
+          "whileMonster": 170
+        },
+        {
+          "character": 6,
+          "command": 8,
+          "ability": 40,
+          "minMp": 15,
+          "whileMonster": 170
+        },
+        {
+          "character": 9,
+          "command": 2,
+          "whileMonster": 168
+        },
+        {
+          "character": 6,
+          "command": 2,
+          "whileMonster": 168
+        },
+        {
+          "character": 9,
+          "command": 8,
+          "ability": 34,
+          "targetAll": true,
+          "minEnemies": 3,
+          "minMp": 15
+        },
+        {
+          "character": 9,
+          "command": 8,
+          "byWeakness": true,
+          "minMp": 5
+        },
+        {
+          "character": 9,
+          "command": 2
+        },
+        {
+          "character": 6,
+          "command": 8,
+          "byWeakness": true,
+          "minEnemies": 3,
+          "minMp": 65
+        },
+        {
+          "character": 6,
+          "command": 2,
+          "reserveMp": 60
+        },
+        {
+          "character": 10,
+          "command": 2
+        }
+      ]
+    },
+    {
+      "label": "Castle hall: Baigan \"joins\", the twins smell a monster - Baigan and his arms (flag 32)",
+      "kind": "mash",
+      "keys": [
+        "Confirm"
+      ],
+      "phases": [
+        "None",
+        "Init",
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Player",
+        "storyFlag": 32
+      },
+      "stableFrames": 30,
+      "periodFrames": 8,
+      "pressedFrames": 2,
+      "timeoutFrames": 216000,
+      "battlePlan": [
+        {
+          "character": 9,
+          "command": 8,
+          "ability": 34,
+          "minMp": 15,
+          "whileMonster": 169
+        },
+        {
+          "character": 6,
+          "command": 8,
+          "ability": 40,
+          "minMp": 15,
+          "whileMonster": 169
+        },
+        {
+          "character": 9,
+          "command": 8,
+          "ability": 34,
+          "minMp": 15,
+          "whileMonster": 170
+        },
+        {
+          "character": 6,
+          "command": 8,
+          "ability": 40,
+          "minMp": 15,
+          "whileMonster": 170
+        },
+        {
+          "character": 9,
+          "command": 2,
+          "whileMonster": 168
+        },
+        {
+          "character": 6,
+          "command": 2,
+          "whileMonster": 168
+        },
+        {
+          "character": 9,
+          "command": 8,
+          "ability": 34,
+          "targetAll": true,
+          "minEnemies": 3,
+          "minMp": 15
+        },
+        {
+          "character": 9,
+          "command": 8,
+          "byWeakness": true,
+          "minMp": 5
+        },
+        {
+          "character": 9,
+          "command": 2
+        },
+        {
+          "character": 6,
+          "command": 8,
+          "byWeakness": true,
+          "minEnemies": 3,
+          "minMp": 65
+        },
+        {
+          "character": 6,
+          "command": 2,
+          "reserveMp": 60
+        },
+        {
+          "character": 10,
+          "command": 2
+        }
+      ]
+    },
+    {
+      "label": "Castle hall: heal after Baigan (guide: \"This fight will leave you wounded\")",
+      "kind": "menu",
+      "mapId": 5,
+      "phases": [
+        "Player",
+        "Menu",
+        "Shop",
+        "Message",
+        "FieldReady",
+        "ChangeMap"
+      ],
+      "until": {
+        "menuDone": true
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 7200
+    },
+    {
+      "label": "Castle hall: north stairs",
+      "kind": "navigate",
+      "mapId": 5,
+      "goal": {
+        "x": 13,
+        "y": 2,
+        "layer": 0
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Player",
+        "mapId": 6
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 54000,
+      "battlePlan": [
+        {
+          "character": 9,
+          "command": 8,
+          "ability": 34,
+          "targetAll": true,
+          "minEnemies": 3,
+          "minMp": 15
+        },
+        {
+          "character": 9,
+          "command": 8,
+          "byWeakness": true,
+          "minMp": 5
+        },
+        {
+          "character": 9,
+          "command": 2
+        },
+        {
+          "character": 6,
+          "command": 8,
+          "byWeakness": true,
+          "minEnemies": 3,
+          "minMp": 65
+        },
+        {
+          "character": 6,
+          "command": 2,
+          "reserveMp": 60
+        },
+        {
+          "character": 10,
+          "command": 2
+        }
+      ]
+    },
+    {
+      "label": "Castle 2F: to the throne room passage",
+      "kind": "navigate",
+      "mapId": 6,
+      "goal": {
+        "x": 25,
+        "y": 5,
+        "layer": 0
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Player",
+        "mapId": 7
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 54000,
+      "battlePlan": [
+        {
+          "character": 9,
+          "command": 8,
+          "ability": 34,
+          "targetAll": true,
+          "minEnemies": 3,
+          "minMp": 15
+        },
+        {
+          "character": 9,
+          "command": 8,
+          "byWeakness": true,
+          "minMp": 5
+        },
+        {
+          "character": 9,
+          "command": 2
+        },
+        {
+          "character": 6,
+          "command": 8,
+          "byWeakness": true,
+          "minEnemies": 3,
+          "minMp": 65
+        },
+        {
+          "character": 6,
+          "command": 2,
+          "reserveMp": 60
+        },
+        {
+          "character": 10,
+          "command": 2
+        }
+      ]
+    },
+    {
+      "label": "Passage: into the throne room",
+      "kind": "navigate",
+      "mapId": 7,
+      "goal": {
+        "x": 6,
+        "y": 6,
+        "layer": 0
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Player",
+        "mapId": 8
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 54000,
+      "battlePlan": [
+        {
+          "character": 9,
+          "command": 8,
+          "ability": 34,
+          "targetAll": true,
+          "minEnemies": 3,
+          "minMp": 15
+        },
+        {
+          "character": 9,
+          "command": 8,
+          "byWeakness": true,
+          "minMp": 5
+        },
+        {
+          "character": 9,
+          "command": 2
+        },
+        {
+          "character": 6,
+          "command": 8,
+          "byWeakness": true,
+          "minEnemies": 3,
+          "minMp": 65
+        },
+        {
+          "character": 6,
+          "command": 2,
+          "reserveMp": 60
+        },
+        {
+          "character": 10,
+          "command": 2
+        }
+      ]
+    },
+    {
+      "label": "Throne room: the King is Cagnazzo; Cid, the twins turn to stone, the Enterprise, Kain's message (flags 33, 107; autosave) - walk in",
+      "kind": "navigate",
+      "mapId": 8,
+      "goal": {
+        "x": 9,
+        "y": 7,
+        "layer": 0
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Event"
+      },
+      "stableFrames": 15,
+      "timeoutFrames": 54000,
+      "battlePlan": [
+        {
+          "character": 6,
+          "command": 8,
+          "ability": 41,
+          "minMp": 30,
+          "whileMonster": 171
+        },
+        {
+          "character": 9,
+          "command": 8,
+          "ability": 40,
+          "minMp": 15,
+          "whileMonster": 171
+        },
+        {
+          "character": 9,
+          "command": 8,
+          "ability": 39,
+          "minMp": 5,
+          "whileMonster": 171
+        },
+        {
+          "character": 9,
+          "command": 8,
+          "ability": 34,
+          "targetAll": true,
+          "minEnemies": 3,
+          "minMp": 15
+        },
+        {
+          "character": 9,
+          "command": 8,
+          "byWeakness": true,
+          "minMp": 5
+        },
+        {
+          "character": 9,
+          "command": 2
+        },
+        {
+          "character": 6,
+          "command": 8,
+          "byWeakness": true,
+          "minEnemies": 3,
+          "minMp": 65
+        },
+        {
+          "character": 6,
+          "command": 2,
+          "reserveMp": 60
+        },
+        {
+          "character": 10,
+          "command": 2
+        }
+      ]
+    },
+    {
+      "label": "Throne room: the King is Cagnazzo; Cid, the twins turn to stone, the Enterprise, Kain's message (flags 33, 107; autosave)",
+      "kind": "mash",
+      "keys": [
+        "Confirm"
+      ],
+      "phases": [
+        "None",
+        "Init",
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "storyFlag": 107,
+        "mapId": 1
+      },
+      "stableFrames": 60,
+      "periodFrames": 8,
+      "pressedFrames": 2,
+      "timeoutFrames": 216000,
+      "battlePlan": [
+        {
+          "character": 6,
+          "command": 8,
+          "ability": 41,
+          "minMp": 30,
+          "whileMonster": 171
+        },
+        {
+          "character": 9,
+          "command": 8,
+          "ability": 40,
+          "minMp": 15,
+          "whileMonster": 171
+        },
+        {
+          "character": 9,
+          "command": 8,
+          "ability": 39,
+          "minMp": 5,
+          "whileMonster": 171
+        },
+        {
+          "character": 9,
+          "command": 8,
+          "ability": 34,
+          "targetAll": true,
+          "minEnemies": 3,
+          "minMp": 15
+        },
+        {
+          "character": 9,
+          "command": 8,
+          "byWeakness": true,
+          "minMp": 5
+        },
+        {
+          "character": 9,
+          "command": 2
+        },
+        {
+          "character": 6,
+          "command": 8,
+          "byWeakness": true,
+          "minEnemies": 3,
+          "minMp": 65
+        },
+        {
+          "character": 6,
+          "command": 2,
+          "reserveMp": 60
+        },
+        {
+          "character": 10,
+          "command": 2
+        }
+      ]
+    },
+    {
+      "label": "Enterprise: land and step off outside Baron (Confirm at the spot, like the hovercraft)",
+      "kind": "navigate",
+      "mapId": 1,
+      "goal": {
+        "x": 107,
+        "y": 142,
+        "layer": 0
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "mapId": 1,
+        "riding": false
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 3600
+    },
+    {
+      "label": "Beside the Enterprise: heal",
+      "kind": "menu",
+      "mapId": 1,
+      "phases": [
+        "Player",
+        "Menu",
+        "Shop",
+        "Message",
+        "FieldReady",
+        "ChangeMap"
+      ],
+      "until": {
+        "menuDone": true
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 7200
+    },
+    {
+      "label": "Segment 7 complete: Cagnazzo defeated, the Enterprise is ours, outside Baron",
+      "kind": "checkpoint",
+      "phases": [
+        "Player"
+      ],
+      "until": {
+        "phase": "Player",
+        "mapId": 1,
+        "storyFlag": 107
+      }
+    }
+  ],
+  "weaknesses": {
+    "7": [
+      1
+    ],
+    "10": [
+      2
+    ],
+    "14": [
+      2
+    ],
+    "15": [
+      3
+    ],
+    "16": [
+      1
+    ],
+    "17": [
+      3
+    ],
+    "18": [
+      1
+    ],
+    "19": [
+      2
+    ],
+    "20": [
+      1
+    ],
+    "21": [
+      3
+    ],
+    "22": [
+      3
+    ],
+    "26": [
+      2
+    ],
+    "27": [
+      2
+    ],
+    "29": [
+      1
+    ],
+    "33": [
+      3
+    ],
+    "34": [
+      1
+    ],
+    "36": [
+      1
+    ],
+    "42": [
+      3
+    ],
+    "43": [
+      2
+    ],
+    "44": [
+      3
+    ],
+    "48": [
+      1
+    ],
+    "49": [
+      1
+    ],
+    "50": [
+      1
+    ],
+    "51": [
+      1
+    ],
+    "52": [
+      1
+    ],
+    "54": [
+      1
+    ],
+    "56": [
+      2
+    ],
+    "57": [
+      3
+    ],
+    "58": [
+      3
+    ],
+    "62": [
+      2
+    ],
+    "68": [
+      1
+    ],
+    "70": [
+      1
+    ],
+    "72": [
+      1
+    ],
+    "74": [
+      3
+    ],
+    "82": [
+      1
+    ],
+    "83": [
+      2
+    ],
+    "89": [
+      2
+    ],
+    "91": [
+      2
+    ],
+    "93": [
+      2
+    ],
+    "94": [
+      1
+    ],
+    "96": [
+      2
+    ],
+    "102": [
+      1
+    ],
+    "103": [
+      2
+    ],
+    "104": [
+      2
+    ],
+    "113": [
+      1
+    ],
+    "115": [
+      1
+    ],
+    "118": [
+      1
+    ],
+    "120": [
+      1
+    ],
+    "121": [
+      1
+    ],
+    "126": [
+      1
+    ],
+    "130": [
+      2
+    ],
+    "148": [
+      2
+    ],
+    "150": [
+      1
+    ],
+    "160": [
+      2
+    ],
+    "163": [
+      3
+    ],
+    "167": [
+      1
+    ],
+    "181": [
+      1
+    ],
+    "189": [
+      3
+    ],
+    "190": [
+      3
+    ],
+    "194": [
+      1
+    ],
+    "195": [
+      3
+    ],
+    "209": [
+      1
+    ],
+    "210": [
+      3
+    ],
+    "212": [
+      1
+    ],
+    "227": [
+      2
+    ],
+    "229": [
+      1
+    ],
+    "231": [
+      2
+    ],
+    "236": [
+      2
+    ],
+    "246": [
+      2
+    ],
+    "251": [
+      2
+    ],
+    "252": [
+      2
+    ],
+    "274": [
+      1
+    ]
+  }
+}
