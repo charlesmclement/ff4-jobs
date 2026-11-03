@@ -224,10 +224,10 @@ internal sealed class BattlePilot
                 Decide(info,actor,dead,injured,mist,plan);
                 // A wanted command that is on the list but greyed out (Items
                 // while hidden): Attack instead of cycling around it forever.
-                if(!mist && (pendingItem!=0?!CommandEnabled(info,ItemsCommand):pendingCommand!=Defend && pendingCommand!=Row && !CommandEnabled(info,pendingCommand)) && CommandEnabled(info,1))
+                if(pendingCommand!=Row && !mist && (pendingItem!=0?!CommandEnabled(info,ItemsCommand):pendingCommand!=Defend && pendingCommand!=Row && !CommandEnabled(info,pendingCommand)) && CommandEnabled(info,1))
                 {if(pendingTarget!=0 && queuedHeals.TryGetValue(pendingTarget,out var q) && q.Healer==actor.Pointer)queuedHeals.Remove(pendingTarget);
                  pendingItem=0;pendingAbility=0;pendingTarget=0;pendingRule=-1;targetAll=false;aimFlyer=false;pendingCommand=1;decision+=" -> greyed out, Attack";}
-                SelectCommand(info,pendingItem!=0?3:mist?2:pendingCommand,state,frame);
+                SelectCommand(info,pendingItem!=0?3:mist && pendingCommand!=Row?2:pendingCommand,state,frame);
                 break;
             case 2 or 4 when pendingTarget!=0 && unreachable.Contains(pendingTarget):
                 // Backing out of a heal on someone the cursor can't reach: up
@@ -315,7 +315,7 @@ internal sealed class BattlePilot
     private readonly HashSet<int> unreachable=new();
     private const int TargetGiveUp=10;
     private float fightSeconds;private int fightFrame=-1;
-    // Back attack flips the rows: one non-Cecil actor uses Row once to fix it.
+    // Back attack flips the rows: the first member with a turn uses Row once.
     private bool rowDone;
     private const int Row=5,Rydia=4,Rosa=3;
     // Master condition ids (both entries named Toad/Mini) and their cure items.
@@ -373,6 +373,13 @@ internal sealed class BattlePilot
         // Decide re-runs every frame of a turn; count a turn once.
         bool newTurn=actor.Pointer!=decidingActor;decidingActor=actor.Pointer;
         abilityConfirms=abilityStuck=abilityStride=0;abilityLastIndex=-1;abilityLastKey=null;
+        // Back attack: the first member who gets a turn (anyone, Cecil too;
+        // user: "really important, for the whole game") swaps the rows back
+        // with Row, in every fight (user: "it should always be on"), before any
+        // other rule. Done only once Row is confirmed: marking it on the first
+        // frame let Decide's next frame pick Attack, so Row was never used.
+        if(info.isBackAttack && !rowDone && livingEnemies>0)
+        {pendingCommand=Row;Log(actor,"Row (back attack)");return;}
         if(mist) {Log(actor,"Defend: Mist Dragon in mist");return;}
         if(scripted) {Log(actor,"Attack: scripted fight, no items or MP");return;}
         // Edward hides by himself at low HP (Hide auto-executes); hidden, his
@@ -383,10 +390,6 @@ internal sealed class BattlePilot
         bool isTellah=actor.GetOwnedCharacterData()?.characterStatusId==Tellah;
         bool canCure=stats!=null && stats.CurrentMP>=CureMp && CommandEnabled(info,WhiteMagic) && !blockedCure.Contains(actor.Pointer);
         int me=actor.GetOwnedCharacterData()?.characterStatusId??0;
-        // Back attack: the weak front-liner (Rydia now; anyone but Cecil) swaps
-        // the party's rows back with Row, once per fight.
-        if(info.isBackAttack && !rowDone && !IsCecil(actor) && livingEnemies>0)
-        {rowDone=true;pendingCommand=Row;Log(actor,"Row (back attack)");return;}
         // Status cures before healing: Maiden's Kiss for Toad, Mallet for Mini.
         if(toad!=null && HasItem(MaidensKiss)) {pendingItem=MaidensKiss;pendingTarget=toad.GetOwnedCharacterData().characterStatusId;Log(actor,"Maiden's Kiss on #"+pendingTarget+" (toad)");return;}
         if(mini!=null && HasItem(Mallet)) {pendingItem=Mallet;pendingTarget=mini.GetOwnedCharacterData().characterStatusId;Log(actor,"Mallet on #"+pendingTarget+" (mini)");return;}
@@ -610,11 +613,12 @@ internal sealed class BattlePilot
         if(c.contentList==null || index<0 || index>=c.contentList.Count)return;
         var selected=c.contentList[index];
         if(selected?.TargetCommand?.Id==wanted && selected.IsEnable)
-        {Pulse(state,frame,"Confirm",wanted==Defend?"Choose Defend":wanted==Row?"Choose Row":wanted==3?"Use recovery item":"Choose Attack");return;}
+        {if(wanted==Row && frame%12==0)rowDone=true;
+         Pulse(state,frame,"Confirm",wanted==Defend?"Choose Defend":wanted==Row?"Choose Row":wanted==3?"Use recovery item":"Choose Attack");return;}
         int wantedIndex=-1;
         for(int i=0;i<c.contentList.Count;i++)if(c.contentList[i]?.TargetCommand?.Id==wanted) {wantedIndex=i;break;}
         // Row missing from its group: Defend instead of stopping the run.
-        if(wantedIndex<0 && wanted==Row) {pendingCommand=Defend;return;}
+        if(wantedIndex<0 && wanted==Row) {rowDone=true;pendingCommand=Defend;return;}
         if(wantedIndex<0) {state.Failure=$"Required native command {wanted} not visible; stop instead of guessing";return;}
         Pulse(state,frame,wantedIndex<index?"Up":"Down","Select battle command");
     }
