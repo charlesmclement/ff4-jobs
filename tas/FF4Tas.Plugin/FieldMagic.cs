@@ -8,7 +8,7 @@ namespace FF4Tas;
 
 // Out-of-battle healing with magic before items (guide: spells refill, items
 // cost gil): Life on a fallen member, else Cure on the lowest member under the
-// threshold, cast by Rosa, then Rydia, then Tellah. Keys only: Menu -> Magic ->
+// threshold, cast by Rosa, then Rydia, Tellah, Porom, FuSoYa. Keys only: Menu -> Magic ->
 // caster -> White Magic -> spell -> target, then Back to the field. When no
 // one can cast it finishes and the item heal (FieldMenu) takes over.
 internal sealed class FieldMagic
@@ -16,7 +16,8 @@ internal sealed class FieldMagic
     private const int MenuMagic=2,WhiteMagicCommand=7,Cure=6,Life=11,CureMp=3,LifeMp=8,AfterCast=48;
     // AbilityWindowController.State (Command) and AbilityUseContentListController.State (All).
     private const int CommandState=4,UseAll=2;
-    private static readonly int[] Casters={3,4,6};
+    // Rosa, Rydia, Tellah, Porom, FuSoYa (Knows() skips anyone without the spell).
+    private static readonly int[] Casters={3,4,6,10,12};
     private float topUpBelow=.7f;
     // RNG steering casts one Cure, never Tellah's, and keeps the caster's MP reserve.
     private int maxCasts=12,keepMp;private bool tellah=true;
