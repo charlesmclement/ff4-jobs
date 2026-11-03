@@ -39,13 +39,17 @@ field=[
 # Everyone Defends; healing still comes first (Yang is a route realFight, so
 # the normal heal logic runs). The rules name the twins, which also blocks
 # their Twincast default.
-# Cecil, Tellah and Porom have Cure (user): they heal with it through the
-# normal heal logic. Palom has none, so he uses Potions (user: "using potion
-# is A-ok"). Otherwise everyone Defends.
-# Yang has to be hit at least once (user): Cecil attacks once, first.
-monk=[{'character':PALADIN,'command':1,'whileMonster':MONK,'first':True,'oncePerBattle':True},
+# Tellah and Porom heal with Cure through the normal heal logic; Palom has
+# none, so he uses Potions (user: "using potion is A-ok"). Otherwise they
+# Defend.
+# His script (sc_ai_205_Monk, research/tas-battle/ai): five turns of lines
+# ("(YANG)!", "Die!", "It's me!", "Hiyah!"), then mode 1, where the next
+# physical hit gets "Ugh..." and ends the fight (user: "you have to swing
+# after his last dialog"). So Cecil swings every turn (user: "fall back to
+# cecil swinging and everyone else healing"); the others heal or Defend.
+monk=[{'character':PALADIN,'command':1,'whileMonster':MONK,'first':True},
       {'character':PALOM,'command':3,'item':2,'targetInjured':True,'whileMonster':MONK,'first':True}]
-monk+=[{'character':c,'command':2,'whileMonster':MONK} for c in (PALADIN,PALOM,POROM,TELLAH)]
+monk+=[{'character':c,'command':2,'whileMonster':MONK} for c in (PALOM,POROM,TELLAH)]
 # Baigan (user's strat, live): the arms come back only after BOTH are
 # dead, so: the arm nearest the party (master 170) by attacks while the
 # casters Defend; then the body (route killFirst). He puts up Reflect after
