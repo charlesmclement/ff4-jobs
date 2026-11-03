@@ -765,3 +765,4 @@ User, after watching: Twincast DOES reflect (the guide is wrong), "kill right ar
 * Yang: the Baron weapon shop (map 31, door (15,17), weaponsmith (11,6), product group 1: Fire/Ice/Thunder Claw) now comes before the item shop and buys a Thunder and a Fire Claw (owned claws count). After Yang joins: equip with reset (everything off, then Strongest). The counter cell (11,8) is a guess, two below the weaponsmith.
 Yang: two Thunder Claws for Cagnazzo (user); spare Fire and Ice Claws are sold at the Baron weapon shop so Strongest can only pick the Thunder Claws.
 Never sell claws (user: they're needed for elemental weaknesses); the Fire/Ice Claw sale is removed. Open: equip can only press Strongest, so which claws Yang wears isn't chosen yet.
+Baron weapon shop: claw pairs, 2 Thunder, 2 Fire, 2 Ice (user), Thunder first; owned claws count.
