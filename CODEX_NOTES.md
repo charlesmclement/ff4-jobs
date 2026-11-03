@@ -655,3 +655,6 @@ User (3 Nov, going to sleep): build as far into the game as possible, big segmen
 
 ### 87. Segment 9 built: Magnes → Toroia → Tower of Zot → Baron (untested)
 `tas/build_segment9.py` → `tas/routes/magnes-zot.json` (42 steps). The overworld map script (sc_map_10010) gates the Zot trigger at (41,70) on flag 38 only, so Edward's report (37) is skipped. Kain Jumps on Barbariccia; killFirst Mindy→Cindy→Sandy. Ends outside Baron's gate by the Enterprise (107,145). docs/TAS-SEGMENT-9.md.
+
+### 88. Segment 10 built: Baron → Agart → Underworld → Dwarf Castle (untested)
+`tas/build_segment10.py` → `tas/routes/zot-dwarves.json` (25 steps). The Agart well uses an itemChoice mash with the Magma Key. The descent is an Enterprise-only trigger (object type 21, target transport 3) at (110–112,198–200). Ends in the Underworld (map 2, save_availability 1). docs/TAS-SEGMENT-10.md.

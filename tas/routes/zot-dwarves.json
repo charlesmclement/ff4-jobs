@@ -1,0 +1,953 @@
+{
+  "schema": 1,
+  "name": "Baron → Agart → Underworld → Dwarf Castle (segment 10) — UNTESTED",
+  "fleeTough": true,
+  "killFirst": [
+    179,
+    211
+  ],
+  "steps": [
+    {
+      "label": "Outside Baron: heal before the flight",
+      "kind": "menu",
+      "mapId": 1,
+      "phases": [
+        "Player",
+        "Menu",
+        "Shop",
+        "Message",
+        "FieldReady",
+        "ChangeMap"
+      ],
+      "until": {
+        "menuDone": true
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 7200
+    },
+    {
+      "label": "Baron: step off and back onto the Enterprise",
+      "kind": "navigate",
+      "mapId": 1,
+      "goal": {
+        "x": 107,
+        "y": 145,
+        "layer": 0
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "riding": true
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 3600,
+      "waypoints": [
+        {
+          "x": 107,
+          "y": 146,
+          "layer": 0
+        }
+      ]
+    },
+    {
+      "label": "Enterprise: south to Agart; land beside the village (guide: \"south of Baron\")",
+      "kind": "navigate",
+      "mapId": 1,
+      "goal": {
+        "x": 108,
+        "y": 202,
+        "layer": 0
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "mapId": 1,
+        "riding": false,
+        "atDestination": true
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 54000,
+      "waypoints": [
+        {
+          "x": 107,
+          "y": 202,
+          "layer": 0
+        }
+      ]
+    },
+    {
+      "label": "Overworld: into Agart",
+      "kind": "navigate",
+      "mapId": 1,
+      "goal": {
+        "x": 109,
+        "y": 202,
+        "layer": 0
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Player",
+        "mapId": 106
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 54000
+    },
+    {
+      "label": "Agart: the well house",
+      "kind": "navigate",
+      "mapId": 106,
+      "goal": {
+        "x": 16,
+        "y": 22,
+        "layer": 0
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Player",
+        "mapId": 109
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 54000
+    },
+    {
+      "label": "Well: walk up to the well",
+      "kind": "navigate",
+      "mapId": 109,
+      "goal": {
+        "x": 15,
+        "y": 10,
+        "layer": 0
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Event"
+      },
+      "stableFrames": 15,
+      "timeoutFrames": 54000,
+      "skipIf": {
+        "storyFlag": 44
+      },
+      "group": "well"
+    },
+    {
+      "label": "Well: throw in the Magma Key (item choice); the mountain splits (flag 44)",
+      "kind": "mash",
+      "keys": [
+        "Confirm"
+      ],
+      "phases": [
+        "None",
+        "Init",
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Player",
+        "storyFlag": 44
+      },
+      "stableFrames": 30,
+      "periodFrames": 8,
+      "pressedFrames": 2,
+      "timeoutFrames": 216000,
+      "itemChoice": 72,
+      "skipIf": {
+        "storyFlag": 44
+      },
+      "group": "well"
+    },
+    {
+      "label": "Well house: out",
+      "kind": "navigate",
+      "mapId": 109,
+      "goal": {
+        "x": 15,
+        "y": 15,
+        "layer": 0
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Player",
+        "mapId": 106
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 54000
+    },
+    {
+      "label": "Agart: out",
+      "kind": "navigate",
+      "mapId": 106,
+      "goal": {
+        "x": 17,
+        "y": 32,
+        "layer": 0
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Player",
+        "mapId": 1
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 54000
+    },
+    {
+      "label": "Overworld: back onto the Enterprise",
+      "kind": "navigate",
+      "mapId": 1,
+      "goal": {
+        "x": 108,
+        "y": 202,
+        "layer": 0
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "riding": true
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 3600
+    },
+    {
+      "label": "Enterprise: over the new hole in the mountain and down (Confirm)",
+      "kind": "navigate",
+      "mapId": 1,
+      "goal": {
+        "x": 111,
+        "y": 199,
+        "layer": 0
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Event"
+      },
+      "stableFrames": 15,
+      "timeoutFrames": 3600,
+      "waypoints": [
+        {
+          "x": 110,
+          "y": 201,
+          "layer": 0
+        },
+        {
+          "x": 111,
+          "y": 201,
+          "layer": 0
+        }
+      ]
+    },
+    {
+      "label": "Underworld: the Red Wings and the dwarf tanks; the Enterprise crash-lands by the Dwarf Castle (flag 45, autosave)",
+      "kind": "mash",
+      "keys": [
+        "Confirm"
+      ],
+      "phases": [
+        "None",
+        "Init",
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Player",
+        "mapId": 2,
+        "storyFlag": 45
+      },
+      "stableFrames": 30,
+      "periodFrames": 8,
+      "pressedFrames": 2,
+      "timeoutFrames": 216000
+    },
+    {
+      "label": "Underworld: heal",
+      "kind": "menu",
+      "mapId": 2,
+      "phases": [
+        "Player",
+        "Menu",
+        "Shop",
+        "Message",
+        "FieldReady",
+        "ChangeMap"
+      ],
+      "until": {
+        "menuDone": true
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 7200
+    },
+    {
+      "label": "Underworld: into the Dwarf Castle",
+      "kind": "navigate",
+      "mapId": 2,
+      "goal": {
+        "x": 110,
+        "y": 88,
+        "layer": 0
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Player",
+        "mapId": 118
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 54000,
+      "waypoints": [
+        {
+          "x": 111,
+          "y": 88,
+          "layer": 0
+        }
+      ]
+    },
+    {
+      "label": "Dwarf Castle grounds: in",
+      "kind": "navigate",
+      "mapId": 118,
+      "goal": {
+        "x": 16,
+        "y": 20,
+        "layer": 0
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Player",
+        "mapId": 119
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 54000
+    },
+    {
+      "label": "Dwarf Castle hall: up to the throne room",
+      "kind": "navigate",
+      "mapId": 119,
+      "goal": {
+        "x": 14,
+        "y": 3,
+        "layer": 0
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Player",
+        "mapId": 120
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 54000
+    },
+    {
+      "label": "Throne room: King Giott; Cid leaves; the dolls (Calbrena), Golbez, Rydia returns (flag 46) - walk in",
+      "kind": "navigate",
+      "mapId": 120,
+      "goal": {
+        "x": 11,
+        "y": 11,
+        "layer": 0
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Event"
+      },
+      "stableFrames": 15,
+      "timeoutFrames": 54000,
+      "battlePlan": [
+        {
+          "character": 2,
+          "command": 11,
+          "whileMonster": 179
+        },
+        {
+          "character": 2,
+          "command": 11,
+          "whileMonster": 211
+        }
+      ],
+      "skipIf": {
+        "storyFlag": 46
+      },
+      "group": "flag46"
+    },
+    {
+      "label": "Throne room: King Giott; Cid leaves; the dolls (Calbrena), Golbez, Rydia returns (flag 46)",
+      "kind": "mash",
+      "keys": [
+        "Confirm"
+      ],
+      "phases": [
+        "None",
+        "Init",
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Player",
+        "storyFlag": 46
+      },
+      "stableFrames": 30,
+      "periodFrames": 8,
+      "pressedFrames": 2,
+      "timeoutFrames": 216000,
+      "battlePlan": [
+        {
+          "character": 2,
+          "command": 11,
+          "whileMonster": 179
+        },
+        {
+          "character": 2,
+          "command": 11,
+          "whileMonster": 211
+        }
+      ],
+      "skipIf": {
+        "storyFlag": 46
+      },
+      "group": "flag46"
+    },
+    {
+      "label": "Throne room: Strongest on everyone (Rydia is back)",
+      "kind": "menu",
+      "mapId": 120,
+      "phases": [
+        "Player",
+        "Menu",
+        "Shop",
+        "Message",
+        "FieldReady",
+        "ChangeMap"
+      ],
+      "until": {
+        "menuDone": true
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 10800,
+      "equip": [
+        0
+      ]
+    },
+    {
+      "label": "Throne room: formation - Rydia, Cecil, Rosa, Yang, Kain; Cecil and Yang in front",
+      "kind": "menu",
+      "mapId": 120,
+      "phases": [
+        "Player",
+        "Menu",
+        "Shop",
+        "Message",
+        "FieldReady",
+        "ChangeMap"
+      ],
+      "until": {
+        "menuDone": true
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 10800,
+      "formation": {
+        "order": [
+          4,
+          13,
+          3,
+          8,
+          2
+        ],
+        "front": [
+          1,
+          3
+        ]
+      }
+    },
+    {
+      "label": "Throne room: heal",
+      "kind": "menu",
+      "mapId": 120,
+      "phases": [
+        "Player",
+        "Menu",
+        "Shop",
+        "Message",
+        "FieldReady",
+        "ChangeMap"
+      ],
+      "until": {
+        "menuDone": true
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 7200
+    },
+    {
+      "label": "Throne room: out",
+      "kind": "navigate",
+      "mapId": 120,
+      "goal": {
+        "x": 11,
+        "y": 15,
+        "layer": 0
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Player",
+        "mapId": 119
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 54000
+    },
+    {
+      "label": "Dwarf Castle hall: out",
+      "kind": "navigate",
+      "mapId": 119,
+      "goal": {
+        "x": 14,
+        "y": 16,
+        "layer": 0
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Player",
+        "mapId": 118
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 54000
+    },
+    {
+      "label": "Dwarf Castle grounds: out to the Underworld",
+      "kind": "navigate",
+      "mapId": 118,
+      "goal": {
+        "x": 16,
+        "y": 33,
+        "layer": 0
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Player",
+        "mapId": 2
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 54000
+    },
+    {
+      "label": "Segment 10 complete: Golbez driven off, Rydia back, outside the Dwarf Castle in the Underworld",
+      "kind": "checkpoint",
+      "phases": [
+        "Player"
+      ],
+      "until": {
+        "phase": "Player",
+        "mapId": 2,
+        "storyFlag": 46
+      }
+    }
+  ],
+  "weaknesses": {
+    "7": [
+      1
+    ],
+    "10": [
+      2
+    ],
+    "14": [
+      2
+    ],
+    "15": [
+      3
+    ],
+    "16": [
+      1
+    ],
+    "17": [
+      3
+    ],
+    "18": [
+      1
+    ],
+    "19": [
+      2
+    ],
+    "20": [
+      1
+    ],
+    "21": [
+      3
+    ],
+    "22": [
+      3
+    ],
+    "26": [
+      2
+    ],
+    "27": [
+      2
+    ],
+    "29": [
+      1
+    ],
+    "33": [
+      3
+    ],
+    "34": [
+      1
+    ],
+    "36": [
+      1
+    ],
+    "42": [
+      3
+    ],
+    "43": [
+      2
+    ],
+    "44": [
+      3
+    ],
+    "48": [
+      1
+    ],
+    "49": [
+      1
+    ],
+    "50": [
+      1
+    ],
+    "51": [
+      1
+    ],
+    "52": [
+      1
+    ],
+    "54": [
+      1
+    ],
+    "56": [
+      2
+    ],
+    "57": [
+      3
+    ],
+    "58": [
+      3
+    ],
+    "62": [
+      2
+    ],
+    "68": [
+      1
+    ],
+    "70": [
+      1
+    ],
+    "72": [
+      1
+    ],
+    "74": [
+      3
+    ],
+    "82": [
+      1
+    ],
+    "83": [
+      2
+    ],
+    "89": [
+      2
+    ],
+    "91": [
+      2
+    ],
+    "93": [
+      2
+    ],
+    "94": [
+      1
+    ],
+    "96": [
+      2
+    ],
+    "102": [
+      1
+    ],
+    "103": [
+      2
+    ],
+    "104": [
+      2
+    ],
+    "113": [
+      1
+    ],
+    "115": [
+      1
+    ],
+    "118": [
+      1
+    ],
+    "120": [
+      1
+    ],
+    "121": [
+      1
+    ],
+    "126": [
+      1
+    ],
+    "130": [
+      2
+    ],
+    "148": [
+      2
+    ],
+    "150": [
+      1
+    ],
+    "160": [
+      2
+    ],
+    "163": [
+      3
+    ],
+    "167": [
+      1
+    ],
+    "181": [
+      1
+    ],
+    "189": [
+      3
+    ],
+    "190": [
+      3
+    ],
+    "194": [
+      1
+    ],
+    "195": [
+      3
+    ],
+    "209": [
+      1
+    ],
+    "210": [
+      3
+    ],
+    "212": [
+      1
+    ],
+    "227": [
+      2
+    ],
+    "229": [
+      1
+    ],
+    "231": [
+      2
+    ],
+    "236": [
+      2
+    ],
+    "246": [
+      2
+    ],
+    "251": [
+      2
+    ],
+    "252": [
+      2
+    ],
+    "274": [
+      1
+    ]
+  }
+}
