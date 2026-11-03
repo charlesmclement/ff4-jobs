@@ -16,11 +16,12 @@ internal sealed class FieldMagic
     private const int MenuMagic=2,WhiteMagicCommand=7,Cure=6,Life=11,Esuna=10,CureMp=3,LifeMp=8,EsunaMp=20,AfterCast=48;
     // AbilityWindowController.State (Command) and AbilityUseContentListController.State (All).
     private const int CommandState=4,UseAll=2;
-    // Rosa, Rydia, Porom, FuSoYa, then Tellah (Knows() skips anyone without
-    // the spell). Tellah last: his MP is for bosses (live: the heal after
-    // Baigan spent his last 20 MP on Cures while Porom had 83, and he met
-    // Cagnazzo with none for Thundaga).
-    private static readonly int[] Casters={3,4,10,12,6};
+    // Paladin Cecil, Rosa, Rydia, Porom, FuSoYa, then Tellah (Knows() skips
+    // anyone without the spell). Cecil first: he has no use for MP in battle
+    // (user). Tellah last: his MP is for bosses (live: the heal after Baigan
+    // spent his last 20 MP on Cures while Porom had 83, and he met Cagnazzo
+    // with none for Thundaga).
+    private static readonly int[] Casters={13,3,4,10,12,6};
     private float topUpBelow=.7f;
     // RNG steering casts one Cure, never Tellah's, and keeps the caster's MP reserve.
     private int maxCasts=12,keepMp;private bool tellah=true;
@@ -30,7 +31,7 @@ internal sealed class FieldMagic
     private const int MaxBacks=10;
     private string? lastKey;
     private MainMenuController? main;
-    internal void Reset(float topUp,int casts=12,bool allowTellah=true,int keepMpAbove=0) {maxCasts=casts;tellah=allowTellah;keepMp=keepMpAbove;topUpBelow=topUp;finished=flip=false;casts=wait=stuck=backs=columns=targetPresses=0;lastIndex=-1;lastKey=null;main=null;}
+    internal void Reset(float topUp,int casts=12,bool allowTellah=true,int keepMpAbove=0) {maxCasts=casts;tellah=allowTellah;keepMp=keepMpAbove;topUpBelow=topUp;finished=flip=false;casts=wait=stuck=backs=columns=targetPresses=casterShift=0;lastIndex=-1;lastKey=null;main=null;}
     internal bool Wanted() {Need();return spell!=0;}
     internal void Read(Snapshot s,int frame)
     {
@@ -66,10 +67,19 @@ internal sealed class FieldMagic
             var status=UnityEngine.Object.FindObjectOfType<StatusWindowController>();
             var cursor=status?.selectCursor;
             if(cursor==null)return;
-            Move(s,frame,cursor.Index,Slot(caster),false,"Caster #"+caster);return;
+            // The party list's order isn't always the corps order: the slot
+            // is a first guess, and each time the opened window shows someone
+            // else the guess moves one member on (the character id decides).
+            int members=Members();
+            int guess=members>0?(Slot(caster)+casterShift)%members:Slot(caster);
+            Move(s,frame,cursor.Index,guess,false,"Caster #"+caster);return;
         }
         // The window shows someone else: back to the party list.
-        if(window!.commandController?.targetCharacter?.characterStatusId is int shown && shown!=caster) {Pulse(s,frame,"Back","Other caster");return;}
+        if(window!.commandController?.targetCharacter?.characterStatusId is int shown && shown!=caster)
+        {
+            if(frame%12==0) {casterShift++;if(casterShift>8)finished=true;}
+            Pulse(s,frame,"Back",$"Other caster (#{shown}); next guess");return;
+        }
         // The state numbers don't say which panel is up (after White Magic it
         // reported UseList 2 while the spell list was open, and the step looped
         // White Magic -> Back): use the command state, then whichever panel is
@@ -194,6 +204,13 @@ internal sealed class FieldMagic
         return false;
     }
     // Party slot of a character_status id (corps order, empty slots skipped).
+    private int casterShift;
+    private static int Members()
+    {
+        var corps=UserDataManager.Instance()?.corpsList;int n=0;
+        for(int c=0;corps!=null && c<corps.Count;c++)if((corps[c]?.CharacterId??0)!=0)n++;
+        return n;
+    }
     private static int Slot(int statusId)
     {
         var user=UserDataManager.Instance();var corps=user?.corpsList;var owned=user?.OwnedCharacterList;

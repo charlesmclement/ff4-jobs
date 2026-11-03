@@ -850,3 +850,6 @@ Fixes:
 * Cagnazzo: Cecil Attack (`first`) while out of the shell, Defend (`first`) in it.
 * The AI-mode read works: the battle line shows `[mode 171:3]` at the start.
 Tellah's MP budget at Baigan: the first Firaga at 30+ MP (oncePerBattle), later ones only at 60+ so 30 stays for Cagnazzo's Thundaga; reserveMp 30 keeps his in-fight Cures above that. Field heals already use him last.
+
+### 121. Cecil heals first in the field; field-magic caster by character id
+User: "cecil is good in the field for cures he doesnt have a use for mp in battle". FieldMagic caster order is now Paladin Cecil (13), Rosa, Rydia, Porom, FuSoYa, Tellah. The party-list cursor still starts from the computed slot. When the opened magic window shows a different character (`commandController.targetCharacter`), the guess moves one member on (`casterShift`, up to 8), instead of retrying the same slot. The character id decides (user: "always use character id not slot").
