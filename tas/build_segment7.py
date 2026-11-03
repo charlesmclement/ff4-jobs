@@ -98,8 +98,10 @@ s.append(door("Baron: out of the Devil's Road house",BARON_ROAD_HOUSE,(6,15),BAR
 # status item"; the guards Mini people). Baron stocks Potions, Phoenix Downs,
 # Gold Needles, Maiden's Kisses, Eye Drops, Antidotes, Tents (product group 3);
 # no Mallets, Echo Herbs or Diet Food here. Never Remedies (user: "spendy").
-# No weapon shop here: Baron's is locked until after Cagnazzo (flag 33);
-# segment 8 buys the claw pairs on the way out.
+# The weapon shop is locked before Yang (the run pushed at its door); it
+# opens once he joins (user: "we should be doing it right after getting
+# yang"; the town script swaps that door's layer after flag 31), so the claw
+# pairs are bought on the way out of the inn.
 s.append(door('Baron: into the item shop',BARON_TOWN,(13,27),ITEM_SHOP))
 s.append(nav('Item shop: up to the counter',ITEM_SHOP,(6,6),{'atDestination':True}))
 s.append(shop('Item shop: status cures - Antidotes, Eye Drops, Maiden\'s Kisses, Gold Needles - and Potions, Phoenix Downs',ITEM_SHOP,
@@ -119,9 +121,21 @@ s.append(formation('Inn: formation - Palom, Cecil, Porom, Yang, Tellah; Cecil an
 # User: "make yang equip his claw or claws" - Strongest leaves claws off
 # (attack 0 in the table), so after it he puts on whatever claws are in the
 # bag, one per hand (Thunder, else Fire, else Ice).
-s.append(any_claws('Inn: Yang takes everything off, Strongest, then a claw in each hand',INN,reset=[YANG]))
+# Claws on the moment he joins (user: "add a claw equip right after we get
+# yang"): whatever claws are in the bag, Thunder first; the weapon shop
+# next door then tops up the pairs and puts the Thunder pair on.
+s.append(claws('Inn: Yang takes everything off, Strongest, then a claw in each hand (Thunder first)',INN,LIGHTNING,reset=[YANG]))
 s.append(heal('Inn: heal after the fights',INN))
 s.append(door('Inn: out',INN,(21,22),BARON_TOWN))
+# Claws right after Yang (user): 2 Thunder (Cagnazzo), 2 Fire, 2 Ice; owned
+# claws count. Then a claw in each hand, Thunder first (Strongest skips
+# claws). Weapon shop: map 31, door (15,17), weaponsmith (11,6).
+s.append(door('Baron: into the weapon shop',BARON_TOWN,(15,17),WEAPON_SHOP))
+s.append(nav('Weapon shop: up to the weaponsmith',WEAPON_SHOP,(11,8),{'atDestination':True}))
+s.append(shop("Weapon shop: claw pairs for Yang - 2 Thunder, 2 Fire, 2 Ice",WEAPON_SHOP,
+              [{'content':THUNDER_CLAW,'count':2},{'content':FIRE_CLAW,'count':2},{'content':ICE_CLAW,'count':2}]))
+s.append(claws('Weapon shop: Yang - Thunder Claws in both hands (else any claws)',WEAPON_SHOP,LIGHTNING))
+s.append(door('Weapon shop: out',WEAPON_SHOP,(13,13),BARON_TOWN))
 s.append(nav('Baron: west to the locked waterway door - walk in',BARON_TOWN,(4,20),{'phase':'Event'},stableFrames=15))
 s.append(mash('Baron: open it with the Baron Key (item choice)',None,itemChoice=BARON_KEY,until={'phase':'Player','flag2':16}))
 s.append(door('Baron: through the unlocked door',BARON_TOWN,(4,20),WATERWAY_IN))

@@ -38,23 +38,9 @@ real_elf=[{'character':TELLAH,'command':2,'whileMonster':DARK_ELF_REAL}]+field
 
 s=[]
 s.append(heal('Outside Baron: heal before the flight',OVERWORLD))
-# Yang's claws (user: "2 fire 2 ice 2 lightning"): Baron's weapon shop
-# opens only after Cagnazzo (the town script swaps its door layer on flag
-# 33; before that it's locked and the run pushed at it over and over). The
-# castle gate tiles (106-107, 143-144) sit between the Enterprise and the
-# town doors (105/108, 144-145): go round them on the east side.
-# Segment 7 lands the Enterprise two tiles below the castle, (107,146),
-# beside the town door (108,145).
-s.append(door('Overworld: into Baron town from the Enterprise',OVERWORLD,(108,145),BARON_TOWN,[(108,146)]))
-s.append(door('Baron: into the weapon shop',BARON_TOWN,(15,17),WEAPON_SHOP))
-s.append(nav('Weapon shop: up to the weaponsmith',WEAPON_SHOP,(11,8),{'atDestination':True}))
-s.append(shop("Weapon shop: claw pairs for Yang - 2 Thunder, 2 Fire, 2 Ice",WEAPON_SHOP,
-              [{'content':THUNDER_CLAW,'count':2},{'content':FIRE_CLAW,'count':2},{'content':ICE_CLAW,'count':2}]))
-s.append(equip('Weapon shop: Yang - Strongest, then Thunder Claws in both hands',WEAPON_SHOP,[YANG],
-               equipItems=[{'character':YANG,'slot':0,'content':THUNDER_CLAW},{'character':YANG,'slot':1,'content':THUNDER_CLAW}]))
-s.append(door('Weapon shop: out',WEAPON_SHOP,(13,13),BARON_TOWN))
-s.append(door('Baron: out the south gate',BARON_TOWN,(17,32),OVERWORLD))
-s.append(nav('Baron: back onto the Enterprise (two tiles below the castle)',OVERWORLD,(107,146),{'riding':True},timeout=3600))
+# Yang's claws are bought in segment 7, right after he joins (user).
+# Segment 7 lands the Enterprise two tiles below the castle, (107,146).
+s.append(nav('Baron: step off and back onto the Enterprise (two tiles below the castle)',OVERWORLD,(107,146),{'riding':True},[(107,147)],timeout=3600))
 s.append(nav('Enterprise: north-west to Toroia; land beside the town',OVERWORLD,(41,70),{'mapId':OVERWORLD,'riding':False,'atDestination':True},
              world_path((107,146),(41,70),transport=ENTERPRISE,avoid=())))
 s.append(door('Overworld: into Toroia Castle',OVERWORLD,(40,69),TOROIA_GROUNDS,[(41,69)]))

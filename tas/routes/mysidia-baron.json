@@ -1094,7 +1094,7 @@
       }
     },
     {
-      "label": "Inn: Yang takes everything off, Strongest, then a claw in each hand",
+      "label": "Inn: Yang takes everything off, Strongest, then a claw in each hand (Thunder first)",
       "kind": "menu",
       "mapId": 25,
       "phases": [
@@ -1174,6 +1174,178 @@
       "goal": {
         "x": 21,
         "y": 22,
+        "layer": 0
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Player",
+        "mapId": 24
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 54000
+    },
+    {
+      "label": "Baron: into the weapon shop",
+      "kind": "navigate",
+      "mapId": 24,
+      "goal": {
+        "x": 15,
+        "y": 17,
+        "layer": 0
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Player",
+        "mapId": 31
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 54000
+    },
+    {
+      "label": "Weapon shop: up to the weaponsmith",
+      "kind": "navigate",
+      "mapId": 31,
+      "goal": {
+        "x": 11,
+        "y": 8,
+        "layer": 0
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "atDestination": true
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 54000
+    },
+    {
+      "label": "Weapon shop: claw pairs for Yang - 2 Thunder, 2 Fire, 2 Ice",
+      "kind": "menu",
+      "mapId": 31,
+      "phases": [
+        "Player",
+        "Menu",
+        "Shop",
+        "Message",
+        "FieldReady",
+        "ChangeMap"
+      ],
+      "until": {
+        "menuDone": true
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 10800,
+      "facing": "Up",
+      "shop": {
+        "buy": [
+          {
+            "content": 164,
+            "count": 2
+          },
+          {
+            "content": 162,
+            "count": 2
+          },
+          {
+            "content": 163,
+            "count": 2
+          }
+        ],
+        "sell": []
+      }
+    },
+    {
+      "label": "Weapon shop: Yang - Thunder Claws in both hands (else any claws)",
+      "kind": "menu",
+      "mapId": 31,
+      "phases": [
+        "Player",
+        "Menu",
+        "Shop",
+        "Message",
+        "FieldReady",
+        "ChangeMap"
+      ],
+      "until": {
+        "menuDone": true
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 10800,
+      "equip": [
+        8
+      ],
+      "equipItems": [
+        {
+          "character": 8,
+          "slot": 0,
+          "content": 164
+        },
+        {
+          "character": 8,
+          "slot": 0,
+          "content": 162
+        },
+        {
+          "character": 8,
+          "slot": 0,
+          "content": 163
+        },
+        {
+          "character": 8,
+          "slot": 1,
+          "content": 164
+        },
+        {
+          "character": 8,
+          "slot": 1,
+          "content": 162
+        },
+        {
+          "character": 8,
+          "slot": 1,
+          "content": 163
+        }
+      ]
+    },
+    {
+      "label": "Weapon shop: out",
+      "kind": "navigate",
+      "mapId": 31,
+      "goal": {
+        "x": 13,
+        "y": 13,
         "layer": 0
       },
       "phases": [

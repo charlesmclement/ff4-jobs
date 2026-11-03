@@ -859,3 +859,9 @@ Landing fix, take 2 (user): (110,147) is forest. The Enterprise now lands two ti
 
 ### 122. F9 pause
 User: "we need a pause button". F9 toggles `RouteEngine.UserPaused`. While it's set, Tick does what focus loss does: status "paused" with reason "Paused (F9 to resume)", input released, step timers frozen, and the run waits ~RefocusFrames before carrying on from the same step. F10 still stops the run, and Stop clears the pause. The overlay shows "F9 pause". All inputs flow through Tick, so nothing is pressed while paused.
+
+### 123. Claws right after Yang
+User: "we should be doing it right after getting yang", "add a claw equip right after we get yang".
+* The weapon shop was locked only because the run tried it before Yang. The town script swaps that door's layer after flag 31.
+* Segment 7 now: Yang joins → inn: reset + Strongest + any claws (Thunder first) → out → weapon shop (2 Thunder, 2 Fire, 2 Ice) → Thunder pair on → waterway. The claw step before Baigan stays for resumes.
+* Segment 8 no longer detours into Baron. It steps off and back onto the Enterprise at (107,146) and flies to Toroia.
