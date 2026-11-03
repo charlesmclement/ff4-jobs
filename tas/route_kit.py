@@ -20,7 +20,8 @@ _world={}
 def cell(x,y,layer=0):return {'x':x,'y':y,'layer':layer}
 
 WORLD_DIRS={1:os.path.join(ROOT,'research','tas-maps','map_10010'),
-            2:os.path.join(ROOT,'research','tas-maps','container','Assets','GameAssets','Serial','Res','Map','Map_10020','Map_10020')}
+            2:os.path.join(ROOT,'research','tas-maps','container','Assets','GameAssets','Serial','Res','Map','Map_10020','Map_10020'),
+            3:os.path.join(ROOT,'research','tas-maps','container','Assets','GameAssets','Serial','Res','Map','Map_10030','Map_10030')}
 
 def world_path(start,goal,transport=1,avoid=(2,21),turn_cost=3,world=1):
     """Overworld waypoints (map 1 = 10010, map 2 = the Underworld 10020)

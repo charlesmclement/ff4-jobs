@@ -121,7 +121,7 @@ internal sealed class BattlePilot
             }
             // Story fights you can't win or lose normally (the Girl at Mist has
             // 60000 HP): never spend items or MP on them.
-            if(e.MonsterMaster?.Id==207 || p.ConfirmedMaxHp()>=30000)scripted=true;
+            if((e.MonsterMaster?.Id==207 || p.ConfirmedMaxHp()>=30000) && Array.IndexOf(RealFights,e.MonsterMaster?.Id??0)<0)scripted=true;
 
             // Kill-first monsters (Route.KillFirst, in order) before anything
             // else, then the lowest HP (user: Gatlinger before the Domovoi
@@ -316,6 +316,7 @@ internal sealed class BattlePilot
     internal int[][] FleeCounts=Array.Empty<int[]>();
     internal bool FleeTough;
     internal int[] KillFirst=Array.Empty<int>();
+    internal int[] RealFights=Array.Empty<int>();
     private int weakestRank;
     private int KillRank(int id) {int i=Array.IndexOf(KillFirst,id);return i<0?int.MaxValue:i;}
     private int fleeFrames;
@@ -572,7 +573,8 @@ internal sealed class BattlePilot
             if(rule.ByWeakness)
             {
                 if(bestElement==0)continue;
-                ability=ElementSpell[bestElement];
+                // Fire 33/34/35, Blizzard 36/37/38, Thunder 39/40/41.
+                ability=ElementSpell[bestElement]+Math.Clamp(rule.WeaknessTier,0,2);
                 // One spell on all when several enemies share the weakness.
                 all=bestElementCount>1;
             }

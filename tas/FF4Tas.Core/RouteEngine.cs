@@ -32,6 +32,10 @@ public sealed class Route
     // Monster ids attacked before anything else, in this order (Gatlinger 32
     // before the Domovoi that come with it); then the lowest HP as usual.
     public int[] KillFirst { get; set; } = Array.Empty<int>();
+    // Monsters with 30000+ HP that are real fights (the Elemental Lord, the
+    // CPU, Rubicant): the pilot heals and follows its roles instead of
+    // treating them as scripted story fights.
+    public int[] RealFights { get; set; } = Array.Empty<int>();
     // RNG steering (docs/TAS-ENCOUNTERS.md); null = off.
     public RngPlan? Rng { get; set; }
     public void Validate()
@@ -194,6 +198,9 @@ public sealed class BattleRule
     // Pick Fire/Blizzard/Thunder by the living enemies' shared weakness
     // (Route.Weaknesses); skipped when nothing on screen is weak to one.
     public bool ByWeakness {get;set;}
+    // With ByWeakness: 0 the -1 spell (Fire), 1 the -ra spell (Fira), 2 the
+    // -ga spell (Firaga) of the weak element.
+    public int WeaknessTier {get;set;}
     // Also allowed below MinEnemies when an enemy shrugs off physical hits
     // (defense >= 200, e.g. Red Mousse / Yellow Jelly at 254).
     public bool OrTough {get;set;}

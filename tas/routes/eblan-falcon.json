@@ -2,6 +2,9 @@
   "schema": 1,
   "name": "Eblan → Rubicant → Falcon (segment 13) — UNTESTED",
   "fleeTough": true,
+  "realFights": [
+    188
+  ],
   "steps": [
     {
       "label": "Eblan shallows: onto the hovercraft (wherever the hook set it down)",

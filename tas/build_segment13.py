@@ -68,4 +68,4 @@ s.append(nav('Falcon: land outside Babil',UNDERWORLD,(58,22),{'mapId':UNDERWORLD
 s.append(heal('Outside Babil: heal',UNDERWORLD))
 s.append(checkpoint('Segment 13 complete: Rubicant defeated, Edge and the Falcon, outside Babil in the Underworld',UNDERWORLD,55))
 
-write('tas/routes/eblan-falcon.json','Eblan → Rubicant → Falcon (segment 13) — UNTESTED',s,fleeTough=True)
+write('tas/routes/eblan-falcon.json','Eblan → Rubicant → Falcon (segment 13) — UNTESTED',s,fleeTough=True,realFights=[RUBICANT])

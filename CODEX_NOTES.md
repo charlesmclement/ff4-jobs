@@ -667,3 +667,6 @@ User (3 Nov, going to sleep): build as far into the game as possible, big segmen
 
 ### 91. Segment 14 built: Falcon → Dwarf Castle → Sealed Cave → drill (untested)
 `tas/build_segment14.py` → `falcon-sealed-cave.json` (69 steps). The Falcon changes vehicle id as it's upgraded (4 → 8 heat shield → 9 drill); every boarding uses `goalVehicle` with the current id. The necklace door is an itemChoice mash (item 74). The drill is an Underworld trigger at (122–124,21–23) that only takes vehicle 9. docs/TAS-SEGMENT-14.md.
+
+### 92. Segment 15 built: Mysidia → Lunar Whale → FuSoYa → Giant of Babil (untested)
+`tas/build_segment15.py` → `mysidia-giant.json` (45 steps). New route `realFights` (30000+ HP monsters that are real fights: the Elemental Lords, the CPU, Rubicant). Before this the pilot treated them as scripted and only attacked; segment 13 was rebuilt with Rubicant listed. New rule `weaknessTier` (-ga spells by weakness). Moon planning in route_kit. Whale board/land steps are guarded both ways (interior or flying). docs/TAS-SEGMENT-15.md.
