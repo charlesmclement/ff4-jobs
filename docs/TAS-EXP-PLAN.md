@@ -36,8 +36,16 @@ Mount Hobs wins: twice the Waterfall's exp per fight, every share goes to a Mom 
 * Everything else is the tested segment: heal after fights, then walk to the summit, heal, formation, Mom Bomb.
 * Levels are now in status.json (`levels`) and the trace, so the levels at each boss can be read from any run.
 
+## Rests (Tents outside Mount Hobs)
+
+First live run: the grind worked, but Rosa spends Cure after every fight. Kaipo's inn is a hovercraft trip away, so the route rests with a **Tent** instead: Kaipo's shop sells them (100 gil, 3 bought), and the cave door is a few steps from the grind spot.
+
+* Grind until the levels are reached, **or** Rosa's MP < 9 or Rydia's < 7.
+* Walk out to the overworld, use a Tent (full HP/MP), walk back in. Re-entering also resets the step counter.
+* Four grind/rest blocks; blocks 2–4 are skipped as a whole once the levels are in (`skipIf` + `group`). The last block that runs ends with a Tent, so the Mom Bomb starts at full MP.
+* Skeleton groups: the flee now keeps trying for 1800 frames. The first run gave up after 600 and fought 4 Skeletons.
+
 ## Not done / open
 
 * Untested live. The step stops when all four targets are reached, or after 60 min of game time.
-* After-fight heals use Rosa's Cure first, so she may reach the Mom Bomb with less MP. The summit heal step tops HP up with items.
 * If more levels are wanted earlier (Octomammoth, Antlion), the same step type works in the Watery Pass (seg 2, 3-way split with Tellah).

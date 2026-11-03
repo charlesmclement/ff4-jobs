@@ -23,4 +23,17 @@ foreach(var file in Directory.GetFiles(Path.Combine(AppContext.BaseDirectory,"..
 {var r=System.Text.Json.JsonSerializer.Deserialize<Route>(File.ReadAllText(file),jsonOptions)!;r.Validate();checks++;}
 var steering=System.Text.Json.JsonSerializer.Deserialize<Route>(File.ReadAllText(Path.Combine(AppContext.BaseDirectory,"../../../../routes/mist-octomammoth.json")),jsonOptions)!;
 Check(steering.Rng?.CureBurns==2 && steering.Rng.AvoidMonsters.Contains(9),"segment 2 RNG plan loads");
+// EXP plan rests: grind until levels or low MP; later rest blocks skip as a group once the levels are in.
+var lv=new Dictionary<int,int>{[1]=16};
+var grindUntil=new Condition{Phase="Player",Any=new[]{new Condition{LevelAtLeast=lv},new Condition{MpBelow=new(){[3]=9}}}};
+Check(!grindUntil.Matches(new Snapshot{Phase="Player",Levels=new(){[1]=15,[3]=10},Mp=new(){[3]=20}}),"grind continues");
+Check(grindUntil.Matches(new Snapshot{Phase="Player",Levels=new(){[1]=15,[3]=10},Mp=new(){[3]=8}}),"low MP ends the grind");
+Check(grindUntil.Matches(new Snapshot{Phase="Player",Levels=new(){[1]=16},Mp=new(){[3]=30}}),"levels end the grind");
+Check(!grindUntil.Matches(new Snapshot{Phase="Menu",Levels=new(){[1]=16}}),"not mid-menu");
+Check(!new Condition{LevelAtLeast=lv}.Matches(new Snapshot{Phase="Player"}),"unread levels never count as reached");
+Step W(string label,string group="",Condition skip=null!)=>new Step{Label=label,Kind="wait",Phases=new[]{"Player"},Until=new(){Phase="Message"},Group=group==""?null:group,SkipIf=skip};
+var rest=new Route{Name="rest",Steps=new[]{W("a"),W("b","r2",new Condition{LevelAtLeast=lv}),W("c","r2"),W("d")}};
+var re=new RouteEngine(rest);var msg=new Snapshot{Phase="Message",Levels=new(){[1]=16}};
+re.Tick(1,msg);re.Tick(2,msg);Check(re.Index==3,"rest group skipped as a whole");
+re=new RouteEngine(rest);var low=new Snapshot{Phase="Message",Levels=new(){[1]=15}};re.Tick(1,low);re.Tick(2,low);Check(re.Index==1,"rest group runs below the levels");
 Console.WriteLine($"PASS: {checks} scripted-route regression checks");

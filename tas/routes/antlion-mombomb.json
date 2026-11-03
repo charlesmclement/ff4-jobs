@@ -438,7 +438,7 @@
       ]
     },
     {
-      "label": "Kaipo item shop: Phoenix Downs and Potions (guide: stock up before Mount Hobs)",
+      "label": "Kaipo item shop: Phoenix Downs, Potions and Tents (guide: stock up before Mount Hobs; Tents for the EXP plan's rests)",
       "kind": "menu",
       "mapId": 34,
       "phases": [
@@ -464,6 +464,10 @@
           {
             "content": 2,
             "count": 10
+          },
+          {
+            "content": 21,
+            "count": 3
           }
         ],
         "sell": []
@@ -822,7 +826,7 @@
       ]
     },
     {
-      "label": "Mount Hobs east cave: EXP plan - fight random battles to Cecil 16, Rydia 13, Rosa 12, Edward 12 (two levels over the tested runs; flyers for Rosa, Skeleton groups fled)",
+      "label": "Mount Hobs east cave: EXP plan, grind 1 - random battles until Cecil 16, Rydia 13, Rosa 12, Edward 12, or Rosa/Rydia low on MP (flyers for Rosa, Skeleton groups fled)",
       "kind": "navigate",
       "mapId": 178,
       "goal": {
@@ -850,12 +854,23 @@
       ],
       "handleBattles": true,
       "until": {
-        "levelAtLeast": {
-          "1": 16,
-          "4": 13,
-          "3": 12,
-          "7": 12
-        }
+        "phase": "Player",
+        "any": [
+          {
+            "levelAtLeast": {
+              "1": 16,
+              "4": 13,
+              "3": 12,
+              "7": 12
+            }
+          },
+          {
+            "mpBelow": {
+              "3": 9,
+              "4": 7
+            }
+          }
+        ]
       },
       "stableFrames": 2,
       "timeoutFrames": 216000,
@@ -867,6 +882,600 @@
         }
       ],
       "loop": true
+    },
+    {
+      "label": "Mount Hobs east cave: walk out to the overworld to rest (1)",
+      "kind": "navigate",
+      "mapId": 178,
+      "goal": {
+        "x": 20,
+        "y": 28,
+        "layer": 0
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "until": {
+        "phase": "Player",
+        "mapId": 1
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 5400,
+      "handleBattles": true,
+      "battlePlan": [
+        {
+          "character": 8,
+          "command": 26,
+          "minEnemies": 2
+        }
+      ]
+    },
+    {
+      "label": "Outside Mount Hobs: use a Tent (full HP/MP) (1)",
+      "kind": "menu",
+      "mapId": 1,
+      "phases": [
+        "Player",
+        "Menu",
+        "Shop",
+        "Message",
+        "FieldReady",
+        "ChangeMap"
+      ],
+      "until": {
+        "menuDone": true
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 10800,
+      "menuItem": 21
+    },
+    {
+      "label": "Overworld: back into Mount Hobs (1)",
+      "kind": "navigate",
+      "mapId": 1,
+      "goal": {
+        "x": 157,
+        "y": 36,
+        "layer": 0
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Player",
+        "mapId": 178
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 54000,
+      "battlePlan": [
+        {
+          "character": 8,
+          "command": 26,
+          "minEnemies": 2
+        }
+      ],
+      "waypoints": [
+        {
+          "x": 157,
+          "y": 37,
+          "layer": 0
+        }
+      ]
+    },
+    {
+      "label": "Mount Hobs east cave: EXP plan, grind 2 - random battles until Cecil 16, Rydia 13, Rosa 12, Edward 12, or Rosa/Rydia low on MP (flyers for Rosa, Skeleton groups fled)",
+      "kind": "navigate",
+      "mapId": 178,
+      "goal": {
+        "x": 20,
+        "y": 19,
+        "layer": 0
+      },
+      "waypoints": [
+        {
+          "x": 20,
+          "y": 23,
+          "layer": 0
+        }
+      ],
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Player",
+        "any": [
+          {
+            "levelAtLeast": {
+              "1": 16,
+              "4": 13,
+              "3": 12,
+              "7": 12
+            }
+          },
+          {
+            "mpBelow": {
+              "3": 9,
+              "4": 7
+            }
+          }
+        ]
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 216000,
+      "battlePlan": [
+        {
+          "character": 8,
+          "command": 26,
+          "minEnemies": 2
+        }
+      ],
+      "loop": true,
+      "skipIf": {
+        "levelAtLeast": {
+          "1": 16,
+          "4": 13,
+          "3": 12,
+          "7": 12
+        }
+      },
+      "group": "rest2"
+    },
+    {
+      "label": "Mount Hobs east cave: walk out to the overworld to rest (2)",
+      "kind": "navigate",
+      "mapId": 178,
+      "goal": {
+        "x": 20,
+        "y": 28,
+        "layer": 0
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "until": {
+        "phase": "Player",
+        "mapId": 1
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 5400,
+      "handleBattles": true,
+      "battlePlan": [
+        {
+          "character": 8,
+          "command": 26,
+          "minEnemies": 2
+        }
+      ],
+      "group": "rest2"
+    },
+    {
+      "label": "Outside Mount Hobs: use a Tent (full HP/MP) (2)",
+      "kind": "menu",
+      "mapId": 1,
+      "phases": [
+        "Player",
+        "Menu",
+        "Shop",
+        "Message",
+        "FieldReady",
+        "ChangeMap"
+      ],
+      "until": {
+        "menuDone": true
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 10800,
+      "menuItem": 21,
+      "group": "rest2"
+    },
+    {
+      "label": "Overworld: back into Mount Hobs (2)",
+      "kind": "navigate",
+      "mapId": 1,
+      "goal": {
+        "x": 157,
+        "y": 36,
+        "layer": 0
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Player",
+        "mapId": 178
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 54000,
+      "battlePlan": [
+        {
+          "character": 8,
+          "command": 26,
+          "minEnemies": 2
+        }
+      ],
+      "waypoints": [
+        {
+          "x": 157,
+          "y": 37,
+          "layer": 0
+        }
+      ],
+      "group": "rest2"
+    },
+    {
+      "label": "Mount Hobs east cave: EXP plan, grind 3 - random battles until Cecil 16, Rydia 13, Rosa 12, Edward 12, or Rosa/Rydia low on MP (flyers for Rosa, Skeleton groups fled)",
+      "kind": "navigate",
+      "mapId": 178,
+      "goal": {
+        "x": 20,
+        "y": 19,
+        "layer": 0
+      },
+      "waypoints": [
+        {
+          "x": 20,
+          "y": 23,
+          "layer": 0
+        }
+      ],
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Player",
+        "any": [
+          {
+            "levelAtLeast": {
+              "1": 16,
+              "4": 13,
+              "3": 12,
+              "7": 12
+            }
+          },
+          {
+            "mpBelow": {
+              "3": 9,
+              "4": 7
+            }
+          }
+        ]
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 216000,
+      "battlePlan": [
+        {
+          "character": 8,
+          "command": 26,
+          "minEnemies": 2
+        }
+      ],
+      "loop": true,
+      "skipIf": {
+        "levelAtLeast": {
+          "1": 16,
+          "4": 13,
+          "3": 12,
+          "7": 12
+        }
+      },
+      "group": "rest3"
+    },
+    {
+      "label": "Mount Hobs east cave: walk out to the overworld to rest (3)",
+      "kind": "navigate",
+      "mapId": 178,
+      "goal": {
+        "x": 20,
+        "y": 28,
+        "layer": 0
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "until": {
+        "phase": "Player",
+        "mapId": 1
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 5400,
+      "handleBattles": true,
+      "battlePlan": [
+        {
+          "character": 8,
+          "command": 26,
+          "minEnemies": 2
+        }
+      ],
+      "group": "rest3"
+    },
+    {
+      "label": "Outside Mount Hobs: use a Tent (full HP/MP) (3)",
+      "kind": "menu",
+      "mapId": 1,
+      "phases": [
+        "Player",
+        "Menu",
+        "Shop",
+        "Message",
+        "FieldReady",
+        "ChangeMap"
+      ],
+      "until": {
+        "menuDone": true
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 10800,
+      "menuItem": 21,
+      "group": "rest3"
+    },
+    {
+      "label": "Overworld: back into Mount Hobs (3)",
+      "kind": "navigate",
+      "mapId": 1,
+      "goal": {
+        "x": 157,
+        "y": 36,
+        "layer": 0
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Player",
+        "mapId": 178
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 54000,
+      "battlePlan": [
+        {
+          "character": 8,
+          "command": 26,
+          "minEnemies": 2
+        }
+      ],
+      "waypoints": [
+        {
+          "x": 157,
+          "y": 37,
+          "layer": 0
+        }
+      ],
+      "group": "rest3"
+    },
+    {
+      "label": "Mount Hobs east cave: EXP plan, grind 4 - random battles until Cecil 16, Rydia 13, Rosa 12, Edward 12, or Rosa/Rydia low on MP (flyers for Rosa, Skeleton groups fled)",
+      "kind": "navigate",
+      "mapId": 178,
+      "goal": {
+        "x": 20,
+        "y": 19,
+        "layer": 0
+      },
+      "waypoints": [
+        {
+          "x": 20,
+          "y": 23,
+          "layer": 0
+        }
+      ],
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Player",
+        "any": [
+          {
+            "levelAtLeast": {
+              "1": 16,
+              "4": 13,
+              "3": 12,
+              "7": 12
+            }
+          },
+          {
+            "mpBelow": {
+              "3": 9,
+              "4": 7
+            }
+          }
+        ]
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 216000,
+      "battlePlan": [
+        {
+          "character": 8,
+          "command": 26,
+          "minEnemies": 2
+        }
+      ],
+      "loop": true,
+      "skipIf": {
+        "levelAtLeast": {
+          "1": 16,
+          "4": 13,
+          "3": 12,
+          "7": 12
+        }
+      },
+      "group": "rest4"
+    },
+    {
+      "label": "Mount Hobs east cave: walk out to the overworld to rest (4)",
+      "kind": "navigate",
+      "mapId": 178,
+      "goal": {
+        "x": 20,
+        "y": 28,
+        "layer": 0
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "until": {
+        "phase": "Player",
+        "mapId": 1
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 5400,
+      "handleBattles": true,
+      "battlePlan": [
+        {
+          "character": 8,
+          "command": 26,
+          "minEnemies": 2
+        }
+      ],
+      "group": "rest4"
+    },
+    {
+      "label": "Outside Mount Hobs: use a Tent (full HP/MP) (4)",
+      "kind": "menu",
+      "mapId": 1,
+      "phases": [
+        "Player",
+        "Menu",
+        "Shop",
+        "Message",
+        "FieldReady",
+        "ChangeMap"
+      ],
+      "until": {
+        "menuDone": true
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 10800,
+      "menuItem": 21,
+      "group": "rest4"
+    },
+    {
+      "label": "Overworld: back into Mount Hobs (4)",
+      "kind": "navigate",
+      "mapId": 1,
+      "goal": {
+        "x": 157,
+        "y": 36,
+        "layer": 0
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Player",
+        "mapId": 178
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 54000,
+      "battlePlan": [
+        {
+          "character": 8,
+          "command": 26,
+          "minEnemies": 2
+        }
+      ],
+      "waypoints": [
+        {
+          "x": 157,
+          "y": 37,
+          "layer": 0
+        }
+      ],
+      "group": "rest4"
     },
     {
       "label": "Mount Hobs: east cave to the summit (skip the first cave)",

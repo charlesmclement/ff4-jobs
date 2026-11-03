@@ -182,7 +182,7 @@ internal sealed class BattlePilot
         // A toad/mini in an ordinary fight: run first, cure with the item in the
         // next fight that is actually fought (user's call).
         bool slow=fightSeconds>SlowFightSeconds,toughFight=FleeTough && tough,status=toad!=null || mini!=null;
-        if((fleeTarget || slow || toughFight || status) && !boss && !scripted && fleeFrames<FleeGiveUp)
+        if((fleeTarget || slow || toughFight || status) && !boss && !scripted && fleeFrames<(fleeTarget?FleeGiveUpListed:FleeGiveUp))
         {
             // L+R escape works only from the command list: back out of any
             // open item, spell or target list first.
@@ -298,6 +298,9 @@ internal sealed class BattlePilot
     internal bool FleeTough;
     private int fleeFrames;
     private const int FleeGiveUp=600;
+    // Listed groups (Skeletons on Mount Hobs) keep trying longer: 600 frames
+    // ran out once and the party fought four Skeletons.
+    private const int FleeGiveUpListed=1800;
     private const float SlowFightSeconds=60;
     private float fightSeconds;private int fightFrame=-1;
     // Back attack flips the rows: one non-Cecil actor uses Row once to fix it.

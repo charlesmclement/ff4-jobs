@@ -51,7 +51,7 @@ public sealed class Route
             if(s.Kind=="mash" && (s.Keys.Length==0 || s.PeriodFrames<2 || s.PressedFrames<1 || s.PressedFrames>=s.PeriodFrames))
                 throw new ArgumentException("Mash requires a release interval");
             if(s.Kind is "wait" or "mash" or "checkpoint" or "navigate" or "interact" or "battle" or "menu")
-                if(s.Until==null || (s.Until.Phase==null && s.Until.MapId==null && s.Until.StoryFlag==null && s.Until.TreasureFlag==null && s.Until.Flag2==null && s.Until.Riding==null && !s.Until.AtDestination && !s.Until.MenuDone && s.Until.GilAtLeast==null && s.Until.LevelAtLeast==null && string.IsNullOrWhiteSpace(s.Until.Visual)))throw new ArgumentException("Step needs a completion condition");
+                if(s.Until==null || s.Until.Empty)throw new ArgumentException("Step needs a completion condition");
             if(s.Until?.Phase!=null && !KnownPhases.Contains(s.Until.Phase))throw new ArgumentException("Unknown completion phase");
             if(s.Kind=="navigate" && (s.Goal==null || s.MapId==null || s.Goal.X is <0 or >1024 || s.Goal.Y is <0 or >1024 || s.Goal.Layer is <0 or >15))
                 throw new ArgumentException("Navigation needs a map and valid destination");
@@ -66,6 +66,7 @@ public sealed class Route
             if(s.Until?.StoryFlag is <0 or >255)throw new ArgumentException("Invalid story flag");
             if(s.Until?.TreasureFlag is <0 or >4095)throw new ArgumentException("Invalid treasure flag");
             if(s.Until?.AtDestination==true && s.Kind!="navigate")throw new ArgumentException("Destination condition requires navigation");
+            if(s.SkipIf!=null && (s.SkipIf.Empty || s.Kind=="checkpoint"))throw new ArgumentException("Invalid skip condition");
             if(s.Kind is "wait" or "checkpoint" && s.Keys.Length!=0)throw new ArgumentException("Wait/checkpoint cannot press keys");
         }
     }
@@ -140,6 +141,10 @@ public sealed class Step
     // During this step, run from any non-boss fight containing one of these
     // monster ids (e.g. Toadgre 19 / Tiny Mage 9 right before Octomammoth).
     public int[]? FleeMonsters {get;set;}
+    // Checked once when the step starts: if it holds, this step and every
+    // following step with the same Group are skipped (an optional rest block).
+    public Condition? SkipIf {get;set;}
+    public string? Group {get;set;}
 }
 public sealed class BattleRule
 {
@@ -208,6 +213,12 @@ public sealed class Condition
     // EXP plan: every listed party member (character_status id -> level) is at
     // least that level; members not in the party don't hold it up.
     public Dictionary<int,int>? LevelAtLeast {get;set;}
+    // Rest stop: any listed member (character_status id -> MP) is below that MP.
+    public Dictionary<int,int>? MpBelow {get;set;}
+    // At least one of these holds (with everything else in this condition).
+    public Condition[]? Any {get;set;}
+    public bool Empty=>Phase==null && MapId==null && StoryFlag==null && TreasureFlag==null && Flag2==null && Riding==null && !AtDestination && !MenuDone
+        && GilAtLeast==null && LevelAtLeast==null && MpBelow==null && (Any==null || Any.Length==0 || Any.All(a=>a==null || a.Empty)) && string.IsNullOrWhiteSpace(Visual);
     public bool Matches(Snapshot state)=>(Phase==null || state.Phase==Phase) && (MapId==null || state.MapId==MapId)
         && (Visual==null || state.VisualMatches.Contains(Visual))
         && (StoryFlag==null || state.StoryFlags.Contains(StoryFlag.Value))
@@ -217,7 +228,9 @@ public sealed class Condition
         && (Riding==null || state.Riding==Riding)
         && (!MenuDone || state.MenuDone)
         && (GilAtLeast==null || state.Gil>=GilAtLeast)
-        && (LevelAtLeast==null || LevelAtLeast.All(l=>!state.Levels.TryGetValue(l.Key,out int lv) || lv>=l.Value));
+        && (LevelAtLeast==null || state.Levels.Count>0 && LevelAtLeast.All(l=>!state.Levels.TryGetValue(l.Key,out int lv) || lv>=l.Value))
+        && (MpBelow==null || MpBelow.Any(m=>state.Mp.TryGetValue(m.Key,out int mp) && mp<m.Value))
+        && (Any==null || Any.Any(a=>a!=null && a.Matches(state)));
 }
 public sealed class Snapshot
 {
@@ -242,6 +255,8 @@ public sealed class Snapshot
     public int Gil {get;set;}
     // Party levels by character_status id (Cecil as 1).
     public Dictionary<int,int> Levels {get;set;}=new();
+    // Party current MP, same keys.
+    public Dictionary<int,int> Mp {get;set;}=new();
     // The plugin is healing between fights through the field menu (after a
     // battle on a walking step): MenuInput keys go out instead of the step's.
     public bool FieldHeal {get;set;}
@@ -272,7 +287,7 @@ public sealed class RouteEngine
     // Below this many focused frames after a pause, input stays released so the
     // click that refocused the window settles before the route acts again.
     private const int RefocusFrames=30;
-    private bool finishStep;
+    private bool finishStep,entered;
     public RouteEngine(Route route) { route.Validate();this.route=route; }
     public int Index { get; private set; }
     public string Status { get; private set; } = "running";
@@ -306,9 +321,21 @@ public sealed class RouteEngine
             Paused=false;Reason="";
         }
         if(state.Failure!=null) { Fail(state.Failure);return; }
-        if(finishStep) { Index++;elapsed=stable=0;finishStep=false; }
+        if(finishStep) { Index++;elapsed=stable=0;finishStep=false;entered=false; }
         if(Index==route.Steps.Length) { Status="complete";return; }
         var step=route.Steps[Index];
+        if(!entered)
+        {
+            entered=true;
+            if(step.SkipIf!=null && step.SkipIf.Matches(state))
+            {
+                string? group=step.Group;
+                do Index++; while(group!=null && Index<route.Steps.Length && route.Steps[Index].Group==group);
+                elapsed=stable=0;entered=false;
+                if(Index==route.Steps.Length)Status="complete";
+                return;
+            }
+        }
         // Completion is checked before the active-phase guard. Input is released
         // as soon as the destination appears, including during stability checks.
         if(step.Kind!="hold" && step.Until!.Matches(state))
