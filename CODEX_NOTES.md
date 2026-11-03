@@ -790,3 +790,13 @@ The arms come back only after BOTH are dead. Twincast hits every enemy (and refl
 * killFirst=[170, Baigan, 169].
 * Single targets only: Palom Fira and Tellah Thundara at the kill-order target (skipped while it has Reflect), else Defend. Porom heals or Defends. No Twincast: the Baigan rules for the twins block their default.
 * BattlePilot: the kill order only moves forward within a fight. A monster that was seen alive and has died isn't chased again if it comes back (`killStage`, `killSeen`, reset per fight).
+
+### 113. Strong single spells on Baigan's body; Cagnazzo's lightning out of the shell
+User: "use strong singular spells on the body", "Kainazzo needs to be hit with HEAVY LIGHTNING WHEN HE IS OUT OF HIS SHELL".
+* New BattleRule fields:
+  * `ignoreReflect`: black magic and Twincast are cast even while the target has Reflect.
+  * `whileMonsterChanged`: live, not latched. True while an enemy's sprite differs from the start of the fight. Two checks 12 frames apart must agree before it flips, so a single animation frame doesn't count.
+* **Baigan:** Palom tries Bio, then Fira, then Thundara; Tellah tries Bio, Firaga, Thundaga, Blizzaga, then Fira. All at the kill-order target, with ignoreReflect. Unknown spells are blocked after one try. Porom heals or Defends.
+* **Cagnazzo, out of the shell** (changed false): Tellah Thundaga (else Thundara), Palom Thundara (else Thunder).
+* **Cagnazzo, in the shell:** the casters Defend. Porom heals or Defends, which also blocks a Twincast that would take Palom's turn.
+* Unverified: whether the shell is a sprite change (the Mom Bomb grow was).

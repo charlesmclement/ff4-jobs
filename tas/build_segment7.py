@@ -38,21 +38,34 @@ field=[
 # Kick hits everyone; the casters Defend through it, Cecil attacks.
 monk=[{'character':c,'command':2,'whileMonster':MONK} for c in (PALOM,POROM,TELLAH)]
 # Baigan (user, live): the arms come back only after BOTH are dead, and
-# Twincast (it hits every enemy, and it reflects) killed both at once. "kill
-# right arm, kill body, kill left arm": the arm the user calls right is
-# master 170 (the run was hitting 169 and the user saw the left arm hit).
-# Single targets only: Palom's Fira and Tellah's Thundara at the kill-order
-# target (the pilot skips them while it has Reflect), Porom heals or
-# Defends; no Twincast here (these rules also block the twins' default).
-baigan=[{'character':PALOM,'command':8,'ability':FIRA,'minMp':15,'whileMonster':BAIGAN},
-        {'character':TELLAH,'command':8,'ability':THUNDARA,'minMp':15,'whileMonster':BAIGAN}]
+# Twincast (it hits every enemy) killed both at once. Order: the arm nearest
+# the party (master 170), the body, the other arm (route killFirst, which
+# also aims single-target spells). User: "use strong singular spells on the
+# body": Palom and Tellah cast their strongest single-target spell at the
+# target even while Baigan has Reflect up (ignoreReflect); the first one each
+# knows is used (a spell he doesn't know is skipped after one try). Porom
+# heals, else Defends. No Twincast or AOE (these rules block the twins'
+# Twincast default).
+BIO,FIRAGA,BLIZZAGA=48,35,38
+baigan=[]
+for who,spells in ((PALOM,(BIO,FIRA,THUNDARA)),(TELLAH,(BIO,FIRAGA,THUNDAGA,BLIZZAGA,FIRA))):
+    for sp in spells:
+        baigan.append({'character':who,'command':8,'ability':sp,'minMp':30 if sp in (FIRAGA,THUNDAGA,BLIZZAGA) else 20 if sp==BIO else 15,'whileMonster':BAIGAN,'ignoreReflect':True})
 baigan+=[{'character':c,'command':2,'whileMonster':BAIGAN} for c in (PALOM,POROM,TELLAH)]+field
-# Cagnazzo: weak to lightning. Guide: "have Tellah use LIT-3 ... then just
-# keep attacking him".
+# Cagnazzo: weak to lightning (guide). User: "HEAVY LIGHTNING WHEN HE IS
+# OUT OF HIS SHELL". In the shell his sprite changes: whileMonsterChanged
+# false = out of it. Out: Tellah Thundaga, Palom Thundara. In the shell the
+# casters Defend (saving MP for when he comes out); Cecil and Yang attack.
 cagnazzo=[
-    {'character':TELLAH,'command':8,'ability':THUNDAGA,'minMp':30,'whileMonster':CAGNAZZO},
-    {'character':PALOM,'command':8,'ability':THUNDARA,'minMp':15,'whileMonster':CAGNAZZO},
-    {'character':PALOM,'command':8,'ability':39,'minMp':5,'whileMonster':CAGNAZZO},
+    {'character':TELLAH,'command':8,'ability':THUNDAGA,'minMp':30,'whileMonster':CAGNAZZO,'whileMonsterChanged':False},
+    {'character':PALOM,'command':8,'ability':THUNDARA,'minMp':15,'whileMonster':CAGNAZZO,'whileMonsterChanged':False},
+    {'character':TELLAH,'command':8,'ability':THUNDARA,'minMp':15,'whileMonster':CAGNAZZO,'whileMonsterChanged':False},
+    {'character':PALOM,'command':8,'ability':39,'minMp':5,'whileMonster':CAGNAZZO,'whileMonsterChanged':False},
+    {'character':TELLAH,'command':2,'whileMonster':CAGNAZZO},
+    {'character':PALOM,'command':2,'whileMonster':CAGNAZZO},
+    # Porom heals, else Defends: a Twincast would take Palom's turn from
+    # the lightning.
+    {'character':POROM,'command':2,'whileMonster':CAGNAZZO},
 ]+field
 
 s=[]

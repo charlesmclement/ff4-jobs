@@ -205,6 +205,13 @@ public sealed class BattleRule
     // ...and only once the monster has (true) / hasn't yet (false) changed
     // sprite: the Mom Bomb's grow action is ChangeSprite (function 45).
     public bool? WhileMonsterGrown {get;set;}
+    // Live (not latched) sprite change: true while an enemy is drawn
+    // differently from how the fight began (Cagnazzo in his shell), false
+    // while it looks as it started (out of the shell).
+    public bool? WhileMonsterChanged {get;set;}
+    // Cast black magic / Twincast at the target even while it has Reflect
+    // (user: "use strong singular spells on the body" - Baigan).
+    public bool IgnoreReflect {get;set;}
     // Target the whole enemy side (one Thunder on all instead of three singles).
     public bool TargetAll {get;set;}
     // Pick Fire/Blizzard/Thunder by the living enemies' shared weakness

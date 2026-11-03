@@ -2022,16 +2022,66 @@
         {
           "character": 9,
           "command": 8,
+          "ability": 48,
+          "minMp": 20,
+          "whileMonster": 168,
+          "ignoreReflect": true
+        },
+        {
+          "character": 9,
+          "command": 8,
           "ability": 34,
           "minMp": 15,
-          "whileMonster": 168
+          "whileMonster": 168,
+          "ignoreReflect": true
+        },
+        {
+          "character": 9,
+          "command": 8,
+          "ability": 40,
+          "minMp": 15,
+          "whileMonster": 168,
+          "ignoreReflect": true
         },
         {
           "character": 6,
           "command": 8,
-          "ability": 40,
+          "ability": 48,
+          "minMp": 20,
+          "whileMonster": 168,
+          "ignoreReflect": true
+        },
+        {
+          "character": 6,
+          "command": 8,
+          "ability": 35,
+          "minMp": 30,
+          "whileMonster": 168,
+          "ignoreReflect": true
+        },
+        {
+          "character": 6,
+          "command": 8,
+          "ability": 41,
+          "minMp": 30,
+          "whileMonster": 168,
+          "ignoreReflect": true
+        },
+        {
+          "character": 6,
+          "command": 8,
+          "ability": 38,
+          "minMp": 30,
+          "whileMonster": 168,
+          "ignoreReflect": true
+        },
+        {
+          "character": 6,
+          "command": 8,
+          "ability": 34,
           "minMp": 15,
-          "whileMonster": 168
+          "whileMonster": 168,
+          "ignoreReflect": true
         },
         {
           "character": 9,
@@ -2128,16 +2178,66 @@
         {
           "character": 9,
           "command": 8,
+          "ability": 48,
+          "minMp": 20,
+          "whileMonster": 168,
+          "ignoreReflect": true
+        },
+        {
+          "character": 9,
+          "command": 8,
           "ability": 34,
           "minMp": 15,
-          "whileMonster": 168
+          "whileMonster": 168,
+          "ignoreReflect": true
+        },
+        {
+          "character": 9,
+          "command": 8,
+          "ability": 40,
+          "minMp": 15,
+          "whileMonster": 168,
+          "ignoreReflect": true
         },
         {
           "character": 6,
           "command": 8,
-          "ability": 40,
+          "ability": 48,
+          "minMp": 20,
+          "whileMonster": 168,
+          "ignoreReflect": true
+        },
+        {
+          "character": 6,
+          "command": 8,
+          "ability": 35,
+          "minMp": 30,
+          "whileMonster": 168,
+          "ignoreReflect": true
+        },
+        {
+          "character": 6,
+          "command": 8,
+          "ability": 41,
+          "minMp": 30,
+          "whileMonster": 168,
+          "ignoreReflect": true
+        },
+        {
+          "character": 6,
+          "command": 8,
+          "ability": 38,
+          "minMp": 30,
+          "whileMonster": 168,
+          "ignoreReflect": true
+        },
+        {
+          "character": 6,
+          "command": 8,
+          "ability": 34,
           "minMp": 15,
-          "whileMonster": 168
+          "whileMonster": 168,
+          "ignoreReflect": true
         },
         {
           "character": 9,
@@ -2224,16 +2324,66 @@
         {
           "character": 9,
           "command": 8,
+          "ability": 48,
+          "minMp": 20,
+          "whileMonster": 168,
+          "ignoreReflect": true
+        },
+        {
+          "character": 9,
+          "command": 8,
           "ability": 34,
           "minMp": 15,
-          "whileMonster": 168
+          "whileMonster": 168,
+          "ignoreReflect": true
+        },
+        {
+          "character": 9,
+          "command": 8,
+          "ability": 40,
+          "minMp": 15,
+          "whileMonster": 168,
+          "ignoreReflect": true
         },
         {
           "character": 6,
           "command": 8,
-          "ability": 40,
+          "ability": 48,
+          "minMp": 20,
+          "whileMonster": 168,
+          "ignoreReflect": true
+        },
+        {
+          "character": 6,
+          "command": 8,
+          "ability": 35,
+          "minMp": 30,
+          "whileMonster": 168,
+          "ignoreReflect": true
+        },
+        {
+          "character": 6,
+          "command": 8,
+          "ability": 41,
+          "minMp": 30,
+          "whileMonster": 168,
+          "ignoreReflect": true
+        },
+        {
+          "character": 6,
+          "command": 8,
+          "ability": 38,
+          "minMp": 30,
+          "whileMonster": 168,
+          "ignoreReflect": true
+        },
+        {
+          "character": 6,
+          "command": 8,
+          "ability": 34,
           "minMp": 15,
-          "whileMonster": 168
+          "whileMonster": 168,
+          "ignoreReflect": true
         },
         {
           "character": 9,
@@ -2330,16 +2480,66 @@
         {
           "character": 9,
           "command": 8,
+          "ability": 48,
+          "minMp": 20,
+          "whileMonster": 168,
+          "ignoreReflect": true
+        },
+        {
+          "character": 9,
+          "command": 8,
           "ability": 34,
           "minMp": 15,
-          "whileMonster": 168
+          "whileMonster": 168,
+          "ignoreReflect": true
+        },
+        {
+          "character": 9,
+          "command": 8,
+          "ability": 40,
+          "minMp": 15,
+          "whileMonster": 168,
+          "ignoreReflect": true
         },
         {
           "character": 6,
           "command": 8,
-          "ability": 40,
+          "ability": 48,
+          "minMp": 20,
+          "whileMonster": 168,
+          "ignoreReflect": true
+        },
+        {
+          "character": 6,
+          "command": 8,
+          "ability": 35,
+          "minMp": 30,
+          "whileMonster": 168,
+          "ignoreReflect": true
+        },
+        {
+          "character": 6,
+          "command": 8,
+          "ability": 41,
+          "minMp": 30,
+          "whileMonster": 168,
+          "ignoreReflect": true
+        },
+        {
+          "character": 6,
+          "command": 8,
+          "ability": 38,
+          "minMp": 30,
+          "whileMonster": 168,
+          "ignoreReflect": true
+        },
+        {
+          "character": 6,
+          "command": 8,
+          "ability": 34,
           "minMp": 15,
-          "whileMonster": 168
+          "whileMonster": 168,
+          "ignoreReflect": true
         },
         {
           "character": 9,
@@ -2426,16 +2626,66 @@
         {
           "character": 9,
           "command": 8,
+          "ability": 48,
+          "minMp": 20,
+          "whileMonster": 168,
+          "ignoreReflect": true
+        },
+        {
+          "character": 9,
+          "command": 8,
           "ability": 34,
           "minMp": 15,
-          "whileMonster": 168
+          "whileMonster": 168,
+          "ignoreReflect": true
+        },
+        {
+          "character": 9,
+          "command": 8,
+          "ability": 40,
+          "minMp": 15,
+          "whileMonster": 168,
+          "ignoreReflect": true
         },
         {
           "character": 6,
           "command": 8,
-          "ability": 40,
+          "ability": 48,
+          "minMp": 20,
+          "whileMonster": 168,
+          "ignoreReflect": true
+        },
+        {
+          "character": 6,
+          "command": 8,
+          "ability": 35,
+          "minMp": 30,
+          "whileMonster": 168,
+          "ignoreReflect": true
+        },
+        {
+          "character": 6,
+          "command": 8,
+          "ability": 41,
+          "minMp": 30,
+          "whileMonster": 168,
+          "ignoreReflect": true
+        },
+        {
+          "character": 6,
+          "command": 8,
+          "ability": 38,
+          "minMp": 30,
+          "whileMonster": 168,
+          "ignoreReflect": true
+        },
+        {
+          "character": 6,
+          "command": 8,
+          "ability": 34,
           "minMp": 15,
-          "whileMonster": 168
+          "whileMonster": 168,
+          "ignoreReflect": true
         },
         {
           "character": 9,
@@ -2524,16 +2774,66 @@
         {
           "character": 9,
           "command": 8,
+          "ability": 48,
+          "minMp": 20,
+          "whileMonster": 168,
+          "ignoreReflect": true
+        },
+        {
+          "character": 9,
+          "command": 8,
           "ability": 34,
           "minMp": 15,
-          "whileMonster": 168
+          "whileMonster": 168,
+          "ignoreReflect": true
+        },
+        {
+          "character": 9,
+          "command": 8,
+          "ability": 40,
+          "minMp": 15,
+          "whileMonster": 168,
+          "ignoreReflect": true
         },
         {
           "character": 6,
           "command": 8,
-          "ability": 40,
+          "ability": 48,
+          "minMp": 20,
+          "whileMonster": 168,
+          "ignoreReflect": true
+        },
+        {
+          "character": 6,
+          "command": 8,
+          "ability": 35,
+          "minMp": 30,
+          "whileMonster": 168,
+          "ignoreReflect": true
+        },
+        {
+          "character": 6,
+          "command": 8,
+          "ability": 41,
+          "minMp": 30,
+          "whileMonster": 168,
+          "ignoreReflect": true
+        },
+        {
+          "character": 6,
+          "command": 8,
+          "ability": 38,
+          "minMp": 30,
+          "whileMonster": 168,
+          "ignoreReflect": true
+        },
+        {
+          "character": 6,
+          "command": 8,
+          "ability": 34,
           "minMp": 15,
-          "whileMonster": 168
+          "whileMonster": 168,
+          "ignoreReflect": true
         },
         {
           "character": 9,
@@ -2832,20 +3132,46 @@
           "command": 8,
           "ability": 41,
           "minMp": 30,
-          "whileMonster": 171
+          "whileMonster": 171,
+          "whileMonsterChanged": false
         },
         {
           "character": 9,
           "command": 8,
           "ability": 40,
           "minMp": 15,
-          "whileMonster": 171
+          "whileMonster": 171,
+          "whileMonsterChanged": false
+        },
+        {
+          "character": 6,
+          "command": 8,
+          "ability": 40,
+          "minMp": 15,
+          "whileMonster": 171,
+          "whileMonsterChanged": false
         },
         {
           "character": 9,
           "command": 8,
           "ability": 39,
           "minMp": 5,
+          "whileMonster": 171,
+          "whileMonsterChanged": false
+        },
+        {
+          "character": 6,
+          "command": 2,
+          "whileMonster": 171
+        },
+        {
+          "character": 9,
+          "command": 2,
+          "whileMonster": 171
+        },
+        {
+          "character": 10,
+          "command": 2,
           "whileMonster": 171
         },
         {
@@ -2930,20 +3256,46 @@
           "command": 8,
           "ability": 41,
           "minMp": 30,
-          "whileMonster": 171
+          "whileMonster": 171,
+          "whileMonsterChanged": false
         },
         {
           "character": 9,
           "command": 8,
           "ability": 40,
           "minMp": 15,
-          "whileMonster": 171
+          "whileMonster": 171,
+          "whileMonsterChanged": false
+        },
+        {
+          "character": 6,
+          "command": 8,
+          "ability": 40,
+          "minMp": 15,
+          "whileMonster": 171,
+          "whileMonsterChanged": false
         },
         {
           "character": 9,
           "command": 8,
           "ability": 39,
           "minMp": 5,
+          "whileMonster": 171,
+          "whileMonsterChanged": false
+        },
+        {
+          "character": 6,
+          "command": 2,
+          "whileMonster": 171
+        },
+        {
+          "character": 9,
+          "command": 2,
+          "whileMonster": 171
+        },
+        {
+          "character": 10,
+          "command": 2,
           "whileMonster": 171
         },
         {
@@ -3018,20 +3370,46 @@
           "command": 8,
           "ability": 41,
           "minMp": 30,
-          "whileMonster": 171
+          "whileMonster": 171,
+          "whileMonsterChanged": false
         },
         {
           "character": 9,
           "command": 8,
           "ability": 40,
           "minMp": 15,
-          "whileMonster": 171
+          "whileMonster": 171,
+          "whileMonsterChanged": false
+        },
+        {
+          "character": 6,
+          "command": 8,
+          "ability": 40,
+          "minMp": 15,
+          "whileMonster": 171,
+          "whileMonsterChanged": false
         },
         {
           "character": 9,
           "command": 8,
           "ability": 39,
           "minMp": 5,
+          "whileMonster": 171,
+          "whileMonsterChanged": false
+        },
+        {
+          "character": 6,
+          "command": 2,
+          "whileMonster": 171
+        },
+        {
+          "character": 9,
+          "command": 2,
+          "whileMonster": 171
+        },
+        {
+          "character": 10,
+          "command": 2,
           "whileMonster": 171
         },
         {
@@ -3116,20 +3494,46 @@
           "command": 8,
           "ability": 41,
           "minMp": 30,
-          "whileMonster": 171
+          "whileMonster": 171,
+          "whileMonsterChanged": false
         },
         {
           "character": 9,
           "command": 8,
           "ability": 40,
           "minMp": 15,
-          "whileMonster": 171
+          "whileMonster": 171,
+          "whileMonsterChanged": false
+        },
+        {
+          "character": 6,
+          "command": 8,
+          "ability": 40,
+          "minMp": 15,
+          "whileMonster": 171,
+          "whileMonsterChanged": false
         },
         {
           "character": 9,
           "command": 8,
           "ability": 39,
           "minMp": 5,
+          "whileMonster": 171,
+          "whileMonsterChanged": false
+        },
+        {
+          "character": 6,
+          "command": 2,
+          "whileMonster": 171
+        },
+        {
+          "character": 9,
+          "command": 2,
+          "whileMonster": 171
+        },
+        {
+          "character": 10,
+          "command": 2,
           "whileMonster": 171
         },
         {
@@ -3204,20 +3608,46 @@
           "command": 8,
           "ability": 41,
           "minMp": 30,
-          "whileMonster": 171
+          "whileMonster": 171,
+          "whileMonsterChanged": false
         },
         {
           "character": 9,
           "command": 8,
           "ability": 40,
           "minMp": 15,
-          "whileMonster": 171
+          "whileMonster": 171,
+          "whileMonsterChanged": false
+        },
+        {
+          "character": 6,
+          "command": 8,
+          "ability": 40,
+          "minMp": 15,
+          "whileMonster": 171,
+          "whileMonsterChanged": false
         },
         {
           "character": 9,
           "command": 8,
           "ability": 39,
           "minMp": 5,
+          "whileMonster": 171,
+          "whileMonsterChanged": false
+        },
+        {
+          "character": 6,
+          "command": 2,
+          "whileMonster": 171
+        },
+        {
+          "character": 9,
+          "command": 2,
+          "whileMonster": 171
+        },
+        {
+          "character": 10,
+          "command": 2,
           "whileMonster": 171
         },
         {
@@ -3294,20 +3724,46 @@
           "command": 8,
           "ability": 41,
           "minMp": 30,
-          "whileMonster": 171
+          "whileMonster": 171,
+          "whileMonsterChanged": false
         },
         {
           "character": 9,
           "command": 8,
           "ability": 40,
           "minMp": 15,
-          "whileMonster": 171
+          "whileMonster": 171,
+          "whileMonsterChanged": false
+        },
+        {
+          "character": 6,
+          "command": 8,
+          "ability": 40,
+          "minMp": 15,
+          "whileMonster": 171,
+          "whileMonsterChanged": false
         },
         {
           "character": 9,
           "command": 8,
           "ability": 39,
           "minMp": 5,
+          "whileMonster": 171,
+          "whileMonsterChanged": false
+        },
+        {
+          "character": 6,
+          "command": 2,
+          "whileMonster": 171
+        },
+        {
+          "character": 9,
+          "command": 2,
+          "whileMonster": 171
+        },
+        {
+          "character": 10,
+          "command": 2,
           "whileMonster": 171
         },
         {

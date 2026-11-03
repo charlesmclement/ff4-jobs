@@ -35,7 +35,7 @@ internal sealed class BattlePilot
         abilityLastIndex=-1;abilityLastKey=null;lastInfo=lastCursor=-1;lastActor=IntPtr.Zero;previousHp=-1;
         pendingRule=-1;abilityConfirms=abilityStuck=targetPresses=0;decision="";
         blockedRules.Clear();blockedCure.Clear();blockedLife.Clear();blockedItems.Clear();blockedStatusSpell.Clear();usedOnce.Clear();wasMist=false;
-        fleeFrames=0;sidePresses=0;unreachable.Clear();fellThisFight.Clear();targetPresses=0;bossSeen=false;turnActor=IntPtr.Zero;turnRule=-1;fightSeconds=0;fightFrame=-1;rowDone=false;firstSprite.Clear();grown=false;spriteLine="";queuedHeals.Clear();killStage=0;killSeen.Clear();
+        fleeFrames=0;sidePresses=0;unreachable.Clear();fellThisFight.Clear();targetPresses=0;bossSeen=false;turnActor=IntPtr.Zero;turnRule=-1;fightSeconds=0;fightFrame=-1;rowDone=false;firstSprite.Clear();grown=false;startSprite.Clear();changed=false;changeVotes=0;spriteLine="";queuedHeals.Clear();killStage=0;killSeen.Clear();
     }
     internal void Read(Snapshot state,int frame,BattleRule[]? plan=null,int[]? fleeMonsters=null,bool grinding=false,bool story=false)
     {
@@ -164,6 +164,24 @@ internal sealed class BattlePilot
         // first try watched the asset id and never fired). Watch each enemy
         // view's drawn sprite and size, and as a backup the "I'M GONNA BLOW!"
         // line (E0020_01_180_b_01) in the battle message. Latched per fight.
+        // Live change for WhileMonsterChanged (Cagnazzo's shell): two checks
+        // in a row that disagree with the start flip it, so a single attack
+        // animation frame doesn't.
+        if(frame%12==0 && plan!=null && Array.Exists(plan,r=>r.WhileMonsterChanged!=null))
+        {
+            bool differs=false;
+            foreach(var view in UnityEngine.Object.FindObjectsOfType<BattleEnemyEntity>())
+            {
+                if(view==null)continue;
+                var sr=view.characterSR;
+                string sig=$"{view.MonsterAssetId}/{(sr!=null?sr.Width:0)}x{(sr!=null?sr.Height:0)}/{(sr?.sprite!=null?sr.sprite.name:"")}";
+                if(!startSprite.TryGetValue(view.Pointer,out var first))startSprite[view.Pointer]=sig;
+                else if(first!=sig)differs=true;
+            }
+            if(differs!=changed) {if(++changeVotes>=2) {changed=differs;changeVotes=0;}}
+            else changeVotes=0;
+        }
+        if(changed)enemyText.Append(" [changed]");
         if(frame%12==0 && !grown && plan!=null && Array.Exists(plan,r=>r.WhileMonsterGrown!=null))
         {
             foreach(var view in UnityEngine.Object.FindObjectsOfType<BattleEnemyEntity>())
@@ -434,7 +452,7 @@ internal sealed class BattlePilot
     private int flyerAims;
     private IntPtr decidingActor;
     private IntPtr turnActor;private int turnRule=-1;private bool itemOnEnemies;
-    private readonly HashSet<int> livingIds=new();private readonly Dictionary<int,int> livingHp=new();private readonly Dictionary<IntPtr,string> firstSprite=new();private bool grown;private string spriteLine="";private const string GrowWarning="E0020_01_180_b_01";private const int MomBomb=165;private BattlePlayerData? rosaTarget,rosaLow;
+    private readonly HashSet<int> livingIds=new();private readonly Dictionary<int,int> livingHp=new();private readonly Dictionary<IntPtr,string> firstSprite=new();private bool grown,changed;private int changeVotes;private readonly Dictionary<IntPtr,string> startSprite=new();private string spriteLine="";private const string GrowWarning="E0020_01_180_b_01";private const int MomBomb=165;private BattlePlayerData? rosaTarget,rosaLow;
     private const float RosaHealBelow=.75f,CriticalHp=.35f;
     // Lowest HP share first; Rosa, Cecil and Yang only get a small edge
     // (user: "loosen that up", "I would have healed Ed there"), and anyone
@@ -642,7 +660,7 @@ internal sealed class BattlePilot
             // Black magic and Twincast at a target behind Reflect bounce back
             // onto the party (user, Baigan's Wall: "focus damage so he doesnt
             // reflect"): wait for it to drop.
-            if(targetReflect && rule.Command is BlackMagic or TwincastCommand)continue;
+            if(targetReflect && !rule.IgnoreReflect && rule.Command is BlackMagic or TwincastCommand)continue;
             if(stats!=null && rule.MinHpPercent>0 && stats.CurrentHP*100<rule.MinHpPercent*Math.Max(1,stats.ConfirmedMaxHp()))continue;
             if(stats!=null && rule.MinMp>0 && stats.CurrentMP<rule.MinMp)continue;
             if(rule.MinEnemies>0 && livingEnemies<rule.MinEnemies && !(rule.OrTough && tough))continue;
@@ -650,6 +668,7 @@ internal sealed class BattlePilot
             if(rule.WhileMonster is int hpId && livingHp.TryGetValue(hpId,out int monsterHp) &&
                (monsterHp>rule.WhileMonsterHpAtMost || monsterHp<=rule.WhileMonsterHpAbove))continue;
             if(rule.WhileMonsterGrown is bool wantGrown && wantGrown!=grown)continue;
+            if(rule.WhileMonsterChanged is bool wantChanged && wantChanged!=changed)continue;
             // Darkness is an HP-costing wave that can kill Cecil (user rule).
             // Only on large groups (4+), and only while Cecil is above a fifth
             // of his HP (it costs ~8-9% a use; the explosion leaves him low and
