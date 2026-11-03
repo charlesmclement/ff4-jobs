@@ -214,6 +214,11 @@ internal sealed class BattlePilot
         {
             case 1:
                 Decide(info,actor,dead,injured,mist,plan);
+                // A wanted command that is on the list but greyed out (Items
+                // while hidden): Attack instead of cycling around it forever.
+                if(!mist && (pendingItem!=0?!CommandEnabled(info,ItemsCommand):pendingCommand!=Defend && pendingCommand!=Row && !CommandEnabled(info,pendingCommand)) && CommandEnabled(info,1))
+                {if(pendingTarget!=0 && queuedHeals.TryGetValue(pendingTarget,out var q) && q.Healer==actor.Pointer)queuedHeals.Remove(pendingTarget);
+                 pendingItem=0;pendingAbility=0;pendingTarget=0;pendingRule=-1;targetAll=false;aimFlyer=false;pendingCommand=1;decision+=" -> greyed out, Attack";}
                 SelectCommand(info,pendingItem!=0?3:mist?2:pendingCommand,state,frame);
                 break;
             case 4:
@@ -282,7 +287,7 @@ internal sealed class BattlePilot
         return a.MonsterMaster?.Id==b.MonsterMaster?.Id && pa.CurrentHP==pb.CurrentHP;
     }
     private const float HealBelow=.5f;
-    private const int DarknessCommand=10,Aim=13;
+    private const int DarknessCommand=10,Aim=13,ItemsCommand=3,ReturnCommand=58;
     private const int EnemySingleState=3,EnemyAllState=4;
     private int undeadCount,livingEnemies;
     private bool targetAll,tough,boss,fleeTarget;
@@ -353,6 +358,10 @@ internal sealed class BattlePilot
         abilityConfirms=abilityStuck=abilityStride=0;abilityLastIndex=-1;abilityLastKey=null;
         if(mist) {Log(actor,"Defend: Mist Dragon in mist");return;}
         if(scripted) {Log(actor,"Attack: scripted fight, no items or MP");return;}
+        // Edward hides by himself at low HP (Hide auto-executes); hidden, his
+        // list offers Return and greys out Items, and the run looped on the
+        // greyed Items. Come back out; the next turn acts normally.
+        if(CommandEnabled(info,ReturnCommand)) {pendingCommand=ReturnCommand;Log(actor,"Return (came out of hiding)");return;}
         var stats=actor.BattleUnitDataInfo?.Parameter;
         bool isTellah=actor.GetOwnedCharacterData()?.characterStatusId==Tellah;
         bool canCure=stats!=null && stats.CurrentMP>=CureMp && CommandEnabled(info,WhiteMagic) && !blockedCure.Contains(actor.Pointer);
