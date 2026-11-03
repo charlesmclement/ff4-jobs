@@ -4048,12 +4048,12 @@
       "group": "flag107"
     },
     {
-      "label": "Enterprise: land and step off outside Baron (Confirm at the spot, like the hovercraft)",
+      "label": "Enterprise: fly off the castle and land on the grass south-east of Baron town",
       "kind": "navigate",
       "mapId": 1,
       "goal": {
-        "x": 107,
-        "y": 142,
+        "x": 110,
+        "y": 147,
         "layer": 0
       },
       "phases": [
@@ -4073,7 +4073,19 @@
         "riding": false
       },
       "stableFrames": 2,
-      "timeoutFrames": 3600
+      "timeoutFrames": 3600,
+      "waypoints": [
+        {
+          "x": 107,
+          "y": 147,
+          "layer": 0
+        },
+        {
+          "x": 109,
+          "y": 147,
+          "layer": 0
+        }
+      ]
     },
     {
       "label": "Beside the Enterprise: heal",

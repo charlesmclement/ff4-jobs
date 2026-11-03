@@ -162,8 +162,13 @@ s.extend(trigger('Throne room: the King is Cagnazzo; Cid, the twins turn to ston
 # The scene ends with the party aboard the Enterprise (SysCall "ride the
 # Enterprise"), phase Transport, so the flag and map decide, not the phase.
 s[-1]['until']={'storyFlag':107,'mapId':OVERWORLD};s[-1]['stableFrames']=60
-s.append(nav('Enterprise: land and step off outside Baron (Confirm at the spot, like the hovercraft)',OVERWORLD,(107,142),
-             {'mapId':OVERWORLD,'riding':False},timeout=3600))
+# After Kain's message the party is in the Enterprise right above Baron
+# Castle (107,142), and the landing step aimed there kept trying to land on
+# the castle (user). Fly south-east to open grass beside the town (110,147)
+# and land there (Confirm at the spot).
+LANDING=(110,147)
+s.append(nav('Enterprise: fly off the castle and land on the grass south-east of Baron town',OVERWORLD,LANDING,
+             {'mapId':OVERWORLD,'riding':False},world_path((107,142),LANDING,transport=3,avoid=()),timeout=3600))
 s.append(heal('Beside the Enterprise: heal',OVERWORLD))
 s.append(checkpoint('Segment 7 complete: Cagnazzo defeated, the Enterprise is ours, outside Baron',OVERWORLD,107))
 

@@ -22,12 +22,12 @@
       "timeoutFrames": 7200
     },
     {
-      "label": "Overworld: into Baron town (east of the castle gate)",
+      "label": "Overworld: into Baron town from the Enterprise",
       "kind": "navigate",
       "mapId": 1,
       "goal": {
         "x": 108,
-        "y": 144,
+        "y": 145,
         "layer": 0
       },
       "phases": [
@@ -50,13 +50,13 @@
       "timeoutFrames": 54000,
       "waypoints": [
         {
-          "x": 108,
-          "y": 142,
+          "x": 110,
+          "y": 145,
           "layer": 0
         },
         {
-          "x": 108,
-          "y": 143,
+          "x": 109,
+          "y": 145,
           "layer": 0
         }
       ]
@@ -242,12 +242,12 @@
       "timeoutFrames": 54000
     },
     {
-      "label": "Baron: round the castle gate and back onto the Enterprise",
+      "label": "Baron: back onto the Enterprise (south-east of the town)",
       "kind": "navigate",
       "mapId": 1,
       "goal": {
-        "x": 107,
-        "y": 142,
+        "x": 110,
+        "y": 147,
         "layer": 0
       },
       "phases": [
@@ -274,18 +274,8 @@
           "layer": 0
         },
         {
-          "x": 109,
+          "x": 110,
           "y": 146,
-          "layer": 0
-        },
-        {
-          "x": 109,
-          "y": 142,
-          "layer": 0
-        },
-        {
-          "x": 108,
-          "y": 142,
           "layer": 0
         }
       ]
@@ -320,7 +310,7 @@
       "timeoutFrames": 54000,
       "waypoints": [
         {
-          "x": 107,
+          "x": 110,
           "y": 70,
           "layer": 0
         },
