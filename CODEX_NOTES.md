@@ -652,3 +652,6 @@ User (3 Nov, going to sleep): build as far into the game as possible, big segmen
 
 ### 86. Segment 8 built: Baron → Toroia → Black Chocobo → Cave of Magnes (untested)
 `tas/build_segment8.py` → `tas/routes/baron-magnes.json` (48 steps). Magnes is in a mountain-walled forest: only the Black Chocobo (vehicle 7, lands on forest) reaches it, from the Chocobo Village map 160 north of Toroia. New navigate `goalEntity` (chase the nearest FieldEntity whose Property.Name contains the text; the chocobos wander). Trigger pairs now skipIf their flag. route_kit's overworld planner cache is per transport (it reused on-foot terrain for the airship). docs/TAS-SEGMENT-8.md.
+
+### 87. Segment 9 built: Magnes → Toroia → Tower of Zot → Baron (untested)
+`tas/build_segment9.py` → `tas/routes/magnes-zot.json` (42 steps). The overworld map script (sc_map_10010) gates the Zot trigger at (41,70) on flag 38 only, so Edward's report (37) is skipped. Kain Jumps on Barbariccia; killFirst Mindy→Cindy→Sandy. Ends outside Baron's gate by the Enterprise (107,145). docs/TAS-SEGMENT-9.md.
