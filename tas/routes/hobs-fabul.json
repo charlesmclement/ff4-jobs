@@ -1207,27 +1207,6 @@
       "timeoutFrames": 108000
     },
     {
-      "label": "King's chamber: equip the strongest gear on Cecil (Deathbringer)",
-      "kind": "menu",
-      "mapId": 56,
-      "phases": [
-        "Player",
-        "Menu",
-        "Shop",
-        "Message",
-        "FieldReady",
-        "ChangeMap"
-      ],
-      "until": {
-        "menuDone": true
-      },
-      "stableFrames": 2,
-      "timeoutFrames": 10800,
-      "equip": [
-        1
-      ]
-    },
-    {
       "label": "King's chamber: stairs down",
       "kind": "navigate",
       "mapId": 56,
@@ -1429,6 +1408,27 @@
       },
       "stableFrames": 2,
       "timeoutFrames": 54000
+    },
+    {
+      "label": "Outside Fabul: Strongest on everyone (Cecil takes the Deathbringer); moved out of the king's chamber, where the equip window never reached Cecil",
+      "kind": "menu",
+      "mapId": 1,
+      "phases": [
+        "Player",
+        "Menu",
+        "Shop",
+        "Message",
+        "FieldReady",
+        "ChangeMap"
+      ],
+      "until": {
+        "menuDone": true
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 10800,
+      "equip": [
+        0
+      ]
     },
     {
       "label": "Segment 5 complete: Fabul defended, ship promised, outside Fabul",

@@ -15,6 +15,7 @@ internal sealed class EquipMenu
     private int[] wanted=Array.Empty<int>();
     private readonly HashSet<int> done=new(),removed=new();
     private int[] reset=Array.Empty<int>();
+    private readonly HashSet<int> seen=new();private bool stepping;private int stepFrom,stepTries;
     private bool finished,sideways;
     private int wait,switches,stuck,lastIndex=-1;
     private string? lastKey;
@@ -22,13 +23,17 @@ internal sealed class EquipMenu
     private EquipmentWindowController? window;
     internal void Reset(int[] characters,int[]? removeFirst=null)
     {
-        wanted=characters;mode=0;reset=removeFirst??Array.Empty<int>();removed.Clear();done.Clear();finished=sideways=false;wait=switches=stuck=0;lastIndex=-1;lastKey=null;main=null;window=null;
+        wanted=characters;mode=0;seen.Clear();stepping=false;stepFrom=stepTries=0;reset=removeFirst??Array.Empty<int>();removed.Clear();done.Clear();finished=sideways=false;wait=switches=stuck=0;lastIndex=-1;lastKey=null;main=null;window=null;
     }
     internal void Read(Snapshot s,int frame)
     {
         if(finished && s.Phase=="Player") {s.MenuDone=true;s.Detail="Equip: done";return;}
         if(wait>0) {wait--;s.Detail="Equip: equipping";return;}
-        int next=Array.Find(wanted,id=>!done.Contains(id) && Slot(id)>=0);
+        // equip [0] = everyone: Strongest on whoever the window shows, step to
+        // the next member, stop once a member comes round again. Needs no slot
+        // matching (the king's chamber never matched Cecil in any counting).
+        bool everyone=wanted.Length==1 && wanted[0]==0;
+        int next=everyone?-1:Array.Find(wanted,id=>!done.Contains(id) && Slot(id)>=0);
         if(next==0 || switches>MaxSwitches)finished=true;
         if(s.Phase=="Player")
         {
@@ -55,11 +60,28 @@ internal sealed class EquipMenu
         // No equipment window yet: the party list picks who to equip; the
         // window then switches members itself.
         if(window==null || !window.gameObject.activeInHierarchy || window.stateMachine==null) {Pulse(s,frame,"Confirm","Pick a member");return;}
-        int slot=Slot(next),shown=window.targetIndex;
-        if(shown!=slot)
+        int shown=window.targetIndex;
+        if(everyone)
         {
-            if(frame%12==0 && ++switches%LapSwitches==0)mode=(mode+1)%3;
-            Pulse(s,frame,"SwitchRight","Next member (#"+next+")");return;
+            if(stepping)
+            {
+                if(shown==stepFrom)
+                {
+                    if(frame%12==0 && ++stepTries>LapSwitches)finished=true;
+                    Pulse(s,frame,"SwitchRight",$"Next member (window {shown})");return;
+                }
+                stepping=false;stepTries=0;
+            }
+            if(seen.Contains(shown)) {finished=true;return;}
+        }
+        else
+        {
+            int slot=Slot(next);
+            if(shown!=slot)
+            {
+                if(frame%12==0 && ++switches%LapSwitches==0)mode=(mode+1)%3;
+                Pulse(s,frame,"SwitchRight",$"Next member (#{next}: window {shown}, want {slot}, counting {mode})");return;
+            }
         }
         if((int)window.stateMachine.Current!=WindowCommand) {Pulse(s,frame,"Back","Back to the equip commands");return;}
         var c=window.commandController;
@@ -74,8 +96,13 @@ internal sealed class EquipMenu
         int cursor=c.selectCursor.Index;
         if(cursor==target)
         {
-            if(frame%12==0) {if(clearing)removed.Add(next);else done.Add(next);wait=AfterEquip;}
-            Pulse(s,frame,"Confirm",(clearing?"Remove everything from #":"Strongest for #")+next);return;
+            if(frame%12==0)
+            {
+                if(clearing)removed.Add(next);else done.Add(next);
+                if(everyone && !clearing) {seen.Add(shown);stepping=true;stepFrom=shown;}
+                wait=AfterEquip;
+            }
+            Pulse(s,frame,"Confirm",(clearing?"Remove everything from #":"Strongest for ")+(everyone?$"window {shown}":"#"+next));return;
         }
         // The command row may be horizontal: flip axes if a key doesn't move it.
         string key=sideways?(target<cursor?"Left":"Right"):(target<cursor?"Up":"Down");

@@ -223,12 +223,13 @@ def auto_step(route):
     current map, the one whose next target (first waypoint, else goal) is
     nearest the player wins; the step choice is printed for checking."""
     s=state();m,x,y=s.get('mapId'),s.get('x'),s.get('y');flags=set(s.get('storyFlags') or [])
-    best=None;blocked=False
+    best=menu_best=None;blocked=False
     for i,step in enumerate(route['steps'],1):
         flag=(step.get('until') or {}).get('storyFlag')
         # Flags above the idle scan (0..40, Plugin StoryFlagScan) aren't
         # reported, so they can't decide anything here (e.g. Damcyan's 95).
         if flag is not None and flag>IDLE_FLAG_SCAN:flag=None
+        if not blocked and step.get('mapId')==m and step.get('kind')=='menu' and step.get('menuItem') is None and flag not in flags and menu_best is None:menu_best=i
         if not blocked and step.get('mapId')==m and step.get('kind')=='navigate' and flag not in flags:
             target=(step.get('waypoints') or [step.get('goal')])[0]
             d=0 if x is None else abs(target['x']-x)+abs(target['y']-y)
@@ -237,7 +238,10 @@ def auto_step(route):
         # A satisfied story flag means every step up to here is done; not the
         # segment's closing checkpoint, which repeats the last flag (resuming
         # on the summit after the Mom Bomb found no step).
-        elif flag is not None and not blocked and step.get('kind')!='checkpoint':best=None
+        elif flag is not None and not blocked and step.get('kind')!='checkpoint':best=menu_best=None
+    # No walking step left here (parked outside after the last gate): the
+    # first reachable menu step on this map, never a Tent (menuItem).
+    if best is None and menu_best is not None:return menu_best
     if best is None:raise RuntimeError(f'No route step starts on map {m} with story flags {sorted(flags)}; stand where the segment begins')
     # Field-menu steps (heal, formation) right before it on the same map run first.
     start=best[1]
