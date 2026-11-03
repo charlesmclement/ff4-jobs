@@ -649,3 +649,6 @@ User (3 Nov, going to sleep): build as far into the game as possible, big segmen
 
 ### 85. Segment 7 built: Mysidia → Baron → Cagnazzo → Enterprise (untested)
 `tas/build_segment7.py` → `tas/routes/mysidia-baron.json` (37 steps). The Baron Key door uses the existing itemChoice mash (Sand Ruby pattern) until ScenarioFlag2[16]. The Yang fight is scripted (Monk 62000 HP), so the casters Defend with monster-tied rules. The segment ends aboard the Enterprise; a navigate step presses Confirm at (107,142) until riding is false, and the checkpoint is on foot on the overworld. docs/TAS-SEGMENT-7.md.
+
+### 86. Segment 8 built: Baron → Toroia → Black Chocobo → Cave of Magnes (untested)
+`tas/build_segment8.py` → `tas/routes/baron-magnes.json` (48 steps). Magnes is in a mountain-walled forest: only the Black Chocobo (vehicle 7, lands on forest) reaches it, from the Chocobo Village map 160 north of Toroia. New navigate `goalEntity` (chase the nearest FieldEntity whose Property.Name contains the text; the chocobos wander). Trigger pairs now skipIf their flag. route_kit's overworld planner cache is per transport (it reused on-foot terrain for the airship). docs/TAS-SEGMENT-8.md.

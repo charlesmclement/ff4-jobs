@@ -1,0 +1,1909 @@
+{
+  "schema": 1,
+  "name": "Baron → Toroia → Cave of Magnes (segment 8) — UNTESTED",
+  "fleeTough": true,
+  "steps": [
+    {
+      "label": "Outside Baron: heal before the flight",
+      "kind": "menu",
+      "mapId": 1,
+      "phases": [
+        "Player",
+        "Menu",
+        "Shop",
+        "Message",
+        "FieldReady",
+        "ChangeMap"
+      ],
+      "until": {
+        "menuDone": true
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 7200
+    },
+    {
+      "label": "Baron: step off and back onto the Enterprise",
+      "kind": "navigate",
+      "mapId": 1,
+      "goal": {
+        "x": 107,
+        "y": 142,
+        "layer": 0
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "riding": true
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 3600,
+      "waypoints": [
+        {
+          "x": 108,
+          "y": 142,
+          "layer": 0
+        }
+      ]
+    },
+    {
+      "label": "Enterprise: north-west to Toroia; land beside the town",
+      "kind": "navigate",
+      "mapId": 1,
+      "goal": {
+        "x": 41,
+        "y": 70,
+        "layer": 0
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "mapId": 1,
+        "riding": false,
+        "atDestination": true
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 54000,
+      "waypoints": [
+        {
+          "x": 107,
+          "y": 70,
+          "layer": 0
+        },
+        {
+          "x": 42,
+          "y": 70,
+          "layer": 0
+        }
+      ]
+    },
+    {
+      "label": "Overworld: into Toroia Castle",
+      "kind": "navigate",
+      "mapId": 1,
+      "goal": {
+        "x": 40,
+        "y": 69,
+        "layer": 0
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Player",
+        "mapId": 96
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 54000,
+      "waypoints": [
+        {
+          "x": 41,
+          "y": 69,
+          "layer": 0
+        }
+      ]
+    },
+    {
+      "label": "Toroia Castle grounds: west door to Edward's room",
+      "kind": "navigate",
+      "mapId": 96,
+      "goal": {
+        "x": 9,
+        "y": 12,
+        "layer": 0
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Player",
+        "mapId": 100
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 54000
+    },
+    {
+      "label": "Edward's sickbed: he gives the Twin Harp (flag 34) - walk in",
+      "kind": "navigate",
+      "mapId": 100,
+      "goal": {
+        "x": 9,
+        "y": 5,
+        "layer": 0
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Event"
+      },
+      "stableFrames": 15,
+      "timeoutFrames": 54000,
+      "skipIf": {
+        "storyFlag": 34
+      },
+      "group": "flag34"
+    },
+    {
+      "label": "Edward's sickbed: he gives the Twin Harp (flag 34)",
+      "kind": "mash",
+      "keys": [
+        "Confirm"
+      ],
+      "phases": [
+        "None",
+        "Init",
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Player",
+        "storyFlag": 34
+      },
+      "stableFrames": 30,
+      "periodFrames": 8,
+      "pressedFrames": 2,
+      "timeoutFrames": 216000,
+      "skipIf": {
+        "storyFlag": 34
+      },
+      "group": "flag34"
+    },
+    {
+      "label": "Edward's room: out",
+      "kind": "navigate",
+      "mapId": 100,
+      "goal": {
+        "x": 3,
+        "y": 9,
+        "layer": 0
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Player",
+        "mapId": 96
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 54000
+    },
+    {
+      "label": "Toroia: formation - Cecil, Tellah, Cid, (empty), Yang; Cecil, Cid and Yang in front",
+      "kind": "menu",
+      "mapId": 96,
+      "phases": [
+        "Player",
+        "Menu",
+        "Shop",
+        "Message",
+        "FieldReady",
+        "ChangeMap"
+      ],
+      "until": {
+        "menuDone": true
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 10800,
+      "formation": {
+        "order": [
+          13,
+          6,
+          5,
+          0,
+          8
+        ],
+        "front": [
+          0,
+          2,
+          4
+        ]
+      }
+    },
+    {
+      "label": "Toroia Castle grounds: out",
+      "kind": "navigate",
+      "mapId": 96,
+      "goal": {
+        "x": 16,
+        "y": 32,
+        "layer": 0
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Player",
+        "mapId": 1
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 54000
+    },
+    {
+      "label": "Overworld: into the town of Toroia",
+      "kind": "navigate",
+      "mapId": 1,
+      "goal": {
+        "x": 40,
+        "y": 70,
+        "layer": 0
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Player",
+        "mapId": 86
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 54000
+    },
+    {
+      "label": "Toroia: item shop",
+      "kind": "navigate",
+      "mapId": 86,
+      "goal": {
+        "x": 20,
+        "y": 18,
+        "layer": 0
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Player",
+        "mapId": 89
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 54000
+    },
+    {
+      "label": "Item shop: up to the counter",
+      "kind": "navigate",
+      "mapId": 89,
+      "goal": {
+        "x": 6,
+        "y": 6,
+        "layer": 0
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "atDestination": true
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 54000
+    },
+    {
+      "label": "Item shop: Tents, Potions, Phoenix Downs (Tellah is the only healer)",
+      "kind": "menu",
+      "mapId": 89,
+      "phases": [
+        "Player",
+        "Menu",
+        "Shop",
+        "Message",
+        "FieldReady",
+        "ChangeMap"
+      ],
+      "until": {
+        "menuDone": true
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 10800,
+      "facing": "Up",
+      "shop": {
+        "buy": [
+          {
+            "content": 21,
+            "count": 4
+          },
+          {
+            "content": 2,
+            "count": 15
+          },
+          {
+            "content": 9,
+            "count": 6
+          }
+        ],
+        "sell": []
+      }
+    },
+    {
+      "label": "Item shop: out",
+      "kind": "navigate",
+      "mapId": 89,
+      "goal": {
+        "x": 6,
+        "y": 11,
+        "layer": 0
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Player",
+        "mapId": 86
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 54000
+    },
+    {
+      "label": "Toroia: out",
+      "kind": "navigate",
+      "mapId": 86,
+      "goal": {
+        "x": 19,
+        "y": 30,
+        "layer": 0
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Player",
+        "mapId": 1
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 54000
+    },
+    {
+      "label": "Overworld: north to the Chocobo Village (guide: \"north of the castle of Toroia\")",
+      "kind": "navigate",
+      "mapId": 1,
+      "goal": {
+        "x": 46,
+        "y": 40,
+        "layer": 0
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Player",
+        "mapId": 160
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 54000,
+      "waypoints": [
+        {
+          "x": 48,
+          "y": 71,
+          "layer": 0
+        },
+        {
+          "x": 48,
+          "y": 41,
+          "layer": 0
+        },
+        {
+          "x": 46,
+          "y": 41,
+          "layer": 0
+        }
+      ]
+    },
+    {
+      "label": "Chocobo Village: walk up to a Black Chocobo and talk to it",
+      "kind": "navigate",
+      "mapId": 160,
+      "goal": {
+        "x": 9,
+        "y": 10,
+        "layer": 0
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Event"
+      },
+      "stableFrames": 15,
+      "timeoutFrames": 54000,
+      "goalEntity": "チョコボ(黒)"
+    },
+    {
+      "label": "Chocobo Village: mount the Black Chocobo (back on the overworld)",
+      "kind": "mash",
+      "keys": [
+        "Confirm"
+      ],
+      "phases": [
+        "None",
+        "Init",
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "mapId": 1,
+        "riding": true
+      },
+      "stableFrames": 1,
+      "periodFrames": 8,
+      "pressedFrames": 2,
+      "timeoutFrames": 216000
+    },
+    {
+      "label": "Black Chocobo: fly to the forest below the Cave of Magnes and land (it lands only on forest)",
+      "kind": "navigate",
+      "mapId": 1,
+      "goal": {
+        "x": 79,
+        "y": 41,
+        "layer": 0
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "mapId": 1,
+        "riding": false,
+        "atDestination": true
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 54000,
+      "waypoints": [
+        {
+          "x": 46,
+          "y": 48,
+          "layer": 0
+        },
+        {
+          "x": 73,
+          "y": 48,
+          "layer": 0
+        },
+        {
+          "x": 73,
+          "y": 43,
+          "layer": 0
+        },
+        {
+          "x": 79,
+          "y": 43,
+          "layer": 0
+        },
+        {
+          "x": 79,
+          "y": 42,
+          "layer": 0
+        }
+      ]
+    },
+    {
+      "label": "Overworld: into the Cave of Magnes",
+      "kind": "navigate",
+      "mapId": 1,
+      "goal": {
+        "x": 79,
+        "y": 40,
+        "layer": 0
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Player",
+        "mapId": 192
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 54000,
+      "facing": "Up"
+    },
+    {
+      "label": "Cave of Magnes: the metal grows heavy (flag 100) - walk in",
+      "kind": "navigate",
+      "mapId": 192,
+      "goal": {
+        "x": 18,
+        "y": 9,
+        "layer": 0
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Event"
+      },
+      "stableFrames": 15,
+      "timeoutFrames": 54000,
+      "battlePlan": [
+        {
+          "character": 6,
+          "command": 8,
+          "byWeakness": true,
+          "minEnemies": 3,
+          "minMp": 60
+        },
+        {
+          "character": 6,
+          "command": 2,
+          "reserveMp": 20
+        }
+      ],
+      "skipIf": {
+        "storyFlag": 100
+      },
+      "group": "flag100"
+    },
+    {
+      "label": "Cave of Magnes: the metal grows heavy (flag 100)",
+      "kind": "mash",
+      "keys": [
+        "Confirm"
+      ],
+      "phases": [
+        "None",
+        "Init",
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Player",
+        "storyFlag": 100
+      },
+      "stableFrames": 30,
+      "periodFrames": 8,
+      "pressedFrames": 2,
+      "timeoutFrames": 216000,
+      "battlePlan": [
+        {
+          "character": 6,
+          "command": 8,
+          "byWeakness": true,
+          "minEnemies": 3,
+          "minMp": 60
+        },
+        {
+          "character": 6,
+          "command": 2,
+          "reserveMp": 20
+        }
+      ],
+      "skipIf": {
+        "storyFlag": 100
+      },
+      "group": "flag100"
+    },
+    {
+      "label": "Magnes B1: down",
+      "kind": "navigate",
+      "mapId": 192,
+      "goal": {
+        "x": 19,
+        "y": 20,
+        "layer": 0
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Player",
+        "mapId": 193
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 54000,
+      "battlePlan": [
+        {
+          "character": 6,
+          "command": 8,
+          "byWeakness": true,
+          "minEnemies": 3,
+          "minMp": 60
+        },
+        {
+          "character": 6,
+          "command": 2,
+          "reserveMp": 20
+        }
+      ]
+    },
+    {
+      "label": "Magnes B2: west passage",
+      "kind": "navigate",
+      "mapId": 193,
+      "goal": {
+        "x": 10,
+        "y": 7,
+        "layer": 0
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Player",
+        "mapId": 195
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 54000,
+      "battlePlan": [
+        {
+          "character": 6,
+          "command": 8,
+          "byWeakness": true,
+          "minEnemies": 3,
+          "minMp": 60
+        },
+        {
+          "character": 6,
+          "command": 2,
+          "reserveMp": 20
+        }
+      ]
+    },
+    {
+      "label": "Magnes B3: on west",
+      "kind": "navigate",
+      "mapId": 195,
+      "goal": {
+        "x": 14,
+        "y": 6,
+        "layer": 0
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Player",
+        "mapId": 198
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 54000,
+      "battlePlan": [
+        {
+          "character": 6,
+          "command": 8,
+          "byWeakness": true,
+          "minEnemies": 3,
+          "minMp": 60
+        },
+        {
+          "character": 6,
+          "command": 2,
+          "reserveMp": 20
+        }
+      ]
+    },
+    {
+      "label": "Magnes B3 (west room): down",
+      "kind": "navigate",
+      "mapId": 198,
+      "goal": {
+        "x": 8,
+        "y": 14,
+        "layer": 0
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Player",
+        "mapId": 199
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 54000,
+      "battlePlan": [
+        {
+          "character": 6,
+          "command": 8,
+          "byWeakness": true,
+          "minEnemies": 3,
+          "minMp": 60
+        },
+        {
+          "character": 6,
+          "command": 2,
+          "reserveMp": 20
+        }
+      ]
+    },
+    {
+      "label": "Magnes B4: the save room (guide: \"yet another chance to save\")",
+      "kind": "navigate",
+      "mapId": 199,
+      "goal": {
+        "x": 31,
+        "y": 16,
+        "layer": 0
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Player",
+        "mapId": 200
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 54000,
+      "battlePlan": [
+        {
+          "character": 6,
+          "command": 8,
+          "byWeakness": true,
+          "minEnemies": 3,
+          "minMp": 60
+        },
+        {
+          "character": 6,
+          "command": 2,
+          "reserveMp": 20
+        }
+      ]
+    },
+    {
+      "label": "Save room: onto the save point",
+      "kind": "navigate",
+      "mapId": 200,
+      "goal": {
+        "x": 14,
+        "y": 7,
+        "layer": 0
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "atDestination": true
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 54000
+    },
+    {
+      "label": "Save room: Tent before the Dark Elf",
+      "kind": "menu",
+      "mapId": 200,
+      "phases": [
+        "Player",
+        "Menu",
+        "Shop",
+        "Message",
+        "FieldReady",
+        "ChangeMap",
+        "Event"
+      ],
+      "until": {
+        "menuDone": true
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 10800,
+      "menuItem": 21
+    },
+    {
+      "label": "Save room: heal anyone the Tent missed",
+      "kind": "menu",
+      "mapId": 200,
+      "phases": [
+        "Player",
+        "Menu",
+        "Shop",
+        "Message",
+        "FieldReady",
+        "ChangeMap"
+      ],
+      "until": {
+        "menuDone": true
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 7200
+    },
+    {
+      "label": "Save room: out",
+      "kind": "navigate",
+      "mapId": 200,
+      "goal": {
+        "x": 14,
+        "y": 12,
+        "layer": 0
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Player",
+        "mapId": 199
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 54000
+    },
+    {
+      "label": "Magnes B4: into the crystal room",
+      "kind": "navigate",
+      "mapId": 199,
+      "goal": {
+        "x": 17,
+        "y": 8,
+        "layer": 0
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Player",
+        "mapId": 201
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 54000,
+      "battlePlan": [
+        {
+          "character": 6,
+          "command": 8,
+          "byWeakness": true,
+          "minEnemies": 3,
+          "minMp": 60
+        },
+        {
+          "character": 6,
+          "command": 2,
+          "reserveMp": 20
+        }
+      ]
+    },
+    {
+      "label": "Crystal room: the Dark Elf - lose the first fight (all Defend); Edward plays the harp (flag 97) - walk in",
+      "kind": "navigate",
+      "mapId": 201,
+      "goal": {
+        "x": 12,
+        "y": 13,
+        "layer": 0
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Event"
+      },
+      "stableFrames": 15,
+      "timeoutFrames": 54000,
+      "battlePlan": [
+        {
+          "character": 13,
+          "command": 2,
+          "whileMonster": 172
+        },
+        {
+          "character": 5,
+          "command": 2,
+          "whileMonster": 172
+        },
+        {
+          "character": 6,
+          "command": 2,
+          "whileMonster": 172
+        },
+        {
+          "character": 8,
+          "command": 2,
+          "whileMonster": 172
+        }
+      ],
+      "skipIf": {
+        "storyFlag": 97
+      },
+      "group": "flag97"
+    },
+    {
+      "label": "Crystal room: the Dark Elf - lose the first fight (all Defend); Edward plays the harp (flag 97)",
+      "kind": "mash",
+      "keys": [
+        "Confirm"
+      ],
+      "phases": [
+        "None",
+        "Init",
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Player",
+        "storyFlag": 97
+      },
+      "stableFrames": 30,
+      "periodFrames": 8,
+      "pressedFrames": 2,
+      "timeoutFrames": 216000,
+      "battlePlan": [
+        {
+          "character": 13,
+          "command": 2,
+          "whileMonster": 172
+        },
+        {
+          "character": 5,
+          "command": 2,
+          "whileMonster": 172
+        },
+        {
+          "character": 6,
+          "command": 2,
+          "whileMonster": 172
+        },
+        {
+          "character": 8,
+          "command": 2,
+          "whileMonster": 172
+        }
+      ],
+      "skipIf": {
+        "storyFlag": 97
+      },
+      "group": "flag97"
+    },
+    {
+      "label": "Crystal room: Strongest on everyone (the seal is gone; guide: \"equip yourself with all your metallic gear\")",
+      "kind": "menu",
+      "mapId": 201,
+      "phases": [
+        "Player",
+        "Menu",
+        "Shop",
+        "Message",
+        "FieldReady",
+        "ChangeMap"
+      ],
+      "until": {
+        "menuDone": true
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 10800,
+      "equip": [
+        0
+      ]
+    },
+    {
+      "label": "Crystal room: the Dark Elf again, then the Dark Dragon (flag 36) - walk in",
+      "kind": "navigate",
+      "mapId": 201,
+      "goal": {
+        "x": 12,
+        "y": 13,
+        "layer": 0
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Event"
+      },
+      "stableFrames": 15,
+      "timeoutFrames": 54000,
+      "battlePlan": [
+        {
+          "character": 6,
+          "command": 2,
+          "whileMonster": 173
+        },
+        {
+          "character": 6,
+          "command": 8,
+          "byWeakness": true,
+          "minEnemies": 3,
+          "minMp": 60
+        },
+        {
+          "character": 6,
+          "command": 2,
+          "reserveMp": 20
+        }
+      ],
+      "skipIf": {
+        "storyFlag": 36
+      },
+      "group": "flag36"
+    },
+    {
+      "label": "Crystal room: the Dark Elf again, then the Dark Dragon (flag 36)",
+      "kind": "mash",
+      "keys": [
+        "Confirm"
+      ],
+      "phases": [
+        "None",
+        "Init",
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Player",
+        "storyFlag": 36
+      },
+      "stableFrames": 30,
+      "periodFrames": 8,
+      "pressedFrames": 2,
+      "timeoutFrames": 216000,
+      "battlePlan": [
+        {
+          "character": 6,
+          "command": 2,
+          "whileMonster": 173
+        },
+        {
+          "character": 6,
+          "command": 8,
+          "byWeakness": true,
+          "minEnemies": 3,
+          "minMp": 60
+        },
+        {
+          "character": 6,
+          "command": 2,
+          "reserveMp": 20
+        }
+      ],
+      "skipIf": {
+        "storyFlag": 36
+      },
+      "group": "flag36"
+    },
+    {
+      "label": "Crystal room: take the Earth Crystal (flag 98) - walk in",
+      "kind": "navigate",
+      "mapId": 201,
+      "goal": {
+        "x": 12,
+        "y": 10,
+        "layer": 0
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Event"
+      },
+      "stableFrames": 15,
+      "timeoutFrames": 54000,
+      "skipIf": {
+        "storyFlag": 98
+      },
+      "group": "flag98"
+    },
+    {
+      "label": "Crystal room: take the Earth Crystal (flag 98)",
+      "kind": "mash",
+      "keys": [
+        "Confirm"
+      ],
+      "phases": [
+        "None",
+        "Init",
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Player",
+        "storyFlag": 98
+      },
+      "stableFrames": 30,
+      "periodFrames": 8,
+      "pressedFrames": 2,
+      "timeoutFrames": 216000,
+      "skipIf": {
+        "storyFlag": 98
+      },
+      "group": "flag98"
+    },
+    {
+      "label": "Crystal room: heal",
+      "kind": "menu",
+      "mapId": 201,
+      "phases": [
+        "Player",
+        "Menu",
+        "Shop",
+        "Message",
+        "FieldReady",
+        "ChangeMap"
+      ],
+      "until": {
+        "menuDone": true
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 7200
+    },
+    {
+      "label": "Crystal room: out",
+      "kind": "navigate",
+      "mapId": 201,
+      "goal": {
+        "x": 12,
+        "y": 28,
+        "layer": 0
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Player",
+        "mapId": 199
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 54000,
+      "battlePlan": [
+        {
+          "character": 6,
+          "command": 8,
+          "byWeakness": true,
+          "minEnemies": 3,
+          "minMp": 60
+        },
+        {
+          "character": 6,
+          "command": 2,
+          "reserveMp": 20
+        }
+      ]
+    },
+    {
+      "label": "Magnes B4: back up",
+      "kind": "navigate",
+      "mapId": 199,
+      "goal": {
+        "x": 26,
+        "y": 27,
+        "layer": 0
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Player",
+        "mapId": 198
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 54000,
+      "battlePlan": [
+        {
+          "character": 6,
+          "command": 8,
+          "byWeakness": true,
+          "minEnemies": 3,
+          "minMp": 60
+        },
+        {
+          "character": 6,
+          "command": 2,
+          "reserveMp": 20
+        }
+      ]
+    },
+    {
+      "label": "Magnes B3 (west room): east",
+      "kind": "navigate",
+      "mapId": 198,
+      "goal": {
+        "x": 17,
+        "y": 14,
+        "layer": 0
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Player",
+        "mapId": 195
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 54000,
+      "battlePlan": [
+        {
+          "character": 6,
+          "command": 8,
+          "byWeakness": true,
+          "minEnemies": 3,
+          "minMp": 60
+        },
+        {
+          "character": 6,
+          "command": 2,
+          "reserveMp": 20
+        }
+      ]
+    },
+    {
+      "label": "Magnes B3: up",
+      "kind": "navigate",
+      "mapId": 195,
+      "goal": {
+        "x": 33,
+        "y": 6,
+        "layer": 0
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Player",
+        "mapId": 193
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 54000,
+      "battlePlan": [
+        {
+          "character": 6,
+          "command": 8,
+          "byWeakness": true,
+          "minEnemies": 3,
+          "minMp": 60
+        },
+        {
+          "character": 6,
+          "command": 2,
+          "reserveMp": 20
+        }
+      ]
+    },
+    {
+      "label": "Magnes B2: up",
+      "kind": "navigate",
+      "mapId": 193,
+      "goal": {
+        "x": 32,
+        "y": 22,
+        "layer": 0
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Player",
+        "mapId": 192
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 54000,
+      "battlePlan": [
+        {
+          "character": 6,
+          "command": 8,
+          "byWeakness": true,
+          "minEnemies": 3,
+          "minMp": 60
+        },
+        {
+          "character": 6,
+          "command": 2,
+          "reserveMp": 20
+        }
+      ]
+    },
+    {
+      "label": "Magnes B1: out to the overworld",
+      "kind": "navigate",
+      "mapId": 192,
+      "goal": {
+        "x": 18,
+        "y": 7,
+        "layer": 0
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Player",
+        "mapId": 1
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 54000,
+      "battlePlan": [
+        {
+          "character": 6,
+          "command": 8,
+          "byWeakness": true,
+          "minEnemies": 3,
+          "minMp": 60
+        },
+        {
+          "character": 6,
+          "command": 2,
+          "reserveMp": 20
+        }
+      ]
+    },
+    {
+      "label": "Segment 8 complete: Dark Elf defeated, Earth Crystal in hand, outside the Cave of Magnes",
+      "kind": "checkpoint",
+      "phases": [
+        "Player"
+      ],
+      "until": {
+        "phase": "Player",
+        "mapId": 1,
+        "storyFlag": 98
+      }
+    }
+  ],
+  "weaknesses": {
+    "7": [
+      1
+    ],
+    "10": [
+      2
+    ],
+    "14": [
+      2
+    ],
+    "15": [
+      3
+    ],
+    "16": [
+      1
+    ],
+    "17": [
+      3
+    ],
+    "18": [
+      1
+    ],
+    "19": [
+      2
+    ],
+    "20": [
+      1
+    ],
+    "21": [
+      3
+    ],
+    "22": [
+      3
+    ],
+    "26": [
+      2
+    ],
+    "27": [
+      2
+    ],
+    "29": [
+      1
+    ],
+    "33": [
+      3
+    ],
+    "34": [
+      1
+    ],
+    "36": [
+      1
+    ],
+    "42": [
+      3
+    ],
+    "43": [
+      2
+    ],
+    "44": [
+      3
+    ],
+    "48": [
+      1
+    ],
+    "49": [
+      1
+    ],
+    "50": [
+      1
+    ],
+    "51": [
+      1
+    ],
+    "52": [
+      1
+    ],
+    "54": [
+      1
+    ],
+    "56": [
+      2
+    ],
+    "57": [
+      3
+    ],
+    "58": [
+      3
+    ],
+    "62": [
+      2
+    ],
+    "68": [
+      1
+    ],
+    "70": [
+      1
+    ],
+    "72": [
+      1
+    ],
+    "74": [
+      3
+    ],
+    "82": [
+      1
+    ],
+    "83": [
+      2
+    ],
+    "89": [
+      2
+    ],
+    "91": [
+      2
+    ],
+    "93": [
+      2
+    ],
+    "94": [
+      1
+    ],
+    "96": [
+      2
+    ],
+    "102": [
+      1
+    ],
+    "103": [
+      2
+    ],
+    "104": [
+      2
+    ],
+    "113": [
+      1
+    ],
+    "115": [
+      1
+    ],
+    "118": [
+      1
+    ],
+    "120": [
+      1
+    ],
+    "121": [
+      1
+    ],
+    "126": [
+      1
+    ],
+    "130": [
+      2
+    ],
+    "148": [
+      2
+    ],
+    "150": [
+      1
+    ],
+    "160": [
+      2
+    ],
+    "163": [
+      3
+    ],
+    "167": [
+      1
+    ],
+    "181": [
+      1
+    ],
+    "189": [
+      3
+    ],
+    "190": [
+      3
+    ],
+    "194": [
+      1
+    ],
+    "195": [
+      3
+    ],
+    "209": [
+      1
+    ],
+    "210": [
+      3
+    ],
+    "212": [
+      1
+    ],
+    "227": [
+      2
+    ],
+    "229": [
+      1
+    ],
+    "231": [
+      2
+    ],
+    "236": [
+      2
+    ],
+    "246": [
+      2
+    ],
+    "251": [
+      2
+    ],
+    "252": [
+      2
+    ],
+    "274": [
+      1
+    ]
+  }
+}

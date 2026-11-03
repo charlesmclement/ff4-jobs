@@ -40,7 +40,19 @@ internal sealed class Navigation
         if(active.Kind!="navigate" || active.Goal==null || active.MapId!=state.MapId)return;
         var goal=active.Goal;
         if(!ReferenceEquals(step,active) || owner!=player.Pointer)
-        {Reset();step=active;owner=player.Pointer;}
+        {Reset();step=active;owner=player.Pointer;entityGoal=null;}
+        if(active.GoalEntity!=null)
+        {
+            // A wandering NPC (chocobo): look it up twice a second and chase
+            // its current cell; a move of the target replans the path.
+            if(frame>=entityLookAt)
+            {
+                entityLookAt=frame+30;
+                var found=FindEntity(accessor,player,active.GoalEntity);
+                if(found!=null && (entityGoal==null || found.X!=entityGoal.X || found.Y!=entityGoal.Y)) {entityGoal=found;path.Clear();retryAt=frame;}
+            }
+            if(entityGoal!=null)goal=entityGoal;
+        }
         var pos=player.transform.position;
         var destination=controller.ConvertCellPositionToWorldPosition(new Vector3(goal.X,goal.Y,goal.Layer));
         var neighbor=controller.ConvertCellPositionToWorldPosition(new Vector3(goal.X+1,goal.Y,goal.Layer));
@@ -137,6 +149,24 @@ internal sealed class Navigation
         state.NavigationInput=Math.Abs(dx)>Math.Abs(dy)?(dx>0?"Right":"Left"):(dy>0?"Up":"Down");
         bool partial=(int)target.x!=goal.X || (int)target.y!=goal.Y;
         state.Detail=$"Walk to ({goal.X},{goal.Y},{goal.Layer}){(partial?$" via ({target.x},{target.y})":"")}; path {cursor+1}/{path.Count}";
+    }
+    private Destination? entityGoal;private int entityLookAt;
+    // Nearest field entity whose map name (PropertyEntity.Name) contains the
+    // text, as a cell; null when none is loaded.
+    private static Destination? FindEntity(IMapAccessor accessor,Last.Entity.Field.FieldEntity player,string name)
+    {
+        Destination? best=null;float bestDistance=float.MaxValue;
+        foreach(var e in UnityEngine.Object.FindObjectsOfType<Last.Entity.Field.FieldEntity>())
+        {
+            if(e==null || !e || e.Pointer==player.Pointer || !e.gameObject.activeInHierarchy)continue;
+            var n=e.Property?.Name;
+            if(n==null || !n.Contains(name))continue;
+            float d=Distance(e.transform.position,player.transform.position);
+            if(d>=bestDistance)continue;
+            var c=MapRouteSearcher.EntityWorldPositionToCellPosition(accessor,e);
+            bestDistance=d;best=new Destination{X=(int)c.x,Y=(int)c.y,Layer=(int)c.z};
+        }
+        return best;
     }
     // The native search fails when the goal is a trigger tile it marks as blocked
     // or lies beyond its 64x64 window. Try the goal, its neighbours, then cells

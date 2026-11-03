@@ -71,7 +71,11 @@
           "y": 43,
           "layer": 0
         }
-      ]
+      ],
+      "skipIf": {
+        "storyFlag": 22
+      },
+      "group": "flag22"
     },
     {
       "label": "Overworld: to Fabul harbor; the voyage, Leviathan, Cecil alone on the beach (flag 22, autosave)",
@@ -100,7 +104,11 @@
       "stableFrames": 30,
       "periodFrames": 8,
       "pressedFrames": 2,
-      "timeoutFrames": 216000
+      "timeoutFrames": 216000,
+      "skipIf": {
+        "storyFlag": 22
+      },
+      "group": "flag22"
     },
     {
       "label": "Beach: east to Mysidia",
@@ -195,7 +203,11 @@
         "phase": "Event"
       },
       "stableFrames": 15,
-      "timeoutFrames": 54000
+      "timeoutFrames": 54000,
+      "skipIf": {
+        "storyFlag": 23
+      },
+      "group": "flag23"
     },
     {
       "label": "Manor: talk to the Elder; Palom and Porom join (flag 23)",
@@ -224,7 +236,11 @@
       "stableFrames": 30,
       "periodFrames": 8,
       "pressedFrames": 2,
-      "timeoutFrames": 216000
+      "timeoutFrames": 216000,
+      "skipIf": {
+        "storyFlag": 23
+      },
+      "group": "flag23"
     },
     {
       "label": "Manor: back out to the town",
@@ -1323,7 +1339,11 @@
           "character": 10,
           "command": 2
         }
-      ]
+      ],
+      "skipIf": {
+        "storyFlag": 24
+      },
+      "group": "flag24"
     },
     {
       "label": "Mt. Ordeals: the burning trees; Palom and Porom put the fire out (flag 24)",
@@ -1388,7 +1408,11 @@
           "character": 10,
           "command": 2
         }
-      ]
+      ],
+      "skipIf": {
+        "storyFlag": 24
+      },
+      "group": "flag24"
     },
     {
       "label": "Mt. Ordeals entrance: north to the ridge",
@@ -1515,7 +1539,11 @@
           "character": 10,
           "command": 2
         }
-      ]
+      ],
+      "skipIf": {
+        "storyFlag": 25
+      },
+      "group": "flag25"
     },
     {
       "label": "Ridge: Tellah again; he joins (flag 25)",
@@ -1580,7 +1608,11 @@
           "character": 10,
           "command": 2
         }
-      ]
+      ],
+      "skipIf": {
+        "storyFlag": 25
+      },
+      "group": "flag25"
     },
     {
       "label": "Ridge: formation - Palom, Cecil, Porom, (empty), Tellah; only Cecil in front",
@@ -1926,7 +1958,11 @@
           "character": 10,
           "command": 2
         }
-      ]
+      ],
+      "skipIf": {
+        "storyFlag": 26
+      },
+      "group": "flag26"
     },
     {
       "label": "Summit: the bridge - Milon and four Revenants (flag 26)",
@@ -2007,7 +2043,11 @@
           "character": 10,
           "command": 2
         }
-      ]
+      ],
+      "skipIf": {
+        "storyFlag": 26
+      },
+      "group": "flag26"
     },
     {
       "label": "Summit: back to the save point (guide)",
@@ -2192,7 +2232,11 @@
           "character": 10,
           "command": 2
         }
-      ]
+      ],
+      "skipIf": {
+        "storyFlag": 27
+      },
+      "group": "flag27"
     },
     {
       "label": "Summit: Milon Z attacks from behind (back attack: Row) (flag 27)",
@@ -2278,7 +2322,11 @@
           "character": 10,
           "command": 2
         }
-      ]
+      ],
+      "skipIf": {
+        "storyFlag": 27
+      },
+      "group": "flag27"
     },
     {
       "label": "Summit: the mirror - the Dark Knight trial, Cecil Defends until it ends; Cecil becomes a Paladin (flag 28) - walk in",
@@ -2317,7 +2365,11 @@
           "command": 2,
           "whileMonster": 206
         }
-      ]
+      ],
+      "skipIf": {
+        "storyFlag": 28
+      },
+      "group": "flag28"
     },
     {
       "label": "Summit: the mirror - the Dark Knight trial, Cecil Defends until it ends; Cecil becomes a Paladin (flag 28)",
@@ -2358,7 +2410,11 @@
           "command": 2,
           "whileMonster": 206
         }
-      ]
+      ],
+      "skipIf": {
+        "storyFlag": 28
+      },
+      "group": "flag28"
     },
     {
       "label": "Summit: Strongest on everyone (Paladin Cecil)",
@@ -2827,7 +2883,11 @@
         "phase": "Event"
       },
       "stableFrames": 15,
-      "timeoutFrames": 54000
+      "timeoutFrames": 54000,
+      "skipIf": {
+        "storyFlag": 29
+      },
+      "group": "flag29"
     },
     {
       "label": "Manor: the Elder sees the Paladin; the twins stay with Cecil, the Devil's Road opens (flag 29)",
@@ -2856,7 +2916,11 @@
       "stableFrames": 30,
       "periodFrames": 8,
       "pressedFrames": 2,
-      "timeoutFrames": 216000
+      "timeoutFrames": 216000,
+      "skipIf": {
+        "storyFlag": 29
+      },
+      "group": "flag29"
     },
     {
       "label": "Manor: back out to the town",

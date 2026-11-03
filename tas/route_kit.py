@@ -15,15 +15,14 @@ WALK=['Player','Event','Message','ChangeMap','FieldReady','Battle','FieldHelp','
 MENU=['Player','Menu','Shop','Message','FieldReady','ChangeMap']
 STORY=['None','Init','Player','Event','Message','ChangeMap','FieldReady','Battle','FieldHelp','Gimmick','Transport']
 OVERWORLD=1
-_world=None
+_world={}
 
 def cell(x,y,layer=0):return {'x':x,'y':y,'layer':layer}
 
 def world_path(start,goal,transport=1,avoid=(2,21),turn_cost=3):
     """Overworld waypoints (map 10010) from start to beside goal."""
-    global _world
-    if _world is None:_world=plan_path.load(os.path.join(ROOT,'research','tas-maps','map_10010'),transport)
-    data,width,height,walk=_world
+    if transport not in _world:_world[transport]=plan_path.load(os.path.join(ROOT,'research','tas-maps','map_10010'),transport)
+    data,width,height,walk=_world[transport]
     path=plan_path.plan(data,width,height,walk,tuple(start),tuple(goal),set(avoid),turn_cost)
     if path is None:raise SystemExit(f'no overworld path {start} -> {goal}')
     cells=[p for p,_ in path]
@@ -50,8 +49,11 @@ def trigger(label,map_id,goal,flag,waypoints=None,battlePlan=None,choice=None,**
     field has control (the Fabul pattern: a walk can't follow a scene that
     changes maps). Two steps."""
     plan={'battlePlan':battlePlan} if battlePlan else {}
-    walk=nav(label+' - walk in',map_id,goal,{'phase':'Event'},waypoints,stableFrames=15,**plan,**extra)
-    return [walk,mash(label,flag,choice=choice,**plan)]
+    # Already happened (a scene that chained on by itself, or a resume): skip
+    # both steps instead of waiting for a scene that won't come again.
+    skip={'skipIf':{'storyFlag':flag},'group':f'flag{flag}'}
+    walk=nav(label+' - walk in',map_id,goal,{'phase':'Event'},waypoints,stableFrames=15,**plan,**skip,**extra)
+    return [walk,mash(label,flag,choice=choice,**plan,**skip)]
 
 def mash(label,flag,map_id=None,choice=None,**extra):
     u={'phase':'Player','storyFlag':flag}

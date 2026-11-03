@@ -113,7 +113,11 @@
         "phase": "Event"
       },
       "stableFrames": 15,
-      "timeoutFrames": 54000
+      "timeoutFrames": 54000,
+      "skipIf": {
+        "storyFlag": 30
+      },
+      "group": "flag30"
     },
     {
       "label": "Devil's Road: across to Baron (flag 30, autosave)",
@@ -142,7 +146,11 @@
       "stableFrames": 30,
       "periodFrames": 8,
       "pressedFrames": 2,
-      "timeoutFrames": 216000
+      "timeoutFrames": 216000,
+      "skipIf": {
+        "storyFlag": 30
+      },
+      "group": "flag30"
     },
     {
       "label": "Baron: out of the Devil's Road house",
@@ -276,7 +284,11 @@
           "character": 10,
           "command": 2
         }
-      ]
+      ],
+      "skipIf": {
+        "storyFlag": 31
+      },
+      "group": "flag31"
     },
     {
       "label": "Inn: talk to Yang - two Baron Guards, then Yang himself; he joins with the Baron Key (flag 31)",
@@ -356,7 +368,11 @@
           "character": 10,
           "command": 2
         }
-      ]
+      ],
+      "skipIf": {
+        "storyFlag": 31
+      },
+      "group": "flag31"
     },
     {
       "label": "Inn: formation - Palom, Cecil, Porom, Yang, Tellah; Cecil and Yang in front",
@@ -1124,7 +1140,11 @@
           "character": 10,
           "command": 2
         }
-      ]
+      ],
+      "skipIf": {
+        "storyFlag": 32
+      },
+      "group": "flag32"
     },
     {
       "label": "Castle hall: Baigan \"joins\", the twins smell a monster - Baigan and his arms (flag 32)",
@@ -1227,7 +1247,11 @@
           "character": 10,
           "command": 2
         }
-      ]
+      ],
+      "skipIf": {
+        "storyFlag": 32
+      },
+      "group": "flag32"
     },
     {
       "label": "Castle hall: heal after Baigan (guide: \"This fight will leave you wounded\")",
@@ -1521,7 +1545,11 @@
           "character": 10,
           "command": 2
         }
-      ]
+      ],
+      "skipIf": {
+        "storyFlag": 107
+      },
+      "group": "flag107"
     },
     {
       "label": "Throne room: the King is Cagnazzo; Cid, the twins turn to stone, the Enterprise, Kain's message (flags 33, 107; autosave)",
@@ -1607,7 +1635,11 @@
           "character": 10,
           "command": 2
         }
-      ]
+      ],
+      "skipIf": {
+        "storyFlag": 107
+      },
+      "group": "flag107"
     },
     {
       "label": "Enterprise: land and step off outside Baron (Confirm at the spot, like the hovercraft)",

@@ -119,6 +119,10 @@ public sealed class Step
     // Walk the waypoints and goal over and over until the step's condition
     // holds (grinding random fights for gil).
     public bool Loop {get;set;}
+    // Walk to a wandering NPC: the nearest field entity whose map name
+    // contains this text (e.g. "チョコボ(黒)", a Black Chocobo) is the goal,
+    // re-read as it moves; Goal is its starting cell, used until it's found.
+    public string? GoalEntity {get;set;}
     public string? Facing {get;set;}
     // 0-based option to pick whenever a native choice window opens during this
     // step (e.g. the Mist Cave warning defaults to "No"; 0 is "Yes").
