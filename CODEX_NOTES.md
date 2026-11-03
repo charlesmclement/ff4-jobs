@@ -757,3 +757,9 @@ New plan:
 * Porom and Palom both Twincast while Baigan lives.
 * Tellah heals by role, else Defends (spells reflect off Baigan's Wall).
 * Plugin: Twincast is the default for both twins (each needs the partner's MP ≥ 20).
+
+### 109. Baigan, take 3 (user), Reflect check, Yang's claws
+User, after watching: Twincast DOES reflect (the guide is wrong), "kill right arm, kill body, kill left arm", "focus damage so he doesnt reflect then regenerate", and "yang seems to be bare handed".
+* Route killFirst=[Right Arm, Baigan, Left Arm]. Both twins Twincast, Tellah Thundara and Palom Fira at the target. Casters Defend as the fallback.
+* BattlePilot `targetReflect`: the current target (kill order, else lowest HP) has condition 28 (Reflect). While it does, plan rules with black magic (8) or Twincast (18) are skipped, and so is the twins' Twincast default.
+* Yang: the Baron weapon shop (map 31, door (15,17), weaponsmith (11,6), product group 1: Fire/Ice/Thunder Claw) now comes before the item shop and buys a Thunder and a Fire Claw (owned claws count). After Yang joins: equip with reset (everything off, then Strongest). The counter cell (11,8) is a guess, two below the weaponsmith.

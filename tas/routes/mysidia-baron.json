@@ -3,7 +3,9 @@
   "name": "Mysidia → Baron → Cagnazzo (segment 7) — UNTESTED",
   "fleeTough": true,
   "killFirst": [
-    168
+    169,
+    168,
+    170
   ],
   "steps": [
     {
@@ -302,6 +304,121 @@
       "goal": {
         "x": 6,
         "y": 15,
+        "layer": 0
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Player",
+        "mapId": 24
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 54000
+    },
+    {
+      "label": "Baron: into the weapon shop",
+      "kind": "navigate",
+      "mapId": 24,
+      "goal": {
+        "x": 15,
+        "y": 17,
+        "layer": 0
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Player",
+        "mapId": 31
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 54000
+    },
+    {
+      "label": "Weapon shop: up to the weaponsmith",
+      "kind": "navigate",
+      "mapId": 31,
+      "goal": {
+        "x": 11,
+        "y": 8,
+        "layer": 0
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "atDestination": true
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 54000
+    },
+    {
+      "label": "Weapon shop: two claws for Yang (Thunder, Fire)",
+      "kind": "menu",
+      "mapId": 31,
+      "phases": [
+        "Player",
+        "Menu",
+        "Shop",
+        "Message",
+        "FieldReady",
+        "ChangeMap"
+      ],
+      "until": {
+        "menuDone": true
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 10800,
+      "facing": "Up",
+      "shop": {
+        "buy": [
+          {
+            "content": 164,
+            "count": 1
+          },
+          {
+            "content": 162,
+            "count": 1
+          }
+        ],
+        "sell": []
+      }
+    },
+    {
+      "label": "Weapon shop: out",
+      "kind": "navigate",
+      "mapId": 31,
+      "goal": {
+        "x": 13,
+        "y": 13,
         "layer": 0
       },
       "phases": [
@@ -1090,6 +1207,30 @@
           3
         ]
       }
+    },
+    {
+      "label": "Inn: Yang takes everything off, then Strongest (both claws)",
+      "kind": "menu",
+      "mapId": 25,
+      "phases": [
+        "Player",
+        "Menu",
+        "Shop",
+        "Message",
+        "FieldReady",
+        "ChangeMap"
+      ],
+      "until": {
+        "menuDone": true
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 10800,
+      "equip": [
+        8
+      ],
+      "equipReset": [
+        8
+      ]
     },
     {
       "label": "Inn: heal after the fights",
@@ -2007,6 +2148,30 @@
         },
         {
           "character": 6,
+          "command": 8,
+          "ability": 40,
+          "minMp": 15,
+          "whileMonster": 168
+        },
+        {
+          "character": 9,
+          "command": 8,
+          "ability": 34,
+          "minMp": 15,
+          "whileMonster": 168
+        },
+        {
+          "character": 9,
+          "command": 2,
+          "whileMonster": 168
+        },
+        {
+          "character": 10,
+          "command": 2,
+          "whileMonster": 168
+        },
+        {
+          "character": 6,
           "command": 2,
           "whileMonster": 168
         },
@@ -2101,6 +2266,30 @@
         },
         {
           "character": 6,
+          "command": 8,
+          "ability": 40,
+          "minMp": 15,
+          "whileMonster": 168
+        },
+        {
+          "character": 9,
+          "command": 8,
+          "ability": 34,
+          "minMp": 15,
+          "whileMonster": 168
+        },
+        {
+          "character": 9,
+          "command": 2,
+          "whileMonster": 168
+        },
+        {
+          "character": 10,
+          "command": 2,
+          "whileMonster": 168
+        },
+        {
+          "character": 6,
           "command": 2,
           "whileMonster": 168
         },
@@ -2181,6 +2370,30 @@
           "character": 9,
           "command": 18,
           "minMp": 20,
+          "whileMonster": 168
+        },
+        {
+          "character": 6,
+          "command": 8,
+          "ability": 40,
+          "minMp": 15,
+          "whileMonster": 168
+        },
+        {
+          "character": 9,
+          "command": 8,
+          "ability": 34,
+          "minMp": 15,
+          "whileMonster": 168
+        },
+        {
+          "character": 9,
+          "command": 2,
+          "whileMonster": 168
+        },
+        {
+          "character": 10,
+          "command": 2,
           "whileMonster": 168
         },
         {
@@ -2279,6 +2492,30 @@
         },
         {
           "character": 6,
+          "command": 8,
+          "ability": 40,
+          "minMp": 15,
+          "whileMonster": 168
+        },
+        {
+          "character": 9,
+          "command": 8,
+          "ability": 34,
+          "minMp": 15,
+          "whileMonster": 168
+        },
+        {
+          "character": 9,
+          "command": 2,
+          "whileMonster": 168
+        },
+        {
+          "character": 10,
+          "command": 2,
+          "whileMonster": 168
+        },
+        {
+          "character": 6,
           "command": 2,
           "whileMonster": 168
         },
@@ -2359,6 +2596,30 @@
           "character": 9,
           "command": 18,
           "minMp": 20,
+          "whileMonster": 168
+        },
+        {
+          "character": 6,
+          "command": 8,
+          "ability": 40,
+          "minMp": 15,
+          "whileMonster": 168
+        },
+        {
+          "character": 9,
+          "command": 8,
+          "ability": 34,
+          "minMp": 15,
+          "whileMonster": 168
+        },
+        {
+          "character": 9,
+          "command": 2,
+          "whileMonster": 168
+        },
+        {
+          "character": 10,
+          "command": 2,
           "whileMonster": 168
         },
         {
@@ -2445,6 +2706,30 @@
           "character": 9,
           "command": 18,
           "minMp": 20,
+          "whileMonster": 168
+        },
+        {
+          "character": 6,
+          "command": 8,
+          "ability": 40,
+          "minMp": 15,
+          "whileMonster": 168
+        },
+        {
+          "character": 9,
+          "command": 8,
+          "ability": 34,
+          "minMp": 15,
+          "whileMonster": 168
+        },
+        {
+          "character": 9,
+          "command": 2,
+          "whileMonster": 168
+        },
+        {
+          "character": 10,
+          "command": 2,
           "whileMonster": 168
         },
         {

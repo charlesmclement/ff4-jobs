@@ -106,7 +106,7 @@ internal sealed class BattlePilot
         // Scripted losses (Titan at Mist) wipe the party and the story goes on;
         // a real game over leaves the battle for GotoTitle, which no step allows.
         if(players.Length>0 && alive==0) {state.Detail="Party down; waiting for the game";return;}
-        var enemyText=new System.Text.StringBuilder();bool mist=false,hasEnemy=false;scripted=false;fleeTarget=false;undead=null;weakest=null;toughestFlyer=null;weakestRank=int.MaxValue;undeadCount=livingEnemies=0;tough=boss=false;Array.Clear(elementCounts);livingIds.Clear();livingHp.Clear();
+        var enemyText=new System.Text.StringBuilder();bool mist=false,hasEnemy=false;scripted=false;fleeTarget=false;undead=null;weakest=null;toughestFlyer=null;weakestRank=int.MaxValue;undeadCount=livingEnemies=0;tough=boss=false;Array.Clear(elementCounts);livingIds.Clear();livingHp.Clear();targetReflect=false;
         for(int i=0;i<enemies.Length;i++)
         {
             var e=enemies[i];var p=e?.BattleUnitDataInfo?.Parameter;
@@ -131,7 +131,11 @@ internal sealed class BattlePilot
             // else, then the lowest HP (user: Gatlinger before the Domovoi
             // imps; the party was wiped while it picked off the imps).
             int rank=KillRank(e.MonsterMaster?.Id??0);
-            if(weakest==null || rank<weakestRank || rank==weakestRank && p.CurrentHP<weakest.BattleUnitDataInfo.Parameter.CurrentHP) {weakest=e;weakestRank=rank;}
+            if(weakest==null || rank<weakestRank || rank==weakestRank && p.CurrentHP<weakest.BattleUnitDataInfo.Parameter.CurrentHP) {
+                weakest=e;weakestRank=rank;targetReflect=false;
+                var conds=p.CurrentConditionList;
+                for(int c=0;conds!=null && c<conds.Count;c++)if(conds[c]?.Id==ReflectCondition)targetReflect=true;
+            }
             if(e.MonsterMaster?.Species==UndeadSpecies)
             {
                 undeadCount++;
@@ -327,6 +331,9 @@ internal sealed class BattlePilot
     internal int[] KillFirst=Array.Empty<int>();
     internal int[] RealFights=Array.Empty<int>();
     private int weakestRank;
+    // The current target (kill order, else lowest HP) has Reflect (Baigan's Wall).
+    private bool targetReflect;
+    private const int ReflectCondition=28;
     private int KillRank(int id) {int i=Array.IndexOf(KillFirst,id);return i<0?int.MaxValue:i;}
     private int fleeFrames;
     private const int FleeGiveUp=600;
@@ -542,7 +549,10 @@ internal sealed class BattlePilot
         // silenced) she does what she did before.
         // Palom too: live, only the first Twincast landed while Porom alone
         // chose it and Palom took his own turns.
-        if(me is PoromId or PalomId && stats!=null && stats.CurrentMP>=TwincastMp && (me==PoromId?palomMp:poromMp)>=TwincastMp && CommandEnabled(info,TwincastCommand))
+        // A boss rule naming this twin while its monster lives (Baigan: Twincast
+        // reflects off his Wall, user) beats the default.
+        bool bossRule=targetReflect || plan!=null && Array.Exists(plan,r=>r.Character==me && r.WhileMonster is int w && livingIds.Contains(w));
+        if(me is PoromId or PalomId && !bossRule && stats!=null && stats.CurrentMP>=TwincastMp && (me==PoromId?palomMp:poromMp)>=TwincastMp && CommandEnabled(info,TwincastCommand))
         {pendingCommand=TwincastCommand;Log(actor,"Twincast (default)");return;}
         // A boss rule naming this member (whileMonster) beats the automatic
         // Cure on undead: Porom Twincasts on Milon Z when nobody needs healing
@@ -618,6 +628,10 @@ internal sealed class BattlePilot
             if(rule.OncePerBattle && usedOnce.Contains((r,actor.Pointer)) && !(actor.Pointer==turnActor && r==turnRule))continue;
             if(rule.BossOnly && !boss)continue;
             if(rule.Character!=null && rule.Character!=id)continue;
+            // Black magic and Twincast at a target behind Reflect bounce back
+            // onto the party (user, Baigan's Wall: "focus damage so he doesnt
+            // reflect"): wait for it to drop.
+            if(targetReflect && rule.Command is BlackMagic or TwincastCommand)continue;
             if(stats!=null && rule.MinHpPercent>0 && stats.CurrentHP*100<rule.MinHpPercent*Math.Max(1,stats.ConfirmedMaxHp()))continue;
             if(stats!=null && rule.MinMp>0 && stats.CurrentMP<rule.MinMp)continue;
             if(rule.MinEnemies>0 && livingEnemies<rule.MinEnemies && !(rule.OrTough && tough))continue;

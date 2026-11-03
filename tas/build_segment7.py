@@ -10,12 +10,13 @@ the guide (Return To Baron, Waterway, Return To Baron Castle).
 from route_kit import *
 
 MYSIDIA,DEVILS_ROAD=57,66
-BARON_TOWN,INN,BARON_ROAD_HOUSE,ITEM_SHOP=24,25,29,26
+BARON_TOWN,INN,BARON_ROAD_HOUSE,ITEM_SHOP,WEAPON_SHOP=24,25,29,26,31
 WATERWAY_IN,WW1,WW2,WW3,WW4,WW_SAVE=318,186,187,188,189,190
 CASTLE_OUT,CASTLE_HALL,CASTLE_2F,WALL_ROOM,THRONE=4,5,6,7,8
 CASTLE_CORRIDOR=9
 PALADIN,TELLAH,YANG,PALOM,POROM=13,6,8,9,10
 TENT=21
+FIRE_CLAW,ICE_CLAW,THUNDER_CLAW=162,163,164
 POTION,PHOENIX,GOLD_NEEDLE,MAIDENS_KISS,EYE_DROPS,ANTIDOTE=2,9,10,11,15,16
 MONK,BAIGAN,RIGHT_ARM,LEFT_ARM,CAGNAZZO=205,168,169,170,171
 FIRA,THUNDARA,THUNDAGA=34,40,41
@@ -36,17 +37,18 @@ field=[
 # Yang (Monk, 62000 HP: a scripted fight that ends by itself). Guide: his
 # Kick hits everyone; the casters Defend through it, Cecil attacks.
 monk=[{'character':c,'command':2,'whileMonster':MONK} for c in (PALOM,POROM,TELLAH)]
-# Baigan (live, segment 7): the arms grow back at full HP (444) a few turns
-# after they die, so the guide's "Quickly eliminate the ARMs" became a
-# treadmill and the party wiped. Everything goes at Baigan: the attackers
-# (route killFirst), and both twins Twincast (the guide: twin magic "cannot
-# be reflected", so his Wall doesn't matter; the first Comet took ~950 off
-# him and both arms). Only the first Twincast landed while Porom alone chose
-# it and Palom took his own turns, so Palom chooses it too. Tellah heals by
-# role and otherwise casts nothing (spells at Baigan bounce off his Wall).
+# Baigan (user, after watching it live): "twincast ... does reflect. new
+# strat. kill right arm, kill body, kill left arm" and "focus damage so he
+# doesnt reflect then regenerate". Route killFirst sets the order for
+# attacks and single-target spells. The twins Twincast and Tellah casts
+# Thundara at whatever the order points to - but the pilot skips black magic
+# and Twincast while that target has Reflect (Baigan's Wall), and then the
+# casters Defend. Porom still heals first.
 baigan=[{'character':POROM,'command':TWINCAST,'minMp':20,'whileMonster':BAIGAN},
         {'character':PALOM,'command':TWINCAST,'minMp':20,'whileMonster':BAIGAN},
-        {'character':TELLAH,'command':2,'whileMonster':BAIGAN}]+field
+        {'character':TELLAH,'command':8,'ability':THUNDARA,'minMp':15,'whileMonster':BAIGAN},
+        {'character':PALOM,'command':8,'ability':FIRA,'minMp':15,'whileMonster':BAIGAN}]
+baigan+=[{'character':c,'command':2,'whileMonster':BAIGAN} for c in (PALOM,POROM,TELLAH)]+field
 # Cagnazzo: weak to lightning. Guide: "have Tellah use LIT-3 ... then just
 # keep attacking him".
 cagnazzo=[
@@ -65,6 +67,13 @@ s.append(door("Baron: out of the Devil's Road house",BARON_ROAD_HOUSE,(6,15),BAR
 # status item"; the guards Mini people). Baron stocks Potions, Phoenix Downs,
 # Gold Needles, Maiden's Kisses, Eye Drops, Antidotes, Tents (product group 3);
 # no Mallets, Echo Herbs or Diet Food here. Never Remedies (user: "spendy").
+# Yang rejoins bare-handed (user): claws first, while there's gil. The
+# weapon shop (map 31; door (15,17); weaponsmith (11,6), product group 1)
+# sells Fire, Ice and Thunder Claws; the order counts claws already owned.
+s.append(door('Baron: into the weapon shop',BARON_TOWN,(15,17),WEAPON_SHOP))
+s.append(nav('Weapon shop: up to the weaponsmith',WEAPON_SHOP,(11,8),{'atDestination':True}))
+s.append(shop("Weapon shop: two claws for Yang (Thunder, Fire)",WEAPON_SHOP,[{'content':THUNDER_CLAW,'count':1},{'content':FIRE_CLAW,'count':1}]))
+s.append(door('Weapon shop: out',WEAPON_SHOP,(13,13),BARON_TOWN))
 s.append(door('Baron: into the item shop',BARON_TOWN,(13,27),ITEM_SHOP))
 s.append(nav('Item shop: up to the counter',ITEM_SHOP,(6,6),{'atDestination':True}))
 s.append(shop('Item shop: status cures - Antidotes, Eye Drops, Maiden\'s Kisses, Gold Needles - and Potions, Phoenix Downs',ITEM_SHOP,
@@ -79,6 +88,7 @@ s.append(door('Baron: into the inn',BARON_TOWN,(20,27),INN))
 s.extend(inn('Inn: rest before Yang',INN,(21,15)))
 s.extend(trigger('Inn: talk to Yang - two Baron Guards, then Yang himself; he joins with the Baron Key (flag 31)',INN,(21,5),31,battlePlan=monk+field))
 s.append(formation('Inn: formation - Palom, Cecil, Porom, Yang, Tellah; Cecil and Yang in front',INN,[PALOM,PALADIN,POROM,YANG,TELLAH],[1,3]))
+s.append(equip('Inn: Yang takes everything off, then Strongest (both claws)',INN,[YANG],reset=[YANG]))
 s.append(heal('Inn: heal after the fights',INN))
 s.append(door('Inn: out',INN,(21,22),BARON_TOWN))
 s.append(nav('Baron: west to the locked waterway door - walk in',BARON_TOWN,(4,20),{'phase':'Event'},stableFrames=15))
@@ -123,4 +133,4 @@ s.append(nav('Enterprise: land and step off outside Baron (Confirm at the spot, 
 s.append(heal('Beside the Enterprise: heal',OVERWORLD))
 s.append(checkpoint('Segment 7 complete: Cagnazzo defeated, the Enterprise is ours, outside Baron',OVERWORLD,107))
 
-write('tas/routes/mysidia-baron.json','Mysidia → Baron → Cagnazzo (segment 7) — UNTESTED',s,fleeTough=True,killFirst=[BAIGAN])
+write('tas/routes/mysidia-baron.json','Mysidia → Baron → Cagnazzo (segment 7) — UNTESTED',s,fleeTough=True,killFirst=[RIGHT_ARM,BAIGAN,LEFT_ARM])
