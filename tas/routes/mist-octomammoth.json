@@ -571,7 +571,8 @@
         "Shop",
         "Message",
         "FieldReady",
-        "ChangeMap"
+        "ChangeMap",
+        "Event"
       ],
       "until": {
         "menuDone": true
@@ -698,7 +699,8 @@
         "Shop",
         "Message",
         "FieldReady",
-        "ChangeMap"
+        "ChangeMap",
+        "Event"
       ],
       "until": {
         "menuDone": true
@@ -827,7 +829,8 @@
         "Shop",
         "Message",
         "FieldReady",
-        "ChangeMap"
+        "ChangeMap",
+        "Event"
       ],
       "until": {
         "menuDone": true
