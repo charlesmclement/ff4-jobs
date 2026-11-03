@@ -484,6 +484,70 @@
       "timeoutFrames": 54000
     },
     {
+      "label": "Inn: rest before Yang - talk to the innkeeper",
+      "kind": "navigate",
+      "mapId": 25,
+      "goal": {
+        "x": 21,
+        "y": 15,
+        "layer": 0
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "any": [
+          {
+            "phase": "Message"
+          },
+          {
+            "phase": "Event"
+          }
+        ]
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 54000
+    },
+    {
+      "label": "Inn: rest before Yang",
+      "kind": "mash",
+      "keys": [
+        "Confirm"
+      ],
+      "phases": [
+        "None",
+        "Init",
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Player",
+        "mapId": 25
+      },
+      "stableFrames": 1,
+      "periodFrames": 8,
+      "pressedFrames": 2,
+      "timeoutFrames": 216000,
+      "choice": 0
+    },
+    {
       "label": "Inn: talk to Yang - two Baron Guards, then Yang himself; he joins with the Baron Key (flag 31) - walk in",
       "kind": "navigate",
       "mapId": 25,

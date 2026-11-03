@@ -71,6 +71,11 @@ s.append(shop('Item shop: status cures - Antidotes, Eye Drops, Maiden\'s Kisses,
                {'content':POTION,'count':10},{'content':PHOENIX,'count':5},{'content':GOLD_NEEDLE,'count':2}]))
 s.append(door('Item shop: out',ITEM_SHOP,(6,11),BARON_TOWN))
 s.append(door('Baron: into the inn',BARON_TOWN,(20,27),INN))
+# Rest first (user: "can you rest in the inn before the fight?"): the twins
+# and Tellah came off the Devil's Road with 1 MP, so nobody could Esuna the
+# guards' Mini. The innkeeper is behind the counter at (21,14); the counter
+# relay is (21,15).
+s.extend(inn('Inn: rest before Yang',INN,(21,15)))
 s.extend(trigger('Inn: talk to Yang - two Baron Guards, then Yang himself; he joins with the Baron Key (flag 31)',INN,(21,5),31,battlePlan=monk+field))
 s.append(formation('Inn: formation - Palom, Cecil, Porom, Yang, Tellah; Cecil and Yang in front',INN,[PALOM,PALADIN,POROM,YANG,TELLAH],[1,3]))
 s.append(heal('Inn: heal after the fights',INN))

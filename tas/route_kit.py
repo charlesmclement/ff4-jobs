@@ -68,6 +68,16 @@ def trigger(label,map_id,goal,flag,waypoints=None,battlePlan=None,choice=None,**
     detour=lambda n:mash(label+' - scene on the way'+n,flag,choice=choice,until={'phase':'Player','mapId':map_id},stableFrames=60,_detour=True,**plan,**skip)
     return [walk(''),detour(''),walk(' (2)'),detour(' (2)'),walk(' (3)'),mash(label,flag,choice=choice,**plan,**skip)]
 
+def inn(label,map_id,counter,choice=0):
+    """Rest at an inn: walk into the counter (the innkeeper's RelayInteraction
+    cell) until he speaks, then hold Confirm through the stay question (choice
+    0, Yes) and the night until the field is back. Ends on the first frame
+    back in control, so no Confirm lands on the innkeeper again; a sleep scene
+    that starts after that is waited out by the next walk."""
+    walk=nav(label+' - talk to the innkeeper',map_id,counter,{'any':[{'phase':'Message'},{'phase':'Event'}]},stableFrames=2)
+    rest=mash(label,None,choice=choice,until={'phase':'Player','mapId':map_id},stableFrames=1)
+    return [walk,rest]
+
 def mash(label,flag,map_id=None,choice=None,**extra):
     u={'phase':'Player','storyFlag':flag}
     if map_id is not None:u['mapId']=map_id

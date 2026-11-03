@@ -714,3 +714,10 @@ Function groups (function 11 = clear one condition, 12 = clear a condition group
 * Shops:
   * Baron's item shop (map 26, door (13,27), product group 3) is now visited before Yang (user: "do this first"). It buys 3 Antidotes, 3 Eye Drops, 3 Maiden's Kisses, Potions, Phoenix Downs and 2 Gold Needles.
   * The Mysidia and Toroia shops buy the full small set; anything a shop doesn't stock is skipped.
+
+### 104. Baron: rest at the inn before Yang; Esuna on Toad/Mini in battle; no fleeing story fights
+Live test, segment 7: the guards Mini'd Cecil. Baron sells no Mallets, and Palom and Tellah came off the Devil's Road with 1 MP. The party tried to run from the story fight, and Porom's Mini spell failed (she doesn't know it).
+* New `route_kit.inn(label,map,counter)`: walk into the counter until the innkeeper speaks, then mash with choice 0 (Yes) until the first Player frame on the map. Ending on that first frame means no Confirm lands on him again; a late sleep scene is waited out by the next walk.
+* Segment 7 rests at the Baron inn (counter relay (21,15), innkeeper (21,14)) before talking to Yang (user: "can you rest in the inn before the fight?").
+* BattlePilot: when no Maiden's Kiss or Mallet is on hand, Esuna (ability 10, 20 MP) on a Toad or Mini from anyone who knows it, before the toggle spells. A failed Esuna blocks that actor, like the toggle spells.
+* Fights during a `mash` step (story fights) never flee; `Read(..., story)` comes from Plugin.

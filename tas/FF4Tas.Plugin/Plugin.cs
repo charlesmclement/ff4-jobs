@@ -215,7 +215,7 @@ public sealed class Controller : MonoBehaviour
                         navigation.Read(field,active,snapshot,frame);
                     }
                 }
-                else if(snapshot.Phase=="Battle" && active.HandleBattles)battle.Read(snapshot,frame,active.BattlePlan,active.FleeMonsters,active.Loop);
+                else if(snapshot.Phase=="Battle" && active.HandleBattles)battle.Read(snapshot,frame,active.BattlePlan,active.FleeMonsters,active.Loop,active.Kind=="mash");
                 if(active.Kind=="menu")
                 {
                     if(!ReferenceEquals(active,menuStep))

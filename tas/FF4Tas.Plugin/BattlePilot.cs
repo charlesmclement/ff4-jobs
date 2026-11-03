@@ -37,7 +37,7 @@ internal sealed class BattlePilot
         blockedRules.Clear();blockedCure.Clear();blockedLife.Clear();blockedItems.Clear();blockedStatusSpell.Clear();usedOnce.Clear();wasMist=false;
         fleeFrames=0;sidePresses=0;unreachable.Clear();fellThisFight.Clear();targetPresses=0;bossSeen=false;turnActor=IntPtr.Zero;turnRule=-1;fightSeconds=0;fightFrame=-1;rowDone=false;firstSprite.Clear();grown=false;spriteLine="";queuedHeals.Clear();
     }
-    internal void Read(Snapshot state,int frame,BattleRule[]? plan=null,int[]? fleeMonsters=null,bool grinding=false)
+    internal void Read(Snapshot state,int frame,BattleRule[]? plan=null,int[]? fleeMonsters=null,bool grinding=false,bool story=false)
     {
         var plug=BattlePlugManager.Instance();
         if(plug==null)return;
@@ -197,7 +197,7 @@ internal sealed class BattlePilot
         // Grinds (looping navigate steps) fight to the end: the exp is the point,
         // and slow fights were fled when nearly won (user).
         bool slow=!grinding && fightSeconds>SlowFightSeconds,toughFight=FleeTough && tough,status=toad!=null || mini!=null;
-        if((fleeTarget || slow || toughFight || status) && !boss && !scripted && fleeFrames<(fleeTarget?FleeGiveUpListed:FleeGiveUp))
+        if((fleeTarget || slow || toughFight || status) && !boss && !scripted && !story && fleeFrames<(fleeTarget?FleeGiveUpListed:FleeGiveUp))
         {
             // L+R escape works only from the command list: back out of any
             // open item, spell or target list first.
@@ -354,6 +354,7 @@ internal sealed class BattlePilot
     private const int ToughDefense=200;
     // Element -> native black magic ability: Fire 33, Blizzard 36, Thunder 39.
     private static readonly int[] ElementSpell={0,33,36,39};
+    private const int EsunaAbility=10,EsunaMp=20;
     private const int Defend=2,UndeadSpecies=4,WhiteMagic=7,CureAbility=6,CureMp=3,Tellah=6,LifeAbility=11,LifeMp=8;
     private bool scripted,castOnUndead,casterCanCure;
     private float injuredRatioNow=1;
@@ -435,8 +436,13 @@ internal sealed class BattlePilot
         // Status cures before healing: Maiden's Kiss for Toad, Mallet for Mini.
         if(toad!=null && HasItem(MaidensKiss)) {pendingItem=MaidensKiss;pendingTarget=toad.GetOwnedCharacterData().characterStatusId;Log(actor,"Maiden's Kiss on #"+pendingTarget+" (toad)");return;}
         if(mini!=null && HasItem(Mallet)) {pendingItem=Mallet;pendingTarget=mini.GetOwnedCharacterData().characterStatusId;Log(actor,"Mallet on #"+pendingTarget+" (mini)");return;}
-        // No item: the same spell toggles the status back (Toad on a toad, Mini
-        // on a mini), cast by someone who isn't affected and can afford it.
+        // No item: Esuna (clears both) from someone who knows it, isn't
+        // affected and can afford it; else the same spell toggles the status
+        // back (Toad on a toad, Mini on a mini). Baron's guards Mini Cecil and
+        // the town sells no Mallets.
+        var shrunk=toad??mini;
+        if(shrunk!=null && stats!=null && actor.Pointer!=shrunk.Pointer && !blockedStatusSpell.Contains(actor.Pointer) && stats.CurrentMP>=EsunaMp && Knows(actor,EsunaAbility) && CommandEnabled(info,WhiteMagic))
+        {pendingCommand=WhiteMagic;pendingAbility=EsunaAbility;pendingTarget=shrunk.GetOwnedCharacterData().characterStatusId;Log(actor,"Esuna on #"+pendingTarget+(toad!=null?" (toad)":" (mini)"));return;}
         if(stats!=null && !blockedStatusSpell.Contains(actor.Pointer) && actor.Pointer!=(toad?.Pointer??IntPtr.Zero) && actor.Pointer!=(mini?.Pointer??IntPtr.Zero))
         {
             if(toad!=null && stats.CurrentMP>=Db.SpellMp(ToadSpell,7) && CommandEnabled(info,BlackMagic))
@@ -607,7 +613,7 @@ internal sealed class BattlePilot
         if(pendingRule>=0)blockedRules.Add(pendingRule);
         else if(pendingAbility==CureAbility && lastActor!=IntPtr.Zero)blockedCure.Add(lastActor);
         else if(pendingAbility==LifeAbility && lastActor!=IntPtr.Zero)blockedLife.Add(lastActor);
-        else if(pendingAbility is ToadSpell or MiniSpell && lastActor!=IntPtr.Zero)blockedStatusSpell.Add(lastActor);
+        else if(pendingAbility is ToadSpell or MiniSpell or EsunaAbility && lastActor!=IntPtr.Zero)blockedStatusSpell.Add(lastActor);
         pendingRule=-1;pendingAbility=0;pendingTarget=0;castOnUndead=false;
     }
     private static bool CommandEnabled(BattleInfomationController info,int id)
