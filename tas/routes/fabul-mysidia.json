@@ -4037,6 +4037,24 @@
       "group": "flag27"
     },
     {
+      "label": "Summit: heal after Milon Z (poison)",
+      "kind": "menu",
+      "mapId": 185,
+      "phases": [
+        "Player",
+        "Menu",
+        "Shop",
+        "Message",
+        "FieldReady",
+        "ChangeMap"
+      ],
+      "until": {
+        "menuDone": true
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 7200
+    },
+    {
       "label": "Summit: the mirror - the Dark Knight trial, Cecil Defends until it ends; Cecil becomes a Paladin (flag 28) - walk in",
       "kind": "navigate",
       "mapId": 185,
@@ -4062,6 +4080,23 @@
       },
       "stableFrames": 15,
       "timeoutFrames": 54000,
+      "waypoints": [
+        {
+          "x": 11,
+          "y": 8,
+          "layer": 0
+        },
+        {
+          "x": 9,
+          "y": 8,
+          "layer": 0
+        },
+        {
+          "x": 9,
+          "y": 7,
+          "layer": 0
+        }
+      ],
       "battlePlan": [
         {
           "character": 13,
@@ -4158,6 +4193,23 @@
       },
       "stableFrames": 15,
       "timeoutFrames": 54000,
+      "waypoints": [
+        {
+          "x": 11,
+          "y": 8,
+          "layer": 0
+        },
+        {
+          "x": 9,
+          "y": 8,
+          "layer": 0
+        },
+        {
+          "x": 9,
+          "y": 7,
+          "layer": 0
+        }
+      ],
       "battlePlan": [
         {
           "character": 13,
@@ -4254,6 +4306,23 @@
       },
       "stableFrames": 15,
       "timeoutFrames": 54000,
+      "waypoints": [
+        {
+          "x": 11,
+          "y": 8,
+          "layer": 0
+        },
+        {
+          "x": 9,
+          "y": 8,
+          "layer": 0
+        },
+        {
+          "x": 9,
+          "y": 7,
+          "layer": 0
+        }
+      ],
       "battlePlan": [
         {
           "character": 13,

@@ -113,7 +113,11 @@ s.append(nav('Summit: back to the save point (guide)',SUMMIT,(28,13),{'atDestina
 s.append(tent('Summit save point: Tent before Milon Z',SUMMIT))
 s.append(heal('Summit save point: heal before Milon Z',SUMMIT))
 s.extend(trigger('Summit: Milon Z attacks from behind (back attack: Row) (flag 27)',SUMMIT,(12,7),27,battlePlan=milon_z))
-s.extend(trigger('Summit: the mirror - the Dark Knight trial, Cecil Defends until it ends; Cecil becomes a Paladin (flag 28)',SUMMIT,(9,6),28,battlePlan=trial))
+# Milon Z poisons: heal (Esuna/Antidote first) before the mirror (user: "it
+# didnt heal us"). The mirror (9,6) is reached only from (9,7), by way of row 8;
+# the native search found no route there and the greedy steering wandered.
+s.append(heal('Summit: heal after Milon Z (poison)',SUMMIT))
+s.extend(trigger('Summit: the mirror - the Dark Knight trial, Cecil Defends until it ends; Cecil becomes a Paladin (flag 28)',SUMMIT,(9,6),28,[(11,8),(9,8),(9,7)],battlePlan=trial))
 s.append(equip('Summit: Strongest on everyone (Paladin Cecil)',SUMMIT,[0]))
 s.append(door('Summit: back down to the pass',SUMMIT,(18,18),PASS,battlePlan=ordeals))
 s.append(door('Pass: down to the ridge',PASS,(23,22),RIDGE,battlePlan=ordeals))
