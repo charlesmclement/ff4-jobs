@@ -595,3 +595,6 @@ Live (user, segment 4 resume): the rest exit walked to (20,28) and stood there. 
 
 ### 71. Tent steps stopped on the Tent's own Event phase (fixed)
 Live: the rest exit now works (walked out, Tent used, MP back to 96/83), then the run failed with "Unexpected state ... Event, map 1": the Tent plays an Event, and the Tent menu steps (copied from segment 5) didn't allow it. Every `menuItem: 21` step now allows Event.
+
+### 72. One rest spent all three Tents (fixed)
+Live (user: "it just used all the tents... we should not need to use 2, definitely not 3"). Tent 1 was the real rest (03:57). Tent 2: resume after the Event failure picked "back into Mount Hobs (1)", and auto_step's "menu steps right before it on the same map run first" pulled the Tent step back in. Tent 3: inside that step, a Tent is used straight from the item list (no target screen), so `uses` stayed 0, and after the Tent's Event the step opened the menu and used another. Fixes: the MenuItem mode records the owned count when the step starts and stops once it drops. auto_step never pulls a `menuItem` step in on resume. A Tent step with no Tents left ends at once ("nobody to heal").

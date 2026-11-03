@@ -20,6 +20,10 @@ internal sealed class FieldMenu
     private float topUpBelow=.7f;
     // MenuItem mode: use this one item once (Tent on the party), no healing.
     private int menuItem;
+    // MenuItem mode: how many were owned when the step began. A Tent is used
+    // straight from the item list (no target screen counts the use), so the
+    // step ends when the count drops (it used all three Tents once).
+    private int startCount=-1;
     private bool finished,oneColumn;
     private int uses,wait,lastIndex=-1,stuck,item,target;
     private string? lastKey;
@@ -30,7 +34,7 @@ internal sealed class FieldMenu
     // menu steps; lower between fights so the run doesn't menu after each one).
     internal void Reset(float topUp=.7f,int useItem=0)
     {
-        topUpBelow=topUp;menuItem=useItem;finished=oneColumn=false;uses=wait=stuck=item=target=0;lastIndex=-1;lastKey=null;main=null;items=null;
+        topUpBelow=topUp;menuItem=useItem;startCount=-1;finished=oneColumn=false;uses=wait=stuck=item=target=0;lastIndex=-1;lastKey=null;main=null;items=null;
     }
     internal void Read(Snapshot s,int frame)
     {
@@ -123,7 +127,11 @@ internal sealed class FieldMenu
     private void Need()
     {
         item=target=0;
-        if(menuItem!=0) {party=$"{menuItem} x{Count(menuItem)}";if(uses==0 && Has(menuItem))item=menuItem;return;}
+        if(menuItem!=0)
+        {
+            int have=Count(menuItem);if(startCount<0 && UserDataManager.Instance()!=null)startCount=have;
+            party=$"{menuItem} x{have}";if(uses==0 && have>0 && have>=startCount)item=menuItem;return;
+        }
         var user=UserDataManager.Instance();
         var corps=user?.corpsList;var owned=user?.OwnedCharacterList;
         if(corps==null || owned==null)return;

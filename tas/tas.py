@@ -223,7 +223,9 @@ def auto_step(route):
     if best is None:raise RuntimeError(f'No route step starts on map {m} with story flags {sorted(flags)}; stand where the segment begins')
     # Field-menu steps (heal, formation) right before it on the same map run first.
     start=best[1]
-    while start>1 and route['steps'][start-2].get('kind')=='menu' and route['steps'][start-2].get('mapId')==m:start-=1
+    # Not a Tent step (menuItem): re-running one spends a Tent (resume after a
+    # rest used another).
+    while start>1 and route['steps'][start-2].get('kind')=='menu' and route['steps'][start-2].get('mapId')==m and route['steps'][start-2].get('menuItem') is None:start-=1
     return start
 
 def install_battle_db():
