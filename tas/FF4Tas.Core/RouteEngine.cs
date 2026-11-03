@@ -358,13 +358,18 @@ public sealed class RouteEngine
     public string Label=>Index<route.Steps.Length?route.Steps[Index].Label:"Finished";
     public bool Running=>Status=="running";
     public bool Paused { get; private set; }
+    // F9: the user holds the run where it is (input released, timers frozen)
+    // and lets go of it with F9 again; the step carries on (user: "we need a
+    // pause button").
+    public bool UserPaused { get; set; }
     // The bridge prepares the upcoming step before Tick advances the index.
     public Step? ActiveStep=>Running && Index+(finishStep?1:0)<route.Steps.Length ? route.Steps[Index+(finishStep?1:0)] : null;
     public bool Held(string key)=>current.Contains(key);
     public bool Down(string key)=>current.Contains(key) && !previous.Contains(key);
     public bool Up(string key)=>!current.Contains(key) && previous.Contains(key);
-    public void Stop(string reason) { Status="stopped";Paused=false;Reason=reason;current.Clear();previous.Clear(); }
+    public void Stop(string reason) { Status="stopped";Paused=UserPaused=false;Reason=reason;current.Clear();previous.Clear(); }
     private void Fail(string reason) { Stop(reason);Status="failed"; }
+    private const string UserPauseReason="Paused (F9 to resume)";
     public void Tick(long frame,Snapshot state)
     {
         if(!Running || frame==lastFrame)return;
@@ -373,9 +378,10 @@ public sealed class RouteEngine
         previous.Clear();previous.UnionWith(current);current.Clear();
         // Focus loss pauses instead of stopping: input is released and step timers
         // freeze until the window is focused again, then the run continues.
-        if(!state.Focused)
+        if(!state.Focused || UserPaused)
         {
-            if(!Paused) { Paused=true;Reason="Paused: game not focused (click the game to resume)"; }
+            if(!Paused || (UserPaused && Reason!=UserPauseReason) || (!UserPaused && Reason==UserPauseReason))
+            {Paused=true;Reason=UserPaused?UserPauseReason:"Paused: game not focused (click the game to resume)";}
             refocused=0;current.Clear();previous.Clear();return;
         }
         if(Paused)

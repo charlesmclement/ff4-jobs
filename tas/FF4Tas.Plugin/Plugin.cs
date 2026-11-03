@@ -248,6 +248,7 @@ public sealed class Controller : MonoBehaviour
             double age=vision==null?double.MaxValue:(DateTime.UtcNow-vision.Utc.ToUniversalTime()).TotalSeconds;
             if(vision?.Error==null && age>=0 && age<=1 && vision?.Matches!=null)snapshot.VisualMatches=vision.Matches;
             if(Input.GetKey(KeyCode.F10))Engine?.Stop("Emergency stop");
+            if(Input.GetKeyDown(KeyCode.F9) && Engine!=null)Engine.UserPaused=!Engine.UserPaused;
             Engine?.Tick(frame,snapshot);
         }
         catch(Exception e) { Engine?.Stop("State read failed: "+e.Message); }
@@ -353,7 +354,7 @@ public sealed class Controller : MonoBehaviour
             shadowStyle=new GUIStyle();shadowStyle.fontSize=OverlayFont;shadowStyle.fontStyle=FontStyle.Bold;shadowStyle.wordWrap=true;shadowStyle.normal.textColor=Color.black;
         }
         string state=Engine==null?"idle":Engine.Paused?"paused":Engine.Status;
-        string speed=$"  {RunClock.Speed}x{(RunClock.Applied!=RunClock.Speed?$" ({RunClock.Applied}x walking)":"")}  F7 -  F8 +";
+        string speed=$"  {RunClock.Speed}x{(RunClock.Applied!=RunClock.Speed?$" ({RunClock.Applied}x walking)":"")}  F7 -  F8 +  F9 pause";
         string text=$"TAS {RunClock.Format(RunClock.GameSeconds)}  (wall clock {RunClock.Format(RunClock.RealSeconds)}){speed}\n{state}: {Engine?.Label}";
         // In battle, a third line shows the enemies and the latest decision.
         if(snapshot.Phase=="Battle" && snapshot.Battle.Length>0)text+="\n"+snapshot.Battle;
