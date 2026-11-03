@@ -106,13 +106,13 @@ internal sealed class BattlePilot
         // Scripted losses (Titan at Mist) wipe the party and the story goes on;
         // a real game over leaves the battle for GotoTitle, which no step allows.
         if(players.Length>0 && alive==0) {state.Detail="Party down; waiting for the game";return;}
-        var enemyText=new System.Text.StringBuilder();bool mist=false,hasEnemy=false;scripted=false;fleeTarget=false;undead=null;weakest=null;toughestFlyer=null;weakestRank=int.MaxValue;undeadCount=livingEnemies=0;tough=boss=false;Array.Clear(elementCounts);livingIds.Clear();livingHp.Clear();targetReflect=false;
+        var enemyText=new System.Text.StringBuilder();bool mist=false,hasEnemy=false;scripted=false;fleeTarget=false;undead=null;weakest=null;toughestFlyer=null;weakestRank=int.MaxValue;undeadCount=livingEnemies=0;tough=boss=false;Array.Clear(elementCounts);livingIds.Clear();livingHp.Clear();livingMode.Clear();targetReflect=false;
         for(int i=0;i<enemies.Length;i++)
         {
             var e=enemies[i];var p=e?.BattleUnitDataInfo?.Parameter;
             if(e==null || p==null || p.CurrentHP<=0 || e.IsRemove)continue;
             hasEnemy=true;livingEnemies++;
-            if(e.MonsterMaster!=null) {livingIds.Add(e.MonsterMaster.Id);livingHp[e.MonsterMaster.Id]=p.CurrentHP;}
+            if(e.MonsterMaster!=null) {livingIds.Add(e.MonsterMaster.Id);livingHp[e.MonsterMaster.Id]=p.CurrentHP;livingMode[e.MonsterMaster.Id]=p.TryCast<EnemyCharacterParameter>()?.CurrentMode??-1;}
             var master=e.MonsterMaster;
             if(master!=null)
             {
@@ -182,6 +182,7 @@ internal sealed class BattlePilot
             else changeVotes=0;
         }
         if(changed)enemyText.Append(" [changed]");
+        if(plan!=null && Array.Exists(plan,r=>r.WhileModeIn!=null || r.WhileModeNot!=null))foreach(var kv in livingMode)enemyText.Append($" [mode {kv.Key}:{kv.Value}]");
         if(frame%12==0 && !grown && plan!=null && Array.Exists(plan,r=>r.WhileMonsterGrown!=null))
         {
             foreach(var view in UnityEngine.Object.FindObjectsOfType<BattleEnemyEntity>())
@@ -452,7 +453,7 @@ internal sealed class BattlePilot
     private int flyerAims;
     private IntPtr decidingActor;
     private IntPtr turnActor;private int turnRule=-1;private bool itemOnEnemies;
-    private readonly HashSet<int> livingIds=new();private readonly Dictionary<int,int> livingHp=new();private readonly Dictionary<IntPtr,string> firstSprite=new();private bool grown,changed;private int changeVotes;private readonly Dictionary<IntPtr,string> startSprite=new();private string spriteLine="";private const string GrowWarning="E0020_01_180_b_01";private const int MomBomb=165;private BattlePlayerData? rosaTarget,rosaLow;
+    private readonly Dictionary<int,int> livingMode=new();private readonly HashSet<int> livingIds=new();private readonly Dictionary<int,int> livingHp=new();private readonly Dictionary<IntPtr,string> firstSprite=new();private bool grown,changed;private int changeVotes;private readonly Dictionary<IntPtr,string> startSprite=new();private string spriteLine="";private const string GrowWarning="E0020_01_180_b_01";private const int MomBomb=165;private BattlePlayerData? rosaTarget,rosaLow;
     private const float RosaHealBelow=.75f,CriticalHp=.35f;
     // Lowest HP share first; Rosa, Cecil and Yang only get a small edge
     // (user: "loosen that up", "I would have healed Ed there"), and anyone
@@ -670,6 +671,12 @@ internal sealed class BattlePilot
             if(rule.WhileMonsterGrown is bool wantGrown && wantGrown!=grown)continue;
             if(rule.WhileMonsterChanged is bool wantChanged && wantChanged!=changed)continue;
             if(rule.OnTarget is int onTarget && weakest?.MonsterMaster?.Id!=onTarget)continue;
+            if((rule.WhileModeIn!=null || rule.WhileModeNot!=null) && rule.WhileMonster is int modeId)
+            {
+                int mode=livingMode.TryGetValue(modeId,out int m)?m:-1;
+                if(rule.WhileModeIn!=null && Array.IndexOf(rule.WhileModeIn,mode)<0)continue;
+                if(rule.WhileModeNot!=null && Array.IndexOf(rule.WhileModeNot,mode)>=0)continue;
+            }
             // Darkness is an HP-costing wave that can kill Cecil (user rule).
             // Only on large groups (4+), and only while Cecil is above a fifth
             // of his HP (it costs ~8-9% a use; the explosion leaves him low and

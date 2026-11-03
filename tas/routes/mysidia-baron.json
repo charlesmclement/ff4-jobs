@@ -2906,12 +2906,64 @@
       "timeoutFrames": 54000,
       "battlePlan": [
         {
+          "character": 13,
+          "command": 2,
+          "whileMonster": 171,
+          "whileModeIn": [
+            4
+          ]
+        },
+        {
+          "character": 8,
+          "command": 2,
+          "whileMonster": 171,
+          "whileModeIn": [
+            4
+          ]
+        },
+        {
+          "character": 9,
+          "command": 2,
+          "whileMonster": 171,
+          "whileModeIn": [
+            4
+          ]
+        },
+        {
+          "character": 10,
+          "command": 2,
+          "whileMonster": 171,
+          "whileModeIn": [
+            4
+          ]
+        },
+        {
+          "character": 6,
+          "command": 2,
+          "whileMonster": 171,
+          "whileModeIn": [
+            4
+          ]
+        },
+        {
           "character": 6,
           "command": 8,
           "ability": 41,
           "minMp": 30,
           "whileMonster": 171,
-          "whileMonsterChanged": false
+          "whileModeNot": [
+            4
+          ]
+        },
+        {
+          "character": 6,
+          "command": 8,
+          "ability": 40,
+          "minMp": 15,
+          "whileMonster": 171,
+          "whileModeNot": [
+            4
+          ]
         },
         {
           "character": 9,
@@ -2919,15 +2971,9 @@
           "ability": 40,
           "minMp": 15,
           "whileMonster": 171,
-          "whileMonsterChanged": false
-        },
-        {
-          "character": 6,
-          "command": 8,
-          "ability": 40,
-          "minMp": 15,
-          "whileMonster": 171,
-          "whileMonsterChanged": false
+          "whileModeNot": [
+            4
+          ]
         },
         {
           "character": 9,
@@ -2935,7 +2981,9 @@
           "ability": 39,
           "minMp": 5,
           "whileMonster": 171,
-          "whileMonsterChanged": false
+          "whileModeNot": [
+            4
+          ]
         },
         {
           "character": 6,
@@ -3030,12 +3078,64 @@
       "timeoutFrames": 216000,
       "battlePlan": [
         {
+          "character": 13,
+          "command": 2,
+          "whileMonster": 171,
+          "whileModeIn": [
+            4
+          ]
+        },
+        {
+          "character": 8,
+          "command": 2,
+          "whileMonster": 171,
+          "whileModeIn": [
+            4
+          ]
+        },
+        {
+          "character": 9,
+          "command": 2,
+          "whileMonster": 171,
+          "whileModeIn": [
+            4
+          ]
+        },
+        {
+          "character": 10,
+          "command": 2,
+          "whileMonster": 171,
+          "whileModeIn": [
+            4
+          ]
+        },
+        {
+          "character": 6,
+          "command": 2,
+          "whileMonster": 171,
+          "whileModeIn": [
+            4
+          ]
+        },
+        {
           "character": 6,
           "command": 8,
           "ability": 41,
           "minMp": 30,
           "whileMonster": 171,
-          "whileMonsterChanged": false
+          "whileModeNot": [
+            4
+          ]
+        },
+        {
+          "character": 6,
+          "command": 8,
+          "ability": 40,
+          "minMp": 15,
+          "whileMonster": 171,
+          "whileModeNot": [
+            4
+          ]
         },
         {
           "character": 9,
@@ -3043,15 +3143,9 @@
           "ability": 40,
           "minMp": 15,
           "whileMonster": 171,
-          "whileMonsterChanged": false
-        },
-        {
-          "character": 6,
-          "command": 8,
-          "ability": 40,
-          "minMp": 15,
-          "whileMonster": 171,
-          "whileMonsterChanged": false
+          "whileModeNot": [
+            4
+          ]
         },
         {
           "character": 9,
@@ -3059,7 +3153,9 @@
           "ability": 39,
           "minMp": 5,
           "whileMonster": 171,
-          "whileMonsterChanged": false
+          "whileModeNot": [
+            4
+          ]
         },
         {
           "character": 6,
@@ -3144,12 +3240,64 @@
       "timeoutFrames": 54000,
       "battlePlan": [
         {
+          "character": 13,
+          "command": 2,
+          "whileMonster": 171,
+          "whileModeIn": [
+            4
+          ]
+        },
+        {
+          "character": 8,
+          "command": 2,
+          "whileMonster": 171,
+          "whileModeIn": [
+            4
+          ]
+        },
+        {
+          "character": 9,
+          "command": 2,
+          "whileMonster": 171,
+          "whileModeIn": [
+            4
+          ]
+        },
+        {
+          "character": 10,
+          "command": 2,
+          "whileMonster": 171,
+          "whileModeIn": [
+            4
+          ]
+        },
+        {
+          "character": 6,
+          "command": 2,
+          "whileMonster": 171,
+          "whileModeIn": [
+            4
+          ]
+        },
+        {
           "character": 6,
           "command": 8,
           "ability": 41,
           "minMp": 30,
           "whileMonster": 171,
-          "whileMonsterChanged": false
+          "whileModeNot": [
+            4
+          ]
+        },
+        {
+          "character": 6,
+          "command": 8,
+          "ability": 40,
+          "minMp": 15,
+          "whileMonster": 171,
+          "whileModeNot": [
+            4
+          ]
         },
         {
           "character": 9,
@@ -3157,15 +3305,9 @@
           "ability": 40,
           "minMp": 15,
           "whileMonster": 171,
-          "whileMonsterChanged": false
-        },
-        {
-          "character": 6,
-          "command": 8,
-          "ability": 40,
-          "minMp": 15,
-          "whileMonster": 171,
-          "whileMonsterChanged": false
+          "whileModeNot": [
+            4
+          ]
         },
         {
           "character": 9,
@@ -3173,7 +3315,9 @@
           "ability": 39,
           "minMp": 5,
           "whileMonster": 171,
-          "whileMonsterChanged": false
+          "whileModeNot": [
+            4
+          ]
         },
         {
           "character": 6,
@@ -3268,12 +3412,64 @@
       "timeoutFrames": 216000,
       "battlePlan": [
         {
+          "character": 13,
+          "command": 2,
+          "whileMonster": 171,
+          "whileModeIn": [
+            4
+          ]
+        },
+        {
+          "character": 8,
+          "command": 2,
+          "whileMonster": 171,
+          "whileModeIn": [
+            4
+          ]
+        },
+        {
+          "character": 9,
+          "command": 2,
+          "whileMonster": 171,
+          "whileModeIn": [
+            4
+          ]
+        },
+        {
+          "character": 10,
+          "command": 2,
+          "whileMonster": 171,
+          "whileModeIn": [
+            4
+          ]
+        },
+        {
+          "character": 6,
+          "command": 2,
+          "whileMonster": 171,
+          "whileModeIn": [
+            4
+          ]
+        },
+        {
           "character": 6,
           "command": 8,
           "ability": 41,
           "minMp": 30,
           "whileMonster": 171,
-          "whileMonsterChanged": false
+          "whileModeNot": [
+            4
+          ]
+        },
+        {
+          "character": 6,
+          "command": 8,
+          "ability": 40,
+          "minMp": 15,
+          "whileMonster": 171,
+          "whileModeNot": [
+            4
+          ]
         },
         {
           "character": 9,
@@ -3281,15 +3477,9 @@
           "ability": 40,
           "minMp": 15,
           "whileMonster": 171,
-          "whileMonsterChanged": false
-        },
-        {
-          "character": 6,
-          "command": 8,
-          "ability": 40,
-          "minMp": 15,
-          "whileMonster": 171,
-          "whileMonsterChanged": false
+          "whileModeNot": [
+            4
+          ]
         },
         {
           "character": 9,
@@ -3297,7 +3487,9 @@
           "ability": 39,
           "minMp": 5,
           "whileMonster": 171,
-          "whileMonsterChanged": false
+          "whileModeNot": [
+            4
+          ]
         },
         {
           "character": 6,
@@ -3382,12 +3574,64 @@
       "timeoutFrames": 54000,
       "battlePlan": [
         {
+          "character": 13,
+          "command": 2,
+          "whileMonster": 171,
+          "whileModeIn": [
+            4
+          ]
+        },
+        {
+          "character": 8,
+          "command": 2,
+          "whileMonster": 171,
+          "whileModeIn": [
+            4
+          ]
+        },
+        {
+          "character": 9,
+          "command": 2,
+          "whileMonster": 171,
+          "whileModeIn": [
+            4
+          ]
+        },
+        {
+          "character": 10,
+          "command": 2,
+          "whileMonster": 171,
+          "whileModeIn": [
+            4
+          ]
+        },
+        {
+          "character": 6,
+          "command": 2,
+          "whileMonster": 171,
+          "whileModeIn": [
+            4
+          ]
+        },
+        {
           "character": 6,
           "command": 8,
           "ability": 41,
           "minMp": 30,
           "whileMonster": 171,
-          "whileMonsterChanged": false
+          "whileModeNot": [
+            4
+          ]
+        },
+        {
+          "character": 6,
+          "command": 8,
+          "ability": 40,
+          "minMp": 15,
+          "whileMonster": 171,
+          "whileModeNot": [
+            4
+          ]
         },
         {
           "character": 9,
@@ -3395,15 +3639,9 @@
           "ability": 40,
           "minMp": 15,
           "whileMonster": 171,
-          "whileMonsterChanged": false
-        },
-        {
-          "character": 6,
-          "command": 8,
-          "ability": 40,
-          "minMp": 15,
-          "whileMonster": 171,
-          "whileMonsterChanged": false
+          "whileModeNot": [
+            4
+          ]
         },
         {
           "character": 9,
@@ -3411,7 +3649,9 @@
           "ability": 39,
           "minMp": 5,
           "whileMonster": 171,
-          "whileMonsterChanged": false
+          "whileModeNot": [
+            4
+          ]
         },
         {
           "character": 6,
@@ -3498,12 +3738,64 @@
       "timeoutFrames": 216000,
       "battlePlan": [
         {
+          "character": 13,
+          "command": 2,
+          "whileMonster": 171,
+          "whileModeIn": [
+            4
+          ]
+        },
+        {
+          "character": 8,
+          "command": 2,
+          "whileMonster": 171,
+          "whileModeIn": [
+            4
+          ]
+        },
+        {
+          "character": 9,
+          "command": 2,
+          "whileMonster": 171,
+          "whileModeIn": [
+            4
+          ]
+        },
+        {
+          "character": 10,
+          "command": 2,
+          "whileMonster": 171,
+          "whileModeIn": [
+            4
+          ]
+        },
+        {
+          "character": 6,
+          "command": 2,
+          "whileMonster": 171,
+          "whileModeIn": [
+            4
+          ]
+        },
+        {
           "character": 6,
           "command": 8,
           "ability": 41,
           "minMp": 30,
           "whileMonster": 171,
-          "whileMonsterChanged": false
+          "whileModeNot": [
+            4
+          ]
+        },
+        {
+          "character": 6,
+          "command": 8,
+          "ability": 40,
+          "minMp": 15,
+          "whileMonster": 171,
+          "whileModeNot": [
+            4
+          ]
         },
         {
           "character": 9,
@@ -3511,15 +3803,9 @@
           "ability": 40,
           "minMp": 15,
           "whileMonster": 171,
-          "whileMonsterChanged": false
-        },
-        {
-          "character": 6,
-          "command": 8,
-          "ability": 40,
-          "minMp": 15,
-          "whileMonster": 171,
-          "whileMonsterChanged": false
+          "whileModeNot": [
+            4
+          ]
         },
         {
           "character": 9,
@@ -3527,7 +3813,9 @@
           "ability": 39,
           "minMp": 5,
           "whileMonster": 171,
-          "whileMonsterChanged": false
+          "whileModeNot": [
+            4
+          ]
         },
         {
           "character": 6,

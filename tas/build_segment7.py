@@ -52,19 +52,25 @@ baigan=[
     {'character':PALOM,'command':8,'ability':FIRA,'minMp':15,'onTarget':BAIGAN,'ignoreReflect':True,'whileMonster':BAIGAN},
 ]
 baigan+=[{'character':c,'command':2,'whileMonster':BAIGAN} for c in (PALOM,POROM,TELLAH)]+field
-# Cagnazzo: weak to lightning (guide). User: "HEAVY LIGHTNING WHEN HE IS
-# OUT OF HIS SHELL". In the shell his sprite changes: whileMonsterChanged
-# false = out of it. Out: Tellah Thundaga, Palom Thundara. In the shell the
-# casters Defend (saving MP for when he comes out); Cecil and Yang attack.
-cagnazzo=[
-    {'character':TELLAH,'command':8,'ability':THUNDAGA,'minMp':30,'whileMonster':CAGNAZZO,'whileMonsterChanged':False},
-    {'character':PALOM,'command':8,'ability':THUNDARA,'minMp':15,'whileMonster':CAGNAZZO,'whileMonsterChanged':False},
-    {'character':TELLAH,'command':8,'ability':THUNDARA,'minMp':15,'whileMonster':CAGNAZZO,'whileMonsterChanged':False},
-    {'character':PALOM,'command':8,'ability':39,'minMp':5,'whileMonster':CAGNAZZO,'whileMonsterChanged':False},
+# Cagnazzo (user: "real similar to mist dragon but he goes inside his
+# shell", "hit him with Lit3 when he comes out, any time he's out").
+# His script (sc_ai_171, research/tas-battle/ai): at 700 HP or less a hit
+# sends him into "Turtle defense!" (AI mode 4: Restore, then out again);
+# mode 2 is "Torrents of water begin to build!" (Tsunami charging), which a
+# lightning spell breaks ("Thunder breaks the barrier!").
+# In the shell (mode 4) everyone Defends, like the Mist Dragon's mist. Out
+# of it: Tellah Thundaga (Lit-3), else Thundara; Palom Thundara, else
+# Thunder; Cecil and Yang attack. Porom heals, else Defends (a Twincast
+# would take Palom's turn from the lightning).
+SHELL=[4]
+cagnazzo=[{'character':c,'command':2,'whileMonster':CAGNAZZO,'whileModeIn':SHELL} for c in (PALADIN,YANG,PALOM,POROM,TELLAH)]
+cagnazzo+=[
+    {'character':TELLAH,'command':8,'ability':THUNDAGA,'minMp':30,'whileMonster':CAGNAZZO,'whileModeNot':SHELL},
+    {'character':TELLAH,'command':8,'ability':THUNDARA,'minMp':15,'whileMonster':CAGNAZZO,'whileModeNot':SHELL},
+    {'character':PALOM,'command':8,'ability':THUNDARA,'minMp':15,'whileMonster':CAGNAZZO,'whileModeNot':SHELL},
+    {'character':PALOM,'command':8,'ability':39,'minMp':5,'whileMonster':CAGNAZZO,'whileModeNot':SHELL},
     {'character':TELLAH,'command':2,'whileMonster':CAGNAZZO},
     {'character':PALOM,'command':2,'whileMonster':CAGNAZZO},
-    # Porom heals, else Defends: a Twincast would take Palom's turn from
-    # the lightning.
     {'character':POROM,'command':2,'whileMonster':CAGNAZZO},
 ]+field
 

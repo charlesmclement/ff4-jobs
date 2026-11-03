@@ -215,6 +215,11 @@ public sealed class BattleRule
     // Only while the current target (kill order, else lowest HP) is this
     // monster: Baigan's spells wait until the arm is dead and the body is up.
     public int? OnTarget {get;set;}
+    // The whileMonster unit's AI mode (EnemyCharacterParameter.CurrentMode,
+    // set by its sc_ai script): only while it is one of / none of these.
+    // Cagnazzo: mode 4 is "Turtle defense!" (the shell, Restore inside).
+    public int[]? WhileModeIn {get;set;}
+    public int[]? WhileModeNot {get;set;}
     // Target the whole enemy side (one Thunder on all instead of three singles).
     public bool TargetAll {get;set;}
     // Pick Fire/Blizzard/Thunder by the living enemies' shared weakness

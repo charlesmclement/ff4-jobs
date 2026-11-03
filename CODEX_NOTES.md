@@ -807,3 +807,12 @@ User: "use strong singular spells on the body", "Kainazzo needs to be hit with H
 * Baigan: arm 170 first by attacks; the casters Defend.
 * Then the body: Tellah Firaga (else Fira), Palom single-target Fira, both `onTarget` Baigan with `ignoreReflect`. Cecil and Yang attack.
 * Porom heals or Defends. No Twincast or AOE.
+
+### 115. Cagnazzo by AI mode
+User: "real similar to mist dragon but he goes inside his shell", "Lit3 when he comes out, any time he's out". `tas`-local extraction: a pure-Python UnityFS + LZ4 reader (scratch, not committed) unpacked the monster_ai bundle. sc_ai_171_Cagnazzo is saved in research/tas-battle/ai.
+* At HP ≤ 700 a hit triggers "Turtle defense!" (ability 292), which puts him in mode 4 (the shell): Restore (160), then 293.
+* Mode 2 is "Torrents of water begin to build!" (Tsunami charging), and lightning *magic* counters it with "Thunder breaks the barrier!".
+* New BattleRule `whileModeIn` / `whileModeNot`: the whileMonster's `EnemyCharacterParameter.CurrentMode`. Modes show in the battle line as `[mode id:n]`.
+* Plan: in the shell (mode 4) all five Defend.
+* Out of the shell: Tellah Thundaga (else Thundara), Palom Thundara (else Thunder), Cecil and Yang attack, Porom heals or Defends.
+* The sprite-based `whileMonsterChanged` stays available but isn't used.
