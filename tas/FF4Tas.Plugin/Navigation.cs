@@ -36,6 +36,7 @@ internal sealed class Navigation
         // a landing tile (navigate's arrival pulse) gets off.
         var fieldPlayer=player.TryCast<Last.Entity.Field.FieldPlayer>();
         state.Riding=fieldPlayer!=null && (int)fieldPlayer.moveState is not (0 or 1);
+        state.MoveState=fieldPlayer!=null?(int)fieldPlayer.moveState:0;
         EncounterWatch.PlayerPos=player.transform.position;
         if(active.Kind!="navigate" || active.Goal==null || active.MapId!=state.MapId)return;
         var goal=active.Goal;
@@ -52,6 +53,16 @@ internal sealed class Navigation
                 if(found!=null && (entityGoal==null || found.X!=entityGoal.X || found.Y!=entityGoal.Y)) {entityGoal=found;path.Clear();retryAt=frame;}
             }
             if(entityGoal!=null)goal=entityGoal;
+        }
+        else if(active.GoalVehicle is int vehicle)
+        {
+            if(frame>=entityLookAt)
+            {
+                entityLookAt=frame+30;
+                var found=FindVehicle(controller,state.MapId,vehicle);
+                if(found!=null && (entityGoal==null || found.X!=entityGoal.X || found.Y!=entityGoal.Y)) {entityGoal=found;path.Clear();retryAt=frame;}
+            }
+            if(entityGoal!=null) {goal=entityGoal;state.Detail=$"Vehicle {vehicle} at ({goal.X},{goal.Y})";}
         }
         var pos=player.transform.position;
         var destination=controller.ConvertCellPositionToWorldPosition(new Vector3(goal.X,goal.Y,goal.Layer));
@@ -167,6 +178,22 @@ internal sealed class Navigation
             bestDistance=d;best=new Destination{X=(int)c.x,Y=(int)c.y,Layer=(int)c.z};
         }
         return best;
+    }
+    // A parked vehicle's cell from the owned-transportation records. Saved
+    // positions may be cells or world units (not verified); a negative y is
+    // taken as world units (Unity's y runs up, map rows run down).
+    private static Destination? FindVehicle(FieldController controller,int mapId,int id)
+    {
+        var list=Last.Management.UserDataManager.Instance()?.GetOwnedTransportationsClone();
+        for(int i=0;list!=null && i<list.Count;i++)
+        {
+            var t=list[i];
+            if(t==null || t.Id!=id || t.MapId!=mapId)continue;
+            var p=t.Position;
+            if(p.y<0)p=controller.ConvertWorldPositionToCellPosition(p);
+            return new Destination{X=(int)Math.Round(p.x),Y=(int)Math.Round(p.y),Layer=0};
+        }
+        return null;
     }
     // The native search fails when the goal is a trigger tile it marks as blocked
     // or lies beyond its 64x64 window. Try the goal, its neighbours, then cells

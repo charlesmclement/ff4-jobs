@@ -661,3 +661,6 @@ User (3 Nov, going to sleep): build as far into the game as possible, big segmen
 
 ### 89. Segment 11 built: Dwarf Castle → Tower of Babil → surface (untested)
 `tas/build_segment11.py` → `tas/routes/dwarves-babil.json` (34 steps). route_kit.world_path takes `world=2` (Underworld attribute grid). The plugin reads ScenarioFlag2 for skipIf too. Lugae: killFirst Doctor→Barnabas, Kain Jumps. Ends on the surface beside Agart after landing the Enterprise. docs/TAS-SEGMENT-11.md.
+
+### 90. Segments 12–13 built: hook, hovercraft, Eblan, Rubicant, Falcon (untested)
+`tas/build_segment12.py` → `babil-hook.json` (12 steps) and `tas/build_segment13.py` → `eblan-falcon.json` (40 steps). New condition `moveState` (FieldPlayer.moveState) and navigate `goalVehicle` (the owned-transportation record's position; cell vs world units is a guess: y<0 → world). The hook is one held Confirm over the hovercraft, then a 4 s wait. The Cave of Eblan has only 4 walkable cells, so the hovercraft is needed. docs/TAS-SEGMENT-12-13.md.

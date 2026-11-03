@@ -1,0 +1,1489 @@
+{
+  "schema": 1,
+  "name": "Eblan → Rubicant → Falcon (segment 13) — UNTESTED",
+  "fleeTough": true,
+  "steps": [
+    {
+      "label": "Eblan shallows: onto the hovercraft (wherever the hook set it down)",
+      "kind": "navigate",
+      "mapId": 1,
+      "goal": {
+        "x": 39,
+        "y": 221,
+        "layer": 0
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "moveState": 3
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 3600,
+      "waypoints": [
+        {
+          "x": 39,
+          "y": 222,
+          "layer": 0
+        }
+      ],
+      "goalVehicle": 2
+    },
+    {
+      "label": "Hovercraft: across the shallows to the cave; get off",
+      "kind": "navigate",
+      "mapId": 1,
+      "goal": {
+        "x": 29,
+        "y": 220,
+        "layer": 0
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "mapId": 1,
+        "riding": false,
+        "atDestination": true
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 54000,
+      "waypoints": [
+        {
+          "x": 39,
+          "y": 221,
+          "layer": 0
+        },
+        {
+          "x": 39,
+          "y": 226,
+          "layer": 0
+        },
+        {
+          "x": 33,
+          "y": 226,
+          "layer": 0
+        },
+        {
+          "x": 33,
+          "y": 224,
+          "layer": 0
+        },
+        {
+          "x": 29,
+          "y": 224,
+          "layer": 0
+        },
+        {
+          "x": 29,
+          "y": 221,
+          "layer": 0
+        }
+      ]
+    },
+    {
+      "label": "Overworld: into the Cave of Eblan",
+      "kind": "navigate",
+      "mapId": 1,
+      "goal": {
+        "x": 29,
+        "y": 218,
+        "layer": 0
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Player",
+        "mapId": 226
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 54000,
+      "waypoints": [
+        {
+          "x": 29,
+          "y": 219,
+          "layer": 0
+        }
+      ],
+      "facing": "Up"
+    },
+    {
+      "label": "Cave of Eblan: down to the refugees",
+      "kind": "navigate",
+      "mapId": 226,
+      "goal": {
+        "x": 7,
+        "y": 33,
+        "layer": 0
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Player",
+        "mapId": 113
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 54000
+    },
+    {
+      "label": "Eblan refugees: on to the Pass to Babil",
+      "kind": "navigate",
+      "mapId": 113,
+      "goal": {
+        "x": 12,
+        "y": 6,
+        "layer": 0
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Player",
+        "mapId": 227
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 54000
+    },
+    {
+      "label": "Pass to Babil: middle passage north",
+      "kind": "navigate",
+      "mapId": 227,
+      "goal": {
+        "x": 20,
+        "y": 9,
+        "layer": 0
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Player",
+        "mapId": 228
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 54000
+    },
+    {
+      "label": "Pass to Babil: the save room",
+      "kind": "navigate",
+      "mapId": 228,
+      "goal": {
+        "x": 34,
+        "y": 26,
+        "layer": 0
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Player",
+        "mapId": 229
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 54000
+    },
+    {
+      "label": "Save room: onto the save point",
+      "kind": "navigate",
+      "mapId": 229,
+      "goal": {
+        "x": 9,
+        "y": 7,
+        "layer": 0
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "atDestination": true
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 54000
+    },
+    {
+      "label": "Save room: Tent",
+      "kind": "menu",
+      "mapId": 229,
+      "phases": [
+        "Player",
+        "Menu",
+        "Shop",
+        "Message",
+        "FieldReady",
+        "ChangeMap",
+        "Event"
+      ],
+      "until": {
+        "menuDone": true
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 10800,
+      "menuItem": 21
+    },
+    {
+      "label": "Save room: heal anyone the Tent missed",
+      "kind": "menu",
+      "mapId": 229,
+      "phases": [
+        "Player",
+        "Menu",
+        "Shop",
+        "Message",
+        "FieldReady",
+        "ChangeMap"
+      ],
+      "until": {
+        "menuDone": true
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 7200
+    },
+    {
+      "label": "Save room: out",
+      "kind": "navigate",
+      "mapId": 229,
+      "goal": {
+        "x": 9,
+        "y": 13,
+        "layer": 0
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Player",
+        "mapId": 228
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 54000
+    },
+    {
+      "label": "Pass to Babil: Edge fights Rubicant; Edge joins (flag 51) - walk in",
+      "kind": "navigate",
+      "mapId": 228,
+      "goal": {
+        "x": 29,
+        "y": 11,
+        "layer": 0
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Event"
+      },
+      "stableFrames": 15,
+      "timeoutFrames": 54000,
+      "skipIf": {
+        "storyFlag": 51
+      },
+      "group": "flag51"
+    },
+    {
+      "label": "Pass to Babil: Edge fights Rubicant; Edge joins (flag 51)",
+      "kind": "mash",
+      "keys": [
+        "Confirm"
+      ],
+      "phases": [
+        "None",
+        "Init",
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Player",
+        "storyFlag": 51
+      },
+      "stableFrames": 30,
+      "periodFrames": 8,
+      "pressedFrames": 2,
+      "timeoutFrames": 216000,
+      "skipIf": {
+        "storyFlag": 51
+      },
+      "group": "flag51"
+    },
+    {
+      "label": "Pass to Babil: Strongest on everyone (Edge)",
+      "kind": "menu",
+      "mapId": 228,
+      "phases": [
+        "Player",
+        "Menu",
+        "Shop",
+        "Message",
+        "FieldReady",
+        "ChangeMap"
+      ],
+      "until": {
+        "menuDone": true
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 10800,
+      "equip": [
+        0
+      ]
+    },
+    {
+      "label": "Pass to Babil: formation - Rydia, Cecil, Rosa, Edge, Kain; Cecil and Edge in front",
+      "kind": "menu",
+      "mapId": 228,
+      "phases": [
+        "Player",
+        "Menu",
+        "Shop",
+        "Message",
+        "FieldReady",
+        "ChangeMap"
+      ],
+      "until": {
+        "menuDone": true
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 10800,
+      "formation": {
+        "order": [
+          4,
+          13,
+          3,
+          11,
+          2
+        ],
+        "front": [
+          1,
+          3
+        ]
+      }
+    },
+    {
+      "label": "Pass to Babil: north to the tower",
+      "kind": "navigate",
+      "mapId": 228,
+      "goal": {
+        "x": 27,
+        "y": 5,
+        "layer": 0
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Player",
+        "mapId": 234
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 54000
+    },
+    {
+      "label": "Babil (outside): in at the door Edge opens",
+      "kind": "navigate",
+      "mapId": 234,
+      "goal": {
+        "x": 33,
+        "y": 19,
+        "layer": 0
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Player",
+        "mapId": 235
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 54000
+    },
+    {
+      "label": "Babil: on west",
+      "kind": "navigate",
+      "mapId": 235,
+      "goal": {
+        "x": 14,
+        "y": 19,
+        "layer": 0
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Player",
+        "mapId": 236
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 54000
+    },
+    {
+      "label": "Babil: the save room (guide: \"enter the first door. Inside this room is a save spot\")",
+      "kind": "navigate",
+      "mapId": 236,
+      "goal": {
+        "x": 27,
+        "y": 9,
+        "layer": 0
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Player",
+        "mapId": 237
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 54000
+    },
+    {
+      "label": "Save room: onto the save point",
+      "kind": "navigate",
+      "mapId": 237,
+      "goal": {
+        "x": 4,
+        "y": 6,
+        "layer": 0
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "atDestination": true
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 54000
+    },
+    {
+      "label": "Save room: Tent before the King and Queen of Eblan",
+      "kind": "menu",
+      "mapId": 237,
+      "phases": [
+        "Player",
+        "Menu",
+        "Shop",
+        "Message",
+        "FieldReady",
+        "ChangeMap",
+        "Event"
+      ],
+      "until": {
+        "menuDone": true
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 10800,
+      "menuItem": 21
+    },
+    {
+      "label": "Save room: heal anyone the Tent missed",
+      "kind": "menu",
+      "mapId": 237,
+      "phases": [
+        "Player",
+        "Menu",
+        "Shop",
+        "Message",
+        "FieldReady",
+        "ChangeMap"
+      ],
+      "until": {
+        "menuDone": true
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 7200
+    },
+    {
+      "label": "Save room: out",
+      "kind": "navigate",
+      "mapId": 237,
+      "goal": {
+        "x": 4,
+        "y": 10,
+        "layer": 0
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Player",
+        "mapId": 236
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 54000
+    },
+    {
+      "label": "Babil: south door",
+      "kind": "navigate",
+      "mapId": 236,
+      "goal": {
+        "x": 20,
+        "y": 25,
+        "layer": 0
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Player",
+        "mapId": 238
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 54000
+    },
+    {
+      "label": "Babil: on to the hall",
+      "kind": "navigate",
+      "mapId": 238,
+      "goal": {
+        "x": 27,
+        "y": 7,
+        "layer": 0
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Player",
+        "mapId": 239
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 54000
+    },
+    {
+      "label": "Babil: Edge's parents (all Defend) (flag 52) - walk in",
+      "kind": "navigate",
+      "mapId": 239,
+      "goal": {
+        "x": 21,
+        "y": 20,
+        "layer": 0
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Event"
+      },
+      "stableFrames": 15,
+      "timeoutFrames": 54000,
+      "battlePlan": [
+        {
+          "character": 13,
+          "command": 2,
+          "whileMonster": 186
+        },
+        {
+          "character": 2,
+          "command": 2,
+          "whileMonster": 186
+        },
+        {
+          "character": 3,
+          "command": 2,
+          "whileMonster": 186
+        },
+        {
+          "character": 4,
+          "command": 2,
+          "whileMonster": 186
+        },
+        {
+          "character": 11,
+          "command": 2,
+          "whileMonster": 186
+        },
+        {
+          "character": 13,
+          "command": 2,
+          "whileMonster": 187
+        },
+        {
+          "character": 2,
+          "command": 2,
+          "whileMonster": 187
+        },
+        {
+          "character": 3,
+          "command": 2,
+          "whileMonster": 187
+        },
+        {
+          "character": 4,
+          "command": 2,
+          "whileMonster": 187
+        },
+        {
+          "character": 11,
+          "command": 2,
+          "whileMonster": 187
+        }
+      ],
+      "skipIf": {
+        "storyFlag": 52
+      },
+      "group": "flag52"
+    },
+    {
+      "label": "Babil: Edge's parents (all Defend) (flag 52)",
+      "kind": "mash",
+      "keys": [
+        "Confirm"
+      ],
+      "phases": [
+        "None",
+        "Init",
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Player",
+        "storyFlag": 52
+      },
+      "stableFrames": 30,
+      "periodFrames": 8,
+      "pressedFrames": 2,
+      "timeoutFrames": 216000,
+      "battlePlan": [
+        {
+          "character": 13,
+          "command": 2,
+          "whileMonster": 186
+        },
+        {
+          "character": 2,
+          "command": 2,
+          "whileMonster": 186
+        },
+        {
+          "character": 3,
+          "command": 2,
+          "whileMonster": 186
+        },
+        {
+          "character": 4,
+          "command": 2,
+          "whileMonster": 186
+        },
+        {
+          "character": 11,
+          "command": 2,
+          "whileMonster": 186
+        },
+        {
+          "character": 13,
+          "command": 2,
+          "whileMonster": 187
+        },
+        {
+          "character": 2,
+          "command": 2,
+          "whileMonster": 187
+        },
+        {
+          "character": 3,
+          "command": 2,
+          "whileMonster": 187
+        },
+        {
+          "character": 4,
+          "command": 2,
+          "whileMonster": 187
+        },
+        {
+          "character": 11,
+          "command": 2,
+          "whileMonster": 187
+        }
+      ],
+      "skipIf": {
+        "storyFlag": 52
+      },
+      "group": "flag52"
+    },
+    {
+      "label": "Babil: talk to Rubicant - Rubicant (flag 53) - walk in",
+      "kind": "navigate",
+      "mapId": 239,
+      "goal": {
+        "x": 21,
+        "y": 18,
+        "layer": 0
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Event"
+      },
+      "stableFrames": 15,
+      "timeoutFrames": 54000,
+      "battlePlan": [
+        {
+          "character": 2,
+          "command": 11,
+          "whileMonster": 188
+        },
+        {
+          "character": 4,
+          "command": 8,
+          "ability": 48,
+          "minMp": 20,
+          "whileMonster": 188
+        }
+      ],
+      "skipIf": {
+        "storyFlag": 53
+      },
+      "group": "flag53",
+      "goalEntity": "ルビカンテ"
+    },
+    {
+      "label": "Babil: talk to Rubicant - Rubicant (flag 53)",
+      "kind": "mash",
+      "keys": [
+        "Confirm"
+      ],
+      "phases": [
+        "None",
+        "Init",
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Player",
+        "storyFlag": 53
+      },
+      "stableFrames": 30,
+      "periodFrames": 8,
+      "pressedFrames": 2,
+      "timeoutFrames": 216000,
+      "battlePlan": [
+        {
+          "character": 2,
+          "command": 11,
+          "whileMonster": 188
+        },
+        {
+          "character": 4,
+          "command": 8,
+          "ability": 48,
+          "minMp": 20,
+          "whileMonster": 188
+        }
+      ],
+      "skipIf": {
+        "storyFlag": 53
+      },
+      "group": "flag53"
+    },
+    {
+      "label": "Babil: heal after Rubicant",
+      "kind": "menu",
+      "mapId": 239,
+      "phases": [
+        "Player",
+        "Menu",
+        "Shop",
+        "Message",
+        "FieldReady",
+        "ChangeMap"
+      ],
+      "until": {
+        "menuDone": true
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 7200
+    },
+    {
+      "label": "Babil: north door to the crystal room",
+      "kind": "navigate",
+      "mapId": 239,
+      "goal": {
+        "x": 21,
+        "y": 15,
+        "layer": 0
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Player",
+        "mapId": 321
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 54000
+    },
+    {
+      "label": "Crystal room: the pitfall - down to 8F (flag 54, autosave) - walk in",
+      "kind": "navigate",
+      "mapId": 321,
+      "goal": {
+        "x": 14,
+        "y": 20,
+        "layer": 0
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Event"
+      },
+      "stableFrames": 15,
+      "timeoutFrames": 54000,
+      "skipIf": {
+        "storyFlag": 54
+      },
+      "group": "flag54"
+    },
+    {
+      "label": "Crystal room: the pitfall - down to 8F (flag 54, autosave)",
+      "kind": "mash",
+      "keys": [
+        "Confirm"
+      ],
+      "phases": [
+        "None",
+        "Init",
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Player",
+        "storyFlag": 54
+      },
+      "stableFrames": 30,
+      "periodFrames": 8,
+      "pressedFrames": 2,
+      "timeoutFrames": 216000,
+      "skipIf": {
+        "storyFlag": 54
+      },
+      "group": "flag54"
+    },
+    {
+      "label": "Babil 8F: up",
+      "kind": "navigate",
+      "mapId": 240,
+      "goal": {
+        "x": 9,
+        "y": 20,
+        "layer": 0
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Player",
+        "mapId": 241
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 54000
+    },
+    {
+      "label": "Babil 7F: on",
+      "kind": "navigate",
+      "mapId": 241,
+      "goal": {
+        "x": 17,
+        "y": 4,
+        "layer": 0
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Player",
+        "mapId": 242
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 54000
+    },
+    {
+      "label": "Babil 6F: the Falcon; Edge takes it; out to the Underworld (flag 55, autosave) - walk in",
+      "kind": "navigate",
+      "mapId": 242,
+      "goal": {
+        "x": 16,
+        "y": 21,
+        "layer": 0
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Event"
+      },
+      "stableFrames": 15,
+      "timeoutFrames": 54000,
+      "skipIf": {
+        "storyFlag": 55
+      },
+      "group": "flag55"
+    },
+    {
+      "label": "Babil 6F: the Falcon; Edge takes it; out to the Underworld (flag 55, autosave)",
+      "kind": "mash",
+      "keys": [
+        "Confirm"
+      ],
+      "phases": [
+        "None",
+        "Init",
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "storyFlag": 55,
+        "mapId": 2
+      },
+      "stableFrames": 60,
+      "periodFrames": 8,
+      "pressedFrames": 2,
+      "timeoutFrames": 216000,
+      "skipIf": {
+        "storyFlag": 55
+      },
+      "group": "flag55"
+    },
+    {
+      "label": "Falcon: land outside Babil",
+      "kind": "navigate",
+      "mapId": 2,
+      "goal": {
+        "x": 58,
+        "y": 22,
+        "layer": 0
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "mapId": 2,
+        "riding": false,
+        "atDestination": true
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 3600
+    },
+    {
+      "label": "Outside Babil: heal",
+      "kind": "menu",
+      "mapId": 2,
+      "phases": [
+        "Player",
+        "Menu",
+        "Shop",
+        "Message",
+        "FieldReady",
+        "ChangeMap"
+      ],
+      "until": {
+        "menuDone": true
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 7200
+    },
+    {
+      "label": "Segment 13 complete: Rubicant defeated, Edge and the Falcon, outside Babil in the Underworld",
+      "kind": "checkpoint",
+      "phases": [
+        "Player"
+      ],
+      "until": {
+        "phase": "Player",
+        "mapId": 2,
+        "storyFlag": 55
+      }
+    }
+  ],
+  "weaknesses": {
+    "7": [
+      1
+    ],
+    "10": [
+      2
+    ],
+    "14": [
+      2
+    ],
+    "15": [
+      3
+    ],
+    "16": [
+      1
+    ],
+    "17": [
+      3
+    ],
+    "18": [
+      1
+    ],
+    "19": [
+      2
+    ],
+    "20": [
+      1
+    ],
+    "21": [
+      3
+    ],
+    "22": [
+      3
+    ],
+    "26": [
+      2
+    ],
+    "27": [
+      2
+    ],
+    "29": [
+      1
+    ],
+    "33": [
+      3
+    ],
+    "34": [
+      1
+    ],
+    "36": [
+      1
+    ],
+    "42": [
+      3
+    ],
+    "43": [
+      2
+    ],
+    "44": [
+      3
+    ],
+    "48": [
+      1
+    ],
+    "49": [
+      1
+    ],
+    "50": [
+      1
+    ],
+    "51": [
+      1
+    ],
+    "52": [
+      1
+    ],
+    "54": [
+      1
+    ],
+    "56": [
+      2
+    ],
+    "57": [
+      3
+    ],
+    "58": [
+      3
+    ],
+    "62": [
+      2
+    ],
+    "68": [
+      1
+    ],
+    "70": [
+      1
+    ],
+    "72": [
+      1
+    ],
+    "74": [
+      3
+    ],
+    "82": [
+      1
+    ],
+    "83": [
+      2
+    ],
+    "89": [
+      2
+    ],
+    "91": [
+      2
+    ],
+    "93": [
+      2
+    ],
+    "94": [
+      1
+    ],
+    "96": [
+      2
+    ],
+    "102": [
+      1
+    ],
+    "103": [
+      2
+    ],
+    "104": [
+      2
+    ],
+    "113": [
+      1
+    ],
+    "115": [
+      1
+    ],
+    "118": [
+      1
+    ],
+    "120": [
+      1
+    ],
+    "121": [
+      1
+    ],
+    "126": [
+      1
+    ],
+    "130": [
+      2
+    ],
+    "148": [
+      2
+    ],
+    "150": [
+      1
+    ],
+    "160": [
+      2
+    ],
+    "163": [
+      3
+    ],
+    "167": [
+      1
+    ],
+    "181": [
+      1
+    ],
+    "189": [
+      3
+    ],
+    "190": [
+      3
+    ],
+    "194": [
+      1
+    ],
+    "195": [
+      3
+    ],
+    "209": [
+      1
+    ],
+    "210": [
+      3
+    ],
+    "212": [
+      1
+    ],
+    "227": [
+      2
+    ],
+    "229": [
+      1
+    ],
+    "231": [
+      2
+    ],
+    "236": [
+      2
+    ],
+    "246": [
+      2
+    ],
+    "251": [
+      2
+    ],
+    "252": [
+      2
+    ],
+    "274": [
+      1
+    ]
+  }
+}

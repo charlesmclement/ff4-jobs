@@ -1,0 +1,564 @@
+{
+  "schema": 1,
+  "name": "Agart → Baron hook → hovercraft to Eblan (segment 12) — UNTESTED",
+  "fleeTough": true,
+  "steps": [
+    {
+      "label": "Beside Agart: heal",
+      "kind": "menu",
+      "mapId": 1,
+      "phases": [
+        "Player",
+        "Menu",
+        "Shop",
+        "Message",
+        "FieldReady",
+        "ChangeMap"
+      ],
+      "until": {
+        "menuDone": true
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 7200
+    },
+    {
+      "label": "Agart: back onto the Enterprise",
+      "kind": "navigate",
+      "mapId": 1,
+      "goal": {
+        "x": 108,
+        "y": 202,
+        "layer": 0
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "riding": true
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 3600,
+      "waypoints": [
+        {
+          "x": 107,
+          "y": 202,
+          "layer": 0
+        }
+      ],
+      "goalVehicle": 3
+    },
+    {
+      "label": "Enterprise: north to Baron; land outside the castle",
+      "kind": "navigate",
+      "mapId": 1,
+      "goal": {
+        "x": 107,
+        "y": 146,
+        "layer": 0
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "mapId": 1,
+        "riding": false,
+        "atDestination": true
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 54000,
+      "waypoints": [
+        {
+          "x": 108,
+          "y": 146,
+          "layer": 0
+        }
+      ]
+    },
+    {
+      "label": "Overworld: into Baron Castle",
+      "kind": "navigate",
+      "mapId": 1,
+      "goal": {
+        "x": 107,
+        "y": 144,
+        "layer": 0
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Player",
+        "mapId": 4
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 54000,
+      "waypoints": [
+        {
+          "x": 107,
+          "y": 145,
+          "layer": 0
+        }
+      ]
+    },
+    {
+      "label": "Baron Castle: Cid's engineers below the east tower fit the hook (flag 50, autosave) - walk in",
+      "kind": "navigate",
+      "mapId": 4,
+      "goal": {
+        "x": 27,
+        "y": 21,
+        "layer": 0
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Event"
+      },
+      "stableFrames": 15,
+      "timeoutFrames": 54000,
+      "skipIf": {
+        "storyFlag": 50
+      },
+      "group": "flag50"
+    },
+    {
+      "label": "Baron Castle: Cid's engineers below the east tower fit the hook (flag 50, autosave)",
+      "kind": "mash",
+      "keys": [
+        "Confirm"
+      ],
+      "phases": [
+        "None",
+        "Init",
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "storyFlag": 50,
+        "mapId": 1
+      },
+      "stableFrames": 60,
+      "periodFrames": 8,
+      "pressedFrames": 2,
+      "timeoutFrames": 216000,
+      "skipIf": {
+        "storyFlag": 50
+      },
+      "group": "flag50"
+    },
+    {
+      "label": "Hook Enterprise: north-east to the hovercraft below Mount Hobs (where segment 4 left it)",
+      "kind": "navigate",
+      "mapId": 1,
+      "goal": {
+        "x": 157,
+        "y": 37,
+        "layer": 0
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "atDestination": true
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 54000,
+      "waypoints": [
+        {
+          "x": 107,
+          "y": 37,
+          "layer": 0
+        },
+        {
+          "x": 156,
+          "y": 37,
+          "layer": 0
+        }
+      ],
+      "goalVehicle": 2
+    },
+    {
+      "label": "Hook Enterprise: Confirm over the hovercraft to hook it",
+      "kind": "hold",
+      "keys": [
+        "Confirm"
+      ],
+      "frames": 3,
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "timeoutFrames": 600
+    },
+    {
+      "label": "Hook Enterprise: wait for the hook",
+      "kind": "wait",
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "until": {
+        "riding": true
+      },
+      "stableFrames": 240,
+      "timeoutFrames": 3600
+    },
+    {
+      "label": "Hook Enterprise: south-west to the shallows by the Cave of Eblan; land (the hovercraft comes down with it)",
+      "kind": "navigate",
+      "mapId": 1,
+      "goal": {
+        "x": 38,
+        "y": 221,
+        "layer": 0
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "mapId": 1,
+        "riding": false,
+        "atDestination": true
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 54000,
+      "waypoints": [
+        {
+          "x": 157,
+          "y": 221,
+          "layer": 0
+        },
+        {
+          "x": 39,
+          "y": 221,
+          "layer": 0
+        }
+      ]
+    },
+    {
+      "label": "By the Eblan shallows: heal",
+      "kind": "menu",
+      "mapId": 1,
+      "phases": [
+        "Player",
+        "Menu",
+        "Shop",
+        "Message",
+        "FieldReady",
+        "ChangeMap"
+      ],
+      "until": {
+        "menuDone": true
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 7200
+    },
+    {
+      "label": "Segment 12 complete: hook fitted, hovercraft carried to the Eblan shallows",
+      "kind": "checkpoint",
+      "phases": [
+        "Player"
+      ],
+      "until": {
+        "phase": "Player",
+        "mapId": 1,
+        "storyFlag": 50
+      }
+    }
+  ],
+  "weaknesses": {
+    "7": [
+      1
+    ],
+    "10": [
+      2
+    ],
+    "14": [
+      2
+    ],
+    "15": [
+      3
+    ],
+    "16": [
+      1
+    ],
+    "17": [
+      3
+    ],
+    "18": [
+      1
+    ],
+    "19": [
+      2
+    ],
+    "20": [
+      1
+    ],
+    "21": [
+      3
+    ],
+    "22": [
+      3
+    ],
+    "26": [
+      2
+    ],
+    "27": [
+      2
+    ],
+    "29": [
+      1
+    ],
+    "33": [
+      3
+    ],
+    "34": [
+      1
+    ],
+    "36": [
+      1
+    ],
+    "42": [
+      3
+    ],
+    "43": [
+      2
+    ],
+    "44": [
+      3
+    ],
+    "48": [
+      1
+    ],
+    "49": [
+      1
+    ],
+    "50": [
+      1
+    ],
+    "51": [
+      1
+    ],
+    "52": [
+      1
+    ],
+    "54": [
+      1
+    ],
+    "56": [
+      2
+    ],
+    "57": [
+      3
+    ],
+    "58": [
+      3
+    ],
+    "62": [
+      2
+    ],
+    "68": [
+      1
+    ],
+    "70": [
+      1
+    ],
+    "72": [
+      1
+    ],
+    "74": [
+      3
+    ],
+    "82": [
+      1
+    ],
+    "83": [
+      2
+    ],
+    "89": [
+      2
+    ],
+    "91": [
+      2
+    ],
+    "93": [
+      2
+    ],
+    "94": [
+      1
+    ],
+    "96": [
+      2
+    ],
+    "102": [
+      1
+    ],
+    "103": [
+      2
+    ],
+    "104": [
+      2
+    ],
+    "113": [
+      1
+    ],
+    "115": [
+      1
+    ],
+    "118": [
+      1
+    ],
+    "120": [
+      1
+    ],
+    "121": [
+      1
+    ],
+    "126": [
+      1
+    ],
+    "130": [
+      2
+    ],
+    "148": [
+      2
+    ],
+    "150": [
+      1
+    ],
+    "160": [
+      2
+    ],
+    "163": [
+      3
+    ],
+    "167": [
+      1
+    ],
+    "181": [
+      1
+    ],
+    "189": [
+      3
+    ],
+    "190": [
+      3
+    ],
+    "194": [
+      1
+    ],
+    "195": [
+      3
+    ],
+    "209": [
+      1
+    ],
+    "210": [
+      3
+    ],
+    "212": [
+      1
+    ],
+    "227": [
+      2
+    ],
+    "229": [
+      1
+    ],
+    "231": [
+      2
+    ],
+    "236": [
+      2
+    ],
+    "246": [
+      2
+    ],
+    "251": [
+      2
+    ],
+    "252": [
+      2
+    ],
+    "274": [
+      1
+    ]
+  }
+}

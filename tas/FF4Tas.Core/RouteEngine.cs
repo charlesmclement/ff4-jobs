@@ -123,6 +123,11 @@ public sealed class Step
     // contains this text (e.g. "チョコボ(黒)", a Black Chocobo) is the goal,
     // re-read as it moves; Goal is its starting cell, used until it's found.
     public string? GoalEntity {get;set;}
+    // Walk to a parked vehicle (transportation id: 2 hovercraft, 3/10 the
+    // Enterprise, 7 a Black Chocobo, 8/9 the Falcon): the game's own record of
+    // where it is (UserDataManager owned transportations) is the goal, so
+    // a vehicle dropped by the hook is found wherever it landed.
+    public int? GoalVehicle {get;set;}
     public string? Facing {get;set;}
     // 0-based option to pick whenever a native choice window opens during this
     // step (e.g. the Mist Cave warning defaults to "No"; 0 is "Yes").
@@ -218,6 +223,9 @@ public sealed class Condition
     public bool AtDestination {get;set;}
     // Riding a vehicle (hovercraft, ship...) or on foot.
     public bool? Riding {get;set;}
+    // The player's FieldPlayerConstants.MoveState: 0 walk, 1 dash, 2 airship,
+    // 3 ship (hovercraft), 4 low flying (Black Chocobo), 5 chocobo.
+    public int? MoveState {get;set;}
     // A "menu" step finished its field-menu work and the field is back.
     public bool MenuDone {get;set;}
     // Party gil at least this much (grind before the Fabul shops).
@@ -229,7 +237,7 @@ public sealed class Condition
     public Dictionary<int,int>? MpBelow {get;set;}
     // At least one of these holds (with everything else in this condition).
     public Condition[]? Any {get;set;}
-    public bool Empty=>Phase==null && MapId==null && StoryFlag==null && TreasureFlag==null && Flag2==null && Riding==null && !AtDestination && !MenuDone
+    public bool Empty=>Phase==null && MapId==null && StoryFlag==null && TreasureFlag==null && Flag2==null && Riding==null && MoveState==null && !AtDestination && !MenuDone
         && GilAtLeast==null && LevelAtLeast==null && MpBelow==null && (Any==null || Any.Length==0 || Any.All(a=>a==null || a.Empty)) && string.IsNullOrWhiteSpace(Visual);
     public bool Matches(Snapshot state)=>(Phase==null || state.Phase==Phase) && (MapId==null || state.MapId==MapId)
         && (Visual==null || state.VisualMatches.Contains(Visual))
@@ -238,6 +246,7 @@ public sealed class Condition
         && (Flag2==null || state.Flag2s.Contains(Flag2.Value))
         && (!AtDestination || state.AtDestination)
         && (Riding==null || state.Riding==Riding)
+        && (MoveState==null || state.MoveState==MoveState)
         && (!MenuDone || state.MenuDone)
         && (GilAtLeast==null || state.Gil>=GilAtLeast)
         && (LevelAtLeast==null || state.Levels.Count>0 && LevelAtLeast.All(l=>!state.Levels.TryGetValue(l.Key,out int lv) || lv>=l.Value))
@@ -259,6 +268,7 @@ public sealed class Snapshot
     public bool AtDestination {get;set;}
     // FieldPlayer.moveState is a vehicle (not Walk/Dush).
     public bool Riding {get;set;}
+    public int MoveState {get;set;}
     public string? NavigationInput {get;set;}
     public string? BattleInput {get;set;}
     // Field-menu driver ("menu" steps): key to press, and whether it is done.
