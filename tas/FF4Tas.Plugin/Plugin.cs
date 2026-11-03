@@ -192,7 +192,10 @@ public sealed class Controller : MonoBehaviour
                     {
                         fightHeal.Read(snapshot,frame);snapshot.FieldHeal=true;
                         // Done (back on the field) or stuck: walk on; one try per fight.
-                        if(snapshot.MenuDone || (++healFrames>FightHealTimeout && snapshot.Phase=="Player")) {healing=healArmed=false;snapshot.FieldHeal=false;snapshot.MenuDone=false;navigation.Reset();}
+                        // The timeout counts menu frames too (a target loop
+                        // ran 30 min in the menu); past it, Back out first.
+                        if(++healFrames>FightHealTimeout && snapshot.Phase=="Menu") {snapshot.Detail="Heal timed out: closing the menu";if(frame%12==0)snapshot.MenuInput="Back";}
+                        if(snapshot.MenuDone || (healFrames>FightHealTimeout && snapshot.Phase=="Player")) {healing=healArmed=false;snapshot.FieldHeal=false;snapshot.MenuDone=false;navigation.Reset();}
                     }
                 }
                 else healing=false;

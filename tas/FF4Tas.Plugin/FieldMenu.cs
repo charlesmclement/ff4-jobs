@@ -43,6 +43,9 @@ internal sealed class FieldMenu
         Need();
         if(finished && s.Phase=="Player") {s.MenuDone=true;s.Detail="Menu: party healed";return;}
         if(wait>0) {wait--;s.Detail="Menu: item in use";return;}
+        // Given up (or done) inside the menu: Back out to the field. It went
+        // back into the Potion list over and over after a give-up.
+        if(finished && s.Phase=="Menu") {Pulse(s,frame,"Back","Close the menu");return;}
         if(s.Phase=="Player")
         {
             if(item==0) {finished=true;s.MenuDone=true;s.Detail="Menu: nobody to heal ("+party+")";return;}
@@ -110,16 +113,17 @@ internal sealed class FieldMenu
                     if(frame%12==0) {uses++;wait=AfterUse;}
                     Pulse(s,frame,"Confirm","Use on the party");return;
                 }
-                // The cursor walks the screen slots (contentList), which keep a
-                // gap where a member left (Tellah); targetList skips it. Counting
-                // in targetList put Edward one short and it pressed Up/Down past
-                // him for 30 minutes. Slots first; after 15 presses that don't
-                // land, try the other count; after 40, give up and close.
+                // targetList keeps an empty entry where a member left (Tellah),
+                // and the cursor skips it (live: cursor 0,1,2 for 3 members,
+                // Edward at raw index 3). Count only real members; after 15
+                // presses that don't land, try the raw index; after 40, close.
                 int want=-1;
-                var slots=use.contentList;
-                if(!countTargets && slots!=null)
-                    for(int i=0;i<slots.Count;i++)if(slots[i]?.CurrentData?.Id==target) {want=i;break;}
-                if(want<0)for(int i=0;i<use.targetList.Count;i++)if(use.targetList[i]?.Id==target) {want=i;break;}
+                for(int i=0,real=0;i<use.targetList.Count;i++)
+                {
+                    int id=use.targetList[i]?.Id??0;
+                    if(id==target) {want=countTargets?i:real;break;}
+                    if(id!=0)real++;
+                }
                 if(want<0) {Pulse(s,frame,"Back","Target not in the list");return;}
                 int at=use.selectCursor.Index;
                 if(at==want && frame%12==0) {uses++;wait=AfterUse;targetPresses=0;}
