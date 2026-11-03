@@ -330,6 +330,7 @@ public sealed class Controller : MonoBehaviour
     private void OnDisable() {Engine?.Stop("Runner disabled");RunClock.Restore();}
     private void OnDestroy() {Engine?.Stop("Runner destroyed");RunClock.Restore();}
     private static GUIStyle? overlayStyle,shadowStyle;
+    private const int OverlayFont=54,Outline=3;
     // Run timer overlay. The TAS time is game time: it speeds up with the boost,
     // so a boosted run is timed exactly as if it ran at normal speed. Real
     // wall-clock time is shown for reference only.
@@ -338,8 +339,10 @@ public sealed class Controller : MonoBehaviour
         if(Engine==null && !RunClock.Boost)return;
         if(overlayStyle==null)
         {
-            overlayStyle=new GUIStyle();overlayStyle.fontSize=18;overlayStyle.normal.textColor=Color.white;
-            shadowStyle=new GUIStyle();shadowStyle.fontSize=18;shadowStyle.normal.textColor=Color.black;
+            // User is hard of seeing: 3x the old 18 px, bold, wrapped to the
+            // screen, with a black outline (drawn at eight offsets) behind it.
+            overlayStyle=new GUIStyle();overlayStyle.fontSize=OverlayFont;overlayStyle.fontStyle=FontStyle.Bold;overlayStyle.wordWrap=true;overlayStyle.normal.textColor=Color.white;
+            shadowStyle=new GUIStyle();shadowStyle.fontSize=OverlayFont;shadowStyle.fontStyle=FontStyle.Bold;shadowStyle.wordWrap=true;shadowStyle.normal.textColor=Color.black;
         }
         string state=Engine==null?"idle":Engine.Paused?"paused":Engine.Status;
         string speed=$"  {RunClock.Speed}x{(RunClock.Applied!=RunClock.Speed?$" ({RunClock.Applied}x walking)":"")}  F7 -  F8 +";
@@ -348,8 +351,11 @@ public sealed class Controller : MonoBehaviour
         if(snapshot.Phase=="Battle" && snapshot.Battle.Length>0)text+="\n"+snapshot.Battle;
         // On the field: the encounter observer's step forecast (read-only).
         else if(snapshot.Encounter.Length>0)text+="\n"+snapshot.Encounter;
-        GUI.Label(new Rect(11,9,1400,90),text,shadowStyle);
-        GUI.Label(new Rect(10,8,1400,90),text,overlayStyle);
+        var area=new Rect(16,10,Screen.width-32,Screen.height-20);
+        for(int dx=-Outline;dx<=Outline;dx+=Outline)
+            for(int dy=-Outline;dy<=Outline;dy+=Outline)
+                if(dx!=0 || dy!=0)GUI.Label(new Rect(area.x+dx,area.y+dy,area.width,area.height),text,shadowStyle);
+        GUI.Label(area,text,overlayStyle);
     }
     private sealed class Request
     {

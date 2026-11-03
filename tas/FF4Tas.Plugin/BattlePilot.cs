@@ -50,7 +50,7 @@ internal sealed class BattlePilot
         // Yang come first (lowest of them), then Rydia and Edward.
         // Without Rosa: lowest percentage first, Cecil wins near-ties.
         BattlePlayerData? injured=null,dead=null;int alive=0,totalHp=0;float injuredRatio=2;casterCanCure=false;injuredRatioNow=1;toad=mini=null;
-        rosaParty=rosaCanCure=false;rydiaMp=-1;rosaTarget=rosaLow=null;float rosaKey=99;
+        rosaParty=rosaCanCure=edwardCanItem=false;rydiaMp=-1;rosaTarget=rosaLow=null;float rosaKey=99;
         for(int i=0;i<players.Length;i++)if(players[i]?.GetOwnedCharacterData()?.characterStatusId==Rosa)rosaParty=true;
         // A heal or revive someone else already queued on a member makes that
         // member nobody else's target until it lands (user: no double heals,
@@ -83,6 +83,7 @@ internal sealed class BattlePilot
                 if(cid is ToadCondition or ToadCondition2 && toad==null)toad=p;
                 if(cid is MiniCondition or MiniCondition2 && mini==null)mini=p;
             }
+            if(who==EdwardId && !away)edwardCanItem=true;
             if(who is Rydia or Tellah or Rosa && stats.CurrentMP>=CureMp)casterCanCure=true;
             if(who==Rosa && stats.CurrentMP>=CureMp)rosaCanCure=true;
             if(who==Rydia && Knows(p!,CureAbility))rydiaMp=stats.CurrentMP;
@@ -328,7 +329,11 @@ internal sealed class BattlePilot
     private float fightSeconds;private int fightFrame=-1;
     // Back attack flips the rows: the first member with a turn uses Row once.
     private bool rowDone;
-    private const int Row=5,Rydia=4,Rosa=3;
+    private const int Row=5,Rydia=4,Rosa=3,EdwardId=7;
+    // Edward alive and not hidden: with no Cure caster up (Cecil, Yang and
+    // Edward at the Fabul defense) he is the item healer and the fighters
+    // keep attacking (user: "Ed should always be the preferred item healer").
+    private bool edwardCanItem;
     // Master condition ids (both entries named Toad/Mini) and their cure items.
     private const int HiddenCondition=32,JumpCondition=36,ToadCondition=14,ToadCondition2=58,MiniCondition=13,MiniCondition2=57,MaidensKiss=11,Mallet=12;
     private BattlePlayerData? toad,mini;
@@ -445,7 +450,8 @@ internal sealed class BattlePilot
         // after the fight (user: both spent the Mom Bomb split on Phoenix
         // Downs for Rydia and Edward).
         bool fighter=me is 1 or 13 or 8;
-        if(dead!=null && HasItem(9) && (!fighter || HealRank(dead)==0)) {pendingItem=9;pendingTarget=dead.GetOwnedCharacterData().characterStatusId;Queue(actor,pendingTarget);Log(actor,"Phoenix Down on #"+pendingTarget);return;}
+        bool edwardHeals=fighter && edwardCanItem && !casterCanCure;
+        if(dead!=null && HasItem(9) && !edwardHeals && (!fighter || HealRank(dead)==0)) {pendingItem=9;pendingTarget=dead.GetOwnedCharacterData().characterStatusId;Queue(actor,pendingTarget);Log(actor,"Phoenix Down on #"+pendingTarget);return;}
         // With Rosa alive and able to Cure, nobody else heals: Rydia Cured and
         // Yang/Cecil used Potions through the Mom Bomb split instead of
         // fighting, and the party lost.
@@ -463,7 +469,7 @@ internal sealed class BattlePilot
             // Non-casters (Cecil) leave healing to the casters: a Potion only
             // when no caster has the MP to Cure (user: Cecil kept healing with
             // Rydia right behind him in the ATB).
-            if(HasItem(2) && (!casterCanCure || (injured==rosaLow && me!=Rosa)))
+            if(HasItem(2) && !edwardHeals && (!casterCanCure || (injured==rosaLow && me!=Rosa)))
             {pendingItem=2;pendingTarget=target;Queue(actor,target);Log(actor,"Potion on ally #"+target);return;}
         }
         // Cure hurts undead: cast it (on all of them when there are several).

@@ -11,7 +11,7 @@ namespace FF4Tas;
 // slot it shows; SwitchRight steps to the next member.
 internal sealed class EquipMenu
 {
-    private const int MenuEquipment=3,Strongest=2,RemoveEverything=3,WindowCommand=1,AfterEquip=30,MaxSwitches=12;
+    private const int MenuEquipment=3,Strongest=2,RemoveEverything=3,WindowCommand=1,AfterEquip=30,MaxSwitches=24,LapSwitches=6;
     private int[] wanted=Array.Empty<int>();
     private readonly HashSet<int> done=new(),removed=new();
     private int[] reset=Array.Empty<int>();
@@ -22,7 +22,7 @@ internal sealed class EquipMenu
     private EquipmentWindowController? window;
     internal void Reset(int[] characters,int[]? removeFirst=null)
     {
-        wanted=characters;reset=removeFirst??Array.Empty<int>();removed.Clear();done.Clear();finished=sideways=false;wait=switches=stuck=0;lastIndex=-1;lastKey=null;main=null;window=null;
+        wanted=characters;mode=0;reset=removeFirst??Array.Empty<int>();removed.Clear();done.Clear();finished=sideways=false;wait=switches=stuck=0;lastIndex=-1;lastKey=null;main=null;window=null;
     }
     internal void Read(Snapshot s,int frame)
     {
@@ -58,7 +58,7 @@ internal sealed class EquipMenu
         int slot=Slot(next),shown=window.targetIndex;
         if(shown!=slot)
         {
-            if(frame%12==0)switches++;
+            if(frame%12==0 && ++switches%LapSwitches==0)mode=(mode+1)%3;
             Pulse(s,frame,"SwitchRight","Next member (#"+next+")");return;
         }
         if((int)window.stateMachine.Current!=WindowCommand) {Pulse(s,frame,"Back","Back to the equip commands");return;}
@@ -87,16 +87,26 @@ internal sealed class EquipMenu
         }
         Pulse(s,frame,key,"Strongest");
     }
-    // Party slot (corps order) of a character_status id (Cecil 1, Yang 8),
-    // or -1 when not in the party. Corps entries hold the owned-character id.
-    private static int Slot(int statusId)
+    // Party slot of a character_status id (Cecil 1, Yang 8), or -1 when not
+    // in the party. Corps entries hold the owned-character id. The menu's
+    // count wasn't always the corps list order: after Golbez took Rosa (her
+    // slot left empty) the run cycled members and never reached Cecil, so the
+    // Deathbringer went unequipped. Mode 0: slot-Id order without empty slots;
+    // 1: with them; 2: raw list order. Read moves to the next mode after a
+    // full lap of the party without a match.
+    private int mode;
+    private int Slot(int statusId)
     {
         var user=UserDataManager.Instance();var corps=user?.corpsList;var owned=user?.OwnedCharacterList;
         if(corps==null || owned==null)return -1;
+        var order=new List<Last.Data.User.Corps>();
+        for(int c=0;c<corps.Count;c++)if(corps[c]!=null)order.Add(corps[c]);
+        if(mode!=2)order.Sort((a,b)=>((int)a.Id).CompareTo((int)b.Id));
         int n=0;
-        for(int c=0;c<corps.Count;c++)
+        foreach(var entry in order)
         {
-            int who=corps[c]?.CharacterId??0;if(who==0)continue;
+            int who=entry.CharacterId;
+            if(who==0) {if(mode==1)n++;continue;}
             for(int o=0;o<owned.Count;o++)if(owned[o]?.Id==who && owned[o].characterStatusId==statusId)return n;
             n++;
         }
