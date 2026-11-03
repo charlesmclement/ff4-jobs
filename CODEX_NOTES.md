@@ -557,3 +557,6 @@ Trace: formation before the Mom Bomb worked (3,4,1,7,0 → 3,1,4,0,7, rows 12121
 
 ### 59. Cecil/Yang spent the Mom Bomb split on Phoenix Downs (fix untested)
 Trace after the explosion: "Cecil: Phoenix Down on #4" and "Yang: Phoenix Down on #7"; revive runs before the plan, so Cecil never reached his Darkness rule. Now Cecil and Yang only Phoenix Down Rosa, Cecil or Yang; Rydia and Edward are revived by Rosa (Life/Phoenix Down), Edward, or the field heal after the fight. Darkness HP guard lowered from 25% to 20% (the blast leaves Cecil low).
+
+### 60. Field Life never reached: the spell list is a grid (fix untested)
+Trace after the Mom Bomb: "Magic: Life (state 2, cursor 0 -> 5)", then "cursor 3 -> 5", repeating. Down jumps a whole row (0 -> 3, then wraps to 0), so pressing only Down never reached Life at 5, and the stuck check never fired because the cursor kept moving. FieldMagic.Move now reads the row width from a Down that moves more than one slot, then uses Up/Down for the row and Left/Right for the column. Unrelated to the formation code.

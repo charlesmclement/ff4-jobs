@@ -20,11 +20,11 @@ internal sealed class FieldMagic
     private float topUpBelow=.7f;
     private bool finished,flip;
     // Backs without a cast: give up on magic (items take over), never loop.
-    private int casts,wait,stuck,backs,lastIndex=-1,caster,spell,target;
+    private int casts,wait,stuck,backs,lastIndex=-1,caster,spell,target,columns;
     private const int MaxBacks=10;
     private string? lastKey;
     private MainMenuController? main;
-    internal void Reset(float topUp) {topUpBelow=topUp;finished=flip=false;casts=wait=stuck=backs=0;lastIndex=-1;lastKey=null;main=null;}
+    internal void Reset(float topUp) {topUpBelow=topUp;finished=flip=false;casts=wait=stuck=backs=columns=0;lastIndex=-1;lastKey=null;main=null;}
     internal bool Wanted() {Need();return spell!=0;}
     internal void Read(Snapshot s,int frame)
     {
@@ -160,11 +160,17 @@ internal sealed class FieldMagic
     }
     // Up/Down; grids and sideways rows flip to Left/Right when a key leaves
     // the cursor in place three times.
+    // The spell list is a grid: Down jumps a whole row (0 -> 3 -> wraps to 0,
+    // and Life at 5 was never reached). A Down that moves more than one slot
+    // gives the row width; then Up/Down picks the row and Left/Right the column.
     private void Move(Snapshot s,int frame,int at,int want,bool canFlip,string what)
     {
         if(want<0) {finished=true;return;}
+        if(frame%12==0 && lastKey=="Down" && at-lastIndex>1 && lastIndex>=0)columns=at-lastIndex;
         bool sideways=canFlip && flip;
-        string key=at==want?"Confirm":sideways?(want<at?"Left":"Right"):(want<at?"Up":"Down");
+        string key=at==want?"Confirm":
+            canFlip && columns>1?(want/columns!=at/columns?(want<at?"Up":"Down"):(want<at?"Left":"Right")):
+            sideways?(want<at?"Left":"Right"):(want<at?"Up":"Down");
         if(frame%12==0 && key!="Confirm")
         {
             if(key==lastKey && at==lastIndex && ++stuck>=3) {flip=!flip;stuck=0;}
