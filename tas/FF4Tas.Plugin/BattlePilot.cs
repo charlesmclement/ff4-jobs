@@ -35,9 +35,9 @@ internal sealed class BattlePilot
         abilityLastIndex=-1;abilityLastKey=null;lastInfo=lastCursor=-1;lastActor=IntPtr.Zero;previousHp=-1;
         pendingRule=-1;abilityConfirms=abilityStuck=targetPresses=0;decision="";
         blockedRules.Clear();blockedCure.Clear();blockedLife.Clear();blockedItems.Clear();blockedStatusSpell.Clear();usedOnce.Clear();wasMist=false;
-        fleeFrames=0;sidePresses=0;bossSeen=false;turnActor=IntPtr.Zero;turnRule=-1;fightSeconds=0;fightFrame=-1;rowDone=false;firstSprite.Clear();grown=false;spriteLine="";queuedHeals.Clear();
+        fleeFrames=0;sidePresses=0;unreachable.Clear();targetPresses=0;bossSeen=false;turnActor=IntPtr.Zero;turnRule=-1;fightSeconds=0;fightFrame=-1;rowDone=false;firstSprite.Clear();grown=false;spriteLine="";queuedHeals.Clear();
     }
-    internal void Read(Snapshot state,int frame,BattleRule[]? plan=null,int[]? fleeMonsters=null)
+    internal void Read(Snapshot state,int frame,BattleRule[]? plan=null,int[]? fleeMonsters=null,bool grinding=false)
     {
         var plug=BattlePlugManager.Instance();
         if(plug==null)return;
@@ -72,10 +72,14 @@ internal sealed class BattlePilot
             float ratio=hp/(float)Math.Max(1,stats.ConfirmedMaxHp());
             int who=p!.GetOwnedCharacterData()?.characterStatusId??0;
             // Toad/Mini stop casting and last after the fight: cure them first.
-            var conditions=stats.CurrentConditionList;
+            var conditions=stats.CurrentConditionList;bool away=unreachable.Contains(who);
             for(int c=0;conditions!=null && c<conditions.Count;c++)
             {
                 int cid=conditions[c]?.Id??0;
+                // Hidden (Edward's Hide, 32) or in the air (Jump, 36): no one
+                // can target them, so they are nobody's heal (user: Rosa looped
+                // looking for a hidden Edward).
+                if(cid is HiddenCondition or JumpCondition)away=true;
                 if(cid is ToadCondition or ToadCondition2 && toad==null)toad=p;
                 if(cid is MiniCondition or MiniCondition2 && mini==null)mini=p;
             }
@@ -83,7 +87,7 @@ internal sealed class BattlePilot
             if(who==Rosa && stats.CurrentMP>=CureMp)rosaCanCure=true;
             if(who==Rydia && Knows(p!,CureAbility))rydiaMp=stats.CurrentMP;
             if(who==Rosa && ratio<HealBelow && !taken)rosaLow=p;
-            if(rank<0 || taken)continue;
+            if(rank<0 || taken || away)continue;
             // Rosa tops up her priority allies earlier (under 75%).
             if(rosaParty && ratio<(rank==0?RosaHealBelow:HealBelow) && rank+ratio<rosaKey) {rosaTarget=p;rosaKey=rank+ratio;}
             if(ratio>=HealBelow)continue;
@@ -181,7 +185,9 @@ internal sealed class BattlePilot
         // ...and run from any ordinary fight that is taking too long.
         // A toad/mini in an ordinary fight: run first, cure with the item in the
         // next fight that is actually fought (user's call).
-        bool slow=fightSeconds>SlowFightSeconds,toughFight=FleeTough && tough,status=toad!=null || mini!=null;
+        // Grinds (looping navigate steps) fight to the end: the exp is the point,
+        // and slow fights were fled when nearly won (user).
+        bool slow=!grinding && fightSeconds>SlowFightSeconds,toughFight=FleeTough && tough,status=toad!=null || mini!=null;
         if((fleeTarget || slow || toughFight || status) && !boss && !scripted && fleeFrames<(fleeTarget?FleeGiveUpListed:FleeGiveUp))
         {
             // L+R escape works only from the command list: back out of any
@@ -223,6 +229,10 @@ internal sealed class BattlePilot
                  pendingItem=0;pendingAbility=0;pendingTarget=0;pendingRule=-1;targetAll=false;aimFlyer=false;pendingCommand=1;decision+=" -> greyed out, Attack";}
                 SelectCommand(info,pendingItem!=0?3:mist?2:pendingCommand,state,frame);
                 break;
+            case 2 or 4 when pendingTarget!=0 && unreachable.Contains(pendingTarget):
+                // Backing out of a heal on someone the cursor can't reach: up
+                // to the command list, where Decide picks someone else.
+                Pulse(state,frame,"Back","Target unreachable; choose again");break;
             case 4:
                 if(pendingAbility==0) {Block();Pulse(state,frame,"Back","Cancel unexpected ability list");break;}
                 SelectAbility(info,state,frame);break;
@@ -302,12 +312,14 @@ internal sealed class BattlePilot
     // ran out once and the party fought four Skeletons.
     private const int FleeGiveUpListed=1800;
     private const float SlowFightSeconds=60;
+    private readonly HashSet<int> unreachable=new();
+    private const int TargetGiveUp=10;
     private float fightSeconds;private int fightFrame=-1;
     // Back attack flips the rows: one non-Cecil actor uses Row once to fix it.
     private bool rowDone;
     private const int Row=5,Rydia=4,Rosa=3;
     // Master condition ids (both entries named Toad/Mini) and their cure items.
-    private const int ToadCondition=14,ToadCondition2=58,MiniCondition=13,MiniCondition2=57,MaidensKiss=11,Mallet=12;
+    private const int HiddenCondition=32,JumpCondition=36,ToadCondition=14,ToadCondition2=58,MiniCondition=13,MiniCondition2=57,MaidensKiss=11,Mallet=12;
     private BattlePlayerData? toad,mini;
     private const int BlackMagic=8,ToadSpell=45,MiniSpell=26;
     private readonly HashSet<IntPtr> blockedStatusSpell=new();
@@ -621,11 +633,15 @@ internal sealed class BattlePilot
     {
         var c=info.targetSelectController;if(c?.stateMachine==null)return;
         if(pendingTarget==0) {Pulse(state,frame,"Back","Cancel unknown healing target");return;}
+        if(unreachable.Contains(pendingTarget)) {Pulse(state,frame,"Back","Target unreachable; choose again");return;}
         if((int)c.stateMachine.Current!=1) {Pulse(state,frame,"Right","Select party side");return;}
         var targets=c.GetPlayerTarget();
         if(targets!=null && targets.Count==1 && targets[0].GetOwnedCharacterData()?.characterStatusId==pendingTarget)
-            Pulse(state,frame,"Confirm","Heal selected party member");
-        else Pulse(state,frame,"Down","Find injured party member");
+        {targetPresses=0;Pulse(state,frame,"Confirm","Heal selected party member");}
+        // The cursor went round the party without reaching them (a state the
+        // checks above missed): give up on them for this fight and back out.
+        else if(targetPresses>TargetGiveUp) {unreachable.Add(pendingTarget);targetPresses=0;Pulse(state,frame,"Back","Target unreachable; choose again");}
+        else {if(frame%12==0)targetPresses++;Pulse(state,frame,"Down","Find injured party member");}
     }
     private static void Pulse(Snapshot state,int frame,string key,string detail)
     {state.Detail=string.IsNullOrEmpty(state.Detail)?detail:state.Detail+"; "+detail;if(frame%12==0)state.BattleInput=key;}
