@@ -1094,7 +1094,7 @@
       }
     },
     {
-      "label": "Inn: Yang takes everything off, then Strongest, then Thunder Claws in both hands",
+      "label": "Inn: Yang takes everything off, then Strongest",
       "kind": "menu",
       "mapId": 25,
       "phases": [
@@ -1112,18 +1112,6 @@
       "timeoutFrames": 10800,
       "equip": [
         8
-      ],
-      "equipItems": [
-        {
-          "character": 8,
-          "slot": 0,
-          "content": 164
-        },
-        {
-          "character": 8,
-          "slot": 1,
-          "content": 164
-        }
       ],
       "equipReset": [
         8
@@ -2691,39 +2679,6 @@
       },
       "stableFrames": 2,
       "timeoutFrames": 7200
-    },
-    {
-      "label": "Castle hall: Yang - Thunder Claws in both hands for Cagnazzo",
-      "kind": "menu",
-      "mapId": 5,
-      "phases": [
-        "Player",
-        "Menu",
-        "Shop",
-        "Message",
-        "FieldReady",
-        "ChangeMap"
-      ],
-      "until": {
-        "menuDone": true
-      },
-      "stableFrames": 2,
-      "timeoutFrames": 10800,
-      "equip": [
-        8
-      ],
-      "equipItems": [
-        {
-          "character": 8,
-          "slot": 0,
-          "content": 164
-        },
-        {
-          "character": 8,
-          "slot": 1,
-          "content": 164
-        }
-      ]
     },
     {
       "label": "Castle hall: north stairs",

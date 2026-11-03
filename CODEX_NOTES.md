@@ -778,3 +778,9 @@ User: "2 fire 2 ice 2 lightning", swapped by weakness. `Step.EquipItems` = [{cha
 
 ### 111. Baron weapon shop is locked until after Cagnazzo
 Live: the run pushed at the weapon shop door (15,17) over and over; it only shows a message. Baron's map script swaps that door's layer (ev_e_0033) on ScenarioFlag1 33, which is set after Cagnazzo (sc_e_0034). Segment 7 no longer visits the shop. Its Thunder-pair equips stay in and are skipped when the claws aren't in the bag. Segment 8 now starts by walking from the Enterprise into Baron town, east of the castle gate tiles (106–107, 143–144). There it buys 2 Thunder, 2 Fire and 2 Ice Claws, gives Yang Strongest plus the Thunder pair, leaves by the south gate (arrival (107,145)), and goes round the gate tiles back onto the Enterprise. User: "we could just add the claws back further in the run".
+Exact equip, live: before any Thunder Claws were bought, the inn step skipped the right hand ("not in the list"). Then it looped on the left hand, because Down from row 0 jumps to row 2, so row numbers aren't slots. Fixes:
+* Items not in the bag are skipped before opening anything.
+* Slot rows are found by their own `Slot` (EquipSlotType Slot1.. = slot 0..) with `IsEnable`.
+* At most 8 presses, then skip.
+
+Segment 7 no longer asks for exact claws (none can be owned before Cagnazzo). The fixed plugin needs a game restart to load; this session continued on the old plugin with segment 7's equipItems removed.

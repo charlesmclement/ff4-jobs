@@ -83,8 +83,9 @@ s.append(door('Baron: into the inn',BARON_TOWN,(20,27),INN))
 s.extend(inn('Inn: rest before Yang',INN,(21,15)))
 s.extend(trigger('Inn: talk to Yang - two Baron Guards, then Yang himself; he joins with the Baron Key (flag 31)',INN,(21,5),31,battlePlan=monk+field))
 s.append(formation('Inn: formation - Palom, Cecil, Porom, Yang, Tellah; Cecil and Yang in front',INN,[PALOM,PALADIN,POROM,YANG,TELLAH],[1,3]))
-s.append(equip('Inn: Yang takes everything off, then Strongest, then Thunder Claws in both hands',INN,[YANG],reset=[YANG],
-               equipItems=[{'character':YANG,'slot':0,'content':THUNDER_CLAW},{'character':YANG,'slot':1,'content':THUNDER_CLAW}]))
+# Strongest only: no Thunder Claws can be owned yet (Baron's weapon shop
+# opens after Cagnazzo; segment 8 buys them).
+s.append(equip('Inn: Yang takes everything off, then Strongest',INN,[YANG],reset=[YANG]))
 s.append(heal('Inn: heal after the fights',INN))
 s.append(door('Inn: out',INN,(21,22),BARON_TOWN))
 s.append(nav('Baron: west to the locked waterway door - walk in',BARON_TOWN,(4,20),{'phase':'Event'},stableFrames=15))
@@ -117,8 +118,6 @@ s.append(door('Side corridor: up and back out beside the hall',CASTLE_CORRIDOR,(
 s.append(door('Baron Castle: into the inner hall',CASTLE_OUT,(16,15),CASTLE_HALL,[(12,15)],battlePlan=field))
 s.extend(trigger('Castle hall: Baigan "joins", the twins smell a monster - Baigan and his arms (flag 32)',CASTLE_HALL,(11,11),32,battlePlan=baigan))
 s.append(heal('Castle hall: heal after Baigan (guide: "This fight will leave you wounded")',CASTLE_HALL))
-# Cagnazzo is weak to lightning (guide): both Thunder Claws on Yang.
-s.append(claws('Castle hall: Yang - Thunder Claws in both hands for Cagnazzo',CASTLE_HALL,LIGHTNING))
 s.append(door('Castle hall: north stairs',CASTLE_HALL,(13,2),CASTLE_2F,battlePlan=field))
 s.append(door('Castle 2F: to the throne room passage',CASTLE_2F,(25,5),WALL_ROOM,battlePlan=field))
 s.append(door('Passage: into the throne room',WALL_ROOM,(6,6),THRONE,battlePlan=field))

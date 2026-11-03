@@ -138,6 +138,9 @@ internal sealed class EquipMenu
     private void ExactItem(Snapshot s,int frame,int k)
     {
         var e=items[k];int state=(int)window!.stateMachine.Current;
+        // Not in the bag: skip it without opening anything (live: the inn's
+        // Thunder pair before any were bought looped in the slot rows).
+        if(!Owned(e.Content)) {itemsDone.Add(k);exactPresses=0;return;}
         if(state==WindowCommand)
         {
             var c=window.commandController;
@@ -158,10 +161,18 @@ internal sealed class EquipMenu
         }
         if(state==WindowInfo)
         {
-            var cur=window.infoWindowController?.selectCursor;if(cur==null)return;
+            // Rows by their own slot type (EquipSlotType Slot1.. = slot 0..):
+            // live, Down from the right hand jumped straight to row 2, so row
+            // numbers aren't slots. A row that's missing, disabled or not
+            // reached within a few presses is skipped.
+            var info=window.infoWindowController;var cur=info?.selectCursor;var rows=info?.contentList;
+            if(cur==null || rows==null)return;
+            int row=-1;
+            for(int i=0;i<rows.Count;i++)if(rows[i]!=null && (int)rows[i].Slot==e.Slot+1) {row=i;break;}
             int at=cur.Index;
-            if(at==e.Slot) {Pulse(s,frame,"Confirm",$"Slot {e.Slot} for #{e.Character}");return;}
-            Pulse(s,frame,e.Slot<at?"Up":"Down",$"Slot {e.Slot} (cursor {at})");return;
+            if(row<0 || !rows[row].IsEnable || (frame%12==0 && ++exactPresses>8)) {itemsDone.Add(k);exactPresses=0;Pulse(s,frame,"Back",$"Slot {e.Slot} not reachable (row {row})");return;}
+            if(at==row) {exactPresses=0;Pulse(s,frame,"Confirm",$"Slot {e.Slot} (row {row}) for #{e.Character}");return;}
+            Pulse(s,frame,row<at?"Up":"Down",$"Slot {e.Slot}: row {row}, cursor {at}");return;
         }
         if(state==WindowSelect)
         {
@@ -177,6 +188,11 @@ internal sealed class EquipMenu
             if(frame%12==0 && ++exactPresses>2*list.Count+6) {itemsDone.Add(k);exactPresses=0;Pulse(s,frame,"Back",$"Can't reach item {e.Content}");return;}
             Pulse(s,frame,want<at?"Up":"Down",$"Item {e.Content}: list {want}, cursor {at}");return;
         }
+    }
+    private static bool Owned(int content)
+    {
+        var owned=UserDataManager.Instance()?.normalOwnedItems;
+        return owned!=null && owned.TryGetValue(content,out var entry) && entry!=null && entry.Count>0;
     }
     // Party slot of a character_status id (Cecil 1, Yang 8), or -1 when not
     // in the party. Corps entries hold the owned-character id. The menu's
