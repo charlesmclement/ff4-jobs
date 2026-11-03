@@ -27,7 +27,7 @@ internal sealed class EquipMenu
     private bool exactOnly;
     internal void Reset(int[] characters,int[]? removeFirst=null,EquipItem[]? exact=null,bool exactOnlyItems=false)
     {
-        items=exact??Array.Empty<EquipItem>();itemsDone.Clear();strong.Clear();exactOnly=exactOnlyItems;
+        items=exact??Array.Empty<EquipItem>();itemsDone.Clear();strong.Clear();exactOnly=exactOnlyItems;bestMember=-1;
         wanted=characters;seen.Clear();stepping=false;stepFrom=stepTries=0;reset=removeFirst??Array.Empty<int>();removed.Clear();done.Clear();finished=sideways=false;wait=switches=stuck=0;lastIndex=-1;lastKey=null;main=null;window=null;
     }
     internal void Read(Snapshot s,int frame)
@@ -106,13 +106,26 @@ internal sealed class EquipMenu
             }
             ExactItem(s,frame,k);return;
         }
+        // Members in `reset` take everything off first. Then the runner's own
+        // best-gear pass replaces the native Strongest (user: "optimal is not
+        // reliable" - it skipped claws): every slot row, the best item the
+        // game lists for it, scored by id from the gear table.
+        bool clearing=Array.IndexOf(reset,next)>=0 && !removed.Contains(next);
+        int member=everyone?ShownCharacter():next;
+        if(!clearing)
+        {
+            if(!BestPass(s,frame,member))return;
+            if(frame%12!=0)return;
+            bestMember=-1;
+            if(!everyone && Array.Exists(items,e=>e.Character==next))strong.Add(next);
+            else if(!everyone)done.Add(next);
+            if(everyone) {seen.Add(shown);stepping=true;stepFrom=shown;}
+            return;
+        }
         if((int)window.stateMachine.Current!=WindowCommand) {Pulse(s,frame,"Back","Back to the equip commands");return;}
         var c=window.commandController;
         if(c?.contents==null || c.selectCursor==null)return;
-        // Members in `reset` take everything off first, then Strongest. If the
-        // removal asks to confirm and gets backed out, Strongest still runs.
-        bool clearing=Array.IndexOf(reset,next)>=0 && !removed.Contains(next);
-        int command=clearing?RemoveEverything:Strongest,target=-1;
+        int command=RemoveEverything,target=-1;
         for(int i=0;i<c.contents.Count;i++)if(c.contents[i]?.Data!=null && (int)c.contents[i].Data.Id==command) {target=i;break;}
         if(target<0 && clearing) {removed.Add(next);return;}
         if(target<0) {finished=true;return;}
@@ -138,6 +151,96 @@ internal sealed class EquipMenu
             lastKey=key;lastIndex=cursor;
         }
         Pulse(s,frame,key,"Strongest");
+    }
+    // ---- Best-gear pass ----
+    private int bestMember=-1,bestRow=-1,bestPresses;private bool bestLeaving;
+    private readonly HashSet<int> bestRows=new();
+    private static BattleDb.GearRow? G(int content)=>content>0 && BattleDb.Current.Gear.TryGetValue(content,out var g)?g:null;
+    private static int Arm(int member)=>BattleDb.Current.Arms.TryGetValue(member,out int a)?a:1;
+    // Rows in order: the main hand first (it decides the off hand), then the
+    // off hand, then armor.
+    private static int RowRank(int slot,int arm)=>slot==(arm==2?1:0)?0:slot is 0 or 1?1:2+slot;
+    // Score of an item for a slot; -1 when it doesn't belong there.
+    private static int Score(int content,int slot,int arm,int other)
+    {
+        var g=G(content);if(g==null)return -1;
+        var o=G(other);
+        if(slot is 0 or 1)
+        {
+            bool main=arm==3 || slot==(arm==2?1:0);
+            if(g.K==1)
+            {
+                if(g.C==13)return o?.C==12?100+g.A:-1;           // arrows only beside a bow
+                if(!main && arm!=3)return o?.C==13 && g.C==12?100+g.A:-1; // off hand: a bow only for arrows
+                if(g.C==18)return 1000+(g.X==3?3:g.X==1?2:g.X==2?1:0); // claws (attack 0): Thunder, Fire, Ice
+                return 100+g.A+g.B;
+            }
+            // Shields: the off hand of a one-handed fighter.
+            if(g.P==2 && !main && o?.T!=1 && o?.C is not (12 or 13))return 100+g.D+g.M+g.B+g.E/10;
+            return -1;
+        }
+        return g.K==2?100+g.D+g.M+g.B+g.E/20:-1;
+    }
+    // One step of the pass for this member; true once every row is handled
+    // and the window is back on the commands.
+    private bool BestPass(Snapshot s,int frame,int member)
+    {
+        if(member!=bestMember) {bestMember=member;bestRows.Clear();bestRow=-1;bestLeaving=false;bestPresses=0;}
+        int state=(int)window!.stateMachine.Current;
+        var info=window.infoWindowController;var rows=info?.contentList;
+        int arm=Arm(member);
+        if(state==WindowCommand)
+        {
+            if(bestLeaving)return true;
+            var c=window.commandController;
+            if(c?.contents==null || c.selectCursor==null)return false;
+            int target=-1;
+            for(int i=0;i<c.contents.Count;i++)if(c.contents[i]?.Data!=null && (int)c.contents[i].Data.Id==EquipCommand) {target=i;break;}
+            if(target<0) {bestLeaving=true;return true;}
+            int cursor=c.selectCursor.Index;
+            if(cursor==target) {Pulse(s,frame,"Confirm","Best gear: open the slots");return false;}
+            Pulse(s,frame,sideways?(target<cursor?"Left":"Right"):(target<cursor?"Up":"Down"),"Best gear: Equip command");return false;
+        }
+        if(rows==null || info?.selectCursor==null)return false;
+        if(state==WindowInfo)
+        {
+            int pick=-1,rank=int.MaxValue;
+            for(int r=0;r<rows.Count;r++)
+            {
+                if(rows[r]==null || !rows[r].IsEnable || bestRows.Contains(r))continue;
+                int rk=RowRank((int)rows[r].Slot-1,arm);
+                if(rk<rank) {rank=rk;pick=r;}
+            }
+            if(pick<0) {bestLeaving=true;Pulse(s,frame,"Back","Best gear: done");return false;}
+            int at=info.selectCursor.Index;
+            if(frame%12==0 && ++bestPresses>12) {bestRows.Add(pick);bestPresses=0;return false;}
+            if(at==pick) {bestRow=pick;bestPresses=0;Pulse(s,frame,"Confirm",$"Best gear: slot {(int)rows[pick].Slot-1}");return false;}
+            Pulse(s,frame,pick<at?"Up":"Down",$"Best gear: to slot row {pick}");return false;
+        }
+        if(state==WindowSelect)
+        {
+            var sel=window.selectWindowController;var list=sel?.ContentDataList;var cur=sel?.selectCursor;
+            if(list==null || cur==null || bestRow<0 || bestRow>=rows.Count)return false;
+            int slot=(int)rows[bestRow].Slot-1;
+            int otherRow=-1;
+            for(int r=0;r<rows.Count;r++)if(rows[r]!=null && (int)rows[r].Slot-1==(slot==0?1:slot==1?0:-9))otherRow=r;
+            int other=otherRow>=0?rows[otherRow].Data?.ContentId??0:0;
+            int now=rows[bestRow].Data?.ContentId??0;
+            int nowScore=now>0?Score(now,slot,arm,other):0;
+            int want=-1,best=nowScore;
+            for(int i=0;i<list.Count;i++)
+            {
+                int id=list[i]?.contentId??0;if(id<=0)continue;
+                int sc=Score(id,slot,arm,other);
+                if(sc>best) {best=sc;want=i;}
+            }
+            if(want<0) {if(frame%12==0)bestRows.Add(bestRow);Pulse(s,frame,"Back",$"Best gear: slot {slot} keeps {now}");return false;}
+            int at=cur.Index;
+            if(at==want) {if(frame%12==0) {bestRows.Add(bestRow);wait=AfterEquip;bestPresses=0;}Pulse(s,frame,"Confirm",$"Best gear: {list[want].contentId} in slot {slot}");return false;}
+            if(frame%12==0 && ++bestPresses>2*list.Count+6) {bestRows.Add(bestRow);bestPresses=0;Pulse(s,frame,"Back","Best gear: can't reach it");return false;}
+            Pulse(s,frame,want<at?"Up":"Down",$"Best gear: slot {slot}, list {want}, cursor {at}");return false;
+        }
+        return false;
     }
     private int exactPresses;
     // One exact item: Equip in the command row, the slot row in the info

@@ -30,6 +30,20 @@ internal sealed class BattleDb
     public Dictionary<int,int[][]> Sets {get;set;}=new();
     public Dictionary<int,int[]> Parties {get;set;}=new();
     public Dictionary<int,int> MapSets {get;set;}=new();
+    // Gear by content id (tas/battle_db.py): K 1 weapon / 2 armor, A attack,
+    // D defense, M magic defense, E evasion, B stat bonuses, C weapon category
+    // (12 bow, 13 arrow, 18 claw), P armor part (2 shield), X element, T two-handed.
+    internal sealed class GearRow
+    {
+        public int K {get;set;}public int A {get;set;}public int D {get;set;}public int M {get;set;}
+        public int E {get;set;}public int B {get;set;}public int C {get;set;}public int P {get;set;}
+        public int X {get;set;}public int T {get;set;}
+    }
+    public Dictionary<int,GearRow> Gear {get;set;}=new();
+    // character_status id -> dominant arm: 1 right, 2 left, 3 both (Yang, Edge).
+    public Dictionary<int,int> Arms {get;set;}=new();
+    // The last database loaded (the equipment pass reads gear from it).
+    internal static BattleDb Current=new();
     // Party a Random.Range(1,1001) roll picks from a monster set (0 = none).
     internal int Group(int set,int roll)
     {
@@ -39,7 +53,7 @@ internal sealed class BattleDb
     }
     internal static BattleDb Load(string path)
     {
-        try {return File.Exists(path)?JsonSerializer.Deserialize<BattleDb>(File.ReadAllText(path),Plugin.Json)??new():new();}
+        try {return Current=File.Exists(path)?JsonSerializer.Deserialize<BattleDb>(File.ReadAllText(path),Plugin.Json)??new():new();}
         catch {return new();}
     }
     internal string MonsterName(int id)=>Monsters.TryGetValue(id,out var m) && m.Name.Length>0?m.Name:"#"+id;

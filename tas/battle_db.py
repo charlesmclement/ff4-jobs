@@ -89,7 +89,25 @@ def main():
         if rows:groups[sid]=rows
     party_monsters={pid:[int(p[f'monster{j}']) for j in range(1,10) if p.get(f'monster{j}') not in(None,'','0')] for pid,p in parties.items()}
     os.makedirs(OUT,exist_ok=True)
-    db={'monsters':monsters,'spells':spells,'elements':ELEMENT,'sets':groups,'parties':party_monsters,
+    # Gear by content id, for the runner's own best-equipment pass (the
+    # native Strongest skipped claws): k 1 weapon / 2 armor, a attack,
+    # d defense, m magic defense, e evasion, b stat bonuses summed, c weapon
+    # category (12 bow, 13 arrow, 18 claw), p armor part (2 shield), x element,
+    # t two-handed. arms: character_status id -> dominant arm (1 right,
+    # 2 left, 3 both - Yang, Edge).
+    weapons={r['id']:r for r in table('weapon')};armors={r['id']:r for r in table('armor')}
+    num=lambda r,k:int(r.get(k) or 0)
+    bonus=lambda r:sum(num(r,k) for k in ('strength','vitality','agility','intelligence','spirit','magic'))
+    gear={}
+    for c in content.values():
+        if c['type_id']=='2' and c['type_value'] in weapons:
+            w=weapons[c['type_value']]
+            gear[c['id']]={'k':1,'a':num(w,'attack'),'b':bonus(w),'c':num(w,'category_type'),'x':num(w,'attribute_id'),'t':num(w,'two_handed_flag')}
+        elif c['type_id']=='3' and c['type_value'] in armors:
+            a=armors[c['type_value']]
+            gear[c['id']]={'k':2,'d':num(a,'defense'),'m':num(a,'ability_defense'),'e':num(a,'evasion_rate'),'b':bonus(a),'p':num(a,'parts_group_id')}
+    arms={r['id']:int(r['dominant_arm'] or 1) for r in table('character_status')}
+    db={'monsters':monsters,'spells':spells,'elements':ELEMENT,'sets':groups,'parties':party_monsters,'gear':gear,'arms':arms,
         'mapSets':{mp['id']:int(mp['monster_set_id']) for mp in maps if mp['monster_set_id']!='0'}}
     json.dump(db,open(os.path.join(OUT,'battle.json'),'w',encoding='utf-8'),ensure_ascii=False)
     with open(os.path.join(OUT,'monsters.md'),'w',encoding='utf-8') as f:

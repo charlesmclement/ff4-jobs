@@ -904,3 +904,16 @@ Equip pass without Strongest (user: "do the thunder claws manually, not with opt
 * Palom: Thunder Rod (right hand).
 * Tellah: Thunder Rod (right hand), Silver Armlet (arms).
 * Yang: Thunder Claw in each hand, Headband (head), Kenpo Gi (body), Silver Armlet (arms).
+
+### 128. Our own best-gear pass replaces the native Strongest everywhere
+User: "It's just unreliable we need to iron this out" (Strongest skipped claws), "DO NOT DROP ANY STEPS UNLESS IT'S UNNEEDED". No equip step was dropped. Every `equip` step now runs the runner's pass instead of pressing Strongest; `equipExactOnly` steps still put on only their listed items.
+* Data: tas/battle_db.py writes `gear` into battle.json, by content id: K weapon/armor, A attack, D defense, M magic defense, E evasion, B summed stat bonuses, C weapon category, P armor part, X element, T two-handed. It also writes `arms` (character_status → dominant arm: 1 right, 2 left, 3 both = Yang, Edge). BattleDb.Current holds it.
+* Pass, per member (found by character id): Equip command → each enabled slot row, the main hand first (it decides the off hand), then the off hand, then armor.
+  * The game's own list for that row shows only what fits. Each item's id is scored, and the best is put on only if it beats what's worn.
+  * Weapons: attack + bonuses.
+  * Claws (attack 0) rank above any other weapon: Thunder, then Fire, then Ice.
+  * Off hand of a one-handed fighter: shields only (defense + magic defense + bonuses + evasion/10). For a dual wielder, weapons.
+  * Bows and arrows pair with each other.
+  * Armor: defense + magic defense + bonuses + evasion/20.
+* Exact items (equipItems) still apply after the pass for steps that list them.
+* Untested live. Watch the slot-row order, the select-list cursor vs index, and the "Best gear:" details in the trace.
