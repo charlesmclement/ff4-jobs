@@ -132,10 +132,7 @@ s.append(formation('Inn: formation - Palom, Cecil, Porom, Yang, Tellah; Cecil an
 # User: "make yang equip his claw or claws" - Strongest leaves claws off
 # (attack 0 in the table), so after it he puts on whatever claws are in the
 # bag, one per hand (Thunder, else Fire, else Ice).
-# Claws on the moment he joins (user: "add a claw equip right after we get
-# yang"): whatever claws are in the bag, Thunder first; the weapon shop
-# next door then tops up the pairs and puts the Thunder pair on.
-s.append(claws('Inn: Yang takes everything off, Strongest, then a claw in each hand (Thunder first)',INN,LIGHTNING,reset=[YANG]))
+
 s.append(heal('Inn: heal after the fights',INN))
 s.append(door('Inn: out',INN,(21,22),BARON_TOWN))
 # Claws right after Yang (user): 2 Thunder (Cagnazzo), 2 Fire, 2 Ice; owned
@@ -160,17 +157,20 @@ s.append(door('Baron: into the weapon shop',BARON_TOWN,(15,17),WEAPON_SHOP))
 #   Silver Armlets). Thunder Claws first (Cagnazzo), the 4000-gil Gi after
 #   the cheap upgrades, Fire/Ice pairs last.
 THUNDER_ROD,HEADBAND,SILVER_ARMLET,KENPO_GI=184,242,298,270
+# One visit per counter, one equipment visit (user: "clean this purchasing
+# up, make it optimized"). Everything is picked by id: products by content
+# id, members by character id, hands by slot type.
 s.append(nav('Weapon shop: up to the weaponsmith',WEAPON_SHOP,(11,8),{'atDestination':True}))
-s.append(shop("Weaponsmith: 2 Thunder Claws, 2 Thunder Rods",WEAPON_SHOP,
-              [{'content':THUNDER_CLAW,'count':2},{'content':THUNDER_ROD,'count':2}]))
+s.append(shop("Weaponsmith: Thunder, Fire, Ice Claw pairs; 2 Thunder Rods",WEAPON_SHOP,
+              [{'content':THUNDER_CLAW,'count':2},{'content':THUNDER_ROD,'count':2},{'content':FIRE_CLAW,'count':2},{'content':ICE_CLAW,'count':2}]))
 s.append(nav('Weapon shop: over to the armorer',WEAPON_SHOP,(16,8),{'atDestination':True}))
-s.append(shop("Armorer: Headband, 2 more Silver Armlets (4 with the twins'), Kenpo Gi",WEAPON_SHOP,
+s.append(shop("Armorer: Headband, Silver Armlets (4 with the twins'), Kenpo Gi",WEAPON_SHOP,
               [{'content':HEADBAND,'count':1},{'content':SILVER_ARMLET,'count':4},{'content':KENPO_GI,'count':1}]))
-s.append(nav('Weapon shop: back to the weaponsmith',WEAPON_SHOP,(11,8),{'atDestination':True}))
-s.append(shop("Weaponsmith: Fire and Ice Claw pairs for Yang",WEAPON_SHOP,
-              [{'content':FIRE_CLAW,'count':2},{'content':ICE_CLAW,'count':2}]))
-s.append(equip('Weapon shop: Strongest on everyone (new rods and armor)',WEAPON_SHOP,[0]))
-s.append(claws('Weapon shop: Yang - Thunder Claws in both hands (else any claws)',WEAPON_SHOP,LIGHTNING))
+# Only the members who got something new: Palom and Tellah (rods, Tellah's
+# armlet), Yang (everything off, Strongest for the armor, then the Thunder
+# pair - Strongest skips claws).
+s.append(equip('Weapon shop: Strongest on Palom, Tellah, Yang; Thunder Claws in both of Yang\'s hands',WEAPON_SHOP,[PALOM,TELLAH,YANG],reset=[YANG],
+               equipItems=[{'character':YANG,'slot':slot,'content':c} for slot in (0,1) for c in (THUNDER_CLAW,FIRE_CLAW,ICE_CLAW)]))
 s.append(door('Weapon shop: out',WEAPON_SHOP,(13,13),BARON_TOWN))
 s.append(nav('Baron: west to the locked waterway door - walk in',BARON_TOWN,(4,20),{'phase':'Event'},stableFrames=15))
 s.append(mash('Baron: open it with the Baron Key (item choice)',None,itemChoice=BARON_KEY,until={'phase':'Player','flag2':16}))
@@ -200,9 +200,6 @@ s.append(door('Baron Castle: west and down the outer wall to the side corridor',
               [(4,3),(4,32),(7,32),(7,24),(12,24)],battlePlan=field))
 s.append(door('Side corridor: up and back out beside the hall',CASTLE_CORRIDOR,(3,3),CASTLE_OUT,battlePlan=field))
 s.append(door('Baron Castle: into the inner hall',CASTLE_OUT,(16,15),CASTLE_HALL,[(12,15)],battlePlan=field))
-# Claws again right before Baigan: a resume from the castle autosave starts
-# here and skips the inn (user: "why didnt yang equip he just ran right in").
-s.append(any_claws('Castle hall: Yang - a claw in each hand before Baigan',CASTLE_HALL))
 s.extend(trigger('Castle hall: Baigan "joins", the twins smell a monster - Baigan and his arms (flag 32)',CASTLE_HALL,(11,11),32,battlePlan=baigan))
 s.append(heal('Castle hall: heal after Baigan (guide: "This fight will leave you wounded")',CASTLE_HALL))
 s.append(door('Castle hall: north stairs',CASTLE_HALL,(13,2),CASTLE_2F,battlePlan=field))

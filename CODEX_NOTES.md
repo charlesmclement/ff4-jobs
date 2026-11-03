@@ -893,3 +893,10 @@ Yang: Tellah casts Firaga, else Fira (user: the inn is just before, and the wate
 User: "we almost always want to maximize spells on the weakness, only when i don't tell you to do you not. and if there's no weakness we just use fire".
 * `DefaultSpell` for Palom (9), Tellah (6) and FuSoYa (12): the strongest spell (-aga, -ara, then base) of the current target's weak element (`WeakTo`: the battle DB, else route weaknesses), Fire when it has none. It must be one they know and can afford, and goes on all enemies when 3+ are alive. Skipped while the target has Reflect. A spell the list doesn't offer is blocked for that caster for the fight.
 * Order in Decide: First rules → status cures → heals → minor statuses → the twins' Twincast default → boss-rule/undead block → ... → fight-specific plan rules (whileMonster/onTarget, ChoosePlan scope 1) → **DefaultSpell** → the route's generic rules (scope 2, e.g. the old "Palom/Tellah Defend" field fallbacks) → Rydia/Attack.
+
+### 127. Shopping cleanup: each shop once, one equip visit
+User (live): "you didnt get the second thunder claw and you are wasting so much time in the menus", "go to each shop ONCE", "USE IDs not MENU POSITIONS".
+* Baron was taking ~1,900 frames over 9 steps: inn claws, weaponsmith, armorer, weaponsmith again, Strongest on everyone, claws again, plus the claw step before Baigan.
+* Now: one weaponsmith visit (Thunder/Fire/Ice Claw pairs and 2 Thunder Rods), one armorer visit, and one equipment visit. That visit does Strongest for Palom, Tellah and Yang (reset), then Yang's Thunder pair, with Fire/Ice as per-hand fallbacks. The inn claw step and the claw step before Baigan are gone.
+* Second Thunder Claw: ShopDriver counted owned + worn. Yang's worn Thunder Claw was apparently also counted in the bag total, so the pair looked complete. Worn items are now counted once each (by pointer), and not at all when the worn entry is the bag's own entry for that item.
+* "Nothing more to buy" now logs, per item, the bag count + worn count / target and the gil, so a skip can be read from the trace. Not yet confirmed live which case it was.

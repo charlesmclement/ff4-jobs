@@ -1091,62 +1091,6 @@
       }
     },
     {
-      "label": "Inn: Yang takes everything off, Strongest, then a claw in each hand (Thunder first)",
-      "kind": "menu",
-      "mapId": 25,
-      "phases": [
-        "Player",
-        "Menu",
-        "Shop",
-        "Message",
-        "FieldReady",
-        "ChangeMap"
-      ],
-      "until": {
-        "menuDone": true
-      },
-      "stableFrames": 2,
-      "timeoutFrames": 10800,
-      "equip": [
-        8
-      ],
-      "equipItems": [
-        {
-          "character": 8,
-          "slot": 0,
-          "content": 164
-        },
-        {
-          "character": 8,
-          "slot": 0,
-          "content": 162
-        },
-        {
-          "character": 8,
-          "slot": 0,
-          "content": 163
-        },
-        {
-          "character": 8,
-          "slot": 1,
-          "content": 164
-        },
-        {
-          "character": 8,
-          "slot": 1,
-          "content": 162
-        },
-        {
-          "character": 8,
-          "slot": 1,
-          "content": 163
-        }
-      ],
-      "equipReset": [
-        8
-      ]
-    },
-    {
       "label": "Inn: heal after the fights",
       "kind": "menu",
       "mapId": 25,
@@ -1313,7 +1257,7 @@
       "timeoutFrames": 54000
     },
     {
-      "label": "Weaponsmith: 2 Thunder Claws, 2 Thunder Rods",
+      "label": "Weaponsmith: Thunder, Fire, Ice Claw pairs; 2 Thunder Rods",
       "kind": "menu",
       "mapId": 31,
       "phases": [
@@ -1338,6 +1282,14 @@
           },
           {
             "content": 184,
+            "count": 2
+          },
+          {
+            "content": 162,
+            "count": 2
+          },
+          {
+            "content": 163,
             "count": 2
           }
         ],
@@ -1372,7 +1324,7 @@
       "timeoutFrames": 54000
     },
     {
-      "label": "Armorer: Headband, 2 more Silver Armlets (4 with the twins'), Kenpo Gi",
+      "label": "Armorer: Headband, Silver Armlets (4 with the twins'), Kenpo Gi",
       "kind": "menu",
       "mapId": 31,
       "phases": [
@@ -1408,66 +1360,7 @@
       }
     },
     {
-      "label": "Weapon shop: back to the weaponsmith",
-      "kind": "navigate",
-      "mapId": 31,
-      "goal": {
-        "x": 11,
-        "y": 8,
-        "layer": 0
-      },
-      "phases": [
-        "Player",
-        "Event",
-        "Message",
-        "ChangeMap",
-        "FieldReady",
-        "Battle",
-        "FieldHelp",
-        "Gimmick",
-        "Transport"
-      ],
-      "handleBattles": true,
-      "until": {
-        "atDestination": true
-      },
-      "stableFrames": 2,
-      "timeoutFrames": 54000
-    },
-    {
-      "label": "Weaponsmith: Fire and Ice Claw pairs for Yang",
-      "kind": "menu",
-      "mapId": 31,
-      "phases": [
-        "Player",
-        "Menu",
-        "Shop",
-        "Message",
-        "FieldReady",
-        "ChangeMap"
-      ],
-      "until": {
-        "menuDone": true
-      },
-      "stableFrames": 2,
-      "timeoutFrames": 10800,
-      "facing": "Up",
-      "shop": {
-        "buy": [
-          {
-            "content": 162,
-            "count": 2
-          },
-          {
-            "content": 163,
-            "count": 2
-          }
-        ],
-        "sell": []
-      }
-    },
-    {
-      "label": "Weapon shop: Strongest on everyone (new rods and armor)",
+      "label": "Weapon shop: Strongest on Palom, Tellah, Yang; Thunder Claws in both of Yang's hands",
       "kind": "menu",
       "mapId": 31,
       "phases": [
@@ -1484,27 +1377,8 @@
       "stableFrames": 2,
       "timeoutFrames": 10800,
       "equip": [
-        0
-      ]
-    },
-    {
-      "label": "Weapon shop: Yang - Thunder Claws in both hands (else any claws)",
-      "kind": "menu",
-      "mapId": 31,
-      "phases": [
-        "Player",
-        "Menu",
-        "Shop",
-        "Message",
-        "FieldReady",
-        "ChangeMap"
-      ],
-      "until": {
-        "menuDone": true
-      },
-      "stableFrames": 2,
-      "timeoutFrames": 10800,
-      "equip": [
+        9,
+        6,
         8
       ],
       "equipItems": [
@@ -1538,6 +1412,9 @@
           "slot": 1,
           "content": 163
         }
+      ],
+      "equipReset": [
+        8
       ]
     },
     {
@@ -2394,59 +2271,6 @@
         {
           "character": 10,
           "command": 2
-        }
-      ]
-    },
-    {
-      "label": "Castle hall: Yang - a claw in each hand before Baigan",
-      "kind": "menu",
-      "mapId": 5,
-      "phases": [
-        "Player",
-        "Menu",
-        "Shop",
-        "Message",
-        "FieldReady",
-        "ChangeMap"
-      ],
-      "until": {
-        "menuDone": true
-      },
-      "stableFrames": 2,
-      "timeoutFrames": 10800,
-      "equip": [
-        8
-      ],
-      "equipItems": [
-        {
-          "character": 8,
-          "slot": 0,
-          "content": 164
-        },
-        {
-          "character": 8,
-          "slot": 0,
-          "content": 162
-        },
-        {
-          "character": 8,
-          "slot": 0,
-          "content": 163
-        },
-        {
-          "character": 8,
-          "slot": 1,
-          "content": 164
-        },
-        {
-          "character": 8,
-          "slot": 1,
-          "content": 162
-        },
-        {
-          "character": 8,
-          "slot": 1,
-          "content": 163
         }
       ]
     },

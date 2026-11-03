@@ -62,7 +62,7 @@ internal sealed class ShopDriver
             }
             case SelectProduct:
             {
-                if(buy==0) {Pulse(s,frame,"Back","Nothing more to buy");return;}
+                if(buy==0) {Pulse(s,frame,"Back","Nothing more to buy ("+string.Join(", ",System.Linq.Enumerable.Select(order.Buy,b=>$"{b.Content}: {Owned(b.Content)} bag + {Equipped(b.Content)} worn / {b.Count}"))+$"; {Gil()} gil)");return;}
                 var list=shop.listController?.listController;
                 if(list?.productContentList==null || list.selectCursor==null)return;
                 int want=-1;
@@ -127,6 +127,7 @@ internal sealed class ShopDriver
     {
         var user=UserDataManager.Instance();var corps=user?.corpsList;var owned=user?.OwnedCharacterList;
         if(corps==null || owned==null)return 0;
+        var bag=user?.normalOwnedItems;
         int n=0;
         for(int c=0;c<corps.Count;c++)
         {
@@ -134,8 +135,18 @@ internal sealed class ShopDriver
             for(int o=0;o<owned.Count;o++)
             {
                 if(owned[o]?.Id!=id)continue;
+                // A worn item can be the bag's own entry for it (the bag count
+                // already includes it) - counting it again skipped the second
+                // Thunder Claw live. Count only worn entries that aren't the
+                // bag's, once each.
                 var gear=owned[o].EquipmentData;
-                if(gear!=null)foreach(var slot in gear)if(slot.Value?.ContentId==content)n++;
+                var seen=new HashSet<IntPtr>();
+                if(gear!=null)foreach(var slot in gear)
+                {
+                    var item=slot.Value;if(item==null || item.ContentId!=content || !seen.Add(item.Pointer))continue;
+                    if(bag!=null && bag.TryGetValue(content,out var mine) && mine!=null && mine.Pointer==item.Pointer)continue;
+                    n++;
+                }
                 break;
             }
         }
