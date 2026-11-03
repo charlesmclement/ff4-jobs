@@ -921,3 +921,8 @@ Yang (user, final): the fight ends on a script, not on his HP. Everyone Defends;
 Yang: Cecil, Tellah and Porom Cure (they all have it; the user); only Palom uses Potions.
 Yang: he has to be hit at least once (user). Cecil attacks once (first, oncePerBattle).
 Yang: sc_ai_205_Monk: 5 turns of lines, then mode 1, where the next physical hit ends the fight (ForceExit). Cecil Attacks every turn (first); Tellah and Porom Cure, Palom Potions, otherwise Defend (user's fallback).
+
+### 129. Crash: native route search on the overworld's "layer"
+Live: segment 7 stopped at once on "Overworld: into Mysidia" with "State read failed: IndexOutOfRangeException at MapRouteSearcher.Search". Note 102 retried candidate cells on the player's layer, but the overworld reports layer 249, and Search threw on a cell at z 249. Fixes:
+* The player's layer is only tried when it's 0–2.
+* `MapRouteSearcher.Search` is wrapped in try/catch, so a cell it can't index is skipped instead of stopping the run.

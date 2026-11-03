@@ -119,7 +119,12 @@ internal sealed class Navigation
             retryAt=frame+30;greedy=false;
             foreach(var candidate in Candidates(cell,goalCell,cell.z))
             {
-                var route=MapRouteSearcher.Search(accessor,cell,candidate,true);
+                // The native search throws on cells it can't index (the
+                // overworld reports layer 249; a candidate on that "layer"
+                // stopped the run with IndexOutOfRange): skip such a cell.
+                Il2CppSystem.Collections.Generic.List<Vector3>? route=null;
+                try {route=MapRouteSearcher.Search(accessor,cell,candidate,true);}
+                catch(Exception) {route=null;}
                 if(route==null || route.Count==0)continue;
                 for(int i=0;i<route.Count;i++)path.Add(route[i]);
                 target=candidate;break;
@@ -214,7 +219,8 @@ internal sealed class Navigation
         foreach(var c in Cells(from,goal))
         {
             yield return c;
-            if((int)playerLayer!=(int)goal.z)yield return new Vector3(c.x,c.y,playerLayer);
+            // Only real collision layers (Bottom 0, Ground 1, Upper 2).
+            if((int)playerLayer!=(int)goal.z && playerLayer is >=0 and <=2)yield return new Vector3(c.x,c.y,playerLayer);
         }
     }
     private static IEnumerable<Vector3> Cells(Vector3 from,Vector3 goal)
