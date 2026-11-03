@@ -155,8 +155,6 @@ s.append(door('Baron Castle: into the inner hall',CASTLE_OUT,(16,15),CASTLE_HALL
 s.append(any_claws('Castle hall: Yang - a claw in each hand before Baigan',CASTLE_HALL))
 s.extend(trigger('Castle hall: Baigan "joins", the twins smell a monster - Baigan and his arms (flag 32)',CASTLE_HALL,(11,11),32,battlePlan=baigan))
 s.append(heal('Castle hall: heal after Baigan (guide: "This fight will leave you wounded")',CASTLE_HALL))
-# Cagnazzo is weak to lightning: Thunder Claws first if he has any.
-s.append(claws('Castle hall: Yang - Thunder Claws first for Cagnazzo, else any claws',CASTLE_HALL,LIGHTNING))
 s.append(door('Castle hall: north stairs',CASTLE_HALL,(13,2),CASTLE_2F,battlePlan=field))
 s.append(door('Castle 2F: to the throne room passage',CASTLE_2F,(25,5),WALL_ROOM,battlePlan=field))
 s.append(door('Passage: into the throne room',WALL_ROOM,(6,6),THRONE,battlePlan=field))

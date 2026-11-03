@@ -853,3 +853,4 @@ Tellah's MP budget at Baigan: the first Firaga at 30+ MP (oncePerBattle), later 
 
 ### 121. Cecil heals first in the field; field-magic caster by character id
 User: "cecil is good in the field for cures he doesnt have a use for mp in battle". FieldMagic caster order is now Paladin Cecil (13), Rosa, Rydia, Porom, FuSoYa, Tellah. The party-list cursor still starts from the computed slot. When the opened magic window shows a different character (`commandController.targetCharacter`), the guess moves one member on (`casterShift`, up to 8), instead of retrying the same slot. The character id decides (user: "always use character id not slot").
+Removed the claw step after Baigan (user: he'd already equipped them before Baigan, and it re-did it). Segment 7 claw steps: the inn, and right before Baigan (for resumes).
