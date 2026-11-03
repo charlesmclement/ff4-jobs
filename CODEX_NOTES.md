@@ -687,3 +687,6 @@ Live test, segment 6, the walk to Milon at (17,7): the path crossed the stairs a
 
 ### 97. Row's target prompt is confirmed
 Live test, segment 6, Milon Z (Scarmiglione's back attack): Cecil chose Row and the game opened a target prompt for the party side. The pilot sent it to SelectEnemy, which pushed Left toward the enemy side forever. Now, any target stage (3/5/6) reached while the pending command is Row just presses Confirm. This applies to every back attack in the game.
+
+### 98. Target sides swap in a back attack
+Live test, segment 6, Milon Z: Row worked (note 97). Then Porom's Cure-vs-undead pushed Left to reach the enemy side forever, because in a back attack the enemies are on the right. `SideKey` now picks Left or Right for the enemy side and for the party side (heals) from `isBackAttack`. Every 3 presses that don't reach the side, it tries the other direction, in case the game doesn't flip the keys. This applies to every fight.

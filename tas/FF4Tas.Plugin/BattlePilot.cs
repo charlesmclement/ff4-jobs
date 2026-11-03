@@ -287,7 +287,7 @@ internal sealed class BattlePilot
         // can't be narrowed: confirm. Otherwise Left a few times, then confirm.
         if(side==EnemyAllState && (pendingCommand!=1 || sidePresses>=3))
         {if(frame%12==0)sidePresses=0;Pulse(state,frame,"Confirm",action+" (all enemies)");return;}
-        if(side!=EnemySingleState) {if(frame%12==0)sidePresses++;Pulse(state,frame,"Left","Select enemy side");return;}
+        if(side!=EnemySingleState) {if(frame%12==0)sidePresses++;Pulse(state,frame,SideKey(info,true,sidePresses),"Select enemy side");return;}
         sidePresses=0;
         var selected=t.GetEnemyTarget();
         // Whole-side targeting (e.g. Darkness) selects every living enemy.
@@ -680,12 +680,23 @@ internal sealed class BattlePilot
         // Native normal item grid has two columns (NormalItemSkipCount = 2).
         Pulse(state,frame,index%2!=desired%2?(desired%2==0?"Left":"Right"):(desired<index?"Up":"Down"),"Find recovery item");
     }
+    private int partySidePresses;
+    // Enemies are on the left and the party on the right, except in a back
+    // attack, where the sides swap: Left never reached Scarmiglione (segment
+    // 6, Milon Z). Every 3 presses that don't get there try the other way.
+    private static string SideKey(BattleInfomationController info,bool enemies,int presses)
+    {
+        bool left=enemies!=info.isBackAttack;
+        if(presses/3%2==1)left=!left;
+        return left?"Left":"Right";
+    }
     private void SelectHealingTarget(BattleInfomationController info,Snapshot state,int frame)
     {
         var c=info.targetSelectController;if(c?.stateMachine==null)return;
         if(pendingTarget==0) {Pulse(state,frame,"Back","Cancel unknown healing target");return;}
         if(unreachable.Contains(pendingTarget)) {Pulse(state,frame,"Back","Target unreachable; choose again");return;}
-        if((int)c.stateMachine.Current!=1) {Pulse(state,frame,"Right","Select party side");return;}
+        if((int)c.stateMachine.Current!=1) {if(frame%12==0)partySidePresses++;Pulse(state,frame,SideKey(info,false,partySidePresses),"Select party side");return;}
+        partySidePresses=0;
         var targets=c.GetPlayerTarget();
         if(targets!=null && targets.Count==1 && targets[0].GetOwnedCharacterData()?.characterStatusId==pendingTarget)
         {targetPresses=0;Pulse(state,frame,"Confirm","Heal selected party member");}
