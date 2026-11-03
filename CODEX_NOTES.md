@@ -888,3 +888,8 @@ User: "upgrade all weapons and armor to optimal for everyone at this point", and
 Yang (user: not Cecil 1-on-1): Palom, Porom and Tellah Attack while the Monk lives (rules also block Twincast); Monk 205 is a route realFight, so the heal logic runs (scripted 30000+ HP fights are attack-only). No MP spent: the fight ends by script, and Baigan needs the MP.
 Yang (user: 'do twincast them'): the twins use their Twincast default; only Tellah has a rule (Attack).
 Yang: Tellah casts Firaga, else Fira (user: the inn is just before, and the waterway Tent refills MP before the castle).
+
+### 126. Default spells: the weakness, else Fire
+User: "we almost always want to maximize spells on the weakness, only when i don't tell you to do you not. and if there's no weakness we just use fire".
+* `DefaultSpell` for Palom (9), Tellah (6) and FuSoYa (12): the strongest spell (-aga, -ara, then base) of the current target's weak element (`WeakTo`: the battle DB, else route weaknesses), Fire when it has none. It must be one they know and can afford, and goes on all enemies when 3+ are alive. Skipped while the target has Reflect. A spell the list doesn't offer is blocked for that caster for the fight.
+* Order in Decide: First rules → status cures → heals → minor statuses → the twins' Twincast default → boss-rule/undead block → ... → fight-specific plan rules (whileMonster/onTarget, ChoosePlan scope 1) → **DefaultSpell** → the route's generic rules (scope 2, e.g. the old "Palom/Tellah Defend" field fallbacks) → Rydia/Attack.

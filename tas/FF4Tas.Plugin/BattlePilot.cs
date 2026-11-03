@@ -35,7 +35,7 @@ internal sealed class BattlePilot
         abilityLastIndex=-1;abilityLastKey=null;lastInfo=lastCursor=-1;lastActor=IntPtr.Zero;previousHp=-1;
         pendingRule=-1;abilityConfirms=abilityStuck=targetPresses=0;decision="";
         blockedRules.Clear();blockedCure.Clear();blockedLife.Clear();blockedItems.Clear();blockedStatusSpell.Clear();usedOnce.Clear();wasMist=false;
-        fleeFrames=0;sidePresses=0;unreachable.Clear();fellThisFight.Clear();targetPresses=0;bossSeen=false;turnActor=IntPtr.Zero;turnRule=-1;fightSeconds=0;fightFrame=-1;rowDone=false;firstSprite.Clear();grown=false;startSprite.Clear();changed=false;changeVotes=0;spriteLine="";queuedHeals.Clear();killStage=0;killSeen.Clear();
+        fleeFrames=0;sidePresses=0;unreachable.Clear();fellThisFight.Clear();targetPresses=0;bossSeen=false;turnActor=IntPtr.Zero;turnRule=-1;fightSeconds=0;fightFrame=-1;rowDone=false;firstSprite.Clear();grown=false;startSprite.Clear();changed=false;changeVotes=0;spriteLine="";queuedHeals.Clear();killStage=0;killSeen.Clear();blockedDefault.Clear();
     }
     internal void Read(Snapshot state,int frame,BattleRule[]? plan=null,int[]? fleeMonsters=null,bool grinding=false,bool story=false)
     {
@@ -483,7 +483,7 @@ internal sealed class BattlePilot
     private void Decide(BattleInfomationController info,BattlePlayerData actor,BattlePlayerData? dead,BattlePlayerData? injured,bool mist,BattleRule[]? plan)
     {
         injuredNow=injured;
-        pendingItem=0;pendingTarget=0;pendingCommand=1;pendingAbility=0;pendingRule=-1;castOnUndead=false;targetAll=false;itemOnEnemies=false;aimFlyer=false;heldUse=false;
+        pendingItem=0;pendingTarget=0;pendingCommand=1;pendingAbility=0;pendingRule=-1;castOnUndead=false;targetAll=false;itemOnEnemies=false;aimFlyer=false;heldUse=false;defaultCast=false;
         // Decide re-runs every frame of a turn; count a turn once.
         bool newTurn=actor.Pointer!=decidingActor;decidingActor=actor.Pointer;
         abilityConfirms=abilityStuck=abilityStride=0;abilityLastIndex=-1;abilityLastKey=null;
@@ -598,7 +598,7 @@ internal sealed class BattlePilot
         {
             ChoosePlan(info,actor,plan);
             if(pendingRule>=0 && plan[pendingRule].WhileMonster!=null && (pendingItem!=0 || CommandEnabled(info,pendingCommand)))return;
-            pendingItem=0;pendingTarget=0;pendingCommand=1;pendingAbility=0;pendingRule=-1;castOnUndead=false;targetAll=false;itemOnEnemies=false;aimFlyer=false;heldUse=false;
+            pendingItem=0;pendingTarget=0;pendingCommand=1;pendingAbility=0;pendingRule=-1;castOnUndead=false;targetAll=false;itemOnEnemies=false;aimFlyer=false;heldUse=false;defaultCast=false;
         }
         // Cure hurts undead: cast it (on all of them when there are several).
         // Tellah joins in while he stays above the MP his route plan reserves.
@@ -615,7 +615,15 @@ internal sealed class BattlePilot
         // Edward just attacks (user: "edward can just attack and die"),
         // unless a plan rule names him (all Defend while the Mom Bomb is big).
         if(me==Edward && (plan==null || !Array.Exists(plan,r=>r.Character==Edward))) {Log(actor,"Attack weakest enemy");return;}
-        ChoosePlan(info,actor,plan);
+        // Fight-specific rules (whileMonster / onTarget) first, then the
+        // black mages' default spell, then the route's generic rules (user:
+        // "we almost always want to maximize spells on the weakness, only
+        // when i don't tell you to do you not. and if there's no weakness we
+        // just use fire").
+        ChoosePlan(info,actor,plan,false,1);
+        if(pendingRule>=0)return;
+        if(DefaultSpell(info,actor))return;
+        ChoosePlan(info,actor,plan,false,2);
         if(pendingItem!=0)return;
         // Rydia with no plan rule: Chocobo summon. Ordinary fights keep 14 MP
         // for the boss.
@@ -649,7 +657,9 @@ internal sealed class BattlePilot
     }
     // First plan rule for this actor whose command is visible and enabled and
     // whose HP condition holds. Ability availability is checked in the list.
-    private void ChoosePlan(BattleInfomationController info,BattlePlayerData actor,BattleRule[]? plan,bool firstOnly=false)
+    // scope 0: every rule; 1: only fight-specific rules (whileMonster or
+    // onTarget); 2: only the generic ones.
+    private void ChoosePlan(BattleInfomationController info,BattlePlayerData actor,BattleRule[]? plan,bool firstOnly=false,int scope=0)
     {
         if(plan==null)return;
         var stats=actor.BattleUnitDataInfo?.Parameter;
@@ -659,6 +669,8 @@ internal sealed class BattlePilot
             var rule=plan[r];
             if(blockedRules.Contains(r))continue;
             if(firstOnly && !rule.First)continue;
+            bool specific=rule.WhileMonster!=null || rule.OnTarget!=null;
+            if(scope==1 && !specific || scope==2 && specific)continue;
             // Decide re-runs every frame of a turn: the rule this turn already
             // took stays allowed, so a once-per-battle rule isn't skipped
             // before it is ever input (Yang skipped Attack x2 + Focus).
@@ -724,8 +736,35 @@ internal sealed class BattlePilot
             return;
         }
     }
+    // The black mages' default (Palom, Tellah, FuSoYa): the strongest spell of
+    // the target's weak element - Fire when it has none - that they know and
+    // can afford, on all enemies when there are three or more. Skipped while
+    // the target has Reflect. A spell the list doesn't offer is blocked for
+    // that caster this fight.
+    private const int FusoyaId=12,FireElement=1;
+    private bool defaultCast;private readonly HashSet<(IntPtr,int)> blockedDefault=new();
+    private bool DefaultSpell(BattleInfomationController info,BattlePlayerData actor)
+    {
+        int me=actor.GetOwnedCharacterData()?.characterStatusId??0;
+        if(me is not (PalomId or Tellah or FusoyaId) || weakest?.MonsterMaster==null || targetReflect || !CommandEnabled(info,BlackMagic))return false;
+        var stats=actor.BattleUnitDataInfo?.Parameter;if(stats==null)return false;
+        int element=0;
+        foreach(int e in WeakTo(weakest.MonsterMaster))if(e is >=1 and <=3) {element=e;break;}
+        if(element==0)element=FireElement;
+        for(int tier=2;tier>=0;tier--)
+        {
+            int ab=ElementSpell[element]+tier;
+            if(blockedDefault.Contains((actor.Pointer,ab)) || !Knows(actor,ab) || stats.CurrentMP<Db.SpellMp(ab,tier==2?30:tier==1?15:5))continue;
+            pendingCommand=BlackMagic;pendingAbility=ab;targetAll=livingEnemies>=3;defaultCast=true;
+            abilityConfirms=abilityStuck=0;abilityStride=0;abilityLastIndex=-1;abilityLastKey=null;
+            Log(actor,$"{Db.SpellName(ab)}{(targetAll?" on all":"")} (default: {(element==FireElement && !Array.Exists(WeakTo(weakest.MonsterMaster),x=>x==FireElement)?"no weakness, Fire":"weakness")})");
+            return true;
+        }
+        return false;
+    }
     private void Block()
     {
+        if(defaultCast && pendingAbility!=0 && lastActor!=IntPtr.Zero)blockedDefault.Add((lastActor,pendingAbility));
         if(pendingRule>=0)blockedRules.Add(pendingRule);
         else if(pendingAbility==CureAbility && lastActor!=IntPtr.Zero)blockedCure.Add(lastActor);
         else if(pendingAbility==LifeAbility && lastActor!=IntPtr.Zero)blockedLife.Add(lastActor);
