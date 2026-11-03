@@ -105,6 +105,18 @@ were not used.
 
 So the next battle's group and the threshold after it are fixed when the last battle ends. Legitimate ways to change them before walking into it: anything that draws or reseeds (a map transition runs `Shuffle`, which draws one value; field healing draws), or changing which area's monster set is active where the battle triggers.
 
+## RNG steering in the route (segments 1–2)
+
+User goals: a comfortable run, no over-levelling, the really dangerous fights avoided altogether.
+
+* `Rng.cs` mirrors UnityEngine.Random from the hooks (`InitState`, `Range(int)`, `Range(float)`: the only three in this build). It drops "synced" when a traced result disagrees, until the next seed. Read-only.
+* Forecast: walking draws nothing, so the next battle's group is the next `Range(1,1001)` against the monster set where the player stands. The set is the game's own table for the cell, else the map's set. Groups come from battle.json (`sets`, `parties`, `mapSets`, built by battle_db.py). The overlay shows `battle in N steps (...); next: <monsters>`, with `[AVOID]` on dangerous groups.
+* Route `rng` block: `{"avoidMonsters": [...], "cureBurns": n}`. During a navigate step, if the forecast group has an avoided monster and the battle comes before this step's path ends, one field Cure is cast to move the generator, at most n per map. The Cure is never Tellah's (he needs his MP for Octomammoth), and the caster keeps 14 MP. Then the forecast is re-checked. Any avoided group that still comes is fled at once (never bosses).
+* **Segment 2** (`mist-octomammoth.json`, `newgame-octomammoth.json`): avoid Tiny Mage (9) and Toadgre (19), the Toad casters the guide warns about (Watery Pass 5, Waterfall: Sahagin×4+Tiny Mage×2, Toadgre groups, Tiny Mage×4). `cureBurns: 2`. No extra fights are added, so levels match the tested run.
+* **Segment 1** (`baron-mist-dragon.json`): unchanged. Its random fights (overworld near Baron; Mist Cave: Goblins, Sword Rats, Insectus, Flying Eyes) aren't dangerous, Cecil and Kain have no field magic to shift the generator, and the battles give the levels the Mist Dragon needs. Only the forecast shows.
+* Not verified live: the Cure draw count (≈13, from 8 casts), whether a Cure on a full-HP member casts at all (if not, the step backs out after 10 tries and walks on), and the game's table lookup (`GetEncountInfo`) on the overworld.
+* Next lever, not built: extra map transitions (each `Shuffle` draws once, and entering a map re-rolls the threshold) to skip a fight outright or reach a better group, where a door is close.
+
 ## Tools
 
 * `tas/FF4Tas.Plugin/EncounterWatch.cs`: read-only hooks (Harmony postfixes)

@@ -25,6 +25,18 @@ internal sealed class BattleDb
     }
     public Dictionary<int,Monster> Monsters {get;set;}=new();
     public Dictionary<int,Spell> Spells {get;set;}=new();
+    // Encounter groups: monster set -> [cumulative per-mille end, party id];
+    // party -> monster ids; map -> its monster set (dungeons).
+    public Dictionary<int,int[][]> Sets {get;set;}=new();
+    public Dictionary<int,int[]> Parties {get;set;}=new();
+    public Dictionary<int,int> MapSets {get;set;}=new();
+    // Party a Random.Range(1,1001) roll picks from a monster set (0 = none).
+    internal int Group(int set,int roll)
+    {
+        if(!Sets.TryGetValue(set,out var rows))return 0;
+        foreach(var r in rows)if(r.Length==2 && roll<=r[0])return r[1];
+        return 0;
+    }
     internal static BattleDb Load(string path)
     {
         try {return File.Exists(path)?JsonSerializer.Deserialize<BattleDb>(File.ReadAllText(path),Plugin.Json)??new():new();}

@@ -2248,5 +2248,9 @@
       19
     ]
   ],
-  "fleeTough": true
+  "fleeTough": true,
+  "rng": {
+    "avoidMonsters": [9, 19],
+    "cureBurns": 2
+  }
 }

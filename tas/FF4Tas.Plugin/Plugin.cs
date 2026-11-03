@@ -56,6 +56,11 @@ public sealed class Controller : MonoBehaviour
     // through the field menu before walking on (user: run from the skeletons,
     // then Phoenix Down Rosa and heal out of combat).
     private static readonly FieldCare fightHeal=new();
+    // RNG steering: one field Cure to move the generator off a dangerous group.
+    private static readonly FieldMagic burnCure=new();
+    private static bool burning;private static int burnFrames,burnsHere,burnMap=-1;
+    private static RngPlan? rngPlan;
+    private const int BurnKeepMp=14;
     private static bool healArmed,healing;private static int healFrames;
     private const float FightHealBelow=.5f;private const int FightHealTimeout=3600;
     private static string lastPhase="";
@@ -145,9 +150,27 @@ public sealed class Controller : MonoBehaviour
                 if(snapshot.Phase=="Battle")healArmed=true;
                 if(active.HandleBattles && active.Kind=="navigate" && snapshot.Focused && !snapshot.Modal)
                 {
-                    if(!healing && healArmed && snapshot.Phase=="Player" && fightHeal.Wanted()) {fightHeal.Reset(FightHealBelow);healing=true;healFrames=0;}
+                    if(!healing && !burning && healArmed && snapshot.Phase=="Player" && fightHeal.Wanted()) {fightHeal.Reset(FightHealBelow);healing=true;healFrames=0;}
                     if(!healing && healArmed && snapshot.Phase=="Player")healArmed=false;
-                    if(healing && snapshot.Phase is "Player" or "Menu")
+                    // RNG steering (Route.Rng): the battle still coming on this
+                    // step's path is a group to avoid, and the walk draws
+                    // nothing, so cast one field Cure (it draws) and re-check.
+                    if(snapshot.MapId!=burnMap) {burnMap=snapshot.MapId;burnsHere=0;}
+                    if(!healing && !burning && snapshot.Phase=="Player" && rngPlan!=null && burnsHere<rngPlan.CureBurns)
+                    {
+                        var next=EncounterWatch.Next();int left=navigation.Remaining;
+                        if(next.Dangerous && left>0 && next.StepsLeft<=left)
+                        {
+                            burnCure.Reset(1.01f,1,false,BurnKeepMp);
+                            if(burnCure.Wanted()) {burning=true;burnFrames=0;burnsHere++;EncounterWatch.Event("burn",EncounterWatch.Lot,$",\"roll\":{next.Roll},\"party\":{next.Party}");}
+                        }
+                    }
+                    if(burning && snapshot.Phase is "Player" or "Menu")
+                    {
+                        burnCure.Read(snapshot,frame);snapshot.FieldHeal=true;
+                        if(snapshot.MenuDone || (++burnFrames>FightHealTimeout && snapshot.Phase=="Player")) {burning=false;snapshot.FieldHeal=false;snapshot.MenuDone=false;navigation.Reset();}
+                    }
+                    else if(healing && snapshot.Phase is "Player" or "Menu")
                     {
                         fightHeal.Read(snapshot,frame);snapshot.FieldHeal=true;
                         // Done (back on the field) or stuck: walk on; one try per fight.
@@ -223,7 +246,7 @@ public sealed class Controller : MonoBehaviour
                     {
                         if(Engine?.Running==true)throw new InvalidOperationException("Stop the current route first");
                         var route=command.Route??throw new InvalidOperationException("Missing route");
-                        var next=new RouteEngine(route);navigation.Reset();battle.Reset();battle.Weaknesses=route.Weaknesses;battle.FleeParties=route.FleeParties.Select(g=>new HashSet<int>(g)).ToList();battle.FleeTough=route.FleeTough;battle.FleeCounts=route.FleeCounts;battle.Db=BattleDb.Load(Path.Combine(Plugin.DirectoryPath,"battle.json"));lastPhase="";Engine=next;routeName=route.Name;error="";RunClock.Reset();
+                        var next=new RouteEngine(route);navigation.Reset();battle.Reset();battle.Weaknesses=route.Weaknesses;battle.FleeParties=route.FleeParties.Select(g=>new HashSet<int>(g)).ToList();battle.FleeTough=route.FleeTough;battle.FleeCounts=route.FleeCounts;battle.Db=BattleDb.Load(Path.Combine(Plugin.DirectoryPath,"battle.json"));EncounterWatch.Db=battle.Db;rngPlan=route.Rng;EncounterWatch.Avoid=new HashSet<int>(route.Rng?.AvoidMonsters??Array.Empty<int>());burning=false;burnsHere=0;burnMap=-1;lastPhase="";Engine=next;routeName=route.Name;error="";RunClock.Reset();
                         // First synthetic input begins next frame, never partway through this one.
                     }
                     else throw new InvalidOperationException("Unknown command");

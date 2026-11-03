@@ -21,6 +21,8 @@ internal sealed class Navigation
     // After any scene/battle (Reset) the player may have been moved: resync to
     // the nearest remaining waypoint before pushing toward the old one.
     private bool resync;
+    // Path cells still to walk on this step (0 = no path yet).
+    internal int Remaining=>Math.Max(0,path.Count-cursor);
     internal void Reset() {resync=true;step=null;owner=IntPtr.Zero;path.Clear();cursor=unchanged=retryAt=greedyTurn=0;observed=greedy=havePrevious=false;}
     internal void Read(FieldMap field,Step active,Snapshot state,int frame)
     {
@@ -34,6 +36,7 @@ internal sealed class Navigation
         // a landing tile (navigate's arrival pulse) gets off.
         var fieldPlayer=player.TryCast<Last.Entity.Field.FieldPlayer>();
         state.Riding=fieldPlayer!=null && (int)fieldPlayer.moveState is not (0 or 1);
+        EncounterWatch.PlayerPos=player.transform.position;
         if(active.Kind!="navigate" || active.Goal==null || active.MapId!=state.MapId)return;
         var goal=active.Goal;
         if(!ReferenceEquals(step,active) || owner!=player.Pointer)

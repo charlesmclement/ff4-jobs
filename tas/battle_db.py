@@ -76,8 +76,21 @@ def main():
             for j in range(1,10):
                 mid=p.get(f'monster{j}')
                 if mid and mid!='0' and mid in monsters and mp['id'] not in monsters[mid]['maps']:monsters[mid]['maps'].append(mp['id'])
+    # Encounter groups (EncounterLot): a monster set lists parties with
+    # per-mille rates; the roll Random.Range(1,1001) picks the first party
+    # whose cumulative range holds it (verified live 3/3). sets: [end, party].
+    groups={}
+    for sid,s in sets.items():
+        cum=0;rows=[]
+        for i in range(1,17):
+            pid,rate=s.get(f'monster_set{i}','0'),int(s.get(f'monster_set{i}_rate') or 0)
+            if pid=='0' or rate==0:continue
+            cum+=rate;rows.append([cum,int(pid)])
+        if rows:groups[sid]=rows
+    party_monsters={pid:[int(p[f'monster{j}']) for j in range(1,10) if p.get(f'monster{j}') not in(None,'','0')] for pid,p in parties.items()}
     os.makedirs(OUT,exist_ok=True)
-    db={'monsters':monsters,'spells':spells,'elements':ELEMENT}
+    db={'monsters':monsters,'spells':spells,'elements':ELEMENT,'sets':groups,'parties':party_monsters,
+        'mapSets':{mp['id']:int(mp['monster_set_id']) for mp in maps if mp['monster_set_id']!='0'}}
     json.dump(db,open(os.path.join(OUT,'battle.json'),'w',encoding='utf-8'),ensure_ascii=False)
     with open(os.path.join(OUT,'monsters.md'),'w',encoding='utf-8') as f:
         f.write('| id | name | HP | def | mdef | weak | resist | undead | boss | steal | maps |\n|---|---|---|---|---|---|---|---|---|---|---|\n')

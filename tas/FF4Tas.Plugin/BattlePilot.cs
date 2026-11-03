@@ -167,6 +167,8 @@ internal sealed class BattlePilot
         for(int i=0;i<enemies.Length;i++)if(enemies[i]?.MonsterMaster!=null)group.Add(enemies[i].MonsterMaster.Id);
         foreach(var flee in FleeParties)if(flee.SetEquals(group))fleeTarget=true;
         if(fleeMonsters!=null)foreach(var id in fleeMonsters)if(group.Contains(id))fleeTarget=true;
+        // Route.Rng.AvoidMonsters: a dangerous group the steering couldn't dodge.
+        foreach(var id in EncounterWatch.Avoid)if(group.Contains(id))fleeTarget=true;
         foreach(var rule in FleeCounts)
         {
             int count=0;

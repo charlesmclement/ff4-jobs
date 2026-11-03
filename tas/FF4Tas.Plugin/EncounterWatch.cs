@@ -24,7 +24,54 @@ internal static class EncounterWatch
     private const int StepValue=6,RngLogCap=200000;
     internal static EncounterLot? Lot;
     private static int rngLines;
-    // "battle in N steps (counter c/threshold t, range a-b)" for the overlay and status.
+    internal static BattleDb Db=new();
+    // Player world position (Navigation sets it) for the encounter table lookup.
+    internal static Vector3? PlayerPos;
+    // Monsters the route calls really dangerous (Route.Rng.AvoidMonsters).
+    internal static HashSet<int> Avoid=new();
+    // The next battle as the field stands: walking draws nothing, so the
+    // group roll is the next Random.Range(1,1001) from the mirrored generator,
+    // against the monster set where the player stands now.
+    internal struct Forecast
+    {
+        internal bool Known,HasEncounters,Dangerous;
+        internal int StepsLeft,Roll,Set,Party;
+        internal int[] Monsters;
+    }
+    internal static Forecast Next()
+    {
+        var f=new Forecast{Monsters=Array.Empty<int>()};
+        var lot=Lot;
+        try
+        {
+            if(lot==null || lot.Pointer==IntPtr.Zero)return f;
+            var range=lot.stepsRange;f.Known=true;f.HasEncounters=range.Max>0 && lot.Enable;
+            f.StepsLeft=Math.Max(0,(lot.subtractSteps-lot.moveCounter+StepValue-1)/StepValue);
+            if(!f.HasEncounters || !FF4Tas.Rng.Synced)return f;
+            f.Roll=FF4Tas.Rng.Peek(1,1001);f.Set=CurrentSet(lot);
+            f.Party=Db.Group(f.Set,f.Roll);
+            if(f.Party!=0 && Db.Parties.TryGetValue(f.Party,out var ms))f.Monsters=ms;
+            foreach(int m in f.Monsters)if(Avoid.Contains(m))f.Dangerous=true;
+        }
+        catch {}
+        return f;
+    }
+    // The game's own table for the player's cell (overworld areas differ),
+    // else the map's monster set (dungeons).
+    private static int CurrentSet(EncounterLot lot)
+    {
+        try
+        {
+            if(PlayerPos is Vector3 pos && lot.mapHander!=null)
+            {
+                int id=lot.mapHander.GetEncountInfo(pos,false)?.Table?.MonsterSetId??0;
+                if(id!=0)return id;
+            }
+        }
+        catch {}
+        return Db.MapSets.TryGetValue(Controller.Current.MapId,out int set)?set:0;
+    }
+    // "battle in N steps (counter c/threshold t, range a-b); next: group" for the overlay and status.
     internal static string Status()
     {
         var lot=Lot;
@@ -33,8 +80,10 @@ internal static class EncounterWatch
             if(lot==null || lot.Pointer==IntPtr.Zero)return "";
             int threshold=lot.subtractSteps,counter=lot.moveCounter;var range=lot.stepsRange;
             if(range.Max==0)return "no random encounters here";
-            int left=Math.Max(0,(threshold-counter+StepValue-1)/StepValue);
-            return $"battle in {left} steps ({counter}/{threshold}, range {range.Min}-{range.Max}){(lot.Enable?"":" [off]")}";
+            var f=Next();
+            string group=!FF4Tas.Rng.Synced?"next: unknown (RNG not synced)":f.Party==0?$"next: roll {f.Roll}":
+                "next: "+string.Join(", ",f.Monsters.Select(Db.MonsterName))+(f.Dangerous?" [AVOID]":"");
+            return $"battle in {f.StepsLeft} steps ({counter}/{threshold}, range {range.Min}-{range.Max}){(lot.Enable?"":" [off]")}; {group}";
         }
         catch {return "";}
     }
@@ -50,7 +99,7 @@ internal static class EncounterWatch
         }
         catch {}
     }
-    internal static void Rng(string kind,string body)
+    internal static void LogRng(string kind,string body)
     {
         if(rngLines>=RngLogCap)return;
         rngLines++;
@@ -70,6 +119,9 @@ internal static class EncounterWatch
         Hook(typeof(EncounterLot),nameof(EncounterLot.CheckEncount),typeof(WatchCheck));
         Hook(typeof(UnityEngine.Random),nameof(UnityEngine.Random.InitState),typeof(WatchSeed));
         Hook(typeof(UnityEngine.Random),nameof(UnityEngine.Random.RandomRangeInt),typeof(WatchRange));
+        // The only float draw in this build (no Random.value): keeps the mirror in step.
+        try {harmony.Patch(AccessTools.Method(typeof(UnityEngine.Random),nameof(UnityEngine.Random.Range),new[]{typeof(float),typeof(float)}),postfix:new HarmonyMethod(AccessTools.Method(typeof(WatchFloat),"Postfix")));}
+        catch(Exception e) {log.LogWarning($"Encounter watch: Random.Range(float) not hooked: {e.Message}");}
     }
     private static string Num(float? v)=>v.HasValue?v.Value.ToString("0.##",System.Globalization.CultureInfo.InvariantCulture):"null";
     private static void Append(string file,string line)=>File.AppendAllText(Path.Combine(Plugin.DirectoryPath,file),line+"\n");
@@ -96,9 +148,13 @@ internal static class WatchCheck
 }
 internal static class WatchSeed
 {
-    static void Postfix(int seed) {EncounterWatch.Rng("seed",$"\"seed\":{seed}");}
+    static void Postfix(int seed) {FF4Tas.Rng.Seed(seed);EncounterWatch.LogRng("seed",$"\"seed\":{seed}");}
 }
 internal static class WatchRange
 {
-    static void Postfix(int min,int max,int __result) {EncounterWatch.Rng("range",$"\"min\":{min},\"max\":{max},\"result\":{__result}");}
+    static void Postfix(int min,int max,int __result) {FF4Tas.Rng.Int(min,max,__result);EncounterWatch.LogRng("range",$"\"min\":{min},\"max\":{max},\"result\":{__result}");}
+}
+internal static class WatchFloat
+{
+    static void Postfix(float min,float max,float __result) {FF4Tas.Rng.Float();EncounterWatch.LogRng("float",$"\"result\":{__result.ToString(System.Globalization.CultureInfo.InvariantCulture)}");}
 }

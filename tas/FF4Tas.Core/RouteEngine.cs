@@ -1,5 +1,16 @@
 namespace FF4Tas.Core;
 
+// Encounter steering from the mirrored generator. Walking draws nothing, so
+// the next battle's group is fixed until something draws; a field Cure draws
+// (~13 per cast). When the forecast says the battle still coming on this map
+// is a group with an AvoidMonsters member, one Cure is cast (at most
+// CureBurns per map) and the forecast re-checked; a dangerous battle that
+// still comes is fled at once. Nothing is added: no extra fights, no grinding.
+public sealed class RngPlan
+{
+    public int[] AvoidMonsters { get; set; } = Array.Empty<int>();
+    public int CureBurns { get; set; }
+}
 public sealed class Route
 {
     public int Schema { get; set; } = 1;
@@ -18,6 +29,8 @@ public sealed class Route
     // Run at once from tough ordinary fights (an enemy with defense >= 200,
     // which attacks barely scratch) instead of spending MP on them.
     public bool FleeTough { get; set; }
+    // RNG steering (docs/TAS-ENCOUNTERS.md); null = off.
+    public RngPlan? Rng { get; set; }
     public void Validate()
     {
         if(Schema!=1 || string.IsNullOrWhiteSpace(Name) || Steps==null || Steps.Length is <1 or >10000)

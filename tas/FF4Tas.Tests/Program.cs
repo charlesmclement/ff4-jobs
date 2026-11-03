@@ -17,4 +17,10 @@ e=Engine(Hold());e.Tick(1,player);e.Stop("test");Check(!e.Held("Right")&&!e.Down
 try {var bad=Hold();bad.Keys=new[]{"Typo"};Engine(bad);throw new Exception("accepted invalid key");}catch(ArgumentException){checks++;}
 e=Engine(new Step{Label="visual wait",Kind="wait",Phases=new[]{"Player"},Until=new(){Visual="boss-menu"},TimeoutFrames=2});
 e.Tick(1,player);Check(e.Running,"unmatched visual waits");e.Tick(2,new Snapshot{Phase="Player",VisualMatches=new[]{"boss-menu"}});e.Tick(3,player);Check(e.Status=="complete","local visual match advances");
+// Every shipped route parses and validates (the plugin's own JSON options).
+var jsonOptions=new System.Text.Json.JsonSerializerOptions{PropertyNameCaseInsensitive=true};
+foreach(var file in Directory.GetFiles(Path.Combine(AppContext.BaseDirectory,"../../../../routes"),"*.json"))
+{var r=System.Text.Json.JsonSerializer.Deserialize<Route>(File.ReadAllText(file),jsonOptions)!;r.Validate();checks++;}
+var steering=System.Text.Json.JsonSerializer.Deserialize<Route>(File.ReadAllText(Path.Combine(AppContext.BaseDirectory,"../../../../routes/mist-octomammoth.json")),jsonOptions)!;
+Check(steering.Rng?.CureBurns==2 && steering.Rng.AvoidMonsters.Contains(9),"segment 2 RNG plan loads");
 Console.WriteLine($"PASS: {checks} scripted-route regression checks");

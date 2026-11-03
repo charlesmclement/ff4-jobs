@@ -13,25 +13,27 @@ namespace FF4Tas;
 // one can cast it finishes and the item heal (FieldMenu) takes over.
 internal sealed class FieldMagic
 {
-    private const int MenuMagic=2,WhiteMagicCommand=7,Cure=6,Life=11,CureMp=3,LifeMp=8,MaxCasts=12,AfterCast=48;
+    private const int MenuMagic=2,WhiteMagicCommand=7,Cure=6,Life=11,CureMp=3,LifeMp=8,AfterCast=48;
     // AbilityWindowController.State (Command) and AbilityUseContentListController.State (All).
     private const int CommandState=4,UseAll=2;
     private static readonly int[] Casters={3,4,6};
     private float topUpBelow=.7f;
+    // RNG steering casts one Cure, never Tellah's, and keeps the caster's MP reserve.
+    private int maxCasts=12,keepMp;private bool tellah=true;
     private bool finished,flip;
     // Backs without a cast: give up on magic (items take over), never loop.
     private int casts,wait,stuck,backs,lastIndex=-1,caster,spell,target,columns;
     private const int MaxBacks=10;
     private string? lastKey;
     private MainMenuController? main;
-    internal void Reset(float topUp) {topUpBelow=topUp;finished=flip=false;casts=wait=stuck=backs=columns=0;lastIndex=-1;lastKey=null;main=null;}
+    internal void Reset(float topUp,int casts=12,bool allowTellah=true,int keepMpAbove=0) {maxCasts=casts;tellah=allowTellah;keepMp=keepMpAbove;topUpBelow=topUp;finished=flip=false;casts=wait=stuck=backs=columns=0;lastIndex=-1;lastKey=null;main=null;}
     internal bool Wanted() {Need();return spell!=0;}
     internal void Read(Snapshot s,int frame)
     {
         Need();
         if(finished && s.Phase=="Player") {s.MenuDone=true;s.Detail="Magic: done";return;}
         if(wait>0) {wait--;s.Detail="Magic: casting";return;}
-        if(spell==0 || casts>=MaxCasts)finished=true;
+        if(spell==0 || casts>=maxCasts)finished=true;
         if(s.Phase=="Player")
         {
             if(finished) {s.MenuDone=true;return;}
@@ -135,7 +137,8 @@ internal sealed class FieldMagic
         {
             var m=members.Find(x=>x.characterStatusId==who);
             if(m==null || m.Parameter.CurrentHP<=0)continue;
-            if(m.Parameter.CurrentMP>=CureMp && Knows(m,Cure)) {caster=who;spell=Cure;target=hurt;return;}
+            if(who==6 && !tellah)continue;
+            if(m.Parameter.CurrentMP>=CureMp+keepMp && Knows(m,Cure)) {caster=who;spell=Cure;target=hurt;return;}
         }
     }
     private static bool Knows(Last.Data.User.OwnedCharacterData m,int ability)
