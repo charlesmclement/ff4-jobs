@@ -1480,6 +1480,118 @@
       ]
     },
     {
+      "label": "Fabul courtyard: from the east tower along the wall to the corridor door (the wall walk and bridge don't reach the gate lane; only the castle connects them)",
+      "kind": "navigate",
+      "mapId": 44,
+      "goal": {
+        "x": 15,
+        "y": 11,
+        "layer": 0
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Player",
+        "mapId": 46
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 54000,
+      "battlePlan": [
+        {
+          "character": 8,
+          "command": 26,
+          "minEnemies": 2
+        }
+      ],
+      "waypoints": [
+        {
+          "x": 17,
+          "y": 12,
+          "layer": 0
+        }
+      ]
+    },
+    {
+      "label": "Fabul corridor: south door to the hall",
+      "kind": "navigate",
+      "mapId": 46,
+      "goal": {
+        "x": 5,
+        "y": 10,
+        "layer": 0
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Player",
+        "mapId": 45
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 54000,
+      "battlePlan": [
+        {
+          "character": 8,
+          "command": 26,
+          "minEnemies": 2
+        }
+      ]
+    },
+    {
+      "label": "Fabul hall: out to the courtyard",
+      "kind": "navigate",
+      "mapId": 45,
+      "goal": {
+        "x": 12,
+        "y": 16,
+        "layer": 0
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Player",
+        "mapId": 44
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 54000,
+      "battlePlan": [
+        {
+          "character": 8,
+          "command": 26,
+          "minEnemies": 2
+        }
+      ]
+    },
+    {
       "label": "Fabul courtyard: leave by the south gate",
       "kind": "navigate",
       "mapId": 44,
