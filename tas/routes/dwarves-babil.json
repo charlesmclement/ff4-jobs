@@ -23,7 +23,8 @@
         "menuDone": true
       },
       "stableFrames": 2,
-      "timeoutFrames": 7200
+      "timeoutFrames": 7200,
+      "healTo": 1.0
     },
     {
       "label": "Underworld: west and north to the Tower of Babil",
@@ -419,7 +420,8 @@
         "menuDone": true
       },
       "stableFrames": 2,
-      "timeoutFrames": 7200
+      "timeoutFrames": 7200,
+      "healTo": 1.0
     },
     {
       "label": "Save room: out",
@@ -803,7 +805,8 @@
         "menuDone": true
       },
       "stableFrames": 2,
-      "timeoutFrames": 7200
+      "timeoutFrames": 7200,
+      "healTo": 1.0
     },
     {
       "label": "Babil 8F: back down",
@@ -1567,7 +1570,8 @@
         "menuDone": true
       },
       "stableFrames": 2,
-      "timeoutFrames": 7200
+      "timeoutFrames": 7200,
+      "healTo": 1.0
     },
     {
       "label": "Segment 11 complete: the Super Cannon is gone, back on the surface by Agart",

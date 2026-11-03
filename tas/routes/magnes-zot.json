@@ -24,7 +24,8 @@
         "menuDone": true
       },
       "stableFrames": 2,
-      "timeoutFrames": 7200
+      "timeoutFrames": 7200,
+      "healTo": 1.0
     },
     {
       "label": "Overworld: step off and back onto the Black Chocobo",
@@ -975,7 +976,8 @@
         "menuDone": true
       },
       "stableFrames": 2,
-      "timeoutFrames": 7200
+      "timeoutFrames": 7200,
+      "healTo": 1.0
     },
     {
       "label": "Zot save room: out",
@@ -1403,7 +1405,8 @@
         "menuDone": true
       },
       "stableFrames": 2,
-      "timeoutFrames": 7200
+      "timeoutFrames": 7200,
+      "healTo": 1.0
     },
     {
       "label": "Zot 5F: on to 6F",
@@ -1912,8 +1915,28 @@
         },
         {
           "character": 8,
+          "slot": 0,
+          "content": 162
+        },
+        {
+          "character": 8,
+          "slot": 0,
+          "content": 163
+        },
+        {
+          "character": 8,
           "slot": 1,
           "content": 164
+        },
+        {
+          "character": 8,
+          "slot": 1,
+          "content": 162
+        },
+        {
+          "character": 8,
+          "slot": 1,
+          "content": 163
         }
       ]
     },
@@ -1965,7 +1988,8 @@
         "menuDone": true
       },
       "stableFrames": 2,
-      "timeoutFrames": 7200
+      "timeoutFrames": 7200,
+      "healTo": 1.0
     },
     {
       "label": "Zot 7F: Barbariccia (Kain Jumps her out of the whirlwind); Rosa's Exit to Baron, the Magma Key (flag 43, autosave) - walk in",

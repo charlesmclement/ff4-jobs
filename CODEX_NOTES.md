@@ -929,3 +929,14 @@ Live: segment 7 stopped at once on "Overworld: into Mysidia" with "State read fa
 
 ### 130. Ancient Sword pickup (user)
 The chest is in the waterway save room (map 190 = Map_30121_5) at (22,6): content 135, treasure flag 113. It sits behind the false wall east, a hidden passage at x 13–19 rows 3–6 that is open in BottomCollision. Segment 7 now walks there after the Tent and heal: waypoints (9,4) (11,4) (11,5) (19,5) (19,6) (21,6), then a push into the chest (StepInto + Confirm) until treasure flag 113, then a mash through the message. It's skipped once the chest is open (group ancientsword). Plugin: the snapshot now reads the treasure flags of both `until` and `skipIf` (before, only `until`).
+
+### 131. Caster pick by the cursor's row; full heals; Run All through Cagnazzo
+* **Cid loop (live):** the field heal moved to the row PartyList.RowOf found for Cecil, but that opened Cid's magic. That happened 9 times, then it backed out to Potions. The status window's contentList order isn't the cursor order.
+  * New `PartyList.UnderCursor`: the character whose row anchor (FocusCursorParent / DefaultCursorParent) is nearest the cursor on screen.
+  * FieldMagic presses Down until the cursor is on the caster, then Confirms. Two laps without it and magic gives up.
+  * FormationMenu: positions are back to corps order (it worked live). The member to move is picked by UnderCursor id when readable.
+* **Tellah at Baigan (live):** he loaded with 60 MP. The first Firaga left 30, and the repeat rule needs 60 (keeps 30 for Cagnazzo's Thundaga), so no second cast. That's the intended budget. On a full run the waterway Tent fills his MP first.
+* **Full heals (user: "healing to full before bosses at least with cecil", obeying MP limits):**
+  * New step field `healTo`. `route_kit.heal()` sets 1.0: Cure everyone to full, Cecil first, Tellah's Cure left out. Potions still only below 70%.
+  * FieldCare.Reset(magicTo) passes it through. All generated routes are rebuilt.
+* **Run All (user: "update the run all to go through kainazzo"):** the Desktop "FF4 TAS Run All (Vanilla)" now chains segments 1–7, ending after Cagnazzo. The old whole-game chain is "FF4 TAS Run Full Game (Vanilla, untested)".

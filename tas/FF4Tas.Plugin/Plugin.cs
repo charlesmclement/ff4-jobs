@@ -230,7 +230,7 @@ public sealed class Controller : MonoBehaviour
                         else if(active.Equip!=null)equipMenu.Reset(active.Equip,active.EquipReset,active.EquipItems,active.EquipExactOnly);
                         else if(active.Formation!=null)formationMenu.Reset(active.Formation);
                         else if(active.MenuItem!=null)fieldMenu.Reset(useItem:active.MenuItem.Value);
-                        else fieldCare.Reset();
+                        else fieldCare.Reset(magicTo:active.HealTo);
                     }
                     if(snapshot.Focused && snapshot.Phase is "Player" or "Menu" or "Shop" or "Message")
                     {

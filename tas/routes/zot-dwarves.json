@@ -23,7 +23,8 @@
         "menuDone": true
       },
       "stableFrames": 2,
-      "timeoutFrames": 7200
+      "timeoutFrames": 7200,
+      "healTo": 1.0
     },
     {
       "label": "Baron: step off and back onto the Enterprise",
@@ -384,7 +385,8 @@
         "menuDone": true
       },
       "stableFrames": 2,
-      "timeoutFrames": 7200
+      "timeoutFrames": 7200,
+      "healTo": 1.0
     },
     {
       "label": "Underworld: into the Dwarf Castle",
@@ -825,7 +827,8 @@
         "menuDone": true
       },
       "stableFrames": 2,
-      "timeoutFrames": 7200
+      "timeoutFrames": 7200,
+      "healTo": 1.0
     },
     {
       "label": "Throne room: out",

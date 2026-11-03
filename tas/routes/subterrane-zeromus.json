@@ -24,7 +24,8 @@
         "menuDone": true
       },
       "stableFrames": 2,
-      "timeoutFrames": 7200
+      "timeoutFrames": 7200,
+      "healTo": 1.0
     },
     {
       "label": "Save room: out",

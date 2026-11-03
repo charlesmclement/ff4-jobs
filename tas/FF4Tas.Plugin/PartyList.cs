@@ -1,4 +1,5 @@
 using Last.UI.KeyInput;
+using UnityEngine;
 
 namespace FF4Tas;
 
@@ -27,5 +28,25 @@ internal static class PartyList
         return -1;
     }
     internal static int Rows(StatusWindowController? status)=>status?.contentList?.Count??0;
+    // The character the party-list cursor is on, read from where the cursor
+    // sits on screen (the row whose cursor anchor is nearest), not from its
+    // index: live, the row RowOf found for Cecil opened Cid's magic, so the
+    // list order and the cursor order differ. 0 when unreadable.
+    internal static int UnderCursor(StatusWindowController? status)
+    {
+        var rows=status?.contentList;var cursor=status?.selectCursor;
+        if(rows==null || cursor==null || !cursor)return 0;
+        Vector3 at=cursor.transform.position;float best=float.MaxValue;int id=0;
+        for(int i=0;i<rows.Count;i++)
+        {
+            var row=rows[i];int who=row?.CharacterData?.characterStatusId??0;if(who==0)continue;
+            GameObject? anchor=null;
+            try {anchor=row!.FocusCursorParent()??row.DefaultCursorParent();} catch {anchor=null;}
+            if(anchor==null)continue;
+            float d=(anchor.transform.position-at).sqrMagnitude;
+            if(d<best) {best=d;id=who;}
+        }
+        return id;
+    }
     private static bool Cecil(int id)=>id is 1 or 13;
 }

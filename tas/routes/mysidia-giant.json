@@ -28,7 +28,8 @@
         "menuDone": true
       },
       "stableFrames": 2,
-      "timeoutFrames": 7200
+      "timeoutFrames": 7200,
+      "healTo": 1.0
     },
     {
       "label": "Agart: onto the Falcon",
@@ -1494,7 +1495,8 @@
         "menuDone": true
       },
       "stableFrames": 2,
-      "timeoutFrames": 7200
+      "timeoutFrames": 7200,
+      "healTo": 1.0
     },
     {
       "label": "Giant: stairwell",
@@ -1919,7 +1921,8 @@
         "menuDone": true
       },
       "stableFrames": 2,
-      "timeoutFrames": 7200
+      "timeoutFrames": 7200,
+      "healTo": 1.0
     },
     {
       "label": "Giant: stairwell again",
@@ -2261,7 +2264,8 @@
         "menuDone": true
       },
       "stableFrames": 2,
-      "timeoutFrames": 7200
+      "timeoutFrames": 7200,
+      "healTo": 1.0
     },
     {
       "label": "Segment 15 complete: the Giant of Babil is destroyed, Kain is back, on the moon",

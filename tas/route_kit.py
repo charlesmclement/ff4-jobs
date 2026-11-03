@@ -90,7 +90,10 @@ def menu(label,map_id,**extra):
     s={'label':label,'kind':'menu','mapId':map_id,'phases':list(MENU),'until':{'menuDone':True},'stableFrames':2,'timeoutFrames':10800}
     s.update(extra);return s
 
-def heal(label,map_id,**extra):return menu(label,map_id,timeoutFrames=7200,**extra)
+# Heal steps Cure everyone to full (Cecil first; Tellah left out, his MP is
+# for bosses); Potions only below 70% (user: "healing to full before bosses
+# at least with cecil ... if there are mana restrictions obey them").
+def heal(label,map_id,**extra):return menu(label,map_id,timeoutFrames=7200,healTo=1.0,**extra)
 
 def tent(label,map_id,**extra):
     # The Tent's rest scene (Event, ~450 frames) starts a few frames after the

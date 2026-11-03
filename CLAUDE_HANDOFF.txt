@@ -154,6 +154,13 @@ NEW ENGINE / PLUGIN PIECES (C#)
   the runner's best-gear pass. battle.json now carries a gear table by
   content id and each character's dominant arm. Steps with equipExactOnly put
   on only their listed items.
+- Heal steps Cure to full (healTo 1.0): Cecil first, Tellah's Cure left out,
+  Potions only below 70%.
+- The party-list cursor is read by position (PartyList.UnderCursor): the
+  contentList order is not the cursor order. Field-magic casters and
+  formation members are picked by who the cursor is on.
+- Desktop "Run All" chains segments 1-7 (through Cagnazzo). "Run Full Game
+  (untested)" chains all of them.
 - Shops: each counter is visited once, with one equipment pass at the end.
   A worn item is counted once toward a buy target.
 - Kill order only moves forward within a fight (a regrown arm isn't chased).

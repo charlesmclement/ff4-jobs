@@ -22,7 +22,8 @@
         "menuDone": true
       },
       "stableFrames": 2,
-      "timeoutFrames": 7200
+      "timeoutFrames": 7200,
+      "healTo": 1.0
     },
     {
       "label": "Overworld: to Fabul harbor; the voyage, Leviathan, Cecil alone on the beach (flag 22, autosave) - walk in",
@@ -2815,7 +2816,8 @@
         "menuDone": true
       },
       "stableFrames": 2,
-      "timeoutFrames": 7200
+      "timeoutFrames": 7200,
+      "healTo": 1.0
     },
     {
       "label": "Summit: the bridge - Milon and four Revenants (flag 26) - walk in",
@@ -3472,7 +3474,8 @@
         "menuDone": true
       },
       "stableFrames": 2,
-      "timeoutFrames": 7200
+      "timeoutFrames": 7200,
+      "healTo": 1.0
     },
     {
       "label": "Summit: Milon Z attacks from behind (back attack: Row) (flag 27) - walk in",
@@ -4076,7 +4079,8 @@
         "menuDone": true
       },
       "stableFrames": 2,
-      "timeoutFrames": 7200
+      "timeoutFrames": 7200,
+      "healTo": 1.0
     },
     {
       "label": "Summit: the mirror - the Dark Knight trial, Cecil Defends until it ends; Cecil becomes a Paladin (flag 28) - walk in",

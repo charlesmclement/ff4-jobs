@@ -31,7 +31,7 @@ internal sealed class FieldMagic
     private const int MaxBacks=10;
     private string? lastKey;
     private MainMenuController? main;
-    internal void Reset(float topUp,int casts=12,bool allowTellah=true,int keepMpAbove=0) {maxCasts=casts;tellah=allowTellah;keepMp=keepMpAbove;topUpBelow=topUp;finished=flip=false;casts=wait=stuck=backs=columns=targetPresses=casterShift=0;lastIndex=-1;lastKey=null;main=null;}
+    internal void Reset(float topUp,int casts=12,bool allowTellah=true,int keepMpAbove=0) {maxCasts=casts;tellah=allowTellah;keepMp=keepMpAbove;topUpBelow=topUp;finished=flip=false;casts=wait=stuck=backs=columns=targetPresses=casterShift=casterPresses=0;lastIndex=-1;lastKey=null;main=null;}
     internal bool Wanted() {Need();return spell!=0;}
     internal void Read(Snapshot s,int frame)
     {
@@ -67,12 +67,13 @@ internal sealed class FieldMagic
             var status=UnityEngine.Object.FindObjectOfType<StatusWindowController>();
             var cursor=status?.selectCursor;
             if(cursor==null)return;
-            // The row that shows the caster (character id, never a slot
-            // count). If the list can't be read, step through the rows: each
-            // time the opened window shows someone else, the next row is tried.
-            int row=PartyList.RowOf(status,caster);
-            if(row<0) {int rows=Math.Max(1,PartyList.Rows(status));row=casterShift%rows;}
-            Move(s,frame,cursor.Index,row,false,"Caster #"+caster);return;
+            // Who the cursor is on (read from its position on screen); Down
+            // until it's the caster, then Confirm. Two laps without finding
+            // them and magic gives up (items take over).
+            int under=PartyList.UnderCursor(status);
+            if(under==caster || under==0 && casterShift>0) {Pulse(s,frame,"Confirm","Caster #"+caster);return;}
+            if(frame%12==0 && ++casterPresses>2*Math.Max(1,PartyList.Rows(status))+2) {finished=true;return;}
+            Pulse(s,frame,"Down",$"Caster #{caster} (cursor on #{under})");return;
         }
         // The window shows someone else: back to the party list.
         if(window!.commandController?.targetCharacter?.characterStatusId is int shown && shown!=caster)
@@ -204,7 +205,7 @@ internal sealed class FieldMagic
         return false;
     }
     // Party slot of a character_status id (corps order, empty slots skipped).
-    private int casterShift;
+    private int casterShift,casterPresses;
     // Up/Down; grids and sideways rows flip to Left/Right when a key leaves
     // the cursor in place three times.
     // The spell list is a grid: Down jumps a whole row (0 -> 3 -> wraps to 0,

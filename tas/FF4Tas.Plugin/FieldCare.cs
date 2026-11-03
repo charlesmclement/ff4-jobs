@@ -10,7 +10,12 @@ internal sealed class FieldCare
     private readonly FieldMenu items=new();
     private bool magicDone;
     private float topUp=.7f;
-    internal void Reset(float topUpBelow=.7f) {topUp=topUpBelow;magicDone=false;magic.Reset(topUp);items.Reset(topUp);}
+    internal void Reset(float topUpBelow=.7f,float? magicTo=null)
+    {
+        topUp=topUpBelow;magicDone=false;
+        if(magicTo is float full)magic.Reset(full,allowTellah:false);else magic.Reset(topUp);
+        items.Reset(topUp);
+    }
     internal bool Wanted()=>magic.Wanted() || items.Wanted();
     // After each fight: every member's condition ids, to status.log beside
     // the session files (field status cures missed a Mini live; this shows

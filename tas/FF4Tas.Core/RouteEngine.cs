@@ -163,6 +163,10 @@ public sealed class Step
     // Skip Strongest: only the exact EquipItems go on (user: "optimal is not
     // reliable. Don't use that" - it skipped claws).
     public bool EquipExactOnly {get;set;}
+    // Heal step: Cure everyone below this share of max HP (1 = to full,
+    // user: "healing to full before bosses at least with cecil"). Potions
+    // still only below 70%, and Tellah is left out (his MP is for bosses).
+    public float? HealTo {get;set;}
     // Shop: talk to the shopkeeper the step faces, then sell, then buy in
     // order (each buy only while affordable and owned+equipped < Count).
     public ShopOrder? Shop {get;set;}
