@@ -36,17 +36,17 @@ field=[
 # Yang (Monk, 62000 HP: a scripted fight that ends by itself). Guide: his
 # Kick hits everyone; the casters Defend through it, Cecil attacks.
 monk=[{'character':c,'command':2,'whileMonster':MONK} for c in (PALOM,POROM,TELLAH)]
-# Baigan: he Reflects himself (guide), so magic goes at the arms, which
-# do most of the damage ("Quickly eliminate the ARMs"); route killFirst
-# sends the attackers at the arms too. With the arms gone the casters Defend.
-# Porom Twincasts with Palom while Baigan is up (user: "aye lets try it";
-# guide: twin magic "cannot be reflected", so his Wall doesn't matter, and
-# Comet hits the arms too). Her heals still come first.
-baigan=[{'character':POROM,'command':TWINCAST,'minMp':20,'whileMonster':BAIGAN}]
-for arm in (RIGHT_ARM,LEFT_ARM):
-    baigan+=[{'character':PALOM,'command':8,'ability':FIRA,'minMp':15,'whileMonster':arm},
-             {'character':TELLAH,'command':8,'ability':THUNDARA,'minMp':15,'whileMonster':arm}]
-baigan+=[{'character':PALOM,'command':2,'whileMonster':BAIGAN},{'character':TELLAH,'command':2,'whileMonster':BAIGAN}]+field
+# Baigan (live, segment 7): the arms grow back at full HP (444) a few turns
+# after they die, so the guide's "Quickly eliminate the ARMs" became a
+# treadmill and the party wiped. Everything goes at Baigan: the attackers
+# (route killFirst), and both twins Twincast (the guide: twin magic "cannot
+# be reflected", so his Wall doesn't matter; the first Comet took ~950 off
+# him and both arms). Only the first Twincast landed while Porom alone chose
+# it and Palom took his own turns, so Palom chooses it too. Tellah heals by
+# role and otherwise casts nothing (spells at Baigan bounce off his Wall).
+baigan=[{'character':POROM,'command':TWINCAST,'minMp':20,'whileMonster':BAIGAN},
+        {'character':PALOM,'command':TWINCAST,'minMp':20,'whileMonster':BAIGAN},
+        {'character':TELLAH,'command':2,'whileMonster':BAIGAN}]+field
 # Cagnazzo: weak to lightning. Guide: "have Tellah use LIT-3 ... then just
 # keep attacking him".
 cagnazzo=[
@@ -123,4 +123,4 @@ s.append(nav('Enterprise: land and step off outside Baron (Confirm at the spot, 
 s.append(heal('Beside the Enterprise: heal',OVERWORLD))
 s.append(checkpoint('Segment 7 complete: Cagnazzo defeated, the Enterprise is ours, outside Baron',OVERWORLD,107))
 
-write('tas/routes/mysidia-baron.json','Mysidia → Baron → Cagnazzo (segment 7) — UNTESTED',s,fleeTough=True,killFirst=[RIGHT_ARM,LEFT_ARM])
+write('tas/routes/mysidia-baron.json','Mysidia → Baron → Cagnazzo (segment 7) — UNTESTED',s,fleeTough=True,killFirst=[BAIGAN])

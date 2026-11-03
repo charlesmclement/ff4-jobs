@@ -3,8 +3,7 @@
   "name": "Mysidia → Baron → Cagnazzo (segment 7) — UNTESTED",
   "fleeTough": true,
   "killFirst": [
-    169,
-    170
+    168
   ],
   "steps": [
     {
@@ -2002,35 +2001,8 @@
         },
         {
           "character": 9,
-          "command": 8,
-          "ability": 34,
-          "minMp": 15,
-          "whileMonster": 169
-        },
-        {
-          "character": 6,
-          "command": 8,
-          "ability": 40,
-          "minMp": 15,
-          "whileMonster": 169
-        },
-        {
-          "character": 9,
-          "command": 8,
-          "ability": 34,
-          "minMp": 15,
-          "whileMonster": 170
-        },
-        {
-          "character": 6,
-          "command": 8,
-          "ability": 40,
-          "minMp": 15,
-          "whileMonster": 170
-        },
-        {
-          "character": 9,
-          "command": 2,
+          "command": 18,
+          "minMp": 20,
           "whileMonster": 168
         },
         {
@@ -2123,35 +2095,8 @@
         },
         {
           "character": 9,
-          "command": 8,
-          "ability": 34,
-          "minMp": 15,
-          "whileMonster": 169
-        },
-        {
-          "character": 6,
-          "command": 8,
-          "ability": 40,
-          "minMp": 15,
-          "whileMonster": 169
-        },
-        {
-          "character": 9,
-          "command": 8,
-          "ability": 34,
-          "minMp": 15,
-          "whileMonster": 170
-        },
-        {
-          "character": 6,
-          "command": 8,
-          "ability": 40,
-          "minMp": 15,
-          "whileMonster": 170
-        },
-        {
-          "character": 9,
-          "command": 2,
+          "command": 18,
+          "minMp": 20,
           "whileMonster": 168
         },
         {
@@ -2234,35 +2179,8 @@
         },
         {
           "character": 9,
-          "command": 8,
-          "ability": 34,
-          "minMp": 15,
-          "whileMonster": 169
-        },
-        {
-          "character": 6,
-          "command": 8,
-          "ability": 40,
-          "minMp": 15,
-          "whileMonster": 169
-        },
-        {
-          "character": 9,
-          "command": 8,
-          "ability": 34,
-          "minMp": 15,
-          "whileMonster": 170
-        },
-        {
-          "character": 6,
-          "command": 8,
-          "ability": 40,
-          "minMp": 15,
-          "whileMonster": 170
-        },
-        {
-          "character": 9,
-          "command": 2,
+          "command": 18,
+          "minMp": 20,
           "whileMonster": 168
         },
         {
@@ -2355,35 +2273,8 @@
         },
         {
           "character": 9,
-          "command": 8,
-          "ability": 34,
-          "minMp": 15,
-          "whileMonster": 169
-        },
-        {
-          "character": 6,
-          "command": 8,
-          "ability": 40,
-          "minMp": 15,
-          "whileMonster": 169
-        },
-        {
-          "character": 9,
-          "command": 8,
-          "ability": 34,
-          "minMp": 15,
-          "whileMonster": 170
-        },
-        {
-          "character": 6,
-          "command": 8,
-          "ability": 40,
-          "minMp": 15,
-          "whileMonster": 170
-        },
-        {
-          "character": 9,
-          "command": 2,
+          "command": 18,
+          "minMp": 20,
           "whileMonster": 168
         },
         {
@@ -2466,35 +2357,8 @@
         },
         {
           "character": 9,
-          "command": 8,
-          "ability": 34,
-          "minMp": 15,
-          "whileMonster": 169
-        },
-        {
-          "character": 6,
-          "command": 8,
-          "ability": 40,
-          "minMp": 15,
-          "whileMonster": 169
-        },
-        {
-          "character": 9,
-          "command": 8,
-          "ability": 34,
-          "minMp": 15,
-          "whileMonster": 170
-        },
-        {
-          "character": 6,
-          "command": 8,
-          "ability": 40,
-          "minMp": 15,
-          "whileMonster": 170
-        },
-        {
-          "character": 9,
-          "command": 2,
+          "command": 18,
+          "minMp": 20,
           "whileMonster": 168
         },
         {
@@ -2579,35 +2443,8 @@
         },
         {
           "character": 9,
-          "command": 8,
-          "ability": 34,
-          "minMp": 15,
-          "whileMonster": 169
-        },
-        {
-          "character": 6,
-          "command": 8,
-          "ability": 40,
-          "minMp": 15,
-          "whileMonster": 169
-        },
-        {
-          "character": 9,
-          "command": 8,
-          "ability": 34,
-          "minMp": 15,
-          "whileMonster": 170
-        },
-        {
-          "character": 6,
-          "command": 8,
-          "ability": 40,
-          "minMp": 15,
-          "whileMonster": 170
-        },
-        {
-          "character": 9,
-          "command": 2,
+          "command": 18,
+          "minMp": 20,
           "whileMonster": 168
         },
         {

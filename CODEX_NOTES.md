@@ -745,3 +745,15 @@ Waterway 2 (live): with the waypoints only down to (9,7), the floor search still
 * **door_graph.py** now takes several assets (`20010,20011`), treats a cell as open on any collision layer, and prints each leg's walk as corners.
 * **Twincast default (user):** Porom Twincasts in every fight once healing and status cures are covered, when she and Palom both have 20 MP and the command is enabled. This comes before plan rules and the undead Cure.
 * **Field status cures missed Mini after a fight (live: two members Mini'd, no field Esuna).** `PlayerCharacterParameter` has only `CurrentConditionList`. To find out what the field actually sees, every member's condition ids now go to `<data>/status.log` after each fight.
+
+### 108. Baigan (live): the arms grow back, so everyone goes at Baigan; both twins Twincast
+Live, segment 7: the shop, inn rest, Yang (Twincast default; Tellah's Esuna cured Cecil's Mini in battle), the Baron walk, the waterway and the side-corridor castle route all worked. Then the party wiped at Baigan.
+* The arms regrow at full HP (444) a few turns after they die, so the guide's arms-first plan was a treadmill.
+* The first Twincast took Baigan from 4444 to 3509 and killed both arms. None of the later Twincasts landed (Porom chose it while Palom took his own Fira and Cure turns and was KO'd), and Baigan stayed at 3335.
+* Tellah Defended (plan rule 7) most of the fight.
+
+New plan:
+* Route killFirst=[Baigan].
+* Porom and Palom both Twincast while Baigan lives.
+* Tellah heals by role, else Defends (spells reflect off Baigan's Wall).
+* Plugin: Twincast is the default for both twins (each needs the partner's MP ≥ 20).
