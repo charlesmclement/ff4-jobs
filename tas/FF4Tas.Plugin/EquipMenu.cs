@@ -27,7 +27,7 @@ internal sealed class EquipMenu
     internal void Reset(int[] characters,int[]? removeFirst=null,EquipItem[]? exact=null)
     {
         items=exact??Array.Empty<EquipItem>();itemsDone.Clear();strong.Clear();
-        wanted=characters;mode=0;seen.Clear();stepping=false;stepFrom=stepTries=0;reset=removeFirst??Array.Empty<int>();removed.Clear();done.Clear();finished=sideways=false;wait=switches=stuck=0;lastIndex=-1;lastKey=null;main=null;window=null;
+        wanted=characters;seen.Clear();stepping=false;stepFrom=stepTries=0;reset=removeFirst??Array.Empty<int>();removed.Clear();done.Clear();finished=sideways=false;wait=switches=stuck=0;lastIndex=-1;lastKey=null;main=null;window=null;
     }
     internal void Read(Snapshot s,int frame)
     {
@@ -37,7 +37,7 @@ internal sealed class EquipMenu
         // the next member, stop once a member comes round again. Needs no slot
         // matching (the king's chamber never matched Cecil in any counting).
         bool everyone=wanted.Length==1 && wanted[0]==0;
-        int next=everyone?-1:Array.Find(wanted,id=>!done.Contains(id) && Slot(id)>=0);
+        int next=everyone?-1:Array.Find(wanted,id=>!done.Contains(id) && InParty(id));
         if(next==0 || switches>MaxSwitches)finished=true;
         if(s.Phase=="Player")
         {
@@ -213,30 +213,18 @@ internal sealed class EquipMenu
         var owned=UserDataManager.Instance()?.normalOwnedItems;
         return owned!=null && owned.TryGetValue(content,out var entry) && entry!=null && entry.Count>0;
     }
-    // Party slot of a character_status id (Cecil 1, Yang 8), or -1 when not
-    // in the party. Corps entries hold the owned-character id. The menu's
-    // count wasn't always the corps list order: after Golbez took Rosa (her
-    // slot left empty) the run cycled members and never reached Cecil, so the
-    // Deathbringer went unequipped. Mode 0: slot-Id order without empty slots;
-    // 1: with them; 2: raw list order. Read moves to the next mode after a
-    // full lap of the party without a match.
-    private int mode;
-    private int Slot(int statusId)
+    // Whether a character_status id is in the party (membership only - the
+    // window is matched by the character it shows, never by a slot).
+    private static bool InParty(int statusId)
     {
         var user=UserDataManager.Instance();var corps=user?.corpsList;var owned=user?.OwnedCharacterList;
-        if(corps==null || owned==null)return -1;
-        var order=new List<Last.Data.User.Corps>();
-        for(int c=0;c<corps.Count;c++)if(corps[c]!=null)order.Add(corps[c]);
-        if(mode!=2)order.Sort((a,b)=>((int)a.Id).CompareTo((int)b.Id));
-        int n=0;
-        foreach(var entry in order)
+        if(corps==null || owned==null)return false;
+        for(int c=0;c<corps.Count;c++)
         {
-            int who=entry.CharacterId;
-            if(who==0) {if(mode==1)n++;continue;}
-            for(int o=0;o<owned.Count;o++)if(owned[o]?.Id==who && owned[o].characterStatusId==statusId)return n;
-            n++;
+            int who=corps[c]?.CharacterId??0;if(who==0)continue;
+            for(int o=0;o<owned.Count;o++)if(owned[o]?.Id==who && owned[o].characterStatusId==statusId)return true;
         }
-        return -1;
+        return false;
     }
     private static void Pulse(Snapshot s,int frame,string key,string detail)
     {

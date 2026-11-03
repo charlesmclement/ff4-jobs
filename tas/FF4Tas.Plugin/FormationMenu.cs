@@ -23,7 +23,13 @@ internal sealed class FormationMenu
     internal void Reset(FormationOrder target) {goal=target;actions=0;main=null;}
     internal void Read(Snapshot s,int frame)
     {
+        // Who is where: the Order screen's own rows (the character each row
+        // shows) once it's open, else the party list; positions are the
+        // point of a formation, but members are found by character id.
         var slots=Slots(out var rows);
+        var shown=UnityEngine.Object.FindObjectOfType<StatusWindowController>();
+        if(shown!=null && PartyList.Rows(shown)==slots.Length)
+            for(int r=0;r<slots.Length;r++) {int id=PartyList.IdAt(shown,r);if(id>=0)slots[r]=id==CecilPaladin?CecilDark:id;}
         // Order first: put each wanted member into its slot.
         int source=-1,dest=-1;
         for(int i=0;i<goal.Order.Length && i<slots.Length;i++)

@@ -1201,7 +1201,7 @@
       "mapId": 24,
       "goal": {
         "x": 15,
-        "y": 17,
+        "y": 18,
         "layer": 0
       },
       "phases": [
@@ -1221,7 +1221,14 @@
         "mapId": 31
       },
       "stableFrames": 2,
-      "timeoutFrames": 54000
+      "timeoutFrames": 54000,
+      "waypoints": [
+        {
+          "x": 15,
+          "y": 19,
+          "layer": 0
+        }
+      ]
     },
     {
       "label": "Weapon shop: up to the weaponsmith",

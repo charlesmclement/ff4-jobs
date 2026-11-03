@@ -865,3 +865,12 @@ User: "we should be doing it right after getting yang", "add a claw equip right 
 * The weapon shop was locked only because the run tried it before Yang. The town script swaps that door's layer after flag 31.
 * Segment 7 now: Yang joins → inn: reset + Strongest + any claws (Thunder first) → out → weapon shop (2 Thunder, 2 Fire, 2 Ice) → Thunder pair on → waterway. The claw step before Baigan stays for resumes.
 * Segment 8 no longer detours into Baron. It steps off and back onto the Enterprise at (107,146) and flies to Toroia.
+
+### 124. No party-slot logic anywhere (user rule)
+User: "none of the programming should be based on what slot the character is in. in no segment".
+* New `PartyList` reads the menu's party list by character: `StatusWindowController.contentList[row].CharacterData.characterStatusId`.
+* FieldMagic: the caster is the row that shows them (`RowOf`). If the list can't be read, it steps through rows until the opened magic window shows the caster.
+* EquipMenu: membership check only (`InParty`). The window is matched by the character it shows (`GetTargetCharacterData`). The slot/mode counting is gone.
+* FormationMenu: who is where comes from the Order screen's rows once open. Positions are still the goal, since a formation is positions, but members are found by id. Front/back rows are still read from corps in list order.
+* Item and battle targets already went by character (TargetCursor, GetPlayerTarget).
+* Weapon shop door fix: it's the GotoMap (15,18) (arrival outside (15,19)), not the animation tile (15,17). Before Yang a "can't enter" message entity sits on it (ev_e_0030); after Yang (ev_e_0033) it's gone.

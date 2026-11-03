@@ -129,8 +129,11 @@ s.append(heal('Inn: heal after the fights',INN))
 s.append(door('Inn: out',INN,(21,22),BARON_TOWN))
 # Claws right after Yang (user): 2 Thunder (Cagnazzo), 2 Fire, 2 Ice; owned
 # claws count. Then a claw in each hand, Thunder first (Strongest skips
-# claws). Weapon shop: map 31, door (15,17), weaponsmith (11,6).
-s.append(door('Baron: into the weapon shop',BARON_TOWN,(15,17),WEAPON_SHOP))
+# claws). Weapon shop: map 31, door (15,18), weaponsmith (11,6).
+# The door is the GotoMap at (15,18) (arrival outside (15,19)); before Yang
+# a "can't enter" message sits on it (ev_e_0030), after Yang it's gone
+# (ev_e_0033).
+s.append(door('Baron: into the weapon shop',BARON_TOWN,(15,18),WEAPON_SHOP,[(15,19)]))
 s.append(nav('Weapon shop: up to the weaponsmith',WEAPON_SHOP,(11,8),{'atDestination':True}))
 s.append(shop("Weapon shop: claw pairs for Yang - 2 Thunder, 2 Fire, 2 Ice",WEAPON_SHOP,
               [{'content':THUNDER_CLAW,'count':2},{'content':FIRE_CLAW,'count':2},{'content':ICE_CLAW,'count':2}]))

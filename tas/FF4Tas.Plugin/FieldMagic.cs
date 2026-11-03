@@ -67,12 +67,12 @@ internal sealed class FieldMagic
             var status=UnityEngine.Object.FindObjectOfType<StatusWindowController>();
             var cursor=status?.selectCursor;
             if(cursor==null)return;
-            // The party list's order isn't always the corps order: the slot
-            // is a first guess, and each time the opened window shows someone
-            // else the guess moves one member on (the character id decides).
-            int members=Members();
-            int guess=members>0?(Slot(caster)+casterShift)%members:Slot(caster);
-            Move(s,frame,cursor.Index,guess,false,"Caster #"+caster);return;
+            // The row that shows the caster (character id, never a slot
+            // count). If the list can't be read, step through the rows: each
+            // time the opened window shows someone else, the next row is tried.
+            int row=PartyList.RowOf(status,caster);
+            if(row<0) {int rows=Math.Max(1,PartyList.Rows(status));row=casterShift%rows;}
+            Move(s,frame,cursor.Index,row,false,"Caster #"+caster);return;
         }
         // The window shows someone else: back to the party list.
         if(window!.commandController?.targetCharacter?.characterStatusId is int shown && shown!=caster)
@@ -205,25 +205,6 @@ internal sealed class FieldMagic
     }
     // Party slot of a character_status id (corps order, empty slots skipped).
     private int casterShift;
-    private static int Members()
-    {
-        var corps=UserDataManager.Instance()?.corpsList;int n=0;
-        for(int c=0;corps!=null && c<corps.Count;c++)if((corps[c]?.CharacterId??0)!=0)n++;
-        return n;
-    }
-    private static int Slot(int statusId)
-    {
-        var user=UserDataManager.Instance();var corps=user?.corpsList;var owned=user?.OwnedCharacterList;
-        if(corps==null || owned==null)return -1;
-        int n=0;
-        for(int c=0;c<corps.Count;c++)
-        {
-            int who=corps[c]?.CharacterId??0;if(who==0)continue;
-            for(int o=0;o<owned.Count;o++)if(owned[o]?.Id==who && owned[o].characterStatusId==statusId)return n;
-            n++;
-        }
-        return -1;
-    }
     // Up/Down; grids and sideways rows flip to Left/Right when a key leaves
     // the cursor in place three times.
     // The spell list is a grid: Down jumps a whole row (0 -> 3 -> wraps to 0,
