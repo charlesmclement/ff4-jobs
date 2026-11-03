@@ -1,0 +1,621 @@
+{
+  "schema": 1,
+  "name": "Lunar Subterrane → Zeromus (segment 17, the end) — UNTESTED",
+  "fleeTough": true,
+  "realFights": [
+    201,
+    202
+  ],
+  "final": true,
+  "steps": [
+    {
+      "label": "Save room: heal",
+      "kind": "menu",
+      "mapId": 310,
+      "phases": [
+        "Player",
+        "Menu",
+        "Shop",
+        "Message",
+        "FieldReady",
+        "ChangeMap"
+      ],
+      "until": {
+        "menuDone": true
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 7200
+    },
+    {
+      "label": "Save room: out",
+      "kind": "navigate",
+      "mapId": 310,
+      "goal": {
+        "x": 3,
+        "y": 16,
+        "layer": 0
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Player",
+        "mapId": 309
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 54000
+    },
+    {
+      "label": "Lunar Subterrane: on toward the core",
+      "kind": "navigate",
+      "mapId": 309,
+      "goal": {
+        "x": 25,
+        "y": 11,
+        "layer": 0
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Player",
+        "mapId": 313
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 54000,
+      "battlePlan": [
+        {
+          "character": 4,
+          "command": 8,
+          "byWeakness": true,
+          "weaknessTier": 2,
+          "minEnemies": 3,
+          "minMp": 80
+        }
+      ]
+    },
+    {
+      "label": "Lunar Subterrane: down",
+      "kind": "navigate",
+      "mapId": 313,
+      "goal": {
+        "x": 19,
+        "y": 21,
+        "layer": 0
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Player",
+        "mapId": 314
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 54000,
+      "battlePlan": [
+        {
+          "character": 4,
+          "command": 8,
+          "byWeakness": true,
+          "weaknessTier": 2,
+          "minEnemies": 3,
+          "minMp": 80
+        }
+      ]
+    },
+    {
+      "label": "Lunar Subterrane: down",
+      "kind": "navigate",
+      "mapId": 314,
+      "goal": {
+        "x": 24,
+        "y": 25,
+        "layer": 0
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Player",
+        "mapId": 315
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 54000,
+      "battlePlan": [
+        {
+          "character": 4,
+          "command": 8,
+          "byWeakness": true,
+          "weaknessTier": 2,
+          "minEnemies": 3,
+          "minMp": 80
+        }
+      ]
+    },
+    {
+      "label": "Lunar Subterrane: down",
+      "kind": "navigate",
+      "mapId": 315,
+      "goal": {
+        "x": 25,
+        "y": 23,
+        "layer": 0
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Player",
+        "mapId": 316
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 54000,
+      "battlePlan": [
+        {
+          "character": 4,
+          "command": 8,
+          "byWeakness": true,
+          "weaknessTier": 2,
+          "minEnemies": 3,
+          "minMp": 80
+        }
+      ]
+    },
+    {
+      "label": "Lunar Subterrane: into the core",
+      "kind": "navigate",
+      "mapId": 316,
+      "goal": {
+        "x": 9,
+        "y": 18,
+        "layer": 0
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Player",
+        "mapId": 317
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 54000,
+      "battlePlan": [
+        {
+          "character": 4,
+          "command": 8,
+          "byWeakness": true,
+          "weaknessTier": 2,
+          "minEnemies": 3,
+          "minMp": 80
+        }
+      ]
+    },
+    {
+      "label": "The core: Zemus, Zeromus; the Crystal; the final battle; the ending (flag 70) - walk in",
+      "kind": "navigate",
+      "mapId": 317,
+      "goal": {
+        "x": 15,
+        "y": 15,
+        "layer": 0
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Event"
+      },
+      "stableFrames": 15,
+      "timeoutFrames": 54000,
+      "battlePlan": [
+        {
+          "character": 13,
+          "item": 59,
+          "targetEnemies": true,
+          "oncePerBattle": true,
+          "whileMonster": 201
+        },
+        {
+          "character": 2,
+          "command": 11,
+          "whileMonster": 202
+        },
+        {
+          "character": 4,
+          "command": 9,
+          "ability": 75,
+          "minMp": 60,
+          "whileMonster": 202
+        },
+        {
+          "character": 3,
+          "command": 7,
+          "ability": 23,
+          "minMp": 46,
+          "whileMonster": 202
+        },
+        {
+          "character": 4,
+          "command": 8,
+          "byWeakness": true,
+          "weaknessTier": 2,
+          "minEnemies": 3,
+          "minMp": 80
+        }
+      ],
+      "skipIf": {
+        "storyFlag": 70
+      },
+      "group": "flag70"
+    },
+    {
+      "label": "The core: Zemus, Zeromus; the Crystal; the final battle; the ending (flag 70)",
+      "kind": "mash",
+      "keys": [
+        "Confirm"
+      ],
+      "phases": [
+        "None",
+        "Init",
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "storyFlag": 70
+      },
+      "stableFrames": 30,
+      "periodFrames": 8,
+      "pressedFrames": 2,
+      "timeoutFrames": 216000,
+      "battlePlan": [
+        {
+          "character": 13,
+          "item": 59,
+          "targetEnemies": true,
+          "oncePerBattle": true,
+          "whileMonster": 201
+        },
+        {
+          "character": 2,
+          "command": 11,
+          "whileMonster": 202
+        },
+        {
+          "character": 4,
+          "command": 9,
+          "ability": 75,
+          "minMp": 60,
+          "whileMonster": 202
+        },
+        {
+          "character": 3,
+          "command": 7,
+          "ability": 23,
+          "minMp": 46,
+          "whileMonster": 202
+        },
+        {
+          "character": 4,
+          "command": 8,
+          "byWeakness": true,
+          "weaknessTier": 2,
+          "minEnemies": 3,
+          "minMp": 80
+        }
+      ],
+      "skipIf": {
+        "storyFlag": 70
+      },
+      "group": "flag70"
+    },
+    {
+      "label": "The end: FINAL FANTASY IV complete",
+      "kind": "checkpoint",
+      "phases": [
+        "None",
+        "Init",
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "until": {
+        "storyFlag": 70
+      }
+    }
+  ],
+  "weaknesses": {
+    "7": [
+      1
+    ],
+    "10": [
+      2
+    ],
+    "14": [
+      2
+    ],
+    "15": [
+      3
+    ],
+    "16": [
+      1
+    ],
+    "17": [
+      3
+    ],
+    "18": [
+      1
+    ],
+    "19": [
+      2
+    ],
+    "20": [
+      1
+    ],
+    "21": [
+      3
+    ],
+    "22": [
+      3
+    ],
+    "26": [
+      2
+    ],
+    "27": [
+      2
+    ],
+    "29": [
+      1
+    ],
+    "33": [
+      3
+    ],
+    "34": [
+      1
+    ],
+    "36": [
+      1
+    ],
+    "42": [
+      3
+    ],
+    "43": [
+      2
+    ],
+    "44": [
+      3
+    ],
+    "48": [
+      1
+    ],
+    "49": [
+      1
+    ],
+    "50": [
+      1
+    ],
+    "51": [
+      1
+    ],
+    "52": [
+      1
+    ],
+    "54": [
+      1
+    ],
+    "56": [
+      2
+    ],
+    "57": [
+      3
+    ],
+    "58": [
+      3
+    ],
+    "62": [
+      2
+    ],
+    "68": [
+      1
+    ],
+    "70": [
+      1
+    ],
+    "72": [
+      1
+    ],
+    "74": [
+      3
+    ],
+    "82": [
+      1
+    ],
+    "83": [
+      2
+    ],
+    "89": [
+      2
+    ],
+    "91": [
+      2
+    ],
+    "93": [
+      2
+    ],
+    "94": [
+      1
+    ],
+    "96": [
+      2
+    ],
+    "102": [
+      1
+    ],
+    "103": [
+      2
+    ],
+    "104": [
+      2
+    ],
+    "113": [
+      1
+    ],
+    "115": [
+      1
+    ],
+    "118": [
+      1
+    ],
+    "120": [
+      1
+    ],
+    "121": [
+      1
+    ],
+    "126": [
+      1
+    ],
+    "130": [
+      2
+    ],
+    "148": [
+      2
+    ],
+    "150": [
+      1
+    ],
+    "160": [
+      2
+    ],
+    "163": [
+      3
+    ],
+    "167": [
+      1
+    ],
+    "181": [
+      1
+    ],
+    "189": [
+      3
+    ],
+    "190": [
+      3
+    ],
+    "194": [
+      1
+    ],
+    "195": [
+      3
+    ],
+    "209": [
+      1
+    ],
+    "210": [
+      3
+    ],
+    "212": [
+      1
+    ],
+    "227": [
+      2
+    ],
+    "229": [
+      1
+    ],
+    "231": [
+      2
+    ],
+    "236": [
+      2
+    ],
+    "246": [
+      2
+    ],
+    "251": [
+      2
+    ],
+    "252": [
+      2
+    ],
+    "274": [
+      1
+    ]
+  }
+}

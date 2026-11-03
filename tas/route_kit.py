@@ -92,6 +92,22 @@ def formation(label,map_id,order,front,**extra):
 def checkpoint(label,map_id,flag):
     return {'label':label,'kind':'checkpoint','phases':['Player'],'until':{'phase':'Player','mapId':map_id,'storyFlag':flag}}
 
+def save_points(map_id):
+    """Save-point cells (entity "セーブポイント") on a master map id."""
+    import csv,glob
+    name=next(r['map_name'] for r in csv.DictReader(open(os.path.join(ROOT,'research','ff4-master','map'),encoding='utf-8')) if r['id']==str(map_id))
+    asset=name.split('_')[1]
+    out=set()
+    for f in glob.glob(os.path.join(ROOT,'research','tas-maps','container','Assets','GameAssets','Serial','Res','Map',f'Map_{asset}',name,'entity_default.json')):
+        def walk(o):
+            if isinstance(o,dict):
+                if 'セーブポイント' in str(o.get('name','')):out.add((int(o['x'])//16,int(o['y'])//16-(1 if 'gid' in o else 0)))
+                for v in o.values():walk(v)
+            elif isinstance(o,list):
+                for v in o:walk(v)
+        walk(json.load(open(f,encoding='utf-8')))
+    return out
+
 def write(path,name,steps,**route):
     """Write the route with weaknesses filled from master data (weaknesses.py)."""
     out={'schema':1,'name':name}
@@ -99,7 +115,14 @@ def write(path,name,steps,**route):
     # Every segment ends on saveable ground (user rule): the overworld maps
     # are the only maps with save_availability 1.
     last=steps[-1]
-    assert last['kind']=='checkpoint' and last['until'].get('mapId') in(1,2,3),'segment must end on the overworld (saveable)'
+    assert last['kind']=='checkpoint','a segment ends with a checkpoint'
+    end_map=last['until'].get('mapId')
+    if route.pop('final',False):pass  # the game's ending: nothing left to save
+    elif end_map not in(1,2,3):
+        # Not an overworld: the step before must stand on a save point.
+        walk=next(st for st in reversed(steps[:-1]) if st['kind']=='navigate')
+        cell=(walk['goal']['x'],walk['goal']['y'])
+        assert walk['mapId']==end_map and cell in save_points(end_map),f'segment must end on saveable ground; map {end_map} {cell} is not a save point'
     full=os.path.join(ROOT,path)
     open(full,'w',encoding='utf-8').write(json.dumps(out,indent=2,ensure_ascii=False)+'\n')
     os.system(f'python3 "{os.path.join(ROOT,"tas","weaknesses.py")}" "{full}" >/dev/null')

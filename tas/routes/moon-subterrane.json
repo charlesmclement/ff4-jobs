@@ -1,0 +1,1042 @@
+{
+  "schema": 1,
+  "name": "Moon → Lunar Subterrane (segment 16) — UNTESTED",
+  "fleeTough": true,
+  "steps": [
+    {
+      "label": "Moon: heal",
+      "kind": "menu",
+      "mapId": 3,
+      "phases": [
+        "Player",
+        "Menu",
+        "Shop",
+        "Message",
+        "FieldReady",
+        "ChangeMap"
+      ],
+      "until": {
+        "menuDone": true
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 7200
+    },
+    {
+      "label": "Moon: walk to the Lunar Palace",
+      "kind": "navigate",
+      "mapId": 3,
+      "goal": {
+        "x": 22,
+        "y": 37,
+        "layer": 0
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Player",
+        "mapId": 153
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 54000,
+      "waypoints": [
+        {
+          "x": 13,
+          "y": 52,
+          "layer": 0
+        },
+        {
+          "x": 21,
+          "y": 52,
+          "layer": 0
+        },
+        {
+          "x": 21,
+          "y": 38,
+          "layer": 0
+        },
+        {
+          "x": 22,
+          "y": 38,
+          "layer": 0
+        }
+      ]
+    },
+    {
+      "label": "Lunar Palace: up the stairs",
+      "kind": "navigate",
+      "mapId": 153,
+      "goal": {
+        "x": 15,
+        "y": 3,
+        "layer": 0
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Player",
+        "mapId": 154
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 54000
+    },
+    {
+      "label": "Lunar Palace 2F: into the Lunar Subterrane (flag 69, autosave) - walk in",
+      "kind": "navigate",
+      "mapId": 154,
+      "goal": {
+        "x": 12,
+        "y": 15,
+        "layer": 0
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Event"
+      },
+      "stableFrames": 15,
+      "timeoutFrames": 54000,
+      "skipIf": {
+        "storyFlag": 69
+      },
+      "group": "flag69"
+    },
+    {
+      "label": "Lunar Palace 2F: into the Lunar Subterrane (flag 69, autosave)",
+      "kind": "mash",
+      "keys": [
+        "Confirm"
+      ],
+      "phases": [
+        "None",
+        "Init",
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Player",
+        "storyFlag": 69
+      },
+      "stableFrames": 30,
+      "periodFrames": 8,
+      "pressedFrames": 2,
+      "timeoutFrames": 216000,
+      "skipIf": {
+        "storyFlag": 69
+      },
+      "group": "flag69"
+    },
+    {
+      "label": "Lunar Subterrane: map 296 door (25, 28)",
+      "kind": "navigate",
+      "mapId": 296,
+      "goal": {
+        "x": 25,
+        "y": 28,
+        "layer": 0
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Player",
+        "mapId": 297
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 54000,
+      "battlePlan": [
+        {
+          "character": 4,
+          "command": 8,
+          "byWeakness": true,
+          "weaknessTier": 2,
+          "minEnemies": 3,
+          "minMp": 60
+        }
+      ]
+    },
+    {
+      "label": "Lunar Subterrane: map 297 door (23, 8)",
+      "kind": "navigate",
+      "mapId": 297,
+      "goal": {
+        "x": 23,
+        "y": 8,
+        "layer": 0
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Player",
+        "mapId": 298
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 54000,
+      "battlePlan": [
+        {
+          "character": 4,
+          "command": 8,
+          "byWeakness": true,
+          "weaknessTier": 2,
+          "minEnemies": 3,
+          "minMp": 60
+        }
+      ]
+    },
+    {
+      "label": "Lunar Subterrane: map 298 door (24, 19)",
+      "kind": "navigate",
+      "mapId": 298,
+      "goal": {
+        "x": 24,
+        "y": 19,
+        "layer": 0
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Player",
+        "mapId": 299
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 54000,
+      "battlePlan": [
+        {
+          "character": 4,
+          "command": 8,
+          "byWeakness": true,
+          "weaknessTier": 2,
+          "minEnemies": 3,
+          "minMp": 60
+        }
+      ]
+    },
+    {
+      "label": "Lunar Subterrane: map 299 door (32, 28)",
+      "kind": "navigate",
+      "mapId": 299,
+      "goal": {
+        "x": 32,
+        "y": 28,
+        "layer": 0
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Player",
+        "mapId": 301
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 54000,
+      "battlePlan": [
+        {
+          "character": 4,
+          "command": 8,
+          "byWeakness": true,
+          "weaknessTier": 2,
+          "minEnemies": 3,
+          "minMp": 60
+        }
+      ]
+    },
+    {
+      "label": "Lunar Subterrane: map 301 door (14, 18)",
+      "kind": "navigate",
+      "mapId": 301,
+      "goal": {
+        "x": 14,
+        "y": 18,
+        "layer": 0
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Player",
+        "mapId": 299
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 54000,
+      "battlePlan": [
+        {
+          "character": 4,
+          "command": 8,
+          "byWeakness": true,
+          "weaknessTier": 2,
+          "minEnemies": 3,
+          "minMp": 60
+        }
+      ]
+    },
+    {
+      "label": "Lunar Subterrane: map 299 door (23, 33)",
+      "kind": "navigate",
+      "mapId": 299,
+      "goal": {
+        "x": 23,
+        "y": 33,
+        "layer": 0
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Player",
+        "mapId": 302
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 54000,
+      "battlePlan": [
+        {
+          "character": 4,
+          "command": 8,
+          "byWeakness": true,
+          "weaknessTier": 2,
+          "minEnemies": 3,
+          "minMp": 60
+        }
+      ]
+    },
+    {
+      "label": "Lunar Subterrane: map 302 door (20, 17)",
+      "kind": "navigate",
+      "mapId": 302,
+      "goal": {
+        "x": 20,
+        "y": 17,
+        "layer": 0
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Player",
+        "mapId": 303
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 54000,
+      "battlePlan": [
+        {
+          "character": 4,
+          "command": 8,
+          "byWeakness": true,
+          "weaknessTier": 2,
+          "minEnemies": 3,
+          "minMp": 60
+        }
+      ]
+    },
+    {
+      "label": "Lunar Subterrane: map 303 door (30, 11)",
+      "kind": "navigate",
+      "mapId": 303,
+      "goal": {
+        "x": 30,
+        "y": 11,
+        "layer": 0
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Player",
+        "mapId": 302
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 54000,
+      "battlePlan": [
+        {
+          "character": 4,
+          "command": 8,
+          "byWeakness": true,
+          "weaknessTier": 2,
+          "minEnemies": 3,
+          "minMp": 60
+        }
+      ]
+    },
+    {
+      "label": "Lunar Subterrane: map 302 door (23, 24)",
+      "kind": "navigate",
+      "mapId": 302,
+      "goal": {
+        "x": 23,
+        "y": 24,
+        "layer": 0
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Player",
+        "mapId": 304
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 54000,
+      "battlePlan": [
+        {
+          "character": 4,
+          "command": 8,
+          "byWeakness": true,
+          "weaknessTier": 2,
+          "minEnemies": 3,
+          "minMp": 60
+        }
+      ]
+    },
+    {
+      "label": "Lunar Subterrane: map 304 door (5, 3)",
+      "kind": "navigate",
+      "mapId": 304,
+      "goal": {
+        "x": 5,
+        "y": 3,
+        "layer": 0
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Player",
+        "mapId": 302
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 54000,
+      "battlePlan": [
+        {
+          "character": 4,
+          "command": 8,
+          "byWeakness": true,
+          "weaknessTier": 2,
+          "minEnemies": 3,
+          "minMp": 60
+        }
+      ]
+    },
+    {
+      "label": "Lunar Subterrane: map 302 door (29, 35)",
+      "kind": "navigate",
+      "mapId": 302,
+      "goal": {
+        "x": 29,
+        "y": 35,
+        "layer": 0
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Player",
+        "mapId": 307
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 54000,
+      "battlePlan": [
+        {
+          "character": 4,
+          "command": 8,
+          "byWeakness": true,
+          "weaknessTier": 2,
+          "minEnemies": 3,
+          "minMp": 60
+        }
+      ]
+    },
+    {
+      "label": "Lunar Subterrane: map 307 door (30, 26)",
+      "kind": "navigate",
+      "mapId": 307,
+      "goal": {
+        "x": 30,
+        "y": 26,
+        "layer": 0
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Player",
+        "mapId": 308
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 54000,
+      "battlePlan": [
+        {
+          "character": 4,
+          "command": 8,
+          "byWeakness": true,
+          "weaknessTier": 2,
+          "minEnemies": 3,
+          "minMp": 60
+        }
+      ]
+    },
+    {
+      "label": "Lunar Subterrane: map 308 door (10, 4)",
+      "kind": "navigate",
+      "mapId": 308,
+      "goal": {
+        "x": 10,
+        "y": 4,
+        "layer": 0
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Player",
+        "mapId": 309
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 54000,
+      "battlePlan": [
+        {
+          "character": 4,
+          "command": 8,
+          "byWeakness": true,
+          "weaknessTier": 2,
+          "minEnemies": 3,
+          "minMp": 60
+        }
+      ]
+    },
+    {
+      "label": "Lunar Subterrane: the save room before the core",
+      "kind": "navigate",
+      "mapId": 309,
+      "goal": {
+        "x": 21,
+        "y": 24,
+        "layer": 0
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Player",
+        "mapId": 310
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 54000,
+      "battlePlan": [
+        {
+          "character": 4,
+          "command": 8,
+          "byWeakness": true,
+          "weaknessTier": 2,
+          "minEnemies": 3,
+          "minMp": 60
+        }
+      ]
+    },
+    {
+      "label": "Save room: onto the save point",
+      "kind": "navigate",
+      "mapId": 310,
+      "goal": {
+        "x": 3,
+        "y": 9,
+        "layer": 0
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "atDestination": true
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 54000
+    },
+    {
+      "label": "Save room: Tent",
+      "kind": "menu",
+      "mapId": 310,
+      "phases": [
+        "Player",
+        "Menu",
+        "Shop",
+        "Message",
+        "FieldReady",
+        "ChangeMap",
+        "Event"
+      ],
+      "until": {
+        "menuDone": true
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 10800,
+      "menuItem": 21
+    },
+    {
+      "label": "Save room: heal anyone the Tent missed",
+      "kind": "menu",
+      "mapId": 310,
+      "phases": [
+        "Player",
+        "Menu",
+        "Shop",
+        "Message",
+        "FieldReady",
+        "ChangeMap"
+      ],
+      "until": {
+        "menuDone": true
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 7200
+    },
+    {
+      "label": "Save room: Strongest on everyone",
+      "kind": "menu",
+      "mapId": 310,
+      "phases": [
+        "Player",
+        "Menu",
+        "Shop",
+        "Message",
+        "FieldReady",
+        "ChangeMap"
+      ],
+      "until": {
+        "menuDone": true
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 10800,
+      "equip": [
+        0
+      ]
+    },
+    {
+      "label": "Save room: back onto the save point",
+      "kind": "navigate",
+      "mapId": 310,
+      "goal": {
+        "x": 3,
+        "y": 9,
+        "layer": 0
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "atDestination": true
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 54000
+    },
+    {
+      "label": "Segment 16 complete: on the last save point of the Lunar Subterrane",
+      "kind": "checkpoint",
+      "phases": [
+        "Player"
+      ],
+      "until": {
+        "phase": "Player",
+        "mapId": 310,
+        "storyFlag": 69
+      }
+    }
+  ],
+  "weaknesses": {
+    "7": [
+      1
+    ],
+    "10": [
+      2
+    ],
+    "14": [
+      2
+    ],
+    "15": [
+      3
+    ],
+    "16": [
+      1
+    ],
+    "17": [
+      3
+    ],
+    "18": [
+      1
+    ],
+    "19": [
+      2
+    ],
+    "20": [
+      1
+    ],
+    "21": [
+      3
+    ],
+    "22": [
+      3
+    ],
+    "26": [
+      2
+    ],
+    "27": [
+      2
+    ],
+    "29": [
+      1
+    ],
+    "33": [
+      3
+    ],
+    "34": [
+      1
+    ],
+    "36": [
+      1
+    ],
+    "42": [
+      3
+    ],
+    "43": [
+      2
+    ],
+    "44": [
+      3
+    ],
+    "48": [
+      1
+    ],
+    "49": [
+      1
+    ],
+    "50": [
+      1
+    ],
+    "51": [
+      1
+    ],
+    "52": [
+      1
+    ],
+    "54": [
+      1
+    ],
+    "56": [
+      2
+    ],
+    "57": [
+      3
+    ],
+    "58": [
+      3
+    ],
+    "62": [
+      2
+    ],
+    "68": [
+      1
+    ],
+    "70": [
+      1
+    ],
+    "72": [
+      1
+    ],
+    "74": [
+      3
+    ],
+    "82": [
+      1
+    ],
+    "83": [
+      2
+    ],
+    "89": [
+      2
+    ],
+    "91": [
+      2
+    ],
+    "93": [
+      2
+    ],
+    "94": [
+      1
+    ],
+    "96": [
+      2
+    ],
+    "102": [
+      1
+    ],
+    "103": [
+      2
+    ],
+    "104": [
+      2
+    ],
+    "113": [
+      1
+    ],
+    "115": [
+      1
+    ],
+    "118": [
+      1
+    ],
+    "120": [
+      1
+    ],
+    "121": [
+      1
+    ],
+    "126": [
+      1
+    ],
+    "130": [
+      2
+    ],
+    "148": [
+      2
+    ],
+    "150": [
+      1
+    ],
+    "160": [
+      2
+    ],
+    "163": [
+      3
+    ],
+    "167": [
+      1
+    ],
+    "181": [
+      1
+    ],
+    "189": [
+      3
+    ],
+    "190": [
+      3
+    ],
+    "194": [
+      1
+    ],
+    "195": [
+      3
+    ],
+    "209": [
+      1
+    ],
+    "210": [
+      3
+    ],
+    "212": [
+      1
+    ],
+    "227": [
+      2
+    ],
+    "229": [
+      1
+    ],
+    "231": [
+      2
+    ],
+    "236": [
+      2
+    ],
+    "246": [
+      2
+    ],
+    "251": [
+      2
+    ],
+    "252": [
+      2
+    ],
+    "274": [
+      1
+    ]
+  }
+}
