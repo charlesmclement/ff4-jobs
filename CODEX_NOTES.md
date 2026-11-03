@@ -678,3 +678,6 @@ Field heals: Porom (10) and FuSoYa (12) now cast field Cure/Life too (FieldMagic
 
 ### 94. Talking to the Mysidia Elder: keep pushing instead of replanning
 Live test, segment 6 step 5: Cecil reached (15,7), below the Elder at (15,6), pushed Up for one frame and then walked away. With no path left, the next frame replanned, found no route into the NPC's cell, and the greedy steering looped him round the room for 3000 frames. Now, whenever he is beside the goal with no path, he keeps stepping into it and presses Confirm every 12 frames after 20 still frames (`StepInto`). This lasts up to 300 still frames before he falls back to replanning. The mirror, the engineers, the King and the other NPC talks go through the same path.
+
+### 95. Tent steps wait out the rest scene
+Live test, segment 6 step 45, at the summit save point: the Tent closed the menu, and the step ended on `menuDone` two frames later. The Tent's rest scene (Event, about 450 frames) then started during the next heal step, which doesn't list Event, so the run failed with "Unexpected state". The earlier rest outside Mt. Ordeals was followed by a navigate step, which tolerates Event, so it got through. `route_kit.tent()` now uses stableFrames 40, so the step ends only once he's been back in control after the scene. All generated routes are rebuilt.

@@ -898,7 +898,7 @@
       "until": {
         "menuDone": true
       },
-      "stableFrames": 2,
+      "stableFrames": 40,
       "timeoutFrames": 10800,
       "menuItem": 21
     },
@@ -1115,7 +1115,7 @@
       "until": {
         "menuDone": true
       },
-      "stableFrames": 2,
+      "stableFrames": 40,
       "timeoutFrames": 10800,
       "menuItem": 21
     },

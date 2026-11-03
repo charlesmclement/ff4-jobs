@@ -76,7 +76,10 @@ def menu(label,map_id,**extra):
 def heal(label,map_id,**extra):return menu(label,map_id,timeoutFrames=7200,**extra)
 
 def tent(label,map_id,**extra):
-    s=menu(label,map_id,menuItem=21,**extra);s['phases'].append('Event');return s
+    # The Tent's rest scene (Event, ~450 frames) starts a few frames after the
+    # menu closes: hold the step until he's been back in control for 40
+    # frames, or the next menu step meets the scene and fails.
+    s=menu(label,map_id,menuItem=21,**extra);s['phases'].append('Event');s['stableFrames']=40;return s
 
 def shop(label,map_id,buy,sell=(),facing='Up',**extra):
     return menu(label,map_id,facing=facing,shop={'buy':[b if isinstance(b,dict) else {'content':b} for b in buy],'sell':list(sell)},**extra)
