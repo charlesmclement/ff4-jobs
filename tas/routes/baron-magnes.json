@@ -50,13 +50,8 @@
       "timeoutFrames": 54000,
       "waypoints": [
         {
-          "x": 110,
-          "y": 145,
-          "layer": 0
-        },
-        {
-          "x": 109,
-          "y": 145,
+          "x": 108,
+          "y": 146,
           "layer": 0
         }
       ]
@@ -242,12 +237,12 @@
       "timeoutFrames": 54000
     },
     {
-      "label": "Baron: back onto the Enterprise (south-east of the town)",
+      "label": "Baron: back onto the Enterprise (two tiles below the castle)",
       "kind": "navigate",
       "mapId": 1,
       "goal": {
-        "x": 110,
-        "y": 147,
+        "x": 107,
+        "y": 146,
         "layer": 0
       },
       "phases": [
@@ -266,19 +261,7 @@
         "riding": true
       },
       "stableFrames": 2,
-      "timeoutFrames": 3600,
-      "waypoints": [
-        {
-          "x": 107,
-          "y": 146,
-          "layer": 0
-        },
-        {
-          "x": 110,
-          "y": 146,
-          "layer": 0
-        }
-      ]
+      "timeoutFrames": 3600
     },
     {
       "label": "Enterprise: north-west to Toroia; land beside the town",
@@ -310,7 +293,7 @@
       "timeoutFrames": 54000,
       "waypoints": [
         {
-          "x": 110,
+          "x": 107,
           "y": 70,
           "layer": 0
         },

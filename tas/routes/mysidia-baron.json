@@ -4048,12 +4048,12 @@
       "group": "flag107"
     },
     {
-      "label": "Enterprise: fly off the castle and land on the grass south-east of Baron town",
+      "label": "Enterprise: fly off the castle and land two tiles below it",
       "kind": "navigate",
       "mapId": 1,
       "goal": {
-        "x": 110,
-        "y": 147,
+        "x": 107,
+        "y": 146,
         "layer": 0
       },
       "phases": [
@@ -4077,12 +4077,7 @@
       "waypoints": [
         {
           "x": 107,
-          "y": 147,
-          "layer": 0
-        },
-        {
-          "x": 109,
-          "y": 147,
+          "y": 145,
           "layer": 0
         }
       ]

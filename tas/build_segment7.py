@@ -164,10 +164,11 @@ s.extend(trigger('Throne room: the King is Cagnazzo; Cid, the twins turn to ston
 s[-1]['until']={'storyFlag':107,'mapId':OVERWORLD};s[-1]['stableFrames']=60
 # After Kain's message the party is in the Enterprise right above Baron
 # Castle (107,142), and the landing step aimed there kept trying to land on
-# the castle (user). Fly south-east to open grass beside the town (110,147)
-# and land there (Confirm at the spot).
-LANDING=(110,147)
-s.append(nav('Enterprise: fly off the castle and land on the grass south-east of Baron town',OVERWORLD,LANDING,
+# the castle (user). Land two tiles below the castle (user), (107,146): the
+# Enterprise's landing_group (transportation 3 -> group 2: attributes 3, 4,
+# 6, 10, 15, 17, 18, 23) allows it; (110,147) was forest.
+LANDING=(107,146)
+s.append(nav('Enterprise: fly off the castle and land two tiles below it',OVERWORLD,LANDING,
              {'mapId':OVERWORLD,'riding':False},world_path((107,142),LANDING,transport=3,avoid=()),timeout=3600))
 s.append(heal('Beside the Enterprise: heal',OVERWORLD))
 s.append(checkpoint('Segment 7 complete: Cagnazzo defeated, the Enterprise is ours, outside Baron',OVERWORLD,107))
