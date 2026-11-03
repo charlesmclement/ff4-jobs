@@ -828,3 +828,6 @@ User: "make yang equip his claw or claws", "cecil to focus damage on the body an
 * New BattleRule `first`: checked before any heal or status cure. Baigan: Cecil Attack (`first`) every turn.
 * Paralyze (8): only Esuna and Remedy clear it (condition group 76). Tellah is the only Esuna caster, so a paralyzed Tellah waits it out unless a Remedy is owned; the run doesn't buy them.
 Claws before Baigan (live): a resume from the castle autosave starts at the Baigan walk-in and skipped the inn's claw step. any_claws now also runs on the hall map right before the trigger; the resume backs up onto it (a menu step without menuItem on the same map).
+
+### 118. Equip picks the member by character id
+Live: the claw step switched to the party "slot" the run worked out for Yang (window 1), but window 1 was Cecil. The claws were then "not in the list" (Cecil can't wear claws), and it backed out. User: "you should always use character id not slot". EquipMenu now reads the member the window shows (`EquipmentWindowController.GetTargetCharacterData(targetIndex).characterStatusId`) and presses SwitchRight until it's the wanted character. After MaxSwitches it gives up. `Slot()` is now only used to check that the member is in the party.

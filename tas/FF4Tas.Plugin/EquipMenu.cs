@@ -80,11 +80,14 @@ internal sealed class EquipMenu
         }
         else
         {
-            int slot=Slot(next);
-            if(shown!=slot)
+            // Match on the character the window shows, never a slot number
+            // (user: "always use character id not slot" - the slot count put
+            // Yang's claws into Cecil's equipment window).
+            int showing=ShownCharacter();
+            if(showing!=next)
             {
-                if(frame%12==0 && ++switches%LapSwitches==0)mode=(mode+1)%3;
-                Pulse(s,frame,"SwitchRight",$"Next member (#{next}: window {shown}, want {slot}, counting {mode})");return;
+                if(frame%12==0)switches++;
+                Pulse(s,frame,"SwitchRight",$"Next member (#{next}: window shows #{showing})");return;
             }
         }
         // Strongest done for this member: the exact items, one at a time
@@ -198,6 +201,12 @@ internal sealed class EquipMenu
             if(frame%12==0 && ++exactPresses>2*list.Count+6) {itemsDone.Add(k);exactPresses=0;Pulse(s,frame,"Back",$"Can't reach item {e.Content}");return;}
             Pulse(s,frame,want<at?"Up":"Down",$"Item {e.Content}: list {want}, cursor {at}");return;
         }
+    }
+    // character_status id of the member the equipment window shows, or -1.
+    private int ShownCharacter()
+    {
+        try {return window!.GetTargetCharacterData(window.targetIndex)?.characterStatusId??-1;}
+        catch(System.Exception) {return -1;}
     }
     private static bool Owned(int content)
     {
