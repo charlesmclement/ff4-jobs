@@ -1885,6 +1885,39 @@
       ]
     },
     {
+      "label": "Zot 7F: Yang - Thunder Claws in both hands for Barbariccia",
+      "kind": "menu",
+      "mapId": 209,
+      "phases": [
+        "Player",
+        "Menu",
+        "Shop",
+        "Message",
+        "FieldReady",
+        "ChangeMap"
+      ],
+      "until": {
+        "menuDone": true
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 10800,
+      "equip": [
+        8
+      ],
+      "equipItems": [
+        {
+          "character": 8,
+          "slot": 0,
+          "content": 164
+        },
+        {
+          "character": 8,
+          "slot": 1,
+          "content": 164
+        }
+      ]
+    },
+    {
       "label": "Zot 7F: formation - Cecil, Rosa, Yang, Kain, Cid; Cecil, Yang and Cid in front",
       "kind": "menu",
       "mapId": 209,

@@ -68,6 +68,7 @@ public sealed class Route
                 throw new ArgumentException("Battle plans need handleBattles and valid rules");
             if(s.Choice is <0 or >15)throw new ArgumentException("Invalid choice index");
             if(s.EquipReset!=null && (s.Equip==null || s.EquipReset.Any(id=>!s.Equip.Contains(id))))throw new ArgumentException("equipReset members must be in equip");
+            if(s.EquipItems!=null && (s.Equip==null || s.EquipItems.Length>12 || s.EquipItems.Any(e=>e==null || !s.Equip.Contains(e.Character) || e.Slot is <0 or >5 || e.Content<1)))throw new ArgumentException("Invalid equipItems");
             if((s.MenuItem!=null || s.Equip!=null || s.Shop!=null || s.Formation!=null) && s.Kind!="menu")throw new ArgumentException("Item/equip/shop need a menu step");
             if(s.Shop!=null && (s.Shop.Buy.Any(b=>b==null || b.Content<1 || b.Count is <1 or >99) || s.Shop.Sell.Any(c=>c<1)))throw new ArgumentException("Invalid shop order");
             if(s.Facing!=null && s.Facing is not ("Up" or "Down" or "Left" or "Right"))throw new ArgumentException("Invalid facing direction");
@@ -96,6 +97,12 @@ public sealed class ShopBuy
 {
     public int Content {get;set;}
     public int Count {get;set;}=1;
+}
+public sealed class EquipItem
+{
+    public int Character {get;set;}
+    public int Slot {get;set;}
+    public int Content {get;set;}
 }
 public sealed class Destination
 {
@@ -148,6 +155,11 @@ public sealed class Step
     // Everything) so Strongest re-picks from the whole bag: an equipped arrow
     // stack plus the new arrows bought for it (Rosa had 1 Iron Arrow left).
     public int[]? EquipReset {get;set;}
+    // After Strongest: these exact items in these slots (0 right hand,
+    // 1 left hand, 2 head, 3 body, 4 arms - the equipment window's slot
+    // rows), e.g. a pair of claws for a boss's weakness. A member here must
+    // also be in Equip. Items not in the bag are skipped.
+    public EquipItem[]? EquipItems {get;set;}
     // Shop: talk to the shopkeeper the step faces, then sell, then buy in
     // order (each buy only while affordable and owned+equipped < Count).
     public ShopOrder? Shop {get;set;}

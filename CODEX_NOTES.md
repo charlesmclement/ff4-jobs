@@ -766,3 +766,12 @@ User, after watching: Twincast DOES reflect (the guide is wrong), "kill right ar
 Yang: two Thunder Claws for Cagnazzo (user); spare Fire and Ice Claws are sold at the Baron weapon shop so Strongest can only pick the Thunder Claws.
 Never sell claws (user: they're needed for elemental weaknesses); the Fire/Ice Claw sale is removed. Open: equip can only press Strongest, so which claws Yang wears isn't chosen yet.
 Baron weapon shop: claw pairs, 2 Thunder, 2 Fire, 2 Ice (user), Thunder first; owned claws count.
+
+### 110. Exact equipment: claws by boss weakness
+User: "2 fire 2 ice 2 lightning", swapped by weakness. `Step.EquipItems` = [{character, slot, content}] (slot rows: 0 right hand, 1 left hand, 2 head, 3 body, 4 arms). Each member must also be in `Equip`.
+* EquipMenu: for that member, Strongest first. Then for each item: the Equip command (EquipmentCommandId 1) → the info window's slot row (`infoWindowController.selectCursor`) → the item in `selectWindowController.ContentDataList` by `contentId` (cursor `selectCursor`) → Confirm.
+* An item not in the list is skipped. So is one the cursor can't reach after a lap (in case the cursor index isn't the list index; check this live).
+* The window states come from dump.cs (KeyInput EquipmentWindowController.State): Command 1, Info 2, Select 3.
+* `route_kit.claws(label, map, element)` puts the claw pair for FIRE/ICE/LIGHTNING on Yang.
+* The master data has no boss weaknesses (resistance group 0 on Cagnazzo and Baigan), so elements come from the guide's monster table. Bolt: Cagnazzo and Barbariccia (Valvalis). Everyone else Yang fights is N/A, and the Dark Dragon is Holy.
+* Uses: segment 7 Thunder pair at the inn after Yang joins and again before Cagnazzo; segment 9 Thunder pair after Zot 7F's Strongest, before Barbariccia.

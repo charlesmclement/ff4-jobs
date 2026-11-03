@@ -11,9 +11,12 @@ namespace FF4Tas;
 // slot it shows; SwitchRight steps to the next member.
 internal sealed class EquipMenu
 {
-    private const int MenuEquipment=3,Strongest=2,RemoveEverything=3,WindowCommand=1,AfterEquip=30,MaxSwitches=24,LapSwitches=6;
+    private const int MenuEquipment=3,EquipCommand=1,Strongest=2,RemoveEverything=3,WindowCommand=1,WindowInfo=2,WindowSelect=3,AfterEquip=30,MaxSwitches=24,LapSwitches=6;
     private int[] wanted=Array.Empty<int>();
-    private readonly HashSet<int> done=new(),removed=new();
+    private readonly HashSet<int> done=new(),removed=new(),strong=new();
+    // Exact items after Strongest (Step.EquipItems), and which are done.
+    private EquipItem[] items=Array.Empty<EquipItem>();
+    private readonly HashSet<int> itemsDone=new();
     private int[] reset=Array.Empty<int>();
     private readonly HashSet<int> seen=new();private bool stepping;private int stepFrom,stepTries;
     private bool finished,sideways;
@@ -21,8 +24,9 @@ internal sealed class EquipMenu
     private string? lastKey;
     private MainMenuController? main;
     private EquipmentWindowController? window;
-    internal void Reset(int[] characters,int[]? removeFirst=null)
+    internal void Reset(int[] characters,int[]? removeFirst=null,EquipItem[]? exact=null)
     {
+        items=exact??Array.Empty<EquipItem>();itemsDone.Clear();strong.Clear();
         wanted=characters;mode=0;seen.Clear();stepping=false;stepFrom=stepTries=0;reset=removeFirst??Array.Empty<int>();removed.Clear();done.Clear();finished=sideways=false;wait=switches=stuck=0;lastIndex=-1;lastKey=null;main=null;window=null;
     }
     internal void Read(Snapshot s,int frame)
@@ -83,6 +87,18 @@ internal sealed class EquipMenu
                 Pulse(s,frame,"SwitchRight",$"Next member (#{next}: window {shown}, want {slot}, counting {mode})");return;
             }
         }
+        // Strongest done for this member: the exact items, one at a time
+        // (Equip -> slot row -> item), then the member is finished.
+        if(!everyone && strong.Contains(next))
+        {
+            int k=Array.FindIndex(items,e=>e.Character==next && !itemsDone.Contains(Array.IndexOf(items,e)));
+            if(k<0)
+            {
+                if((int)window.stateMachine.Current!=WindowCommand) {Pulse(s,frame,"Back","Back to the equip commands");return;}
+                done.Add(next);return;
+            }
+            ExactItem(s,frame,k);return;
+        }
         if((int)window.stateMachine.Current!=WindowCommand) {Pulse(s,frame,"Back","Back to the equip commands");return;}
         var c=window.commandController;
         if(c?.contents==null || c.selectCursor==null)return;
@@ -98,7 +114,9 @@ internal sealed class EquipMenu
         {
             if(frame%12==0)
             {
-                if(clearing)removed.Add(next);else done.Add(next);
+                if(clearing)removed.Add(next);
+                else if(!everyone && Array.Exists(items,e=>e.Character==next))strong.Add(next);
+                else done.Add(next);
                 if(everyone && !clearing) {seen.Add(shown);stepping=true;stepFrom=shown;}
                 wait=AfterEquip;
             }
@@ -113,6 +131,52 @@ internal sealed class EquipMenu
             lastKey=key;lastIndex=cursor;
         }
         Pulse(s,frame,key,"Strongest");
+    }
+    private int exactPresses;
+    // One exact item: Equip in the command row, the slot row in the info
+    // window, the item (by content id) in the select list, Confirm.
+    private void ExactItem(Snapshot s,int frame,int k)
+    {
+        var e=items[k];int state=(int)window!.stateMachine.Current;
+        if(state==WindowCommand)
+        {
+            var c=window.commandController;
+            if(c?.contents==null || c.selectCursor==null)return;
+            int target=-1;
+            for(int i=0;i<c.contents.Count;i++)if(c.contents[i]?.Data!=null && (int)c.contents[i].Data.Id==EquipCommand) {target=i;break;}
+            if(target<0) {itemsDone.Add(k);return;}
+            int cursor=c.selectCursor.Index;
+            if(cursor==target) {Pulse(s,frame,"Confirm","Equip (slot pick)");return;}
+            string key=sideways?(target<cursor?"Left":"Right"):(target<cursor?"Up":"Down");
+            if(frame%12==0)
+            {
+                if(key==lastKey && cursor==lastIndex && ++stuck>=3) {sideways=!sideways;stuck=0;}
+                else if(cursor!=lastIndex)stuck=0;
+                lastKey=key;lastIndex=cursor;
+            }
+            Pulse(s,frame,key,"Equip command");return;
+        }
+        if(state==WindowInfo)
+        {
+            var cur=window.infoWindowController?.selectCursor;if(cur==null)return;
+            int at=cur.Index;
+            if(at==e.Slot) {Pulse(s,frame,"Confirm",$"Slot {e.Slot} for #{e.Character}");return;}
+            Pulse(s,frame,e.Slot<at?"Up":"Down",$"Slot {e.Slot} (cursor {at})");return;
+        }
+        if(state==WindowSelect)
+        {
+            var sel=window.selectWindowController;var list=sel?.ContentDataList;var cur=sel?.selectCursor;
+            if(list==null || cur==null)return;
+            int want=-1;
+            for(int i=0;i<list.Count;i++)if(list[i]!=null && list[i].contentId==e.Content) {want=i;break;}
+            // Not in the bag (or already worn there): skip it.
+            if(want<0) {if(frame%12==0)itemsDone.Add(k);Pulse(s,frame,"Back",$"Item {e.Content} not in the list ({list.Count} entries)");return;}
+            int at=cur.Index;
+            if(at==want) {if(frame%12==0) {itemsDone.Add(k);wait=AfterEquip;exactPresses=0;}Pulse(s,frame,"Confirm",$"Equip item {e.Content} in slot {e.Slot}");return;}
+            // A lap without landing (cursor index isn't the list index): give up on it.
+            if(frame%12==0 && ++exactPresses>2*list.Count+6) {itemsDone.Add(k);exactPresses=0;Pulse(s,frame,"Back",$"Can't reach item {e.Content}");return;}
+            Pulse(s,frame,want<at?"Up":"Down",$"Item {e.Content}: list {want}, cursor {at}");return;
+        }
     }
     // Party slot of a character_status id (Cecil 1, Yang 8), or -1 when not
     // in the party. Corps entries hold the owned-character id. The menu's

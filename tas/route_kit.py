@@ -106,6 +106,17 @@ def equip(label,map_id,who,reset=None,**extra):
     if reset:s['equipReset']=list(reset)
     return s
 
+YANG_ID,FIRE_CLAW_ID,ICE_CLAW_ID,THUNDER_CLAW_ID=8,162,163,164
+FIRE,ICE,LIGHTNING=1,2,3
+CLAW_FOR={FIRE:FIRE_CLAW_ID,ICE:ICE_CLAW_ID,LIGHTNING:THUNDER_CLAW_ID}
+def claws(label,map_id,element,**extra):
+    """Yang's claws for a boss's weakness (user: "2 fire 2 ice 2 lightning",
+    swapped by weakness): Strongest, then that element's claw in both hands
+    (slots 0 and 1). The element comes from the guide - the master data has
+    no weakness on the bosses (Cagnazzo, Baigan: resistance group 0)."""
+    claw=CLAW_FOR[element]
+    return equip(label,map_id,[YANG_ID],equipItems=[{'character':YANG_ID,'slot':0,'content':claw},{'character':YANG_ID,'slot':1,'content':claw}],**extra)
+
 def formation(label,map_id,order,front,**extra):
     return menu(label,map_id,formation={'order':list(order),'front':list(front)},**extra)
 

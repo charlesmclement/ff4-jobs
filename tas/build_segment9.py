@@ -59,6 +59,9 @@ s.append(door('Zot 5F: on to 6F',ZOT[4],(20,15),ZOT_6F,battlePlan=field))
 s.extend(trigger('Zot 6F: Golbez and Kain; Tellah fights alone, Meteor, Tellah dies (flag 41)',ZOT_6F,(10,9),41))
 s.extend(trigger('Zot 6F: Kain wakes; Rosa saved from the guillotine (flag 42, autosave)',ZOT_6F,(8,6),42))
 s.append(equip('Zot 7F: Strongest on everyone (guide: Rosa arrives with no weapon)',ZOT_7F,[0]))
+# Barbariccia is weak to lightning (guide monster table: Valvalis, Bolt):
+# Strongest just re-picked Yang's claws, so both Thunder Claws back on.
+s.append(claws('Zot 7F: Yang - Thunder Claws in both hands for Barbariccia',ZOT_7F,LIGHTNING))
 s.append(formation('Zot 7F: formation - Cecil, Rosa, Yang, Kain, Cid; Cecil, Yang and Cid in front',ZOT_7F,[PALADIN,ROSA,YANG,KAIN,CID],[0,2,4]))
 s.append(heal('Zot 7F: heal before Barbariccia',ZOT_7F))
 s.extend(trigger("Zot 7F: Barbariccia (Kain Jumps her out of the whirlwind); Rosa's Exit to Baron, the Magma Key (flag 43, autosave)",ZOT_7F,(10,10),43,battlePlan=barbariccia))
