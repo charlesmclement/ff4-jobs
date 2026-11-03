@@ -36,6 +36,24 @@ Mount Hobs wins: twice the Waterfall's exp per fight, every share goes to a Mom 
 * Everything else is the tested segment: heal after fights, then walk to the summit, heal, formation, Mom Bomb.
 * Levels are now in status.json (`levels`) and the trace, so the levels at each boss can be read from any run.
 
+## Spread over the segments (user: "build grinds into the other segments too")
+
+Average exp per fight for each member who stays for the Mom Bomb (battle.json groups weighted by their per-mille rates; avoided/fled groups count 0):
+
+| Spot | Shared by | Per member per fight |
+|---|---|---|
+| Mist Cave (seg 1) | Cecil, Kain (leaves) | ~50 for Cecil only |
+| **Watery Pass 1 before Tellah (seg 2)** | **Cecil, Rydia** | **~145** |
+| Watery Pass after Tellah | Cecil, Rydia, Tellah (leaves) | ~96 |
+| Antlion's Den 1 (seg 3) | Cecil, Rydia, Edward | ~54 (Yellow Jelly fled; Adamantoise isn't "tough", defense 1) |
+| Mount Hobs east cave (seg 4) | all four | ~128 |
+
+Exp to level (exp_table): Cecil 14→16 is 2461 exp, the slowest; Rosa 10→12 is 925. So moving Cecil's levels earlier saves the most seg 4 time.
+
+* **Segment 2** (`mist-octomammoth.json`, `newgame-octomammoth.json`): at the Kaipo inn after Rydia joins, buy 3 Tents and 2 Phoenix Downs. In Watery Pass 1, before the Maiden's Kiss and Tellah, pace (33,27)↔(33,22) near the door in three stages: Cecil 12/Rydia 5, Cecil 13/Rydia 8, Cecil 13/Rydia 10. After each stage, walk out (31,30), use a Tent and walk back in (143,71 → 143,70). Rydia starts at level 1 with almost no MP, so stages rest by level, not by MP. Stages 2–3 are skipped once Cecil 13/Rydia 10 is reached. The guide has the party at 11 in the Watery Pass and 15 at Damcyan.
+* **Segment 3**: no grind. Every member gains more per fight at Mount Hobs.
+* **Segment 4**: targets unchanged (Cecil 16, Rydia 13, Rosa 12, Edward 12); it now starts closer to them.
+
 ## Rests (Tents outside Mount Hobs)
 
 First live run: the grind worked, but Rosa spends Cure after every fight. Kaipo's inn is a hovercraft trip away, so the route rests with a **Tent** instead: Kaipo's shop sells them (100 gil, 3 bought), and the cave door is a few steps from the grind spot.

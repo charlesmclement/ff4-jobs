@@ -232,6 +232,64 @@
       "timeoutFrames": 72000
     },
     {
+      "label": "Kaipo inn: up to the item counter (EXP plan supplies)",
+      "kind": "navigate",
+      "mapId": 34,
+      "goal": {
+        "x": 36,
+        "y": 6,
+        "layer": 0
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick"
+      ],
+      "handleBattles": true,
+      "until": {
+        "atDestination": true
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 54000
+    },
+    {
+      "label": "Kaipo item shop: Tents and Phoenix Downs for the Watery Pass grind (EXP plan)",
+      "kind": "menu",
+      "mapId": 34,
+      "phases": [
+        "Player",
+        "Menu",
+        "Shop",
+        "Message",
+        "FieldReady",
+        "ChangeMap"
+      ],
+      "until": {
+        "menuDone": true
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 10800,
+      "facing": "Up",
+      "shop": {
+        "buy": [
+          {
+            "content": 21,
+            "count": 3
+          },
+          {
+            "content": 9,
+            "count": 2
+          }
+        ],
+        "sell": []
+      }
+    },
+    {
       "label": "Kaipo inn: leave",
       "kind": "navigate",
       "mapId": 34,
@@ -436,6 +494,380 @@
       },
       "stableFrames": 2,
       "timeoutFrames": 36000
+    },
+    {
+      "label": "Watery Pass 1: EXP plan, grind 1 - random battles until Cecil 12, Rydia 5 (only Cecil and Rydia share the exp before Tellah joins)",
+      "kind": "navigate",
+      "mapId": 163,
+      "goal": {
+        "x": 33,
+        "y": 22,
+        "layer": 1
+      },
+      "waypoints": [
+        {
+          "x": 33,
+          "y": 27,
+          "layer": 1
+        }
+      ],
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Player",
+        "levelAtLeast": {
+          "1": 12,
+          "4": 5
+        }
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 216000,
+      "loop": true
+    },
+    {
+      "label": "Watery Pass 1: walk out to the overworld to rest (1)",
+      "kind": "navigate",
+      "mapId": 163,
+      "goal": {
+        "x": 31,
+        "y": 30,
+        "layer": 1
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Player",
+        "mapId": 1
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 5400
+    },
+    {
+      "label": "Outside the Watery Pass: use a Tent (full HP/MP) (1)",
+      "kind": "menu",
+      "mapId": 1,
+      "phases": [
+        "Player",
+        "Menu",
+        "Shop",
+        "Message",
+        "FieldReady",
+        "ChangeMap"
+      ],
+      "until": {
+        "menuDone": true
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 10800,
+      "menuItem": 21
+    },
+    {
+      "label": "Overworld: back into the Watery Pass (1)",
+      "kind": "navigate",
+      "mapId": 1,
+      "goal": {
+        "x": 143,
+        "y": 70,
+        "layer": 0
+      },
+      "waypoints": [
+        {
+          "x": 143,
+          "y": 71,
+          "layer": 0
+        }
+      ],
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Player",
+        "mapId": 163
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 36000
+    },
+    {
+      "label": "Watery Pass 1: EXP plan, grind 2 - random battles until Cecil 13, Rydia 8 (only Cecil and Rydia share the exp before Tellah joins)",
+      "kind": "navigate",
+      "mapId": 163,
+      "goal": {
+        "x": 33,
+        "y": 22,
+        "layer": 1
+      },
+      "waypoints": [
+        {
+          "x": 33,
+          "y": 27,
+          "layer": 1
+        }
+      ],
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Player",
+        "levelAtLeast": {
+          "1": 13,
+          "4": 8
+        }
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 216000,
+      "loop": true,
+      "skipIf": {
+        "levelAtLeast": {
+          "1": 13,
+          "4": 10
+        }
+      },
+      "group": "waterrest2"
+    },
+    {
+      "label": "Watery Pass 1: walk out to the overworld to rest (2)",
+      "kind": "navigate",
+      "mapId": 163,
+      "goal": {
+        "x": 31,
+        "y": 30,
+        "layer": 1
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Player",
+        "mapId": 1
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 5400,
+      "group": "waterrest2"
+    },
+    {
+      "label": "Outside the Watery Pass: use a Tent (full HP/MP) (2)",
+      "kind": "menu",
+      "mapId": 1,
+      "phases": [
+        "Player",
+        "Menu",
+        "Shop",
+        "Message",
+        "FieldReady",
+        "ChangeMap"
+      ],
+      "until": {
+        "menuDone": true
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 10800,
+      "menuItem": 21,
+      "group": "waterrest2"
+    },
+    {
+      "label": "Overworld: back into the Watery Pass (2)",
+      "kind": "navigate",
+      "mapId": 1,
+      "goal": {
+        "x": 143,
+        "y": 70,
+        "layer": 0
+      },
+      "waypoints": [
+        {
+          "x": 143,
+          "y": 71,
+          "layer": 0
+        }
+      ],
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Player",
+        "mapId": 163
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 36000,
+      "group": "waterrest2"
+    },
+    {
+      "label": "Watery Pass 1: EXP plan, grind 3 - random battles until Cecil 13, Rydia 10 (only Cecil and Rydia share the exp before Tellah joins)",
+      "kind": "navigate",
+      "mapId": 163,
+      "goal": {
+        "x": 33,
+        "y": 22,
+        "layer": 1
+      },
+      "waypoints": [
+        {
+          "x": 33,
+          "y": 27,
+          "layer": 1
+        }
+      ],
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Player",
+        "levelAtLeast": {
+          "1": 13,
+          "4": 10
+        }
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 216000,
+      "loop": true,
+      "skipIf": {
+        "levelAtLeast": {
+          "1": 13,
+          "4": 10
+        }
+      },
+      "group": "waterrest3"
+    },
+    {
+      "label": "Watery Pass 1: walk out to the overworld to rest (3)",
+      "kind": "navigate",
+      "mapId": 163,
+      "goal": {
+        "x": 31,
+        "y": 30,
+        "layer": 1
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Player",
+        "mapId": 1
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 5400,
+      "group": "waterrest3"
+    },
+    {
+      "label": "Outside the Watery Pass: use a Tent (full HP/MP) (3)",
+      "kind": "menu",
+      "mapId": 1,
+      "phases": [
+        "Player",
+        "Menu",
+        "Shop",
+        "Message",
+        "FieldReady",
+        "ChangeMap"
+      ],
+      "until": {
+        "menuDone": true
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 10800,
+      "menuItem": 21,
+      "group": "waterrest3"
+    },
+    {
+      "label": "Overworld: back into the Watery Pass (3)",
+      "kind": "navigate",
+      "mapId": 1,
+      "goal": {
+        "x": 143,
+        "y": 70,
+        "layer": 0
+      },
+      "waypoints": [
+        {
+          "x": 143,
+          "y": 71,
+          "layer": 0
+        }
+      ],
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Player",
+        "mapId": 163
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 36000,
+      "group": "waterrest3"
     },
     {
       "label": "Watery Pass 1: walk to the Maiden's Kiss chest",
@@ -1799,7 +2231,10 @@
   ],
   "fleeTough": true,
   "rng": {
-    "avoidMonsters": [9, 19],
+    "avoidMonsters": [
+      9,
+      19
+    ],
     "cureBurns": 2
   }
 }
