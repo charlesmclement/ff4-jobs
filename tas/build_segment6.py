@@ -35,7 +35,10 @@ ordeals=[
 # Porom as your healer." Milon Z: "If you have Fire2, use it ... have Porom
 # and Tellah be the healers and have Cecil attack". Dark Knight: "All you
 # have to do is survive this fight ... defend for about three rounds".
+# Milon too: Porom Twincasts instead of Curing the undead (user: "dont
+# heal the first form either"); healing hurt allies still comes first.
 milon=[
+    {'character':POROM,'command':TWINCAST,'minMp':20,'whileMonster':MILON},
     {'character':PALOM,'command':8,'ability':FIRA,'targetAll':True,'minMp':15,'whileMonster':MILON},
     {'character':TELLAH,'command':8,'ability':33,'targetAll':True,'minMp':5,'whileMonster':MILON},
 ]+ordeals

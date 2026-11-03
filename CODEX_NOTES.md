@@ -693,3 +693,4 @@ Live test, segment 6, Milon Z: Row worked (note 97). Then Porom's Cure-vs-undead
 
 ### 99. Milon Z: Porom Twincasts instead of Cure-on-undead
 User: the Cure on Milon Z "seems underwhelming… better to use twin… when she doesn't need to heal people". Twincast is command 18 (MSG_SYSTEM_102, ability 171, no list). `milon_z` now opens with Porom Twincast (minMp 20, whileMonster Milon Z). In the pilot, a boss rule (whileMonster) naming the acting member now beats the automatic Cure-vs-undead. Heals of injured allies still come first. If the rule's command is greyed out (Palom down), the pilot falls back to the Cure. The guide's Milon Z strat is Palom's Fira, Porom and Tellah healing, and Cecil attacking; it doesn't mention Twincast, though the spell list says Cure damages Milon Z.
+Milon (first form) gets the same Porom Twincast rule (user).
