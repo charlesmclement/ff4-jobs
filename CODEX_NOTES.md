@@ -919,3 +919,4 @@ User: "It's just unreliable we need to iron this out" (Strongest skipped claws),
 * Untested live. Watch the slot-row order, the select-list cursor vs index, and the "Best gear:" details in the trace.
 Yang (user, final): the fight ends on a script, not on his HP. Everyone Defends; Cecil, Palom and Tellah Potion the injured (first, targetInjured; 'using potion is A-ok'); Porom Cures; realFight; no Twincast. The handoff is updated (Yang plan, best-gear pass, shop cleanup).
 Yang: Cecil, Tellah and Porom Cure (they all have it; the user); only Palom uses Potions.
+Yang: he has to be hit at least once (user). Cecil attacks once (first, oncePerBattle).

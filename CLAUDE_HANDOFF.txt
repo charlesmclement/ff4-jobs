@@ -94,6 +94,8 @@ BOSS PLANS (user-directed, segments 6-7)
 - Mirror trial: Cecil Defends.
 - Yang at the Baron inn (62000 HP): the fight ends on a script, not on his
   HP.
+  - He must be hit at least once: Cecil attacks once on his first turn
+    (first, oncePerBattle).
   - Everyone Defends. Cecil, Tellah and Porom heal with Cure through the heal
     logic. Palom, who has no Cure, uses Potions (first, targetInjured).
   - It's a route realFight, so the heal logic runs. No Twincast.
