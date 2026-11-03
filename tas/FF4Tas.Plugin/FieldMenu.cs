@@ -24,7 +24,7 @@ internal sealed class FieldMenu
     // straight from the item list (no target screen counts the use), so the
     // step ends when the count drops (it used all three Tents once).
     private int startCount=-1;
-    private bool finished,oneColumn,countTargets;
+    private bool finished,oneColumn;
     private int uses,wait,lastIndex=-1,stuck,item,target,targetPresses;
     private string? lastKey;
     private string party="";
@@ -34,7 +34,7 @@ internal sealed class FieldMenu
     // menu steps; lower between fights so the run doesn't menu after each one).
     internal void Reset(float topUp=.7f,int useItem=0)
     {
-        topUpBelow=topUp;menuItem=useItem;startCount=-1;finished=oneColumn=countTargets=false;uses=wait=stuck=item=target=targetPresses=0;lastIndex=-1;lastKey=null;main=null;items=null;
+        topUpBelow=topUp;menuItem=useItem;startCount=-1;finished=oneColumn=false;uses=wait=stuck=item=target=targetPresses=0;lastIndex=-1;lastKey=null;main=null;items=null;
     }
     internal void Read(Snapshot s,int frame)
     {
@@ -113,23 +113,20 @@ internal sealed class FieldMenu
                     if(frame%12==0) {uses++;wait=AfterUse;}
                     Pulse(s,frame,"Confirm","Use on the party");return;
                 }
-                // targetList keeps an empty entry where a member left (Tellah),
-                // and the cursor skips it (live: cursor 0,1,2 for 3 members,
-                // Edward at raw index 3). Count only real members; after 15
-                // presses that don't land, try the raw index; after 40, close.
-                int want=-1;
-                for(int i=0,real=0;i<use.targetList.Count;i++)
+                // Ask the screen who the cursor is on (TargetCursor) and press
+                // Down until it's the target: works for any party setup, gaps
+                // included. Down wraps, so two laps without landing = give up.
+                bool listed=false;int members=0;
+                for(int i=0;i<use.targetList.Count;i++) {int id=use.targetList[i]?.Id??0;if(id!=0)members++;if(id==target)listed=true;}
+                if(!listed) {Pulse(s,frame,"Back","Target not in the list");return;}
+                int under=TargetCursor.Under(use);
+                if(under==target)
                 {
-                    int id=use.targetList[i]?.Id??0;
-                    if(id==target) {want=countTargets?i:real;break;}
-                    if(id!=0)real++;
+                    if(frame%12==0) {uses++;wait=AfterUse;targetPresses=0;}
+                    Pulse(s,frame,"Confirm","Use on #"+target);return;
                 }
-                if(want<0) {Pulse(s,frame,"Back","Target not in the list");return;}
-                int at=use.selectCursor.Index;
-                if(at==want && frame%12==0) {uses++;wait=AfterUse;targetPresses=0;}
-                else if(frame%12==0 && ++targetPresses%15==0)countTargets=!countTargets;
-                if(targetPresses>=40) {finished=true;Pulse(s,frame,"Back","Can't reach #"+target+"; closing");return;}
-                Step(s,frame,at,want,"Up","Down","Use on #"+target+" (slot "+want+", at "+at+")");return;
+                if(frame%12==0 && ++targetPresses>2*members+4) {finished=true;Pulse(s,frame,"Back","Can't reach #"+target+"; closing");return;}
+                Pulse(s,frame,"Down","Use on #"+target+" (cursor on #"+under+")");return;
             }
             default:Pulse(s,frame,"Back","Back to the item commands");return;
         }

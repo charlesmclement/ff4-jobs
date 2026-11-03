@@ -22,11 +22,11 @@ internal sealed class FieldMagic
     private int maxCasts=12,keepMp;private bool tellah=true;
     private bool finished,flip;
     // Backs without a cast: give up on magic (items take over), never loop.
-    private int casts,wait,stuck,backs,lastIndex=-1,caster,spell,target,columns;
+    private int casts,wait,stuck,backs,lastIndex=-1,caster,spell,target,columns,targetPresses;
     private const int MaxBacks=10;
     private string? lastKey;
     private MainMenuController? main;
-    internal void Reset(float topUp,int casts=12,bool allowTellah=true,int keepMpAbove=0) {maxCasts=casts;tellah=allowTellah;keepMp=keepMpAbove;topUpBelow=topUp;finished=flip=false;casts=wait=stuck=backs=columns=0;lastIndex=-1;lastKey=null;main=null;}
+    internal void Reset(float topUp,int casts=12,bool allowTellah=true,int keepMpAbove=0) {maxCasts=casts;tellah=allowTellah;keepMp=keepMpAbove;topUpBelow=topUp;finished=flip=false;casts=wait=stuck=backs=columns=targetPresses=0;lastIndex=-1;lastKey=null;main=null;}
     internal bool Wanted() {Need();return spell!=0;}
     internal void Read(Snapshot s,int frame)
     {
@@ -84,11 +84,16 @@ internal sealed class FieldMagic
         {
             if(u.targetAbility?.Ability?.Id is int chosen && chosen!=spell) {if(frame%12==0 && ++backs>=MaxBacks)finished=true;Pulse(s,frame,"Back","Switch spell");return;}
             if(u.stateMachine!=null && (int)u.stateMachine.Current==UseAll) {Cast(s,frame);return;}
-            int want=-1;
-            for(int i=0;i<u.targetSelectList.Count;i++)if(u.targetSelectList[i]?.Id==target) {want=i;break;}
-            if(want<0) {if(frame%12==0 && ++backs>=MaxBacks)finished=true;Pulse(s,frame,"Back","Target not in the list");return;}
-            if(u.selectCursor.Index==want) {Cast(s,frame);return;}
-            Move(s,frame,u.selectCursor.Index,want,false,"Target #"+target);return;
+            bool listed=false;int members=0;
+            for(int i=0;i<u.targetSelectList.Count;i++) {int id=u.targetSelectList[i]?.Id??0;if(id!=0)members++;if(id==target)listed=true;}
+            if(!listed) {if(frame%12==0 && ++backs>=MaxBacks)finished=true;Pulse(s,frame,"Back","Target not in the list");return;}
+            // Read who the cursor is on (TargetCursor), not a list index: the
+            // list keeps empty entries the cursor skips. Down wraps; two laps
+            // without landing and magic gives up (items take over).
+            int under=TargetCursor.Under(u.currentContent,u.selectCursor,u.contentList);
+            if(under==target) {targetPresses=0;Cast(s,frame);return;}
+            if(frame%12==0 && ++targetPresses>2*members+4) {finished=true;Pulse(s,frame,"Back","Can't reach #"+target+"; giving up");return;}
+            Pulse(s,frame,"Down","Target #"+target+" (cursor on #"+under+")");return;
         }
         var l=window.listController;
         if(l?.abilityList!=null && l.selectCursor!=null && l.abilityList.Count>0)
