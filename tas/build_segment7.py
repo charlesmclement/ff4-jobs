@@ -17,6 +17,7 @@ PALADIN,TELLAH,YANG,PALOM,POROM=13,6,8,9,10
 TENT=21
 MONK,BAIGAN,RIGHT_ARM,LEFT_ARM,CAGNAZZO=205,168,169,170,171
 FIRA,THUNDARA,THUNDAGA=34,40,41
+TWINCAST=18
 BARON_KEY=68
 
 # Ordinary fights: Palom's Fira on groups, else the weakness spell; Tellah
@@ -36,7 +37,10 @@ monk=[{'character':c,'command':2,'whileMonster':MONK} for c in (PALOM,POROM,TELL
 # Baigan: he Reflects himself (guide), so magic goes at the arms, which
 # do most of the damage ("Quickly eliminate the ARMs"); route killFirst
 # sends the attackers at the arms too. With the arms gone the casters Defend.
-baigan=[]
+# Porom Twincasts with Palom while Baigan is up (user: "aye lets try it";
+# guide: twin magic "cannot be reflected", so his Wall doesn't matter, and
+# Comet hits the arms too). Her heals still come first.
+baigan=[{'character':POROM,'command':TWINCAST,'minMp':20,'whileMonster':BAIGAN}]
 for arm in (RIGHT_ARM,LEFT_ARM):
     baigan+=[{'character':PALOM,'command':8,'ability':FIRA,'minMp':15,'whileMonster':arm},
              {'character':TELLAH,'command':8,'ability':THUNDARA,'minMp':15,'whileMonster':arm}]
