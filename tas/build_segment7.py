@@ -34,15 +34,15 @@ field=[
     {'character':TELLAH,'command':2,'reserveMp':60},
     {'character':POROM,'command':2},
 ]
-# Yang (Monk, 62000 HP; the fight ends by itself). Not Cecil alone (user:
-# "you shouldn't make cecil 1 on 1 against yang"): the twins Twincast (their
-# default - user: "do twincast them"), Tellah casts his strongest (user:
-# "why wouldn't tellah cast a spell. we're in an inn" - the inn rest is just
-# before and the waterway save room's Tent refills MP before the castle),
-# Porom still heals first (Yang is a route realFight, so the normal heal
-# logic runs instead of the scripted-fight attack-only path).
-monk=[{'character':TELLAH,'command':8,'ability':35,'minMp':30,'whileMonster':MONK},
-      {'character':TELLAH,'command':8,'ability':FIRA,'minMp':15,'whileMonster':MONK}]
+# Yang (Monk, 62000 HP): the fight ends on a script, not on his HP (user:
+# "we all need to defend and heal during yang's fight it's not hp based").
+# Everyone Defends; healing still comes first (Yang is a route realFight, so
+# the normal heal logic runs). The rules name the twins, which also blocks
+# their Twincast default.
+# Potions are fine here (user): Cecil, Palom and Tellah Potion whoever is
+# hurt; Porom Cures; otherwise everyone Defends.
+monk=[{'character':c,'command':3,'item':2,'targetInjured':True,'whileMonster':MONK,'first':True} for c in (PALADIN,PALOM,TELLAH)]
+monk+=[{'character':c,'command':2,'whileMonster':MONK} for c in (PALADIN,PALOM,POROM,TELLAH)]
 # Baigan (user's strat, live): the arms come back only after BOTH are
 # dead, so: the arm nearest the party (master 170) by attacks while the
 # casters Defend; then the body (route killFirst). He puts up Reflect after

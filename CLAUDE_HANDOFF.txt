@@ -92,11 +92,12 @@ USER RULES FROM THIS SESSION (all segments)
 BOSS PLANS (user-directed, segments 6-7)
 - Milon and Milon Z: Porom Twincasts while nobody needs healing.
 - Mirror trial: Cecil Defends.
-- Yang at the Baron inn (62000 HP, ends by itself):
-  - A route realFight, so heals run.
-  - The twins Twincast, Tellah casts Firaga or Fira, Cecil attacks, Porom
-    heals first.
-  - MP is free here: inn before, waterway Tent after.
+- Yang at the Baron inn (62000 HP): the fight ends on a script, not on his
+  HP.
+  - Everyone Defends. Cecil, Palom and Tellah use Potions on whoever is hurt
+    (first, targetInjured), and Porom Cures.
+  - It's a route realFight, so the heal logic runs. No Twincast.
+  - This is the user's last call, replacing the earlier attack/Twincast plan.
 - Baigan:
   - The arms regrow only after BOTH die.
   - killFirst: the arm nearest the party (master 170), the body, the other arm
@@ -146,6 +147,12 @@ NEW ENGINE / PLUGIN PIECES (C#)
   - whileMonsterChanged: live sprite change.
   - targetInjured: item on the most hurt member.
   - heldItem: use the item in hand.
+- Equipment: the native Strongest is no longer used. Every equip step runs
+  the runner's best-gear pass. battle.json now carries a gear table by
+  content id and each character's dominant arm. Steps with equipExactOnly put
+  on only their listed items.
+- Shops: each counter is visited once, with one equipment pass at the end.
+  A worn item is counted once toward a buy target.
 - Kill order only moves forward within a fight (a regrown arm isn't chased).
 - Reflect on the target is read live; the battle line shows [reflect].
 - Item choice (the "アイテム選択肢表示" SysCall) steers a two-column grid.
