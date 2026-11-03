@@ -13,7 +13,7 @@ namespace FF4Tas;
 // cursors (Last.UI.KeyInput.MainMenuController / ItemWindowController).
 internal sealed class FieldMenu
 {
-    private const int Potion=2,PhoenixDown=9,MaxUses=12,AfterUse=48,Rosa=3;
+    private const int Potion=2,PhoenixDown=9,Antidote=16,MaxUses=12,AfterUse=48,Rosa=3;
     private const int MenuItem=1,ItemUse=1;
     // ItemWindowController.State and ItemUseController.State.
     private const int CommandSelect=1,UseSelect=2,TargetSelect=5,UseAll=2;
@@ -146,7 +146,7 @@ internal sealed class FieldMenu
         var user=UserDataManager.Instance();
         var corps=user?.corpsList;var owned=user?.OwnedCharacterList;
         if(corps==null || owned==null)return;
-        float lowest=topUpBelow;int dead=0,hurt=0;
+        float lowest=topUpBelow;int dead=0,hurt=0,poisoned=0;
         var seen=new System.Text.StringBuilder();
         for(int c=0;c<corps.Count;c++)
         {
@@ -160,11 +160,13 @@ internal sealed class FieldMenu
                 if(p.CurrentHP<=0) {if(dead==0 || id==Rosa)dead=id;break;}
                 float ratio=p.CurrentHP/(float)Math.Max(1,p.ConfirmedMaxHp());
                 if(ratio<lowest) {lowest=ratio;hurt=id;}
+                if(poisoned==0 && FieldMagic.Poisoned(member))poisoned=id;
                 break;
             }
         }
         party=$"{seen}; Potions {Count(Potion)}, Phoenix Downs {Count(PhoenixDown)}";
         if(dead!=0 && Has(PhoenixDown)) {item=PhoenixDown;target=dead;}
+        else if(poisoned!=0 && Has(Antidote)) {item=Antidote;target=poisoned;}
         else if(hurt!=0 && Has(Potion)) {item=Potion;target=hurt;}
     }
     private static bool Has(int contentId)=>Count(contentId)>0;

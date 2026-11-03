@@ -13,7 +13,7 @@ namespace FF4Tas;
 // one can cast it finishes and the item heal (FieldMenu) takes over.
 internal sealed class FieldMagic
 {
-    private const int MenuMagic=2,WhiteMagicCommand=7,Cure=6,Life=11,CureMp=3,LifeMp=8,AfterCast=48;
+    private const int MenuMagic=2,WhiteMagicCommand=7,Cure=6,Life=11,Esuna=10,CureMp=3,LifeMp=8,EsunaMp=20,AfterCast=48;
     // AbilityWindowController.State (Command) and AbilityUseContentListController.State (All).
     private const int CommandState=4,UseAll=2;
     // Rosa, Rydia, Tellah, Porom, FuSoYa (Knows() skips anyone without the spell).
@@ -102,14 +102,14 @@ internal sealed class FieldMagic
             int want=-1;
             for(int i=0;i<l.abilityList.Count;i++)if(l.abilityList[i]?.Ability?.Id==spell) {want=i;break;}
             if(want<0) {finished=true;Pulse(s,frame,"Back","Spell not learned");return;}
-            Move(s,frame,l.selectCursor.Index,want,true,(spell==Life?"Life":"Cure")+$" (state {state}, cursor {l.selectCursor.Index} -> {want})");return;
+            Move(s,frame,l.selectCursor.Index,want,true,(spell==Life?"Life":spell==Esuna?"Esuna":"Cure")+$" (state {state}, cursor {l.selectCursor.Index} -> {want})");return;
         }
         s.Detail=$"Magic: waiting (window state {state})";
     }
     private void Cast(Snapshot s,int frame)
     {
         if(frame%12==0) {casts++;backs=0;wait=AfterCast;}
-        Pulse(s,frame,"Confirm",(spell==Life?"Life":"Cure")+" on #"+target);
+        Pulse(s,frame,"Confirm",(spell==Life?"Life":spell==Esuna?"Esuna":"Cure")+" on #"+target);
     }
     // Who casts what on whom right now (owned-character id as the target).
     private void Need()
@@ -117,7 +117,7 @@ internal sealed class FieldMagic
         caster=spell=target=0;
         var user=UserDataManager.Instance();var corps=user?.corpsList;var owned=user?.OwnedCharacterList;
         if(corps==null || owned==null)return;
-        int dead=0,hurt=0;float lowest=topUpBelow;
+        int dead=0,hurt=0,poisoned=0;float lowest=topUpBelow;
         var members=new List<Last.Data.User.OwnedCharacterData>();
         for(int c=0;c<corps.Count;c++)
         {
@@ -130,6 +130,7 @@ internal sealed class FieldMagic
             if(p.CurrentHP<=0) {if(dead==0 || m.characterStatusId==3)dead=m.Id;continue;}
             float ratio=p.CurrentHP/(float)Math.Max(1,p.ConfirmedMaxHp());
             if(ratio<lowest) {lowest=ratio;hurt=m.Id;}
+            if(poisoned==0 && Poisoned(m))poisoned=m.Id;
         }
         foreach(int who in Casters)
         {
@@ -138,6 +139,16 @@ internal sealed class FieldMagic
             int mp=m.Parameter.CurrentMP;
             if(dead!=0 && mp>=LifeMp && Knows(m,Life)) {caster=who;spell=Life;target=dead;return;}
         }
+        // Poison stays after the fight and drains HP as he walks (user:
+        // "if antidote or esuna isn't in the field cure add it"): Esuna,
+        // else FieldMenu's Antidote.
+        if(poisoned!=0)
+            foreach(int who in Casters)
+            {
+                var m=members.Find(x=>x.characterStatusId==who);
+                if(m==null || m.Parameter.CurrentHP<=0)continue;
+                if(m.Parameter.CurrentMP>=EsunaMp+keepMp && Knows(m,Esuna)) {caster=who;spell=Esuna;target=poisoned;return;}
+            }
         if(hurt==0)return;
         foreach(int who in Casters)
         {
@@ -146,6 +157,13 @@ internal sealed class FieldMagic
             if(who==6 && !tellah)continue;
             if(m.Parameter.CurrentMP>=CureMp+keepMp && Knows(m,Cure)) {caster=who;spell=Cure;target=hurt;return;}
         }
+    }
+    // Master condition 10 is Poison.
+    internal static bool Poisoned(Last.Data.User.OwnedCharacterData m)
+    {
+        var list=m.Parameter?.CurrentConditionList;
+        for(int i=0;list!=null && i<list.Count;i++)if(list[i]?.Id==10)return true;
+        return false;
     }
     private static bool Knows(Last.Data.User.OwnedCharacterData m,int ability)
     {
