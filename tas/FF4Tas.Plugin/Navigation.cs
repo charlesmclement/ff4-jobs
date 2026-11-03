@@ -120,6 +120,10 @@ internal sealed class Navigation
             {
                 state.NavigationInput=Toward(cell,goalCell,0);
                 state.Detail=$"Step into ({goal.X},{goal.Y},{goal.Layer})";
+                // Pushing doesn't move him: the goal is an NPC or object to
+                // talk to (Mysidia's Elder, the Ordeals mirror). He is facing
+                // it now, so Confirm between pushes starts the talk.
+                if(unchanged>20 && unchanged%12<3) {state.NavigationInput="Confirm";state.Detail=$"Talk to ({goal.X},{goal.Y},{goal.Layer})";}
                 return;
             }
             retryAt=frame;state.Detail="Planning next leg";return;

@@ -213,7 +213,7 @@ def launch_game(route_path,smoke,resume,documents,chain=None):
         elif route and not started:
             raise RuntimeError('FF4 closed before the route started. If this was unexpected, check Steam is signed in. Startup evidence is in unity.log, game.log and exit.json.')
 
-IDLE_FLAG_SCAN=40
+IDLE_FLAG_SCAN=160
 
 def auto_step(route):
     """1-based step to resume at, from the live map id, cell and story flags.
@@ -226,7 +226,7 @@ def auto_step(route):
     best=menu_best=None;blocked=False
     for i,step in enumerate(route['steps'],1):
         flag=(step.get('until') or {}).get('storyFlag')
-        # Flags above the idle scan (0..40, Plugin StoryFlagScan) aren't
+        # Flags above the idle scan (0..160, Plugin StoryFlagScan) aren't
         # reported, so they can't decide anything here (e.g. Damcyan's 95).
         if flag is not None and flag>IDLE_FLAG_SCAN:flag=None
         if not blocked and step.get('mapId')==m and step.get('kind')=='menu' and step.get('menuItem') is None and flag not in flags and menu_best is None:menu_best=i

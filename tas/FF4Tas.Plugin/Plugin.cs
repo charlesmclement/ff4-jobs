@@ -86,7 +86,7 @@ public sealed class Controller : MonoBehaviour
     private static float nextFieldFind;
     private static float nextVision;
     private static Vision? vision;
-    private const int StoryFlagScan=40;
+    private const int StoryFlagScan=160;
     private sealed class Vision
     {
         public DateTime Utc {get;set;}

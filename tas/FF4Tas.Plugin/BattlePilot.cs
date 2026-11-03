@@ -405,7 +405,19 @@ internal sealed class BattlePilot
         if(info.isBackAttack && !rowDone && livingEnemies>0)
         {pendingCommand=Row;Log(actor,"Row (back attack)");return;}
         if(mist) {Log(actor,"Defend: Mist Dragon in mist");return;}
-        if(scripted) {Log(actor,"Attack: scripted fight, no items or MP");return;}
+        // Scripted fights (Mist Dragon story fight, the Dark Knight trial at
+        // 60000 HP) attack unless the route's plan names a rule for them: the
+        // trial is survived by Defending (guide: "defend for about three
+        // rounds"), and hitting the Dark Knight only draws counters.
+        if(scripted)
+        {
+            // Only rules tied to a monster (whileMonster), so older routes'
+            // general rules don't change their scripted fights.
+            ChoosePlan(info,actor,plan==null?null:Array.FindAll(plan,r=>r.WhileMonster!=null));
+            if(pendingRule>=0)return;
+            pendingCommand=1;pendingAbility=0;
+            Log(actor,"Attack: scripted fight, no items or MP");return;
+        }
         // Edward hides by himself at low HP (Hide auto-executes); hidden, his
         // list offers Return and greys out Items, and the run looped on the
         // greyed Items. Come back out; the next turn acts normally.
