@@ -72,7 +72,12 @@ s.append(door("Baron: out of the Devil's Road house",BARON_ROAD_HOUSE,(6,15),BAR
 # sells Fire, Ice and Thunder Claws; the order counts claws already owned.
 s.append(door('Baron: into the weapon shop',BARON_TOWN,(15,17),WEAPON_SHOP))
 s.append(nav('Weapon shop: up to the weaponsmith',WEAPON_SHOP,(11,8),{'atDestination':True}))
-s.append(shop("Weapon shop: two claws for Yang (Thunder, Fire)",WEAPON_SHOP,[{'content':THUNDER_CLAW,'count':1},{'content':FIRE_CLAW,'count':1}]))
+# Two Thunder Claws (user: "He should have 2 thunder claws for KAINAZZO";
+# Cagnazzo is weak to lightning).
+# Spare Fire and Ice Claws are sold first, so that Strongest (claws all list
+# attack 0) can only fill his hands with the Thunder Claws.
+s.append(shop("Weapon shop: two Thunder Claws for Yang (Cagnazzo is weak to lightning); sell spare Fire/Ice Claws",WEAPON_SHOP,
+              [{'content':THUNDER_CLAW,'count':2}],sell=[FIRE_CLAW,ICE_CLAW]))
 s.append(door('Weapon shop: out',WEAPON_SHOP,(13,13),BARON_TOWN))
 s.append(door('Baron: into the item shop',BARON_TOWN,(13,27),ITEM_SHOP))
 s.append(nav('Item shop: up to the counter',ITEM_SHOP,(6,6),{'atDestination':True}))

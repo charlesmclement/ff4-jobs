@@ -381,7 +381,7 @@
       "timeoutFrames": 54000
     },
     {
-      "label": "Weapon shop: two claws for Yang (Thunder, Fire)",
+      "label": "Weapon shop: two Thunder Claws for Yang (Cagnazzo is weak to lightning); sell spare Fire/Ice Claws",
       "kind": "menu",
       "mapId": 31,
       "phases": [
@@ -402,14 +402,13 @@
         "buy": [
           {
             "content": 164,
-            "count": 1
-          },
-          {
-            "content": 162,
-            "count": 1
+            "count": 2
           }
         ],
-        "sell": []
+        "sell": [
+          162,
+          163
+        ]
       }
     },
     {
