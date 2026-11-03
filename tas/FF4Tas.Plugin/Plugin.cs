@@ -127,8 +127,12 @@ public sealed class Controller : MonoBehaviour
                 snapshot.Gil=UserDataManager.Instance()?.OwendGil??0;
                 snapshot.Encounter=EncounterWatch.Status();
                 snapshot.Mp=new();snapshot.Levels=PartyLevels(snapshot.Mp);
-                if(active?.Until?.TreasureFlag is int chest && storage.Get(DataStorage.Category.kTreasureFlag1,chest)!=0)
-                    snapshot.TreasureFlags=new[]{chest};
+                // The step's until and skipIf chests (a skipIf skips a chest
+                // already opened - the Ancient Sword after a reload).
+                var chests=new List<int>();
+                foreach(var t in new[]{active?.Until?.TreasureFlag,active?.SkipIf?.TreasureFlag})
+                    if(t is int chest && !chests.Contains(chest) && storage.Get(DataStorage.Category.kTreasureFlag1,chest)!=0)chests.Add(chest);
+                if(chests.Count>0)snapshot.TreasureFlags=chests.ToArray();
                 // The step's until and skipIf flags (a skipIf on a door
                 // already unlocked, e.g. the Tower Key, needs it too).
                 var f2s=new List<int>();

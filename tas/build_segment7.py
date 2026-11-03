@@ -202,6 +202,15 @@ s.append(door('Old Waterway 4: the save room (guide: "immediately head for the d
 s.append(nav('Save room: onto the save point',WW_SAVE,(9,7),{'atDestination':True}))
 s.append(tent('Save room: Tent before the castle',WW_SAVE))
 s.append(heal('Save room: heal anyone the Tent missed',WW_SAVE))
+# The Ancient Sword (user: grab it; "through a false wall, east"): the chest
+# (22,6, treasure flag 113) is past the hidden passage (x 13-19, rows 3-6,
+# open in the collision grid): up from the save point, round through x 11,
+# east along row 6 to (21,6), then push into the chest (Confirm). Skipped
+# once it's been opened.
+ANCIENT_SWORD_CHEST=113
+s.append(nav('Save room: through the false wall to the Ancient Sword chest',WW_SAVE,(22,6),{'treasureFlag':ANCIENT_SWORD_CHEST},
+             [(9,4),(11,4),(11,5),(19,5),(19,6),(21,6)],stableFrames=2,skipIf={'treasureFlag':ANCIENT_SWORD_CHEST},group='ancientsword'))
+s.append(mash('Save room: take the Ancient Sword',None,until={'phase':'Player','treasureFlag':ANCIENT_SWORD_CHEST},stableFrames=10,skipIf={'treasureFlag':ANCIENT_SWORD_CHEST},group='ancientsword'))
 s.append(door('Save room: back out',WW_SAVE,(9,13),WW4))
 s.append(door('Old Waterway 4: up into Baron Castle',WW4,(19,2),CASTLE_OUT,battlePlan=field))
 # The hall door (16,15) is reached only through the side corridor (map 9):

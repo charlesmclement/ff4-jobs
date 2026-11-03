@@ -926,3 +926,6 @@ Yang: sc_ai_205_Monk: 5 turns of lines, then mode 1, where the next physical hit
 Live: segment 7 stopped at once on "Overworld: into Mysidia" with "State read failed: IndexOutOfRangeException at MapRouteSearcher.Search". Note 102 retried candidate cells on the player's layer, but the overworld reports layer 249, and Search threw on a cell at z 249. Fixes:
 * The player's layer is only tried when it's 0–2.
 * `MapRouteSearcher.Search` is wrapped in try/catch, so a cell it can't index is skipped instead of stopping the run.
+
+### 130. Ancient Sword pickup (user)
+The chest is in the waterway save room (map 190 = Map_30121_5) at (22,6): content 135, treasure flag 113. It sits behind the false wall east, a hidden passage at x 13–19 rows 3–6 that is open in BottomCollision. Segment 7 now walks there after the Tent and heal: waypoints (9,4) (11,4) (11,5) (19,5) (19,6) (21,6), then a push into the chest (StepInto + Confirm) until treasure flag 113, then a mash through the message. It's skipped once the chest is open (group ancientsword). Plugin: the snapshot now reads the treasure flags of both `until` and `skipIf` (before, only `until`).

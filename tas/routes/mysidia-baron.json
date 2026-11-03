@@ -2055,6 +2055,102 @@
       "timeoutFrames": 7200
     },
     {
+      "label": "Save room: through the false wall to the Ancient Sword chest",
+      "kind": "navigate",
+      "mapId": 190,
+      "goal": {
+        "x": 22,
+        "y": 6,
+        "layer": 0
+      },
+      "phases": [
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "treasureFlag": 113
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 54000,
+      "waypoints": [
+        {
+          "x": 9,
+          "y": 4,
+          "layer": 0
+        },
+        {
+          "x": 11,
+          "y": 4,
+          "layer": 0
+        },
+        {
+          "x": 11,
+          "y": 5,
+          "layer": 0
+        },
+        {
+          "x": 19,
+          "y": 5,
+          "layer": 0
+        },
+        {
+          "x": 19,
+          "y": 6,
+          "layer": 0
+        },
+        {
+          "x": 21,
+          "y": 6,
+          "layer": 0
+        }
+      ],
+      "skipIf": {
+        "treasureFlag": 113
+      },
+      "group": "ancientsword"
+    },
+    {
+      "label": "Save room: take the Ancient Sword",
+      "kind": "mash",
+      "keys": [
+        "Confirm"
+      ],
+      "phases": [
+        "None",
+        "Init",
+        "Player",
+        "Event",
+        "Message",
+        "ChangeMap",
+        "FieldReady",
+        "Battle",
+        "FieldHelp",
+        "Gimmick",
+        "Transport"
+      ],
+      "handleBattles": true,
+      "until": {
+        "phase": "Player",
+        "treasureFlag": 113
+      },
+      "stableFrames": 10,
+      "periodFrames": 8,
+      "pressedFrames": 2,
+      "timeoutFrames": 216000,
+      "skipIf": {
+        "treasureFlag": 113
+      },
+      "group": "ancientsword"
+    },
+    {
       "label": "Save room: back out",
       "kind": "navigate",
       "mapId": 190,
