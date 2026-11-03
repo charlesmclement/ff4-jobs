@@ -658,3 +658,6 @@ User (3 Nov, going to sleep): build as far into the game as possible, big segmen
 
 ### 88. Segment 10 built: Baron → Agart → Underworld → Dwarf Castle (untested)
 `tas/build_segment10.py` → `tas/routes/zot-dwarves.json` (25 steps). The Agart well uses an itemChoice mash with the Magma Key. The descent is an Enterprise-only trigger (object type 21, target transport 3) at (110–112,198–200). Ends in the Underworld (map 2, save_availability 1). docs/TAS-SEGMENT-10.md.
+
+### 89. Segment 11 built: Dwarf Castle → Tower of Babil → surface (untested)
+`tas/build_segment11.py` → `tas/routes/dwarves-babil.json` (34 steps). route_kit.world_path takes `world=2` (Underworld attribute grid). The plugin reads ScenarioFlag2 for skipIf too. Lugae: killFirst Doctor→Barnabas, Kain Jumps. Ends on the surface beside Agart after landing the Enterprise. docs/TAS-SEGMENT-11.md.

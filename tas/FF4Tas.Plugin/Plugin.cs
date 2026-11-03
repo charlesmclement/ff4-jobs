@@ -129,8 +129,12 @@ public sealed class Controller : MonoBehaviour
                 snapshot.Mp=new();snapshot.Levels=PartyLevels(snapshot.Mp);
                 if(active?.Until?.TreasureFlag is int chest && storage.Get(DataStorage.Category.kTreasureFlag1,chest)!=0)
                     snapshot.TreasureFlags=new[]{chest};
-                if(active?.Until?.Flag2 is int f2 && storage.Get(DataStorage.Category.kScenarioFlag2,f2)!=0)
-                    snapshot.Flag2s=new[]{f2};
+                // The step's until and skipIf flags (a skipIf on a door
+                // already unlocked, e.g. the Tower Key, needs it too).
+                var f2s=new List<int>();
+                foreach(var f2 in new[]{active?.Until?.Flag2,active?.SkipIf?.Flag2})
+                    if(f2 is int f && !f2s.Contains(f) && storage.Get(DataStorage.Category.kScenarioFlag2,f)!=0)f2s.Add(f);
+                if(f2s.Count>0)snapshot.Flag2s=f2s.ToArray();
             }
             if(active!=null)
             {

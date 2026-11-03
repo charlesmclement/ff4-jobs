@@ -19,10 +19,15 @@ _world={}
 
 def cell(x,y,layer=0):return {'x':x,'y':y,'layer':layer}
 
-def world_path(start,goal,transport=1,avoid=(2,21),turn_cost=3):
-    """Overworld waypoints (map 10010) from start to beside goal."""
-    if transport not in _world:_world[transport]=plan_path.load(os.path.join(ROOT,'research','tas-maps','map_10010'),transport)
-    data,width,height,walk=_world[transport]
+WORLD_DIRS={1:os.path.join(ROOT,'research','tas-maps','map_10010'),
+            2:os.path.join(ROOT,'research','tas-maps','container','Assets','GameAssets','Serial','Res','Map','Map_10020','Map_10020')}
+
+def world_path(start,goal,transport=1,avoid=(2,21),turn_cost=3,world=1):
+    """Overworld waypoints (map 1 = 10010, map 2 = the Underworld 10020)
+    from start to beside goal."""
+    key=(world,transport)
+    if key not in _world:_world[key]=plan_path.load(WORLD_DIRS[world],transport)
+    data,width,height,walk=_world[key]
     path=plan_path.plan(data,width,height,walk,tuple(start),tuple(goal),set(avoid),turn_cost)
     if path is None:raise SystemExit(f'no overworld path {start} -> {goal}')
     cells=[p for p,_ in path]
