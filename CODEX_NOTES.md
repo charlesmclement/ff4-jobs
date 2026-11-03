@@ -728,3 +728,13 @@ User: "stone or confuse anything… i said all status effects earlier". The pilo
 * **After healing:** Darkness, Poison, Curse.
 
 `CureStatus` uses the status's item (Gold Needle, Maiden's Kiss, Mallet, Diet Food, Echo Herbs, Eye Drops, Antidote, Cross). Failing that, Esuna from a caster who knows it and has the MP. Failing that, a Remedy if one is owned. A cure is queued on the target so two members don't spend turns on the same one. Toad and Mini still fall back to the toggle spells after that. Mallets are sold only in product groups 19/26/29/33/37 (later towns), so in Baron, Mini is cured with Esuna; that's why the inn rest matters.
+
+### 106. Old Waterway 2: waypoints down from the walkway
+Live: the arrival (6,4) is on a raised walkway (Ground layer, x 6–9, rows 2–5), and the ladder down to the floor (Bottom) is at x=9. The native search doesn't route across layers. The greedy steering bounced between (9,2) and (9,3) until the party wiped to Hydras. The door step now has waypoints (6,2) → (9,2) → (9,7); after them, the floor route to the stairs (35,2) is found.
+
+Driving the game (user asked me to take over testing while they rest): the session is X11 and `wmctrl`/`xdotool` are installed.
+* `wmctrl -l` lists windows; the game's is "FINAL FANTASY IV".
+* `wmctrl -i -a <id>` focuses it; the runner pauses without focus.
+* `xdotool key --window <id> Return` presses keys: Enter confirms. After a defeat, the game offers "Start from recent save data?" (the autosave).
+* PIL `ImageGrab.grab()` takes a screenshot.
+* `tas.py stop` and `tas.py start <route> --from-step 0` swap routes in a running game.

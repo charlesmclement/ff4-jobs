@@ -1342,6 +1342,23 @@
       },
       "stableFrames": 2,
       "timeoutFrames": 54000,
+      "waypoints": [
+        {
+          "x": 6,
+          "y": 2,
+          "layer": 0
+        },
+        {
+          "x": 9,
+          "y": 2,
+          "layer": 0
+        },
+        {
+          "x": 9,
+          "y": 7,
+          "layer": 0
+        }
+      ],
       "battlePlan": [
         {
           "character": 9,

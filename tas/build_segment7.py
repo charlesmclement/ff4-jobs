@@ -85,7 +85,11 @@ s.append(mash('Baron: open it with the Baron Key (item choice)',None,itemChoice=
 s.append(door('Baron: through the unlocked door',BARON_TOWN,(4,20),WATERWAY_IN))
 s.append(door('Waterway entrance: down the stairs',WATERWAY_IN,(3,5),WW1))
 s.append(door('Old Waterway 1: east to the next stairs',WW1,(32,6),WW2,battlePlan=field))
-s.append(door('Old Waterway 2: north-east stairs',WW2,(35,2),WW3,battlePlan=field))
+# The arrival (6,4) is on a raised walkway (Ground layer); the stairs down to
+# the floor (Bottom) are at x=9. The native search doesn't route across
+# layers, so the walk bounced between (9,2) and (9,3): walk round and down
+# the stairs first, then the floor route to the far stairs is found.
+s.append(door('Old Waterway 2: north-east stairs',WW2,(35,2),WW3,[(6,2),(9,2),(9,7)],battlePlan=field))
 s.append(door('Old Waterway 3: north stairs',WW3,(13,2),WW4,battlePlan=field))
 s.append(door('Old Waterway 4: the save room (guide: "immediately head for the door and in there you will find a save room")',WW4,(7,9),WW_SAVE,battlePlan=field))
 s.append(nav('Save room: onto the save point',WW_SAVE,(9,7),{'atDestination':True}))
