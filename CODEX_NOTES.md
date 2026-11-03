@@ -721,3 +721,10 @@ Live test, segment 7: the guards Mini'd Cecil. Baron sells no Mallets, and Palom
 * Segment 7 rests at the Baron inn (counter relay (21,15), innkeeper (21,14)) before talking to Yang (user: "can you rest in the inn before the fight?").
 * BattlePilot: when no Maiden's Kiss or Mallet is on hand, Esuna (ability 10, 20 MP) on a Toad or Mini from anyone who knows it, before the toggle spells. A failed Esuna blocks that actor, like the toggle spells.
 * Fights during a `mash` step (story fights) never flee; `Read(..., story)` comes from Plugin.
+
+### 105. Battle: every status, not just Toad/Mini
+User: "stone or confuse anything… i said all status effects earlier". The pilot now tracks the worst status on any member (`StatusOrder`):
+* **Before healing:** Petrify, gradual Petrify, Confuse, Sleep, Paralyze, Toad, Pig, Silence, Mini.
+* **After healing:** Darkness, Poison, Curse.
+
+`CureStatus` uses the status's item (Gold Needle, Maiden's Kiss, Mallet, Diet Food, Echo Herbs, Eye Drops, Antidote, Cross). Failing that, Esuna from a caster who knows it and has the MP. Failing that, a Remedy if one is owned. A cure is queued on the target so two members don't spend turns on the same one. Toad and Mini still fall back to the toggle spells after that. Mallets are sold only in product groups 19/26/29/33/37 (later towns), so in Baron, Mini is cured with Esuna; that's why the inn rest matters.

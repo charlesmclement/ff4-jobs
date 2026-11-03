@@ -49,7 +49,7 @@ internal sealed class BattlePilot
         // Heal anyone under half HP. Once Rosa is in the party, Rosa, Cecil and
         // Yang come first (lowest of them), then Rydia and Edward.
         // Without Rosa: lowest percentage first, Cecil wins near-ties.
-        BattlePlayerData? injured=null,dead=null;int alive=0,totalHp=0;float injuredRatio=2;casterCanCure=false;injuredRatioNow=1;toad=mini=null;
+        BattlePlayerData? injured=null,dead=null;int alive=0,totalHp=0;float injuredRatio=2;casterCanCure=false;injuredRatioNow=1;toad=mini=null;afflicted=null;afflictedRank=int.MaxValue;afflictedStatus=0;
         rosaParty=rosaCanCure=edwardCanItem=false;rydiaMp=-1;rosaTarget=rosaLow=null;float rosaKey=99;
         for(int i=0;i<players.Length;i++)if(players[i]?.GetOwnedCharacterData()?.characterStatusId==Rosa)rosaParty=true;
         // A heal or revive someone else already queued on a member makes that
@@ -82,6 +82,8 @@ internal sealed class BattlePilot
                 if(cid is HiddenCondition or JumpCondition)away=true;
                 if(cid is ToadCondition or ToadCondition2 && toad==null)toad=p;
                 if(cid is MiniCondition or MiniCondition2 && mini==null)mini=p;
+                int rankNow=Array.IndexOf(StatusOrder,cid);
+                if(rankNow>=0 && (afflicted==null || rankNow<afflictedRank)) {afflicted=p;afflictedRank=rankNow;afflictedStatus=cid;}
             }
             if(who==EdwardId && !away)edwardCanItem=true;
             if(who is Rydia or Tellah or Rosa && stats.CurrentMP>=CureMp)casterCanCure=true;
@@ -342,7 +344,44 @@ internal sealed class BattlePilot
     private bool edwardCanItem;
     // Master condition ids (both entries named Toad/Mini) and their cure items.
     private const int HiddenCondition=32,JumpCondition=36,ToadCondition=14,ToadCondition2=58,MiniCondition=13,MiniCondition2=57,MaidensKiss=11,Mallet=12;
-    private BattlePlayerData? toad,mini;
+    private BattlePlayerData? toad,mini,afflicted;private int afflictedRank,afflictedStatus;
+    // Every status worth a turn, worst first (user: "stone or confuse
+    // anything... all status effects"): Petrify 11, gradual Petrify 17,
+    // Confuse 12, Sleep 7, Paralyze 8, Toad 14/58, Pig 15/59, Silence 6,
+    // Mini 13/57 - these come before healing - then Darkness 9, Poison 10,
+    // Curse 18, after healing.
+    private static readonly int[] StatusOrder={11,17,12,7,8,14,58,15,59,6,13,57,9,10,18};
+    private const int MinorStatusRank=12,RemedyItem=18;
+    // The item that clears each status in battle (master function groups);
+    // Sleep, Paralyze and Confuse have none (Esuna or a Remedy).
+    private static int StatusItem(int status)=>status switch
+    {
+        11 or 17=>10,   // Gold Needle
+        14 or 58=>11,   // Maiden's Kiss
+        13 or 57=>12,   // Mallet
+        15 or 59=>13,   // Diet Food
+        6=>14,          // Echo Herbs
+        9=>15,          // Eye Drops
+        10=>16,         // Antidote
+        18=>17,         // Cross
+        _=>0,
+    };
+    // The cure for the worst status on someone else: its item, else Esuna
+    // (clears them all) from someone who knows it, isn't Silenced and can
+    // afford it, else a Remedy if one is owned (never bought: "spendy").
+    private bool CureStatus(BattleInfomationController info,BattlePlayerData actor,bool minor)
+    {
+        if(afflicted==null || afflicted.Pointer==actor.Pointer || (afflictedRank>=MinorStatusRank)!=minor)return false;
+        int target=afflicted.GetOwnedCharacterData()?.characterStatusId??0;if(target==0 || unreachable.Contains(target))return false;
+        if(queuedHeals.TryGetValue(target,out var q) && q.Healer!=actor.Pointer)return false;
+        var stats=actor.BattleUnitDataInfo?.Parameter;
+        int item=StatusItem(afflictedStatus);
+        if(item!=0 && HasItem(item)) {pendingItem=item;pendingTarget=target;Queue(actor,target);Log(actor,$"Item {item} on #{target} (status {afflictedStatus})");return true;}
+        if(stats!=null && stats.CurrentMP>=EsunaMp && Knows(actor,EsunaAbility) && CommandEnabled(info,WhiteMagic) && !blockedStatusSpell.Contains(actor.Pointer))
+        {pendingCommand=WhiteMagic;pendingAbility=EsunaAbility;pendingTarget=target;Queue(actor,target);Log(actor,$"Esuna on #{target} (status {afflictedStatus})");return true;}
+        if(HasItem(RemedyItem)) {pendingItem=RemedyItem;pendingTarget=target;Queue(actor,target);Log(actor,$"Remedy on #{target} (status {afflictedStatus}, no cheaper cure)");return true;}
+        return false;
+    }
     private const int BlackMagic=8,ToadSpell=45,MiniSpell=26;
     private readonly HashSet<IntPtr> blockedStatusSpell=new();
     internal Dictionary<int,int[]> Weaknesses=new();
@@ -433,16 +472,11 @@ internal sealed class BattlePilot
         bool isTellah=actor.GetOwnedCharacterData()?.characterStatusId==Tellah;
         bool canCure=stats!=null && stats.CurrentMP>=CureMp && CommandEnabled(info,WhiteMagic) && !blockedCure.Contains(actor.Pointer);
         int me=actor.GetOwnedCharacterData()?.characterStatusId??0;
-        // Status cures before healing: Maiden's Kiss for Toad, Mallet for Mini.
-        if(toad!=null && HasItem(MaidensKiss)) {pendingItem=MaidensKiss;pendingTarget=toad.GetOwnedCharacterData().characterStatusId;Log(actor,"Maiden's Kiss on #"+pendingTarget+" (toad)");return;}
-        if(mini!=null && HasItem(Mallet)) {pendingItem=Mallet;pendingTarget=mini.GetOwnedCharacterData().characterStatusId;Log(actor,"Mallet on #"+pendingTarget+" (mini)");return;}
-        // No item: Esuna (clears both) from someone who knows it, isn't
-        // affected and can afford it; else the same spell toggles the status
-        // back (Toad on a toad, Mini on a mini). Baron's guards Mini Cecil and
-        // the town sells no Mallets.
-        var shrunk=toad??mini;
-        if(shrunk!=null && stats!=null && actor.Pointer!=shrunk.Pointer && !blockedStatusSpell.Contains(actor.Pointer) && stats.CurrentMP>=EsunaMp && Knows(actor,EsunaAbility) && CommandEnabled(info,WhiteMagic))
-        {pendingCommand=WhiteMagic;pendingAbility=EsunaAbility;pendingTarget=shrunk.GetOwnedCharacterData().characterStatusId;Log(actor,"Esuna on #"+pendingTarget+(toad!=null?" (toad)":" (mini)"));return;}
+        // Status cures before healing: the worst status on anyone (Petrify,
+        // Confuse, Sleep, Paralyze, Toad, Pig, Silence, Mini) - its item, else
+        // Esuna, else a Remedy; Toad/Mini then fall back to the toggle spells.
+        if(CureStatus(info,actor,false))return;
+        // No item or Esuna: the same spell toggles Toad/Mini back.
         if(stats!=null && !blockedStatusSpell.Contains(actor.Pointer) && actor.Pointer!=(toad?.Pointer??IntPtr.Zero) && actor.Pointer!=(mini?.Pointer??IntPtr.Zero))
         {
             if(toad!=null && stats.CurrentMP>=Db.SpellMp(ToadSpell,7) && CommandEnabled(info,BlackMagic))
@@ -496,6 +530,8 @@ internal sealed class BattlePilot
             if(HasItem(2) && !edwardHeals && (!casterCanCure || (injured==rosaLow && me!=Rosa)))
             {pendingItem=2;pendingTarget=target;Queue(actor,target);Log(actor,"Potion on ally #"+target);return;}
         }
+        // Darkness, Poison, Curse: once nobody needs healing.
+        if(CureStatus(info,actor,true))return;
         // A boss rule naming this member (whileMonster) beats the automatic
         // Cure on undead: Porom Twincasts on Milon Z when nobody needs healing
         // (user: "the cure seems underwhelming"). Twincast greyed out (Palom
