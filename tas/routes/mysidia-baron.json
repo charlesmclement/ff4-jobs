@@ -2025,6 +2025,59 @@
       ]
     },
     {
+      "label": "Castle hall: Yang - a claw in each hand before Baigan",
+      "kind": "menu",
+      "mapId": 5,
+      "phases": [
+        "Player",
+        "Menu",
+        "Shop",
+        "Message",
+        "FieldReady",
+        "ChangeMap"
+      ],
+      "until": {
+        "menuDone": true
+      },
+      "stableFrames": 2,
+      "timeoutFrames": 10800,
+      "equip": [
+        8
+      ],
+      "equipItems": [
+        {
+          "character": 8,
+          "slot": 0,
+          "content": 164
+        },
+        {
+          "character": 8,
+          "slot": 0,
+          "content": 162
+        },
+        {
+          "character": 8,
+          "slot": 0,
+          "content": 163
+        },
+        {
+          "character": 8,
+          "slot": 1,
+          "content": 164
+        },
+        {
+          "character": 8,
+          "slot": 1,
+          "content": 162
+        },
+        {
+          "character": 8,
+          "slot": 1,
+          "content": 163
+        }
+      ]
+    },
+    {
       "label": "Castle hall: Baigan \"joins\", the twins smell a monster - Baigan and his arms (flag 32) - walk in",
       "kind": "navigate",
       "mapId": 5,

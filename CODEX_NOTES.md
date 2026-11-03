@@ -827,3 +827,4 @@ User: "make yang equip his claw or claws", "cecil to focus damage on the body an
 * Segment 7: at the inn (reset + Strongest + claws), and again before Cagnazzo (Thunder first).
 * New BattleRule `first`: checked before any heal or status cure. Baigan: Cecil Attack (`first`) every turn.
 * Paralyze (8): only Esuna and Remedy clear it (condition group 76). Tellah is the only Esuna caster, so a paralyzed Tellah waits it out unless a Remedy is owned; the run doesn't buy them.
+Claws before Baigan (live): a resume from the castle autosave starts at the Baigan walk-in and skipped the inn's claw step. any_claws now also runs on the hall map right before the trigger; the resume backs up onto it (a menu step without menuItem on the same map).
